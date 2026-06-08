@@ -13,6 +13,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 MD_PATH = ROOT / "docs" / "teukolsky_scalar_kerr.md"
 PDF_PATH = ROOT / "docs" / "teukolsky_scalar_kerr.pdf"
+VECTOR_PDF_PATH = ROOT / "docs" / "_pdfbuild" / "teukolsky_scalar_kerr_vector.pdf"
 BUILD_DIR = ROOT / "docs" / "_pdfbuild"
 
 
@@ -138,6 +139,27 @@ def _document(body):
 """
 
 
+def _rasterize_pdf(source, target, dpi=180):
+    """Write a viewer-robust image-backed copy of a PDF."""
+    try:
+        import fitz
+    except ImportError as exc:
+        raise RuntimeError("PyMuPDF/fitz is required to rasterize the PDF") from exc
+
+    src = fitz.open(source)
+    out = fitz.open()
+    zoom = dpi / 72.0
+    matrix = fitz.Matrix(zoom, zoom)
+    for src_page in src:
+        rect = src_page.rect
+        pix = src_page.get_pixmap(matrix=matrix, alpha=False)
+        dst_page = out.new_page(width=rect.width, height=rect.height)
+        dst_page.insert_image(rect, pixmap=pix)
+    out.save(target, deflate=True, garbage=4)
+    out.close()
+    src.close()
+
+
 def main():
     xelatex = shutil.which("xelatex")
     if not xelatex:
@@ -166,7 +188,8 @@ def main():
             raise RuntimeError(detail)
 
     built_pdf = BUILD_DIR / "teukolsky_scalar_kerr.pdf"
-    shutil.copy2(built_pdf, PDF_PATH)
+    shutil.copy2(built_pdf, VECTOR_PDF_PATH)
+    _rasterize_pdf(VECTOR_PDF_PATH, PDF_PATH)
     print(PDF_PATH)
 
 
