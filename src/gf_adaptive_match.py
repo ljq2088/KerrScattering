@@ -5,7 +5,8 @@ from .cheb import cheb, cheb_interpolate, real_to_cheb
 from .bondi import bondi_matrix
 
 
-def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10):
+def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10,
+            quad_abstol=1e-6):
     """Compute Schwarzschild scattering coefficients and nonlinear corrections.
 
     Args:
@@ -17,6 +18,10 @@ def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10):
             NOTE: Cl is undefined in the original MATLAB script; set to 1.0
             as a placeholder. Physical value must be supplied by the user.
         quad_reltol: relative tolerance for quadrature (default 1e-10).
+        quad_abstol: absolute tolerance for oscillatory tail quadrature
+            (default 1e-6). This is applied to individual Fourier-cycle
+            tail integrals, so over-tightening it can make QUADPACK's
+            extrapolation table less stable.
 
     Returns:
         dict with keys:
@@ -136,8 +141,11 @@ def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10):
         def phi_up_fun1(z):
             return -np.conj(Ciu) * phi_in_fun1(z) + Cid * phi_out_fun1(z)
 
+        def phi_down_amp0(z):
+            return cheb_eval(phi_down_ReCheb, phi_down_ImCheb, 0, zp, z)
+
         def phi_down_fun0(z):
-            return cheb_eval(phi_down_ReCheb, phi_down_ImCheb, 0, zp, z) * np.exp(-1j * omega * x_fun(z))
+            return phi_down_amp0(z) * np.exp(-1j * omega * x_fun(z))
 
         def phi_up_fun0(z):
             return np.conj(phi_down_fun0(z))
@@ -167,8 +175,11 @@ def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10):
         def phi_down_funy(y):
             return cheb_eval(phi_down_ReCheb, phi_down_ImCheb, -1, 1, y)
 
+        def phi_down_amp0(z):
+            return phi_down_funy(z02y(z))
+
         def phi_down_fun0(z):
-            return phi_down_funy(z02y(z)) * np.exp(-1j * omega * x_fun(z))
+            return phi_down_amp0(z) * np.exp(-1j * omega * x_fun(z))
 
         def phi_up_fun0(z):
             return np.conj(phi_down_fun0(z))
@@ -202,6 +213,84 @@ def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10):
             return val.item()
         return val
 
+    r_match = rh / zp
+
+    def poly_mul(p, q):
+        out = {}
+        for pk, pv in p.items():
+            for qk, qv in q.items():
+                out[pk + qk] = out.get(pk + qk, 0.0j) + pv * qv
+        return out
+
+    def mode_coeffs_out(r):
+        q = phi_down_amp0(rh / r)
+        qc = np.conj(q)
+        phi = {-1: Cid * q, 1: Ciu * qc}
+        phi_c = {1: np.conj(Cid) * qc, -1: np.conj(Ciu) * q}
+        return poly_mul(poly_mul(poly_mul(phi, phi_c), phi), phi)
+
+    def mode_coeffs_in(r):
+        q = phi_down_amp0(rh / r)
+        qc = np.conj(q)
+        phi = {-1: Cid * q, 1: Ciu * qc}
+        phi_c = {1: np.conj(Cid) * qc, -1: np.conj(Ciu) * q}
+        phi_up = {1: qc}
+        return poly_mul(poly_mul(poly_mul(phi, phi_c), phi), phi_up)
+
+    def complex_quad(fun, a, b):
+        real, real_err = quad(lambda x: np.real(fun(x)), a, b,
+                              epsabs=quad_abstol, epsrel=quad_reltol,
+                              limit=2000)
+        imag, imag_err = quad(lambda x: np.imag(fun(x)), a, b,
+                              epsabs=quad_abstol, epsrel=quad_reltol,
+                              limit=2000)
+        return real + 1j * imag, real_err + 1j * imag_err
+
+    def weighted_exp_quad(amp_fun, k):
+        w = abs(k) * omega
+        sign = 1.0 if k > 0 else -1.0
+
+        def slow_amp(r):
+            z = rh / r
+            return (amp_fun(r) *
+                    np.exp(1j * k * omega * rh * np.log(1.0 / z - 1.0)))
+
+        # QAWFE accelerates the infinite sum over Fourier cycles.  For this
+        # problem the final observables contain severe cancellations, so an
+        # over-small cycle absolute tolerance can destabilize the extrapolation.
+        rc, rc_err = quad(lambda r: np.real(slow_amp(r)), r_match, np.inf,
+                          weight="cos", wvar=w, epsabs=quad_abstol,
+                          epsrel=quad_reltol, limlst=1000, maxp1=200)
+        rs, rs_err = quad(lambda r: np.real(slow_amp(r)), r_match, np.inf,
+                          weight="sin", wvar=w, epsabs=quad_abstol,
+                          epsrel=quad_reltol, limlst=1000, maxp1=200)
+        ic, ic_err = quad(lambda r: np.imag(slow_amp(r)), r_match, np.inf,
+                          weight="cos", wvar=w, epsabs=quad_abstol,
+                          epsrel=quad_reltol, limlst=1000, maxp1=200)
+        is_, is_err = quad(lambda r: np.imag(slow_amp(r)), r_match, np.inf,
+                           weight="sin", wvar=w, epsabs=quad_abstol,
+                           epsrel=quad_reltol, limlst=1000, maxp1=200)
+
+        val = (rc - sign * is_) + 1j * (ic + sign * rs)
+        err = (rc_err + is_err) + 1j * (ic_err + rs_err)
+        return val, err
+
+    def integrate_modes(mode_coeffs):
+        values = []
+        errors = []
+        sample_modes = mode_coeffs(r_match)
+        for k in sorted(sample_modes):
+            def amp(r, kk=k):
+                return mode_coeffs(r).get(kk, 0.0j) / r ** 2
+
+            if k == 0:
+                val, err = complex_quad(amp, r_match, np.inf)
+            else:
+                val, err = weighted_exp_quad(amp, k)
+            values.append(val)
+            errors.append(err)
+        return sum(values), sum(errors)
+
     # Nonlinear corrections: integrals
     # A1out: integral of |phi_in|^2 * phi_in^2
     def integrand1_out(z):
@@ -213,15 +302,7 @@ def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10):
                                         epsrel=quad_reltol, limit=2000)
     val1_out = (val1_out + 1j * val1_out_imag) / rh
 
-    def integrand0_out(r):
-        z = rh / r
-        return np.abs(phi_in_fun0(z)) ** 2 * phi_in_fun0(z) ** 2 / r ** 2
-
-    val0_out, err0_out = quad(lambda r: integrand0_out(r).real, rh / zp, np.inf,
-                              epsrel=quad_reltol, limit=2000)
-    val0_out_imag, err0_out_imag = quad(lambda r: integrand0_out(r).imag, rh / zp, np.inf,
-                                        epsrel=quad_reltol, limit=2000)
-    val0_out = val0_out + 1j * val0_out_imag
+    val0_out, err0_out = integrate_modes(mode_coeffs_out)
 
     A1out = -(val1_out + val0_out) * Cl / W
 
@@ -235,15 +316,7 @@ def compute(M=1.0, l=0, omega=1e-3, N=128, Cl=1.0, quad_reltol=1e-10):
                                       epsrel=quad_reltol, limit=2000)
     val1_in = (val1_in + 1j * val1_in_imag) / rh
 
-    def integrand0_in(r):
-        z = rh / r
-        return np.abs(phi_in_fun0(z)) ** 2 * phi_in_fun0(z) * phi_up_fun0(z) / r ** 2
-
-    val0_in, err0_in = quad(lambda r: integrand0_in(r).real, rh / zp, np.inf,
-                            epsrel=quad_reltol, limit=2000)
-    val0_in_imag, err0_in_imag = quad(lambda r: integrand0_in(r).imag, rh / zp, np.inf,
-                                      epsrel=quad_reltol, limit=2000)
-    val0_in = val0_in + 1j * val0_in_imag
+    val0_in, err0_in = integrate_modes(mode_coeffs_in)
 
     A1in = -(val1_in + val0_in) * Cl / W
 

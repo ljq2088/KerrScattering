@@ -21,7 +21,7 @@ def cheb(N):
     c[-1] = 2.0
     c *= (-1.0) ** np.arange(N + 1)
 
-    X = np.tile(x, (N + 1, 1))
+    X = np.tile(x.reshape(-1, 1), (1, N + 1))
     dX = X - X.T
     D = np.outer(c, 1.0 / c) / (dX + np.eye(N + 1))
     D = D - np.diag(np.sum(D, axis=1))
@@ -47,8 +47,8 @@ def real_to_cheb(f):
     N = f.shape[0] - 1
 
     if N % 2 == 0:
-        a = dct(f, type=2, axis=0, norm=None)
-        a = 2 * a / N
+        a = dct(f, type=1, axis=0, norm=None)
+        a = a / N
         a[0, :] /= 2
         a[-1, :] /= 2
     else:
@@ -85,11 +85,11 @@ def cheb_interpolate(a, x1, x2, x):
 
     xL = x2 - x1
     x = np.asarray(x)
+    scalar = x.ndim == 0
     z = 2 * (x - x1) / xL - 1
     z = np.clip(z, -1, 1)
     theta = np.arccos(z)
 
-    scalar = np.isscalar(x)
     if scalar:
         vals = np.sum(a * np.cos(n * theta), axis=0)
         if vals.size == 1:

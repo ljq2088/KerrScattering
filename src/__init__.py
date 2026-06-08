@@ -1,5 +1,28 @@
 from .cheb import cheb, cheb_interpolate, real_to_cheb
 from .bondi import bondi_matrix
 from .gf_adaptive_match import compute
+from .teukolsky_scalar import (
+    KerrParams,
+    kerr_horizons,
+    rstar,
+    scalar_spheroidal_eigenvalue,
+    solve_scalar_in_mode,
+    teukolsky_lambda_s0,
+)
+from .teukolsky_lambda import LambdaResult, compute_teukolsky_lambda
 
-__all__ = ["cheb", "cheb_interpolate", "real_to_cheb", "bondi_matrix", "compute"]
+__all__ = [
+    "cheb",
+    "cheb_interpolate",
+    "real_to_cheb",
+    "bondi_matrix",
+    "compute",
+    "KerrParams",
+    "kerr_horizons",
+    "rstar",
+    "scalar_spheroidal_eigenvalue",
+    "solve_scalar_in_mode",
+    "teukolsky_lambda_s0",
+    "LambdaResult",
+    "compute_teukolsky_lambda",
+]

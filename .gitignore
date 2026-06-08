@@ -6,3 +6,5 @@ __pycache__/
 results/*.csv
 results/*.mat
 figures/*.png
+docs/_pdfbuild/
+tmp_pdf_check/

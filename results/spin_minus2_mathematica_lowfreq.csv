@@ -1,0 +1,2 @@
+"s","a","l","m","omega","transmission_amplitude","incidence_amplitude","reflection_amplitude","reflection_over_incidence","abs_reflection_over_incidence","method","status"
+"-2","0.5","2","2","0.0001","1.+0. I","-1.5435347274666643e20+3.416432242244572e20 I","10210.782613860754-22813.76866596801 I","-6.667069924566495e-17+2.3437123724010847e-19 I","6.667111119355036e-17","MST","ok"

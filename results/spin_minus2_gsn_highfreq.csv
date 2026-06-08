@@ -1,0 +1,2 @@
+s,a,l,m,omega,lambda,transmission_amplitude,incidence_amplitude,reflection_amplitude,normalization,status
+-2,0.5,2,2,10.0,-26.85215496939334,1.0000000000000000e+00+0.0000000000000000e+00im,2.4675049712429978e+01-5.0001332607188900e+00im,-6.4579566171517927e-09-8.1445991065750824e-09im,UNIT_TEUKOLSKY_TRANS,ok

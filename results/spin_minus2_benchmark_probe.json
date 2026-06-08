@@ -1,0 +1,42 @@
+{
+  "distro": {
+    "returncode": 0,
+    "stdout": "Ubuntu-22.04-D",
+    "stderr": ""
+  },
+  "wsl_uname": {
+    "returncode": 0,
+    "stdout": "Linux DESKTOP-5OPNKQE 5.15.167.4-microsoft-standard-WSL2 #1 SMP Tue Nov 5 00:21:55 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux",
+    "stderr": ""
+  },
+  "julia": {
+    "returncode": 0,
+    "stdout": "/home/ljq/julia-1.10.7/bin/julia",
+    "stderr": ""
+  },
+  "wolframscript": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "math": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "lambda_script": {
+    "returncode": 0,
+    "stdout": "found",
+    "stderr": ""
+  },
+  "gsn_dir": {
+    "returncode": 0,
+    "stdout": "found",
+    "stderr": ""
+  },
+  "repo_search": {
+    "returncode": 0,
+    "stdout": "/home/ljq/code/GSN\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/Project.toml\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/Manifest.toml\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.github\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.github/workflows\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/docs\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/docs/make.jl\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/docs/src\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/test\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/test/runtests.jl\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/README.md\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/src\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/src/Inhomogeneous\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/src/GeneralizedSasakiNakamura.jl\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/src/Homogeneous\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/objects\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/info\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/HEAD\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/description\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/branches\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/packed-refs\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/hooks\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/config\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/index\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/refs\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.git/logs\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/LICENSE\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/examples\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/examples/realtime-demo.ipynb\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/examples/plot-reflectivity.ipynb\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/examples/GSN-function.ipynb\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/examples/realtime-visualization-MST.nb\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/examples/radialinfall-infinity.ipynb\n/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl/.gitignore\n/home/ljq/code/PINN/SolvingTeukolskyEq_autoencoder/utils/compute_lambda_usage.py\n/home/ljq/code/PINN/SolvingTeukolsky/utils/compute_lambda_usage.py\n/home/ljq/.codeium/code_tracker/active/SolvingTeukolsky_110edf235494d7a5f3e8656c046c7a462994730f/5a85e614604fba46851d3ec0a6afc4d3_compute_lambda_usage.py\n/home/ljq/.julia/compiled/v1.10/GeneralizedSasakiNakamura\n/home/ljq/.julia/compiled/v1.10/GeneralizedSasakiNakamura/E5MGi_JHWaj.so\n/home/ljq/.julia/compiled/v1.10/GeneralizedSasakiNakamura/E5MGi_pdvv3.ji\n/home/ljq/.julia/compiled/v1.10/GeneralizedSasakiNakamura/E5MGi_JHWaj.ji\n/home/ljq/.julia/compiled/v1.10/GeneralizedSasakiNakamura/E5MGi_pdvv3.so",
+    "stderr": ""
+  }
+}
