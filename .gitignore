@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.pyo
+*.npy
+*.npz
+results/*.csv
+results/*.mat
+figures/*.png
