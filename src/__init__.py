@@ -10,6 +10,11 @@ from .teukolsky_scalar import (
     teukolsky_lambda_s0,
 )
 from .teukolsky_lambda import LambdaResult, compute_teukolsky_lambda
+from .teukolsky_rin import (
+    RInAmplitudeResult,
+    solve_rin_asymptotic,
+    solve_rin_chebyshev,
+)
 
 __all__ = [
     "cheb",
@@ -25,4 +30,7 @@ __all__ = [
     "teukolsky_lambda_s0",
     "LambdaResult",
     "compute_teukolsky_lambda",
+    "RInAmplitudeResult",
+    "solve_rin_asymptotic",
+    "solve_rin_chebyshev",
 ]

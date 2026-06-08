@@ -29,7 +29,10 @@ rowFor[s_, l_, m_, a_, omega_] := Module[
 ];
 
 rows = Prepend[
-    {rowFor[-2, 2, 2, 0.5, 10^-4]},
+    {
+        rowFor[-2, 2, 2, 0.5, 0.1],
+        rowFor[-2, 2, 2, 0.5, 10^-4]
+    },
     {
         "s",
         "a",

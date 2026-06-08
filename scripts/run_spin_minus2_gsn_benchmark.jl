@@ -15,7 +15,7 @@ function main()
     l = 2
     m = 2
     a = 0.5
-    omegas = [10.0]
+    omegas = [10.0, 0.1]
 
     mkpath("results")
     out = joinpath("results", "spin_minus2_gsn_highfreq.csv")

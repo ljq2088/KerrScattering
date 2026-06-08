@@ -25,6 +25,7 @@ python scripts/run_parameter_sweep.py     # Multi-frequency sweep
 python scripts/run_convergence.py         # N-convergence test
 python scripts/run_teukolsky_scalar_demo.py  # Scalar s=0 Kerr/Teukolsky demo
 python scripts/compute_teukolsky_lambda.py --s 0 --l 2 --m 1 --a 0.5 --omega 0.1
+python scripts/run_spin_minus2_rin_comparison.py  # s=-2 R_in Binc/Bref comparison
 python -m pytest tests/test_basic_run.py  # Smoke test
 ```
 
@@ -72,6 +73,9 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
 - `scripts/run_spin_minus2_benchmark_suite.py`: split benchmark runner using
   GSN for high frequency and Windows Mathematica/MST from `F:\mma` for low
   frequency.
+- `scripts/run_spin_minus2_rin_comparison.py`: computes the requested
+  `s=-2, a=0.5, l=m=2` `R_in` incidence/reflection amplitudes at
+  `omega = 10, 0.1, 1e-4` and compares them against the GSN/MST benchmarks.
 
 ## Future Work
 
