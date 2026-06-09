@@ -77,7 +77,7 @@ Current direct-Teukolsky Python comparison:
 | omega | Python method | Binc relative error | Bref relative error | benchmark |
 |---:|---|---:|---:|---|
 | 10.0 | phase-peeled Chebyshev | 4.0e-7 | 3.4e-1 | GSN |
-| 0.1 | high-order asymptotic matching | 4.6e-3 | 3.3e-5 | Mathematica MST |
+| 0.1 | high-order asymptotic matching, `r_match=200`, `inf_order=14` | 2.7e-10 | 5.3e-12 | Mathematica MST |
 | 1e-4 | high-order asymptotic matching | 2.5e-8 | 9.1e-12 | Mathematica MST |
 
 The high-frequency reflected amplitude is about `1e-8`, so it sits near the

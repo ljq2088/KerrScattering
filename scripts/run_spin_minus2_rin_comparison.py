@@ -61,9 +61,9 @@ def compute_row(omega):
         note = "B_ref is close to the double-precision floor in direct Teukolsky variables."
     elif omega == 0.1:
         result = solve_rin_asymptotic(
-            omega, lam, r_match=50.0, infinity_order=4, horizon_order=3
+            omega, lam, r_match=200.0, infinity_order=14, horizon_order=3
         )
-        note = "High-order infinity matching; stable B_ref and percent-level B_inc."
+        note = "High-order infinity matching after r_match/order scan."
     else:
         result = solve_rin_asymptotic(
             omega, lam, r_match=1.0e5, infinity_order=6, horizon_order=3
