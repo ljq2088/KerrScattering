@@ -24,6 +24,8 @@ python scripts/run_reproduction.py       # Single frequency reproduction
 python scripts/run_parameter_sweep.py     # Multi-frequency sweep
 python scripts/run_convergence.py         # N-convergence test
 python scripts/run_teukolsky_scalar_demo.py  # Scalar s=0 Kerr/Teukolsky demo
+python scripts/run_kerr_scalar_spectral_demo.py  # Kerr s=0 spectral/IVP comparison
+python scripts/run_kerr_scalar_spectral_convergence.py  # Kerr s=0 spectral convergence
 python scripts/compute_teukolsky_lambda.py --s 0 --l 2 --m 1 --a 0.5 --omega 0.1
 python scripts/run_spin_minus2_rin_comparison.py  # s=-2 R_in Binc/Bref comparison
 python -m pytest tests/test_basic_run.py  # Smoke test
@@ -66,6 +68,14 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
 - `src/teukolsky_scalar.py`: scalar spheroidal eigenvalue, Kerr tortoise
   coordinate, scalar radial Teukolsky ODE, and unit-horizon-amplitude in-mode
   integration.
+- `src/kerr_scalar_spectral.py`: two-domain Chebyshev spectral matching for
+  scalar Kerr in modes. This follows the Schwarzschild spectral route with
+  Kerr `s=0` radial coefficients, direct `z=0,1` endpoint regularity rows,
+  phase peeling, and value/derivative matching for `B_inc` and `B_ref`.
+- `scripts/run_kerr_scalar_spectral_demo.py`: compares the Kerr `s=0` spectral
+  amplitudes against the direct radial IVP leading-asymptotic output.
+- `scripts/run_kerr_scalar_spectral_convergence.py`: scans spectral order and
+  records convergence diagnostics in `results/kerr_scalar_spectral_convergence.csv`.
 - `docs/teukolsky_scalar_kerr.md` and `docs/teukolsky_scalar_kerr.pdf`:
   derivation notes.
 - `scripts/probe_spin_minus2_benchmark.py`: environment probe for the requested

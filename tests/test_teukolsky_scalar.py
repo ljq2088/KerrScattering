@@ -12,6 +12,7 @@ from src.teukolsky_scalar import (
     solve_scalar_in_mode,
     teukolsky_lambda_s0,
 )
+from src.kerr_scalar_spectral import solve_scalar_in_mode_spectral
 from src.teukolsky_lambda import compute_teukolsky_lambda
 
 
@@ -44,3 +45,14 @@ def test_scalar_in_mode_smoke():
     assert np.isfinite(result["lambda"])
     assert np.isfinite(result["Z_in"])
     assert np.isfinite(result["Z_out"])
+
+
+def test_scalar_spectral_in_mode_smoke():
+    result = solve_scalar_in_mode_spectral(
+        l=0, m=0, omega=0.1, M=1.0, a=0.3, N_outer=64, N_inner=64
+    )
+    assert result.status == "ok"
+    assert np.isfinite(result.radial_lambda)
+    assert np.isfinite(result.B_inc)
+    assert np.isfinite(result.B_ref)
+    assert result.flux_balance_error < 1e-4

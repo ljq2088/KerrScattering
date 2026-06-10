@@ -10,6 +10,7 @@ from .teukolsky_scalar import (
     teukolsky_lambda_s0,
 )
 from .teukolsky_lambda import LambdaResult, compute_teukolsky_lambda
+from .kerr_scalar_spectral import ScalarSpectralResult, solve_scalar_in_mode_spectral
 from .teukolsky_rin import (
     RInAmplitudeResult,
     solve_rin_asymptotic,
@@ -30,6 +31,8 @@ __all__ = [
     "teukolsky_lambda_s0",
     "LambdaResult",
     "compute_teukolsky_lambda",
+    "ScalarSpectralResult",
+    "solve_scalar_in_mode_spectral",
     "RInAmplitudeResult",
     "solve_rin_asymptotic",
     "solve_rin_chebyshev",
