@@ -207,8 +207,6 @@ def main():
         "",
         "## Remaining PRD-level work",
         "",
-        "- Cross-check the two excluded high-spin `l=3` GSN cases with an",
-        "  independent benchmark route before including them in production tables.",
         "- Carry the nonlinear Green-function correction over from the Schwarzschild",
         "  project only after the linear solver validation remains stable on a denser",
         "  grid.",

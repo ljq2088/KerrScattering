@@ -91,7 +91,7 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
   across packages.
 - `scripts/adaptive_kerr_scalar_gsn_validation.py`: scans Chebyshev order and
   matching radius for each usable GSN case; the summary table currently
-  verifies 35 cases with all amplitude-magnitude errors below `1e-7`.
+  verifies 37 cases with all amplitude-magnitude errors below `1e-7`.
 - `scripts/run_kerr_scalar_frequency_sweep.py`: computes self-converged
   Schwarzschild and Kerr frequency sweeps for `R`, `T`, and superradiant
   amplification using the same endpoint-collocation spectral route.

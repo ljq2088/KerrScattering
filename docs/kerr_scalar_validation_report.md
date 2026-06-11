@@ -38,18 +38,11 @@ balance are the benchmark quantities used for pass/fail validation.
 ## Summary
 
 - GSN benchmark requests: 37
-- Usable GSN benchmark cases tested: 35
-- GSN benchmark cases excluded: 2
+- Usable GSN benchmark cases tested: 37
+- GSN benchmark cases excluded: 0
 - All cases passed: `true`
 - Worst score: `1.485e-08`
 - Worst flux-balance residual: `3.714e-09`
-
-Excluded GSN cases are retained in the benchmark CSV but omitted from
-the pass/fail table because the external package returned zero or
-non-finite amplitudes:
-
-- `l=3, m=2, a=0.9, omega=0.05`: failed: nonfinite-or-zero amplitude from GSN
-- `l=3, m=2, a=0.9, omega=0.6`: failed: nonfinite-or-zero amplitude from GSN
 
 | l | m | a | omega | N | r_match | mapping | rel_abs_B_inc | rel_abs_B_ref | flux | score | passed |
 |---:|---:|---:|---:|---:|---:|:---|---:|---:|---:|---:|:---|
@@ -87,7 +80,9 @@ non-finite amplitudes:
 | 2 | 2 | 0.9 | 0.62 | 128 | 12 | linear | 5.958e-10 | 5.980e-10 | 4.145e-12 | 5.980e-10 | true |
 | 2 | 2 | 0.9 | 0.65 | 160 | 25 | linear | 2.447e-10 | 2.483e-10 | 4.032e-12 | 2.483e-10 | true |
 | 2 | 2 | 0.9 | 0.9 | 224 | 10 | linear | 1.863e-09 | 1.173e-09 | 3.714e-09 | 3.714e-09 | true |
+| 3 | 2 | 0.9 | 0.05 | 96 | 20 | sinh | 1.045e-09 | 1.045e-09 | 0.000e+00 | 1.045e-09 | true |
 | 3 | 2 | 0.9 | 0.2 | 224 | 6 | linear | 8.015e-11 | 8.015e-11 | 0.000e+00 | 8.015e-11 | true |
+| 3 | 2 | 0.9 | 0.6 | 128 | 20 | linear | 2.250e-10 | 2.251e-10 | 1.458e-13 | 2.251e-10 | true |
 
 ## Frequency sweep
 
@@ -131,8 +126,6 @@ remain below the acceptance gate.
 
 ## Remaining PRD-level work
 
-- Cross-check the two excluded high-spin `l=3` GSN cases with an
-  independent benchmark route before including them in production tables.
 - Carry the nonlinear Green-function correction over from the Schwarzschild
   project only after the linear solver validation remains stable on a denser
   grid.

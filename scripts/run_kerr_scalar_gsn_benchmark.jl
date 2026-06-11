@@ -18,6 +18,17 @@ function rsout_for(omega)
     return max(GeneralizedSasakiNakamura._DEFAULT_rsout, 20 / abs(omega))
 end
 
+function solve_rin(s, l, m, a, omega, rsin, rsout, horizon_order, infinity_order, method)
+    return Teukolsky_radial(
+        s, l, m, a, omega, IN,
+        rsin,
+        rsout;
+        horizon_expansion_order=horizon_order,
+        infinity_expansion_order=infinity_order,
+        method=method,
+    )
+end
+
 function main()
     cases = [
         # Schwarzschild and non-superradiant reference points.
@@ -67,27 +78,41 @@ function main()
     mkpath("results")
     out = joinpath("results", "kerr_scalar_gsn_benchmark.csv")
     open(out, "w") do io
-        println(io, "s,l,m,a,omega,rsin,rsout,horizon_order,infinity_order,lambda,transmission_amplitude,incidence_amplitude,reflection_amplitude,normalization,status")
+        println(io, "s,l,m,a,omega,rsin,rsout,horizon_order,infinity_order,method,lambda,transmission_amplitude,incidence_amplitude,reflection_amplitude,normalization,status")
         for (l, m, a, omega) in cases
             s = 0
             rsin = GeneralizedSasakiNakamura._DEFAULT_rsin
             rsout = rsout_for(omega)
             horizon_order = 30
             infinity_order = 40
+            Rin = nothing
+            method_used = ""
+            status = "failed: no method attempted"
             try
-                Rin = Teukolsky_radial(
-                    s, l, m, a, omega, IN,
-                    rsin,
-                    rsout;
-                    horizon_expansion_order=horizon_order,
-                    infinity_expansion_order=infinity_order,
-                    method="Riccati",
-                )
-                if !is_usable_amplitude(Rin.incidence_amplitude) || !is_usable_amplitude(Rin.reflection_amplitude)
-                    status = "failed: nonfinite-or-zero amplitude from GSN"
-                else
-                    status = "ok"
+                for method in ["Riccati", "linear"]
+                    try
+                        trial = solve_rin(
+                            s, l, m, a, omega, rsin, rsout,
+                            horizon_order, infinity_order, method,
+                        )
+                        Rin = trial
+                        method_used = method
+                        if is_usable_amplitude(trial.incidence_amplitude) && is_usable_amplitude(trial.reflection_amplitude)
+                            status = "ok"
+                            break
+                        end
+                        status = "failed: nonfinite-or-zero amplitude from GSN"
+                    catch err
+                        status = "failed: $(err)"
+                    end
                 end
+
+                if Rin === nothing
+                    println(io, join([s, l, m, a, omega, rsin, rsout, horizon_order, infinity_order, method_used, "NaN", "NaN", "NaN", "NaN", "NaN", status], ","))
+                    println("failed: s=0 l=", l, " m=", m, " a=", a, " omega=", omega, " status=", status)
+                    continue
+                end
+
                 println(io, join([
                     s,
                     l,
@@ -98,6 +123,7 @@ function main()
                     rsout,
                     horizon_order,
                     infinity_order,
+                    method_used,
                     Rin.mode.lambda,
                     fmt_complex(Rin.transmission_amplitude),
                     fmt_complex(Rin.incidence_amplitude),
@@ -115,7 +141,7 @@ function main()
                 println("  rsout=", rsout)
                 println("  status=", status)
             catch err
-                println(io, join([s, l, m, a, omega, rsin, rsout, horizon_order, infinity_order, "NaN", "NaN", "NaN", "NaN", "NaN", "failed: $(err)"], ","))
+                println(io, join([s, l, m, a, omega, rsin, rsout, horizon_order, infinity_order, method_used, "NaN", "NaN", "NaN", "NaN", "NaN", "failed: $(err)"], ","))
                 println("failed: s=0 l=", l, " m=", m, " a=", a, " omega=", omega, " err=", err)
             end
         end
