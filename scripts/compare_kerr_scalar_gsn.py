@@ -18,6 +18,7 @@ from src.teukolsky_scalar import teukolsky_lambda_s0
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GSN_IN = os.path.join(ROOT, "results", "kerr_scalar_gsn_benchmark.csv")
 OUT = os.path.join(ROOT, "results", "kerr_scalar_spectral_vs_gsn.csv")
+DEFAULT_N = 224
 
 
 def parse_complex(text):
@@ -73,8 +74,8 @@ def main():
                 m,
                 omega,
                 a=a,
-                N_outer=128,
-                N_inner=128,
+                N_outer=DEFAULT_N,
+                N_inner=DEFAULT_N,
                 radial_lambda=lam_gsn,
             )
             lam_local = teukolsky_lambda_s0(l, m, a, omega)

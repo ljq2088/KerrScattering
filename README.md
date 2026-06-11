@@ -28,6 +28,9 @@ python scripts/run_kerr_scalar_spectral_demo.py  # Kerr s=0 spectral/IVP compari
 python scripts/run_kerr_scalar_spectral_convergence.py  # Kerr s=0 spectral convergence
 julia --project=/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl scripts/run_kerr_scalar_gsn_benchmark.jl
 python scripts/compare_kerr_scalar_gsn.py  # Kerr s=0 spectral/GSN benchmark comparison
+python scripts/adaptive_kerr_scalar_gsn_validation.py  # Scan N/r_match against GSN
+python scripts/build_kerr_scalar_validation_report.py
+python scripts/plot_kerr_scalar_validation.py
 python scripts/compute_teukolsky_lambda.py --s 0 --l 2 --m 1 --a 0.5 --omega 0.1
 python scripts/run_spin_minus2_rin_comparison.py  # s=-2 R_in Binc/Bref comparison
 python -m pytest tests/test_basic_run.py  # Smoke test
@@ -84,6 +87,11 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
   Magnitude errors are the convention-invariant benchmark; complex phase
   factors are reported separately because tortoise-coordinate constants differ
   across packages.
+- `scripts/adaptive_kerr_scalar_gsn_validation.py`: scans Chebyshev order and
+  matching radius for each GSN case; the summary table currently verifies 12
+  cases with all amplitude-magnitude errors below `1e-7`.
+- `docs/kerr_scalar_validation_report.md` and `figures/kerr_scalar_*.png`:
+  current validation report and plots.
 - `docs/teukolsky_scalar_kerr.md` and `docs/teukolsky_scalar_kerr.pdf`:
   derivation notes.
 - `scripts/probe_spin_minus2_benchmark.py`: environment probe for the requested

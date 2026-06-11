@@ -72,18 +72,22 @@ def _cheb_interval(N, z_left, z_right, mapping="linear", kappa=0.0):
     else:
         raise ValueError(f"Unknown Chebyshev mapping: {mapping}")
 
+    z[0] = z_left
+    z[-1] = z_right
     Dz = Dy / dzdy[:, None]
     D2z = Dz @ Dz
     return z, Dz, D2z
 
 
-def _default_r_match(M, omega):
+def _default_r_match(M, a, omega):
     """Heuristic matching radius following the Schwarzschild spectral scale."""
     wM = abs(omega) * M
     if wM <= 0.0:
         raise ValueError("omega must be nonzero.")
-    if wM >= 0.5:
+    if abs(a) / M >= 0.8 and wM >= 0.15:
         return 12.0 * M
+    if wM >= 0.5:
+        return 20.0 * M
     if wM >= 0.05:
         return 30.0 * M
     return max(30.0 * M, M * (3.0 + 1.0 / np.sqrt(wM)))
@@ -138,7 +142,9 @@ def _transformed_coefficients(z, branch, params, l, m, omega, radial_lambda):
     B1 = np.zeros_like(z, dtype=complex)
     B0 = np.zeros_like(z, dtype=complex)
 
-    regular = (z > 0.0) & (z < 1.0)
+    at_infinity = np.isclose(z, 0.0, rtol=0.0, atol=1e-14)
+    at_horizon = np.isclose(z, 1.0, rtol=0.0, atol=1e-14)
+    regular = ~(at_infinity | at_horizon)
     if np.any(regular):
         zr = z[regular]
         r = rp / zr
@@ -155,7 +161,6 @@ def _transformed_coefficients(z, branch, params, l, m, omega, radial_lambda):
         B1[regular] = d * (z_rr + 2.0 * q * z_r) + dp * z_r
         B0[regular] = d * (qp + q**2) + dp * q + a0
 
-    at_infinity = z == 0.0
     if np.any(at_infinity):
         if branch not in {"down", "up"}:
             raise ValueError("Only down/up branches are regular at z=0.")
@@ -164,7 +169,6 @@ def _transformed_coefficients(z, branch, params, l, m, omega, radial_lambda):
         B1[at_infinity] = -2j * sigma * rp * omega
         B0[at_infinity] = -radial_lambda
 
-    at_horizon = z == 1.0
     if np.any(at_horizon):
         if branch != "in":
             raise ValueError("Only the in branch is regular at z=1.")
@@ -256,7 +260,7 @@ def solve_scalar_in_mode_spectral(
     params = KerrParams(M=M, a=a)
     rp = params.rp
     if r_match is None:
-        r_match = _default_r_match(M, omega)
+        r_match = _default_r_match(M, a, omega)
     z_match = rp / r_match
 
     if z_infinity != 0.0 or z_horizon != 1.0:
