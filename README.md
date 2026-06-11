@@ -29,8 +29,10 @@ python scripts/run_kerr_scalar_spectral_convergence.py  # Kerr s=0 spectral conv
 julia --project=/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl scripts/run_kerr_scalar_gsn_benchmark.jl
 python scripts/compare_kerr_scalar_gsn.py  # Kerr s=0 spectral/GSN benchmark comparison
 python scripts/adaptive_kerr_scalar_gsn_validation.py  # Scan N/r_match against GSN
+python scripts/run_kerr_scalar_frequency_sweep.py  # Kerr s=0 frequency sweep
 python scripts/build_kerr_scalar_validation_report.py
 python scripts/plot_kerr_scalar_validation.py
+python scripts/plot_kerr_scalar_frequency_sweep.py
 python scripts/compute_teukolsky_lambda.py --s 0 --l 2 --m 1 --a 0.5 --omega 0.1
 python scripts/run_spin_minus2_rin_comparison.py  # s=-2 R_in Binc/Bref comparison
 python -m pytest tests/test_basic_run.py  # Smoke test
@@ -90,6 +92,12 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
 - `scripts/adaptive_kerr_scalar_gsn_validation.py`: scans Chebyshev order and
   matching radius for each GSN case; the summary table currently verifies 12
   cases with all amplitude-magnitude errors below `1e-7`.
+- `scripts/run_kerr_scalar_frequency_sweep.py`: computes self-converged
+  Schwarzschild and Kerr frequency sweeps for `R`, `T`, and superradiant
+  amplification using the same endpoint-collocation spectral route.
+- `scripts/plot_kerr_scalar_frequency_sweep.py`: produces publication-style
+  frequency-sweep plots in `figures/kerr_scalar_frequency_rt.png` and
+  `figures/kerr_scalar_superradiance_amplification.png`.
 - `docs/kerr_scalar_validation_report.md` and `figures/kerr_scalar_*.png`:
   current validation report and plots.
 - `docs/teukolsky_scalar_kerr.md` and `docs/teukolsky_scalar_kerr.pdf`:
