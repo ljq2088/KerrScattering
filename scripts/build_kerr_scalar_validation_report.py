@@ -7,6 +7,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SUMMARY = os.path.join(ROOT, "results", "kerr_scalar_adaptive_summary.csv")
+GSN_BENCHMARK = os.path.join(ROOT, "results", "kerr_scalar_gsn_benchmark.csv")
 SWEEP = os.path.join(ROOT, "results", "kerr_scalar_frequency_sweep.csv")
 REPORT = os.path.join(ROOT, "docs", "kerr_scalar_validation_report.md")
 
@@ -23,10 +24,15 @@ def main():
 
     with open(SUMMARY, newline="") as f:
         rows = list(csv.DictReader(f))
+    gsn_rows = []
+    if os.path.exists(GSN_BENCHMARK):
+        with open(GSN_BENCHMARK, newline="") as f:
+            gsn_rows = list(csv.DictReader(f))
 
     max_score = max(float(row["score"]) for row in rows)
     max_flux = max(float(row["flux_balance_error"]) for row in rows)
     all_passed = all(row["passed"] == "true" for row in rows)
+    excluded_gsn = [row for row in gsn_rows if row["status"] != "ok"]
     sweep_rows = []
     if os.path.exists(SWEEP):
         with open(SWEEP, newline="") as f:
@@ -57,16 +63,48 @@ def main():
         "phase factors are recorded in the CSV output but are not used as invariant",
         "benchmark errors.",
         "",
+        "## Phase convention",
+        "",
+        "The spectral code reports amplitudes in its own Kerr tortoise coordinate",
+        "convention. At infinity the basis is",
+        "`exp(-i omega r*)/r` for the incident wave and `exp(+i omega r*)/r`",
+        "for the reflected wave; at the horizon the unit-amplitude in-mode uses",
+        "`exp[-i (omega - m Omega_H) r*]`. If another package uses",
+        "`r* -> r* + C`, then the complex coefficients transform by",
+        "`B_inc -> B_inc exp(-i omega C)` and",
+        "`B_ref -> B_ref exp(+i omega C)` in the infinity basis. Therefore the",
+        "magnitudes, reflection probability, transmission probability, and flux",
+        "balance are the benchmark quantities used for pass/fail validation.",
+        "",
         "## Summary",
         "",
-        f"- Cases tested: {len(rows)}",
+        f"- GSN benchmark requests: {len(gsn_rows) if gsn_rows else 'not recorded'}",
+        f"- Usable GSN benchmark cases tested: {len(rows)}",
+        f"- GSN benchmark cases excluded: {len(excluded_gsn)}",
         f"- All cases passed: `{str(all_passed).lower()}`",
         f"- Worst score: `{max_score:.3e}`",
         f"- Worst flux-balance residual: `{max_flux:.3e}`",
         "",
+    ]
+
+    if excluded_gsn:
+        lines.extend([
+            "Excluded GSN cases are retained in the benchmark CSV but omitted from",
+            "the pass/fail table because the external package returned zero or",
+            "non-finite amplitudes:",
+            "",
+        ])
+        for row in excluded_gsn:
+            lines.append(
+                f"- `l={row['l']}, m={row['m']}, a={float(row['a']):.3g}, "
+                f"omega={float(row['omega']):.3g}`: {row['status']}"
+            )
+        lines.append("")
+
+    lines.extend([
         "| l | m | a | omega | N | r_match | mapping | rel_abs_B_inc | rel_abs_B_ref | flux | score | passed |",
         "|---:|---:|---:|---:|---:|---:|:---|---:|---:|---:|---:|:---|",
-    ]
+    ])
 
     for row in rows:
         lines.append(
@@ -152,6 +190,9 @@ def main():
         "The present validation covers the Schwarzschild limit, moderate Kerr spin,",
         "near-superradiant scalar modes, low-frequency superradiant scattering,",
         "high-frequency small-reflection scattering, and high-spin Kerr cases.",
+        "The GSN benchmark grid now includes nonrotating checks, non-superradiant",
+        "`m=0` modes, multiple `l=1,2,3` modes, and rotating cases on both sides",
+        "of `omega = m Omega_H`.",
         "",
         "The worst invariant benchmark error in the current table is below `1.5e-8`,",
         "which is comfortably inside the `1e-7` amplitude-magnitude target. The",
@@ -166,10 +207,8 @@ def main():
         "",
         "## Remaining PRD-level work",
         "",
-        "- Expand the GSN benchmark grid before using final production tables.",
-        "- Densify the production frequency grid around each superradiant threshold.",
-        "- State the complex phase convention explicitly if phase-sensitive",
-        "  observables are reported.",
+        "- Cross-check the two excluded high-spin `l=3` GSN cases with an",
+        "  independent benchmark route before including them in production tables.",
         "- Carry the nonlinear Green-function correction over from the Schwarzschild",
         "  project only after the linear solver validation remains stable on a denser",
         "  grid.",

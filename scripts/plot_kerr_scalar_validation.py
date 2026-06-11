@@ -1,6 +1,7 @@
 """Create validation plots for the Kerr s=0 spectral solver."""
 
 import csv
+import math
 import os
 import sys
 
@@ -18,10 +19,6 @@ def read_csv(path):
         return list(csv.DictReader(f))
 
 
-def case_label(row):
-    return f"l={row['l']},m={row['m']},a={float(row['a']):.1g},w={float(row['omega']):.2g}"
-
-
 def plot_floor(values, floor=1e-16):
     return [max(float(value), floor) for value in values]
 
@@ -30,11 +27,12 @@ def main():
     os.makedirs(FIGDIR, exist_ok=True)
     summary = read_csv(SUMMARY)
 
-    labels = [case_label(row) for row in summary]
     inc_err = plot_floor(row["rel_abs_B_inc"] for row in summary)
     ref_err = plot_floor(row["rel_abs_B_ref"] for row in summary)
     flux = plot_floor(row["flux_balance_error"] for row in summary)
-    x = list(range(len(summary)))
+    x = list(range(1, len(summary) + 1))
+    tick_step = max(1, math.ceil(len(summary) / 14))
+    ticks = x[::tick_step]
 
     fig, ax = plt.subplots(figsize=(11, 5.6))
     ax.semilogy(x, inc_err, "o-", label=r"$|B_{\rm inc}|$")
@@ -42,8 +40,9 @@ def main():
     ax.semilogy(x, flux, "^-", label="flux balance")
     ax.axhline(1e-7, color="0.35", ls="--", lw=1, label=r"$10^{-7}$ amplitude gate")
     ax.axhline(1e-8, color="0.6", ls=":", lw=1, label=r"$10^{-8}$ flux gate")
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels, rotation=45, ha="right")
+    ax.set_xticks(ticks)
+    ax.set_xlim(0.5, len(summary) + 0.5)
+    ax.set_xlabel("GSN benchmark case index")
     ax.set_ylabel("relative / residual error")
     ax.set_title("Kerr scalar spectral solver vs GSN benchmarks")
     ax.grid(True, which="both", ls=":", lw=0.5)
