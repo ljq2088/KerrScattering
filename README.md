@@ -26,6 +26,8 @@ python scripts/run_convergence.py         # N-convergence test
 python scripts/run_teukolsky_scalar_demo.py  # Scalar s=0 Kerr/Teukolsky demo
 python scripts/run_kerr_scalar_spectral_demo.py  # Kerr s=0 spectral/IVP comparison
 python scripts/run_kerr_scalar_spectral_convergence.py  # Kerr s=0 spectral convergence
+julia --project=/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl scripts/run_kerr_scalar_gsn_benchmark.jl
+python scripts/compare_kerr_scalar_gsn.py  # Kerr s=0 spectral/GSN benchmark comparison
 python scripts/compute_teukolsky_lambda.py --s 0 --l 2 --m 1 --a 0.5 --omega 0.1
 python scripts/run_spin_minus2_rin_comparison.py  # s=-2 R_in Binc/Bref comparison
 python -m pytest tests/test_basic_run.py  # Smoke test
@@ -76,6 +78,12 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
   amplitudes against the direct radial IVP leading-asymptotic output.
 - `scripts/run_kerr_scalar_spectral_convergence.py`: scans spectral order and
   records convergence diagnostics in `results/kerr_scalar_spectral_convergence.csv`.
+- `scripts/run_kerr_scalar_gsn_benchmark.jl`: runs external GSN scalar
+  Teukolsky benchmarks for selected Kerr modes.
+- `scripts/compare_kerr_scalar_gsn.py`: compares spectral amplitudes with GSN.
+  Magnitude errors are the convention-invariant benchmark; complex phase
+  factors are reported separately because tortoise-coordinate constants differ
+  across packages.
 - `docs/teukolsky_scalar_kerr.md` and `docs/teukolsky_scalar_kerr.pdf`:
   derivation notes.
 - `scripts/probe_spin_minus2_benchmark.py`: environment probe for the requested

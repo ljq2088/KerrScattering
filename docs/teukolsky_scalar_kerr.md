@@ -282,10 +282,16 @@ W_r[R1,R2] = Delta (R1 R2' - R2 R1')
 为常数。对实频率、实势，`R_up` 可与共轭解相关联。用 Wronskian 在两端
 求值，可得到能流守恒。
 
-对 scalar 场，径向能流与相位群速度成正比。若 `B_trans=1`，则形式上
+对 scalar 场，径向能流与相位群速度成正比。注意 Kerr 视界端
 
 ```text
-F_H ~ p |B_trans|^2
+Delta d_r exp(-i p r*) -> -i p (r_+^2+a^2) exp(-i p r*)
+```
+
+因此视界通量带有 `r_+^2+a^2 = 2 M r_+` 因子。若 `B_trans=1`，则形式上
+
+```text
+F_H ~ p (r_+^2+a^2) |B_trans|^2
 F_infty,in  ~ omega |B_inc|^2
 F_infty,out ~ omega |B_ref|^2
 ```
@@ -294,7 +300,7 @@ F_infty,out ~ omega |B_ref|^2
 
 ```text
 R0 = |B_ref|^2 / |B_inc|^2
-T0 = (p/omega) |B_trans|^2 / |B_inc|^2
+T0 = [p (r_+^2+a^2)/omega] |B_trans|^2 / |B_inc|^2
 ```
 
 并满足
@@ -468,6 +474,42 @@ near infinity:  R = F(z) exp(-i omega r*)/r
 4. 在 matching point 同时匹配 R 和 dR/dr。
 5. 用 Wronskian 检查匹配误差。
 ```
+
+当前代码采用端点直接配点，而不是在视界或无穷远附近做有限截断。令
+
+```text
+R = F(z) u(z),    z = r_+/r
+```
+
+则剥离后的方程可写为
+
+```text
+B2(z) u'' + B1(z) u' + B0(z) u = 0
+```
+
+在 `z=0` 和 `z=1` 处二阶导系数 `B2` 退化为零；矩阵中保留该退化
+ODE 行作为正则一阶条件，并用相邻一行加入归一化 `u(endpoint)=1`。无穷
+远端对 `F = exp(i sigma omega r*)/r`，`sigma=-1` 为 down、`sigma=+1`
+为 up，有
+
+```text
+B2(0) = 0
+B1(0) = -2 i sigma r_+ omega
+B0(0) = -lambda
+```
+
+视界端对 `F = exp(-i p r*)` 有
+
+```text
+B2(1) = 0
+B1(1) = r_-/r_+ - 1 + 2 i p (r_+ + r_-)
+B0(1) =
+  4 r_+^2 (r_+ + r_-) p (omega-p)/(r_+-r_-)
+  - 2 i r_+ p - lambda
+```
+
+这正是 Schwarzschild 谱方法中“端点退化给导数条件、另加 `u=1` 归一化”
+的 Kerr `s=0` 对应物。
 
 非线性积分建议：
 

@@ -39,6 +39,9 @@ class ScalarSpectralResult:
     z_match: float
     N_outer: int
     N_inner: int
+    mapping: str
+    kappa_outer: float
+    kappa_inner: float
     B_inc: complex
     B_ref: complex
     reflection_amplitude: complex
@@ -52,17 +55,38 @@ class ScalarSpectralResult:
     status: str
 
 
-def _cheb_interval(N, z_left, z_right):
+def _cheb_interval(N, z_left, z_right, mapping="linear", kappa=0.0):
     """Return Chebyshev nodes and z-derivative matrices on [z_left, z_right]."""
     Dy, y = cheb(N)
     length = z_right - z_left
     if length <= 0:
         raise ValueError("Require z_right > z_left.")
 
-    z = z_left + 0.5 * length * (1.0 - y)
-    Dz = (-2.0 / length) * Dy
+    if mapping == "linear" or kappa <= 0.0:
+        z = z_left + 0.5 * length * (1.0 - y)
+        dzdy = np.full_like(y, -0.5 * length)
+    elif mapping == "sinh-left":
+        arg = 0.5 * kappa * (1.0 - y)
+        z = z_left + length * np.sinh(arg) / np.sinh(kappa)
+        dzdy = -0.5 * length * kappa * np.cosh(arg) / np.sinh(kappa)
+    else:
+        raise ValueError(f"Unknown Chebyshev mapping: {mapping}")
+
+    Dz = Dy / dzdy[:, None]
     D2z = Dz @ Dz
     return z, Dz, D2z
+
+
+def _default_r_match(M, omega):
+    """Heuristic matching radius following the Schwarzschild spectral scale."""
+    wM = abs(omega) * M
+    if wM <= 0.0:
+        raise ValueError("omega must be nonzero.")
+    if wM >= 0.5:
+        return 12.0 * M
+    if wM >= 0.05:
+        return 30.0 * M
+    return max(30.0 * M, M * (3.0 + 1.0 / np.sqrt(wM)))
 
 
 def _d2rstar_dr2(r, M, a):
@@ -160,8 +184,9 @@ def _transformed_coefficients(z, branch, params, l, m, omega, radial_lambda):
 
 
 def _solve_branch(N, z_left, z_right, branch, boundary_side, params,
+                  mapping, kappa,
                   l, m, omega, radial_lambda):
-    z, Dz, D2z = _cheb_interval(N, z_left, z_right)
+    z, Dz, D2z = _cheb_interval(N, z_left, z_right, mapping=mapping, kappa=kappa)
     B2, B1, B0 = _transformed_coefficients(
         z, branch, params, l, m, omega, radial_lambda
     )
@@ -212,6 +237,7 @@ def solve_scalar_in_mode_spectral(
     r_match=None,
     z_infinity=0.0,
     z_horizon=1.0,
+    mapping="auto",
     lmax_extra=16,
     radial_lambda=None,
 ):
@@ -230,7 +256,7 @@ def solve_scalar_in_mode_spectral(
     params = KerrParams(M=M, a=a)
     rp = params.rp
     if r_match is None:
-        r_match = max(30.0 * M, 12.0 / np.sqrt(abs(omega)))
+        r_match = _default_r_match(M, omega)
     z_match = rp / r_match
 
     if z_infinity != 0.0 or z_horizon != 1.0:
@@ -238,21 +264,42 @@ def solve_scalar_in_mode_spectral(
     if not (z_infinity < z_match < z_horizon):
         raise ValueError("Invalid z-domain endpoints.")
 
+    if mapping == "auto":
+        use_sinh = abs(omega) * M < 0.1
+    elif mapping == "linear":
+        use_sinh = False
+    elif mapping == "sinh":
+        use_sinh = True
+    else:
+        raise ValueError("mapping must be 'auto', 'linear', or 'sinh'.")
+
+    if use_sinh:
+        active_mapping = "sinh-left"
+        kappa_outer = abs(np.log(max(abs(omega) * 2.0 * M, 1e-300)))
+        kappa_inner = 0.5 * kappa_outer
+    else:
+        active_mapping = "linear"
+        kappa_outer = 0.0
+        kappa_inner = 0.0
+
     lam = radial_lambda
     if lam is None:
         lam = teukolsky_lambda_s0(l, m, a, omega, lmax_extra=lmax_extra)
 
     down = _solve_branch(
         N_outer, z_infinity, z_match, "down", "left",
-        params, l, m, omega, lam
+        params, active_mapping, kappa_outer,
+        l, m, omega, lam
     )
     up = _solve_branch(
         N_outer, z_infinity, z_match, "up", "left",
-        params, l, m, omega, lam
+        params, active_mapping, kappa_outer,
+        l, m, omega, lam
     )
     inner = _solve_branch(
         N_inner, z_match, z_horizon, "in", "right",
-        params, l, m, omega, lam
+        params, active_mapping, kappa_inner,
+        l, m, omega, lam
     )
 
     R_down, Rr_down = _field_and_radial_derivative(
@@ -291,6 +338,9 @@ def solve_scalar_in_mode_spectral(
         z_match=float(z_match),
         N_outer=int(N_outer),
         N_inner=int(N_inner),
+        mapping="sinh" if use_sinh else "linear",
+        kappa_outer=float(kappa_outer),
+        kappa_inner=float(kappa_inner),
         B_inc=B_inc,
         B_ref=B_ref,
         reflection_amplitude=reflection_amp,
