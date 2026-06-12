@@ -9,6 +9,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SUMMARY = os.path.join(ROOT, "results", "kerr_scalar_adaptive_summary.csv")
 GSN_BENCHMARK = os.path.join(ROOT, "results", "kerr_scalar_gsn_benchmark.csv")
 SWEEP = os.path.join(ROOT, "results", "kerr_scalar_frequency_sweep.csv")
+COUPLINGS = os.path.join(ROOT, "results", "kerr_scalar_cubic_couplings.csv")
 REPORT = os.path.join(ROOT, "docs", "kerr_scalar_validation_report.md")
 
 
@@ -37,6 +38,10 @@ def main():
     if os.path.exists(SWEEP):
         with open(SWEEP, newline="") as f:
             sweep_rows = list(csv.DictReader(f))
+    coupling_rows = []
+    if os.path.exists(COUPLINGS):
+        with open(COUPLINGS, newline="") as f:
+            coupling_rows = list(csv.DictReader(f))
 
     lines = [
         "# Kerr s=0 spectral validation report",
@@ -183,6 +188,45 @@ def main():
                 )
             )
 
+    if coupling_rows:
+        coupling_cases = {
+            (row["l_source"], row["m"], row["a"], row["omega"])
+            for row in coupling_rows
+        }
+        self_rows = [
+            row for row in coupling_rows
+            if int(row["l_source"]) == int(row["l_target"])
+        ]
+        offdiag_rows = [
+            row for row in coupling_rows
+            if int(row["l_source"]) != int(row["l_target"])
+        ]
+        min_self = min(self_rows, key=lambda row: float(row["abs_coefficient"]))
+        max_self = max(self_rows, key=lambda row: float(row["abs_coefficient"]))
+        max_offdiag = max(offdiag_rows, key=lambda row: float(row["abs_coefficient"]))
+
+        lines.extend([
+            "",
+            "## Cubic angular projector",
+            "",
+            "The Kerr nonlinear source requires the spheroidal projection",
+            "`C_{l'lm} = int dOmega conj(S_l'm) |S_lm|^2 S_lm`. The table",
+            "`results/kerr_scalar_cubic_couplings.csv` evaluates these coefficients",
+            "for every validated source mode and target channels `|m| <= l' <= l+4`.",
+            "",
+            f"- Source modes projected: {len(coupling_cases)}",
+            f"- Coupling rows: {len(coupling_rows)}",
+            "- Self-channel coefficient range: "
+            f"`{float(min_self['abs_coefficient']):.3e}` to "
+            f"`{float(max_self['abs_coefficient']):.3e}`",
+            "- Largest off-diagonal coefficient: "
+            f"`{float(max_offdiag['abs_coefficient']):.3e}` for "
+            f"`l={max_offdiag['l_source']}, m={max_offdiag['m']}, "
+            f"a={float(max_offdiag['a']):.3g}, "
+            f"omega={float(max_offdiag['omega']):.3g}, "
+            f"l'={max_offdiag['l_target']}`",
+        ])
+
     lines.extend([
         "",
         "## Current interpretation",
@@ -205,14 +249,19 @@ def main():
         "appears only for `omega < m Omega_H`, while the reported flux residuals",
         "remain below the acceptance gate.",
         "",
+        "The angular cubic projector is now explicit, so the remaining nonlinear",
+        "work is reduced to the radial Green-function source integrals and their",
+        "convergence validation.",
+        "",
         "## Remaining PRD-level work",
         "",
         "- Carry the nonlinear Green-function correction over from the Schwarzschild",
         "  project only after the linear solver validation remains stable on a denser",
         "  grid.",
         "",
-        "Generated from `results/kerr_scalar_adaptive_summary.csv` and, when",
-        "available, `results/kerr_scalar_frequency_sweep.csv`.",
+        "Generated from `results/kerr_scalar_adaptive_summary.csv`,",
+        "`results/kerr_scalar_frequency_sweep.csv`, and",
+        "`results/kerr_scalar_cubic_couplings.csv` when available.",
         "",
     ])
 

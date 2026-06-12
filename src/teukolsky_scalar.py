@@ -13,6 +13,7 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.integrate import solve_ivp
 from scipy.linalg import eigh
+from scipy.special import sph_harm_y
 
 
 @dataclass(frozen=True)
@@ -33,6 +34,18 @@ class KerrParams:
     @property
     def omega_h(self):
         return self.a / (self.rp**2 + self.a**2)
+
+
+@dataclass(frozen=True)
+class ScalarSpheroidalMode:
+    """Scalar spheroidal harmonic expanded in normalized spherical harmonics."""
+
+    l: int
+    m: int
+    c: float
+    eigenvalue: float
+    ells: np.ndarray
+    coefficients: np.ndarray
 
 
 def kerr_horizons(M=1.0, a=0.0):
@@ -91,8 +104,8 @@ def _cos2_matrix(ells, m):
     return mat
 
 
-def scalar_spheroidal_eigenvalue(l, m, c, lmax_extra=16):
-    """Return the scalar spheroidal angular eigenvalue A_lm(c).
+def scalar_spheroidal_mode(l, m, c, lmax_extra=16):
+    """Return the scalar spheroidal mode in a spherical-harmonic basis.
 
     The angular equation convention is
 
@@ -112,7 +125,79 @@ def scalar_spheroidal_eigenvalue(l, m, c, lmax_extra=16):
 
     target = np.where(ells == l)[0][0]
     mode = int(np.argmax(np.abs(vecs[target, :])))
-    return float(vals[mode])
+    coeffs = vecs[:, mode].astype(float)
+    if coeffs[target] < 0.0:
+        coeffs = -coeffs
+    return ScalarSpheroidalMode(
+        l=l,
+        m=m,
+        c=float(c),
+        eigenvalue=float(vals[mode]),
+        ells=ells,
+        coefficients=coeffs,
+    )
+
+
+def scalar_spheroidal_eigenvalue(l, m, c, lmax_extra=16):
+    """Return the scalar spheroidal angular eigenvalue A_lm(c)."""
+    return scalar_spheroidal_mode(l, m, c, lmax_extra=lmax_extra).eigenvalue
+
+
+def evaluate_scalar_spheroidal(mode, theta, phi=0.0):
+    """Evaluate a scalar spheroidal harmonic from its spherical expansion."""
+    theta = np.asarray(theta)
+    value = np.zeros(theta.shape, dtype=complex)
+    for ell, coeff in zip(mode.ells, mode.coefficients):
+        value = value + coeff * sph_harm_y(int(ell), mode.m, theta, phi)
+    if value.ndim == 0:
+        return value.item()
+    return value
+
+
+def scalar_cubic_coupling(l_source, m, a, omega, l_target=None,
+                          lmax_extra=16, quad_order=256):
+    """Project ``|S_lm|^2 S_lm`` onto a scalar spheroidal harmonic.
+
+    The returned coefficient is
+
+        C_{l'lm} = int dOmega conj(S_{l'm}) |S_lm|^2 S_lm,
+
+    with all spheroidal harmonics normalized to unit integral over the sphere.
+    The same spheroidal parameter ``c = a omega`` is used for source and
+    target modes.
+    """
+    if l_target is None:
+        l_target = l_source
+    if l_source < abs(m) or l_target < abs(m):
+        raise ValueError("Require l_source,l_target >= |m|.")
+
+    c = a * omega
+    source = scalar_spheroidal_mode(l_source, m, c, lmax_extra=lmax_extra)
+    target = scalar_spheroidal_mode(l_target, m, c, lmax_extra=lmax_extra)
+
+    x, w = np.polynomial.legendre.leggauss(quad_order)
+    theta = np.arccos(x)
+    source_vals = evaluate_scalar_spheroidal(source, theta, 0.0)
+    target_vals = evaluate_scalar_spheroidal(target, theta, 0.0)
+    integrand = np.conj(target_vals) * np.abs(source_vals) ** 2 * source_vals
+    return 2.0 * np.pi * np.sum(w * integrand)
+
+
+def scalar_cubic_couplings(l_source, m, a, omega, l_targets,
+                           lmax_extra=16, quad_order=256):
+    """Return cubic source projection coefficients for several target modes."""
+    return {
+        int(l_target): scalar_cubic_coupling(
+            l_source,
+            m,
+            a,
+            omega,
+            l_target=int(l_target),
+            lmax_extra=lmax_extra,
+            quad_order=quad_order,
+        )
+        for l_target in l_targets
+    }
 
 
 def teukolsky_lambda_s0(l, m, a, omega, lmax_extra=16):

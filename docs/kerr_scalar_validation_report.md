@@ -104,6 +104,18 @@ the invariant flux balance check.
 | kerr_a09_l2m2 | 2 | 2 | 0.9 | 0.02--1.1 | 20 | 4.970e-04 | true |
 | schwarzschild_l0 | 0 | 0 | 0 | 0.01--1 | 11 | -1.714e-03 | true |
 
+## Cubic angular projector
+
+The Kerr nonlinear source requires the spheroidal projection
+`C_{l'lm} = int dOmega conj(S_l'm) |S_lm|^2 S_lm`. The table
+`results/kerr_scalar_cubic_couplings.csv` evaluates these coefficients
+for every validated source mode and target channels `|m| <= l' <= l+4`.
+
+- Source modes projected: 37
+- Coupling rows: 199
+- Self-channel coefficient range: `7.958e-02` to `1.705e-01`
+- Largest off-diagonal coefficient: `8.318e-02` for `l=2, m=0, a=0.5, omega=0.1, l'=4`
+
 ## Current interpretation
 
 The present validation covers the Schwarzschild limit, moderate Kerr spin,
@@ -124,11 +136,16 @@ Kerr scalar superradiant regime. For the sampled rotating cases, `R > 1`
 appears only for `omega < m Omega_H`, while the reported flux residuals
 remain below the acceptance gate.
 
+The angular cubic projector is now explicit, so the remaining nonlinear
+work is reduced to the radial Green-function source integrals and their
+convergence validation.
+
 ## Remaining PRD-level work
 
 - Carry the nonlinear Green-function correction over from the Schwarzschild
   project only after the linear solver validation remains stable on a denser
   grid.
 
-Generated from `results/kerr_scalar_adaptive_summary.csv` and, when
-available, `results/kerr_scalar_frequency_sweep.csv`.
+Generated from `results/kerr_scalar_adaptive_summary.csv`,
+`results/kerr_scalar_frequency_sweep.csv`, and
+`results/kerr_scalar_cubic_couplings.csv` when available.

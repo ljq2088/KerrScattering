@@ -30,6 +30,7 @@ julia --project=/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl scripts/run_kerr
 python scripts/compare_kerr_scalar_gsn.py  # Kerr s=0 spectral/GSN benchmark comparison
 python scripts/adaptive_kerr_scalar_gsn_validation.py  # Scan N/r_match against GSN
 python scripts/run_kerr_scalar_frequency_sweep.py  # Kerr s=0 frequency sweep
+python scripts/run_kerr_scalar_cubic_projector.py  # Kerr s=0 cubic angular source projection
 python scripts/build_kerr_scalar_validation_report.py
 python scripts/plot_kerr_scalar_validation.py
 python scripts/plot_kerr_scalar_frequency_sweep.py
@@ -95,6 +96,9 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
 - `scripts/run_kerr_scalar_frequency_sweep.py`: computes self-converged
   Schwarzschild and Kerr frequency sweeps for `R`, `T`, and superradiant
   amplification using the same endpoint-collocation spectral route.
+- `scripts/run_kerr_scalar_cubic_projector.py`: computes scalar spheroidal
+  cubic source projection coefficients `C_{l'lm}` for the validated Kerr
+  modes; this is the angular input for the nonlinear Green-function extension.
 - `scripts/plot_kerr_scalar_frequency_sweep.py`: produces publication-style
   frequency-sweep plots in `figures/kerr_scalar_frequency_rt.png` and
   `figures/kerr_scalar_superradiance_amplification.png`.
