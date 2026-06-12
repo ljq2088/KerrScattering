@@ -16,6 +16,10 @@ from .teukolsky_scalar import (
 )
 from .teukolsky_lambda import LambdaResult, compute_teukolsky_lambda
 from .kerr_scalar_spectral import ScalarSpectralResult, solve_scalar_in_mode_spectral
+from .kerr_scalar_nonlinear import (
+    KerrScalarGreenDiagnostics,
+    compute_kerr_scalar_green_diagnostics,
+)
 from .teukolsky_rin import (
     RInAmplitudeResult,
     solve_rin_asymptotic,
@@ -43,6 +47,8 @@ __all__ = [
     "compute_teukolsky_lambda",
     "ScalarSpectralResult",
     "solve_scalar_in_mode_spectral",
+    "KerrScalarGreenDiagnostics",
+    "compute_kerr_scalar_green_diagnostics",
     "RInAmplitudeResult",
     "solve_rin_asymptotic",
     "solve_rin_chebyshev",

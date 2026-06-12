@@ -16,6 +16,7 @@ from src.teukolsky_scalar import (
     teukolsky_lambda_s0,
 )
 from src.kerr_scalar_spectral import solve_scalar_in_mode_spectral
+from src.kerr_scalar_nonlinear import compute_kerr_scalar_green_diagnostics
 from src.teukolsky_lambda import compute_teukolsky_lambda
 
 
@@ -87,3 +88,23 @@ def test_scalar_spectral_in_mode_smoke():
     assert np.isfinite(result.B_inc)
     assert np.isfinite(result.B_ref)
     assert result.flux_balance_error < 1e-4
+
+
+def test_kerr_scalar_green_diagnostics_smoke():
+    result = compute_kerr_scalar_green_diagnostics(
+        l=2, m=2, omega=0.3, a=0.5, N_outer=64, N_inner=64, quad_order=48
+    )
+    assert result.status == "ok"
+    assert np.isfinite(result.wronskian)
+    assert np.isfinite(result.A_ref_1)
+    assert np.isfinite(result.A_hor_1)
+    assert result.wronskian_relative_error < 1e-10
+
+
+def test_kerr_scalar_green_diagnostics_zero_coupling():
+    result = compute_kerr_scalar_green_diagnostics(
+        l=2, m=2, omega=0.3, a=0.5, N_outer=64, N_inner=64,
+        quad_order=48, Cl=0.0
+    )
+    assert result.A_ref_1 == 0.0
+    assert result.A_hor_1 == 0.0

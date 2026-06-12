@@ -31,6 +31,7 @@ python scripts/compare_kerr_scalar_gsn.py  # Kerr s=0 spectral/GSN benchmark com
 python scripts/adaptive_kerr_scalar_gsn_validation.py  # Scan N/r_match against GSN
 python scripts/run_kerr_scalar_frequency_sweep.py  # Kerr s=0 frequency sweep
 python scripts/run_kerr_scalar_cubic_projector.py  # Kerr s=0 cubic angular source projection
+python scripts/run_kerr_scalar_nonlinear_diagnostics.py  # Prototype nonlinear radial GF diagnostics
 python scripts/build_kerr_scalar_validation_report.py
 python scripts/plot_kerr_scalar_validation.py
 python scripts/plot_kerr_scalar_frequency_sweep.py
@@ -99,6 +100,10 @@ Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
 - `scripts/run_kerr_scalar_cubic_projector.py`: computes scalar spheroidal
   cubic source projection coefficients `C_{l'lm}` for the validated Kerr
   modes; this is the angular input for the nonlinear Green-function extension.
+- `scripts/run_kerr_scalar_nonlinear_diagnostics.py`: evaluates prototype
+  nonlinear radial Green-function source integrals and quadrature convergence
+  diagnostics. These are explicitly marked as diagnostics until the final Kerr
+  cubic radial source weight is fixed.
 - `scripts/plot_kerr_scalar_frequency_sweep.py`: produces publication-style
   frequency-sweep plots in `figures/kerr_scalar_frequency_rt.png` and
   `figures/kerr_scalar_superradiance_amplification.png`.

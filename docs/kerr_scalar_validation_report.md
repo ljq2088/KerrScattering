@@ -116,6 +116,21 @@ for every validated source mode and target channels `|m| <= l' <= l+4`.
 - Self-channel coefficient range: `7.958e-02` to `1.705e-01`
 - Largest off-diagonal coefficient: `8.318e-02` for `l=2, m=0, a=0.5, omega=0.1, l'=4`
 
+## Nonlinear radial diagnostics
+
+`scripts/run_kerr_scalar_nonlinear_diagnostics.py` evaluates prototype
+Green-function radial source integrals using the validated spectral
+homogeneous solutions and the cubic angular projector. The present
+radial source weight is explicitly labelled
+`legacy-bondi-dr-over-r2`; it is a diagnostic bridge to the
+Schwarzschild code, not yet a final Kerr self-interaction convention.
+
+- Diagnostic cases: 4
+- Quadrature rows: 16
+- Worst Wronskian consistency error: `3.094e-16`
+- Worst consecutive `A_ref_1` quadrature change: `7.011e-05`
+- Worst consecutive `A_hor_1` quadrature change: `8.331e-05`
+
 ## Current interpretation
 
 The present validation covers the Schwarzschild limit, moderate Kerr spin,
@@ -136,16 +151,20 @@ Kerr scalar superradiant regime. For the sampled rotating cases, `R > 1`
 appears only for `omega < m Omega_H`, while the reported flux residuals
 remain below the acceptance gate.
 
-The angular cubic projector is now explicit, so the remaining nonlinear
-work is reduced to the radial Green-function source integrals and their
-convergence validation.
+The angular cubic projector and a first radial Green-function diagnostic
+are now explicit. Wronskians are stable at machine precision; the remaining
+nonlinear work is to fix the final Kerr source-weight convention and replace
+the diagnostic finite-order quadrature by production oscillatory-tail
+integration.
 
 ## Remaining PRD-level work
 
-- Carry the nonlinear Green-function correction over from the Schwarzschild
-  project only after the linear solver validation remains stable on a denser
-  grid.
+- Calibrate the Kerr cubic radial source weight from the covariant scalar
+  field equation and spheroidal projection.
+- Replace the diagnostic radial quadrature by production oscillatory-tail
+  integration and set acceptance gates for `A_ref_1/A_hor_1` convergence.
 
 Generated from `results/kerr_scalar_adaptive_summary.csv`,
 `results/kerr_scalar_frequency_sweep.csv`, and
-`results/kerr_scalar_cubic_couplings.csv` when available.
+`results/kerr_scalar_cubic_couplings.csv`, plus nonlinear diagnostics
+when available.

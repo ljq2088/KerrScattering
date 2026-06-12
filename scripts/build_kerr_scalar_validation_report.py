@@ -10,6 +10,7 @@ SUMMARY = os.path.join(ROOT, "results", "kerr_scalar_adaptive_summary.csv")
 GSN_BENCHMARK = os.path.join(ROOT, "results", "kerr_scalar_gsn_benchmark.csv")
 SWEEP = os.path.join(ROOT, "results", "kerr_scalar_frequency_sweep.csv")
 COUPLINGS = os.path.join(ROOT, "results", "kerr_scalar_cubic_couplings.csv")
+NONLINEAR = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_diagnostics.csv")
 REPORT = os.path.join(ROOT, "docs", "kerr_scalar_validation_report.md")
 
 
@@ -42,6 +43,10 @@ def main():
     if os.path.exists(COUPLINGS):
         with open(COUPLINGS, newline="") as f:
             coupling_rows = list(csv.DictReader(f))
+    nonlinear_rows = []
+    if os.path.exists(NONLINEAR):
+        with open(NONLINEAR, newline="") as f:
+            nonlinear_rows = list(csv.DictReader(f))
 
     lines = [
         "# Kerr s=0 spectral validation report",
@@ -227,6 +232,33 @@ def main():
             f"l'={max_offdiag['l_target']}`",
         ])
 
+    if nonlinear_rows:
+        finite_rows = [
+            row for row in nonlinear_rows
+            if row["rel_A_ref_from_previous"] != "inf"
+        ]
+        max_werr = max(float(row["wronskian_relative_error"]) for row in nonlinear_rows)
+        max_ref_delta = max(float(row["rel_A_ref_from_previous"]) for row in finite_rows)
+        max_hor_delta = max(float(row["rel_A_hor_from_previous"]) for row in finite_rows)
+        diagnostic_cases = {row["label"] for row in nonlinear_rows}
+        lines.extend([
+            "",
+            "## Nonlinear radial diagnostics",
+            "",
+            "`scripts/run_kerr_scalar_nonlinear_diagnostics.py` evaluates prototype",
+            "Green-function radial source integrals using the validated spectral",
+            "homogeneous solutions and the cubic angular projector. The present",
+            "radial source weight is explicitly labelled",
+            "`legacy-bondi-dr-over-r2`; it is a diagnostic bridge to the",
+            "Schwarzschild code, not yet a final Kerr self-interaction convention.",
+            "",
+            f"- Diagnostic cases: {len(diagnostic_cases)}",
+            f"- Quadrature rows: {len(nonlinear_rows)}",
+            f"- Worst Wronskian consistency error: `{max_werr:.3e}`",
+            f"- Worst consecutive `A_ref_1` quadrature change: `{max_ref_delta:.3e}`",
+            f"- Worst consecutive `A_hor_1` quadrature change: `{max_hor_delta:.3e}`",
+        ])
+
     lines.extend([
         "",
         "## Current interpretation",
@@ -249,19 +281,23 @@ def main():
         "appears only for `omega < m Omega_H`, while the reported flux residuals",
         "remain below the acceptance gate.",
         "",
-        "The angular cubic projector is now explicit, so the remaining nonlinear",
-        "work is reduced to the radial Green-function source integrals and their",
-        "convergence validation.",
+        "The angular cubic projector and a first radial Green-function diagnostic",
+        "are now explicit. Wronskians are stable at machine precision; the remaining",
+        "nonlinear work is to fix the final Kerr source-weight convention and replace",
+        "the diagnostic finite-order quadrature by production oscillatory-tail",
+        "integration.",
         "",
         "## Remaining PRD-level work",
         "",
-        "- Carry the nonlinear Green-function correction over from the Schwarzschild",
-        "  project only after the linear solver validation remains stable on a denser",
-        "  grid.",
+        "- Calibrate the Kerr cubic radial source weight from the covariant scalar",
+        "  field equation and spheroidal projection.",
+        "- Replace the diagnostic radial quadrature by production oscillatory-tail",
+        "  integration and set acceptance gates for `A_ref_1/A_hor_1` convergence.",
         "",
         "Generated from `results/kerr_scalar_adaptive_summary.csv`,",
         "`results/kerr_scalar_frequency_sweep.csv`, and",
-        "`results/kerr_scalar_cubic_couplings.csv` when available.",
+        "`results/kerr_scalar_cubic_couplings.csv`, plus nonlinear diagnostics",
+        "when available.",
         "",
     ])
 
