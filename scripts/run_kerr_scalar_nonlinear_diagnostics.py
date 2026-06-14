@@ -1,4 +1,4 @@
-"""Run prototype Kerr s=0 nonlinear Green-function radial diagnostics."""
+"""Run Kerr s=0 nonlinear Green-function radial diagnostics."""
 
 import argparse
 import csv
@@ -16,10 +16,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_diagnostics.csv")
 
 CASES = [
-    {"label": "schwarzschild_l0", "l": 0, "m": 0, "a": 0.0, "omega": 0.1},
-    {"label": "kerr_a05_l2m2_sub", "l": 2, "m": 2, "a": 0.5, "omega": 0.24},
-    {"label": "kerr_a05_l2m2_super", "l": 2, "m": 2, "a": 0.5, "omega": 0.3},
-    {"label": "kerr_a09_l2m2_peak", "l": 2, "m": 2, "a": 0.9, "omega": 0.58},
+    {"label": "schwarzschild_l0", "l": 0, "m": 0, "a": 0.0, "omega": 0.1,
+     "r_match": 30.0},
+    {"label": "kerr_a05_l2m2_sub", "l": 2, "m": 2, "a": 0.5, "omega": 0.24,
+     "r_match": 40.0},
+    {"label": "kerr_a05_l2m2_super", "l": 2, "m": 2, "a": 0.5, "omega": 0.3,
+     "r_match": 40.0},
+    {"label": "kerr_a09_l2m2_peak", "l": 2, "m": 2, "a": 0.9, "omega": 0.58,
+     "r_match": 16.0},
 ]
 QUAD_ORDERS = [64, 96, 128, 192]
 
@@ -109,8 +113,14 @@ def parse_args(argv=None):
                         default=QUAD_ORDERS)
     parser.add_argument("--case-label", action="append", default=[],
                         help="case label to run; may be repeated")
-    parser.add_argument("--N-outer", type=int, default=128)
-    parser.add_argument("--N-inner", type=int, default=128)
+    parser.add_argument("--N-outer", type=int, default=256)
+    parser.add_argument("--N-inner", type=int, default=256)
+    parser.add_argument(
+        "--radial-weight-model",
+        choices=["kerr-covariant-sigma-dr", "legacy-bondi-dr-over-r2"],
+        default="kerr-covariant-sigma-dr",
+        help="radial source measure/model to use",
+    )
     parser.add_argument(
         "--max-rss-mb",
         type=float,
@@ -148,9 +158,13 @@ def main(argv=None):
             start = time.perf_counter()
             print(
                 f"Running {case['label']} q={quad_order} "
+                f"r_match={case.get('r_match', 'auto')} "
                 f"RSS={rss_before:.1f} MB"
                 if rss_before is not None
-                else f"Running {case['label']} q={quad_order}"
+                else (
+                    f"Running {case['label']} q={quad_order} "
+                    f"r_match={case.get('r_match', 'auto')}"
+                )
             )
             result = compute_kerr_scalar_green_diagnostics(
                 case["l"],
@@ -159,7 +173,9 @@ def main(argv=None):
                 a=case["a"],
                 N_outer=args.N_outer,
                 N_inner=args.N_inner,
+                r_match=case.get("r_match"),
                 quad_order=quad_order,
+                radial_weight_model=args.radial_weight_model,
             )
             elapsed_s = time.perf_counter() - start
             rss_after = require_memory_room(
@@ -180,9 +196,12 @@ def main(argv=None):
                 "quad_order": quad_order,
                 "N_outer": result.N_outer,
                 "N_inner": result.N_inner,
+                "r_match": f"{result.r_match:.16e}",
                 "mapping": result.mapping,
                 "radial_weight_model": result.radial_weight_model,
+                "radial_integral_method": result.radial_integral_method,
                 "angular_coupling": fmt_complex(result.angular_coupling),
+                "angular_coupling_cos2": fmt_complex(result.angular_coupling_cos2),
                 "wronskian": fmt_complex(result.wronskian),
                 "wronskian_relative_error": f"{result.wronskian_relative_error:.16e}",
                 "source_projection_ref": fmt_complex(result.source_projection_ref),
@@ -200,9 +219,10 @@ def main(argv=None):
 
     fields = [
         "label", "l", "m", "a", "omega", "quad_order", "N_outer",
-        "N_inner", "mapping", "radial_weight_model", "angular_coupling",
-        "wronskian", "wronskian_relative_error", "source_projection_ref",
-        "source_projection_hor", "A_ref_1", "A_hor_1",
+        "N_inner", "r_match", "mapping", "radial_weight_model",
+        "radial_integral_method", "angular_coupling", "angular_coupling_cos2",
+        "wronskian", "wronskian_relative_error",
+        "source_projection_ref", "source_projection_hor", "A_ref_1", "A_hor_1",
         "rel_A_ref_from_previous", "rel_A_hor_from_previous", "elapsed_s",
         "rss_mb_before", "rss_mb_after", "status",
     ]

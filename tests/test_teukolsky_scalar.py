@@ -10,6 +10,7 @@ from src.teukolsky_scalar import (
     evaluate_scalar_spheroidal,
     kerr_horizons,
     scalar_cubic_coupling,
+    scalar_cubic_coupling_cos2,
     scalar_spheroidal_mode,
     scalar_spheroidal_eigenvalue,
     solve_scalar_in_mode,
@@ -52,6 +53,12 @@ def test_scalar_cubic_coupling_spherical_l0():
     coeff = scalar_cubic_coupling(l_source=0, m=0, a=0.0, omega=0.1)
     assert abs(coeff.imag) < 1e-14
     assert abs(coeff.real - 1.0 / (4.0 * np.pi)) < 1e-12
+
+
+def test_scalar_cubic_coupling_cos2_spherical_l0():
+    coeff = scalar_cubic_coupling_cos2(l_source=0, m=0, a=0.0, omega=0.1)
+    assert abs(coeff.imag) < 1e-14
+    assert abs(coeff.real - 1.0 / (12.0 * np.pi)) < 1e-12
 
 
 def test_scalar_cubic_coupling_spherical_l1_m0():
@@ -98,6 +105,7 @@ def test_kerr_scalar_green_diagnostics_smoke():
     assert np.isfinite(result.wronskian)
     assert np.isfinite(result.A_ref_1)
     assert np.isfinite(result.A_hor_1)
+    assert result.radial_weight_model == "kerr-covariant-sigma-dr"
     assert result.wronskian_relative_error < 1e-10
 
 

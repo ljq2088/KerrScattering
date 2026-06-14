@@ -1,15 +1,21 @@
-"""Prototype nonlinear Green-function diagnostics for scalar Kerr modes.
+"""Nonlinear Green-function diagnostics for scalar Kerr modes.
 
-This module does not claim the final physical Kerr self-interaction
-normalization.  It provides the radial Green-function data needed to finish
-that step: continued homogeneous solutions, a constant radial Wronskian, and
-finite cubic source projections using the same compactified spectral solutions
-as the validated linear solver.
+The default source model is the Kerr-covariant cubic scalar source obtained
+from ``Box Phi + eps |Phi|^2 Phi = 0``.  After multiplying by
+``Sigma = r^2 + a^2 cos(theta)^2`` and projecting onto a target spheroidal
+harmonic, the self-channel radial source is
+
+    (r^2 C0 + a^2 C2) |R|^2 R,
+
+where C0 and C2 are the angular projections without and with an extra
+``cos(theta)^2`` factor.  The radial integral uses the physical ``dr`` measure.
 """
 
 from dataclasses import dataclass
+import warnings
 
 import numpy as np
+from scipy.integrate import IntegrationWarning, quad
 
 from .cheb import cheb_interpolate, real_to_cheb
 from .kerr_scalar_spectral import (
@@ -20,8 +26,11 @@ from .kerr_scalar_spectral import (
 )
 from .teukolsky_scalar import (
     KerrParams,
+    drstar_dr,
     delta,
+    rstar,
     scalar_cubic_coupling,
+    scalar_cubic_coupling_cos2,
     teukolsky_lambda_s0,
 )
 
@@ -37,6 +46,7 @@ class KerrScalarGreenDiagnostics:
     omega: float
     radial_lambda: float
     angular_coupling: complex
+    angular_coupling_cos2: complex
     r_plus: float
     r_minus: float
     omega_h: float
@@ -48,6 +58,7 @@ class KerrScalarGreenDiagnostics:
     mapping: str
     quad_order: int
     radial_weight_model: str
+    radial_integral_method: str
     B_inc: complex
     B_ref: complex
     wronskian: complex
@@ -107,6 +118,120 @@ def _complex_weighted_sum(values, weights):
     return np.sum(weights * values)
 
 
+def _r_from_rstar(x, params):
+    """Invert the Kerr tortoise coordinate on the outer domain."""
+    x = np.asarray(x, dtype=float)
+    scalar = x.ndim == 0
+    x = np.atleast_1d(x)
+    r = np.maximum(x, params.rp + 1.0)
+    r = np.asarray(r, dtype=float)
+
+    floor = params.rp + 1e-12
+    for _ in range(16):
+        f = rstar(r, M=params.M, a=params.a) - x
+        fp = drstar_dr(r, M=params.M, a=params.a)
+        step = f / fp
+        trial = r - step
+        bad = trial <= floor
+        if np.any(bad):
+            trial[bad] = 0.5 * (r[bad] + floor)
+        r = trial
+        if np.max(np.abs(step) / np.maximum(r, 1.0)) < 1e-13:
+            break
+
+    if scalar:
+        return float(r[0])
+    return r
+
+
+def _quad_complex_infinite(g, x0, phase_frequency, epsrel=1e-9):
+    """Integrate ``g(x) exp(i phase_frequency x)`` from x0 to infinity."""
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", IntegrationWarning)
+        if abs(phase_frequency) < 1e-15:
+            real = quad(lambda x: np.real(g(x)), x0, np.inf,
+                        epsabs=1e-10, epsrel=epsrel, limit=300)[0]
+            imag = quad(lambda x: np.imag(g(x)), x0, np.inf,
+                        epsabs=1e-10, epsrel=epsrel, limit=300)[0]
+            return real + 1j * imag
+
+        k = abs(phase_frequency)
+        phase_sign = 1.0 if phase_frequency > 0.0 else -1.0
+        a_cos = quad(lambda x: np.real(g(x)), x0, np.inf, weight="cos", wvar=k,
+                     epsabs=1e-10, epsrel=epsrel, limit=300, limlst=300)[0]
+        a_sin = quad(lambda x: np.real(g(x)), x0, np.inf, weight="sin", wvar=k,
+                     epsabs=1e-10, epsrel=epsrel, limit=300, limlst=300)[0]
+        b_cos = quad(lambda x: np.imag(g(x)), x0, np.inf, weight="cos", wvar=k,
+                     epsabs=1e-10, epsrel=epsrel, limit=300, limlst=300)[0]
+        b_sin = quad(lambda x: np.imag(g(x)), x0, np.inf, weight="sin", wvar=k,
+                     epsabs=1e-10, epsrel=epsrel, limit=300, limlst=300)[0]
+    return (a_cos - phase_sign * b_sin) + 1j * (b_cos + phase_sign * a_sin)
+
+
+def _outer_phase_projection(
+    test_kind,
+    x_match,
+    params,
+    omega,
+    a,
+    B_inc,
+    B_ref,
+    down_eval,
+    up_eval,
+    c_ang,
+    c_ang_cos2,
+    epsrel=1e-9,
+):
+    """Outer-domain physical source integral with explicit phase channels."""
+    phase_indices = (-4, -2, 0, 2, 4)
+
+    def channel_amplitude(phase_index):
+        def amplitude(x):
+            r = _r_from_rstar(x, params)
+            z = params.rp / r
+            down_amp = down_eval.u(z) / r
+            up_amp = up_eval.u(z) / r
+            radial_weight = r**2 * c_ang + a**2 * c_ang_cos2
+            dr_dx = delta(r, M=params.M, a=params.a) / (r**2 + a**2)
+            source_prefactor = radial_weight * dr_dx
+
+            field = [
+                (-1, B_inc, down_amp),
+                (1, B_ref, up_amp),
+            ]
+            field_conj = [
+                (1, np.conj(B_inc), np.conj(down_amp)),
+                (-1, np.conj(B_ref), np.conj(up_amp)),
+            ]
+            if test_kind == "ref":
+                tests = field
+            elif test_kind == "hor":
+                tests = [(1, 1.0 + 0.0j, up_amp)]
+            else:
+                raise ValueError("test_kind must be 'ref' or 'hor'.")
+
+            total = 0.0 + 0.0j
+            for s_test, c_test, a_test in tests:
+                for s1, c1, a1 in field:
+                    for s2, c2, a2 in field_conj:
+                        for s3, c3, a3 in field:
+                            if s_test + s1 + s2 + s3 == phase_index:
+                                total += c_test * c1 * c2 * c3 * a_test * a1 * a2 * a3
+            return source_prefactor * total
+
+        return amplitude
+
+    total = 0.0 + 0.0j
+    for phase_index in phase_indices:
+        total += _quad_complex_infinite(
+            channel_amplitude(phase_index),
+            x_match,
+            phase_index * omega,
+            epsrel=epsrel,
+        )
+    return total
+
+
 def compute_kerr_scalar_green_diagnostics(
     l,
     m,
@@ -122,13 +247,15 @@ def compute_kerr_scalar_green_diagnostics(
     angular_coupling=None,
     Cl=1.0,
     quad_order=240,
+    radial_weight_model="kerr-covariant-sigma-dr",
+    angular_coupling_cos2=None,
 ):
-    """Compute prototype nonlinear Green-function radial source integrals.
+    """Compute nonlinear Green-function radial source integrals.
 
-    The radial source model uses the legacy Schwarzschild/Bondi compact-weight
-    convention ``dr/r^2 = dz/r_+``.  The returned ``A_ref_1`` and ``A_hor_1``
-    are therefore diagnostic Green-function amplitudes, not final calibrated
-    Kerr observables.
+    The default ``kerr-covariant-sigma-dr`` model projects the cubic scalar
+    source from the covariant Kerr equation.  The old
+    ``legacy-bondi-dr-over-r2`` model is retained only to reproduce early
+    diagnostics.
     """
     if abs(omega) <= 0:
         raise ValueError("omega must be nonzero.")
@@ -136,6 +263,14 @@ def compute_kerr_scalar_green_diagnostics(
         raise ValueError("Require subextremal Kerr, |a| < M.")
     if quad_order < 16:
         raise ValueError("quad_order is too small for a stable diagnostic.")
+    if radial_weight_model not in {
+        "kerr-covariant-sigma-dr",
+        "legacy-bondi-dr-over-r2",
+    }:
+        raise ValueError(
+            "radial_weight_model must be 'kerr-covariant-sigma-dr' "
+            "or 'legacy-bondi-dr-over-r2'."
+        )
 
     params = KerrParams(M=M, a=a)
     if r_match is None:
@@ -166,6 +301,11 @@ def compute_kerr_scalar_green_diagnostics(
     c_ang = angular_coupling
     if c_ang is None:
         c_ang = scalar_cubic_coupling(
+            l, m, a, omega, l_target=l, lmax_extra=lmax_extra
+        )
+    c_ang_cos2 = angular_coupling_cos2
+    if c_ang_cos2 is None:
+        c_ang_cos2 = scalar_cubic_coupling_cos2(
             l, m, a, omega, l_target=l, lmax_extra=lmax_extra
         )
 
@@ -246,14 +386,54 @@ def compute_kerr_scalar_green_diagnostics(
         abs(wronskian - wronskian_outer) / max(abs(wronskian), 1e-300)
     )
 
-    z0, w0 = _gauss_interval(0.0, z_match, quad_order)
-    z1, w1 = _gauss_interval(z_match, 1.0, quad_order)
-    z = np.concatenate([z0, z1])
-    weights = np.concatenate([w0, w1]) / params.rp
-    source = np.abs(R0(z)) ** 2 * R0(z)
+    if radial_weight_model == "kerr-covariant-sigma-dr":
+        z, z_weights = _gauss_interval(z_match, 1.0, quad_order)
+        r = params.rp / z
+        weights = z_weights * params.rp / z**2
+        R0_values = R0(z)
+        cubic_radial = np.abs(R0_values) ** 2 * R0_values
+        source = (r**2 * c_ang + a**2 * c_ang_cos2) * cubic_radial
+        source_projection_ref = _complex_weighted_sum(Rtest_ref(z) * source, weights)
+        source_projection_hor = _complex_weighted_sum(Rtest_hor(z) * source, weights)
 
-    source_projection_ref = c_ang * _complex_weighted_sum(Rtest_ref(z) * source, weights)
-    source_projection_hor = c_ang * _complex_weighted_sum(Rtest_hor(z) * source, weights)
+        x_match = rstar(r_match, M=M, a=a)
+        source_projection_ref += _outer_phase_projection(
+            "ref",
+            x_match,
+            params,
+            omega,
+            a,
+            B_inc,
+            B_ref,
+            down_eval,
+            up_eval,
+            c_ang,
+            c_ang_cos2,
+        )
+        source_projection_hor += _outer_phase_projection(
+            "hor",
+            x_match,
+            params,
+            omega,
+            a,
+            B_inc,
+            B_ref,
+            down_eval,
+            up_eval,
+            c_ang,
+            c_ang_cos2,
+        )
+    else:
+        z0, w0 = _gauss_interval(0.0, z_match, quad_order)
+        z1, w1 = _gauss_interval(z_match, 1.0, quad_order)
+        z = np.concatenate([z0, z1])
+        z_weights = np.concatenate([w0, w1])
+        weights = z_weights / params.rp
+        R0_values = R0(z)
+        cubic_radial = np.abs(R0_values) ** 2 * R0_values
+        source = c_ang * cubic_radial
+        source_projection_ref = _complex_weighted_sum(Rtest_ref(z) * source, weights)
+        source_projection_hor = _complex_weighted_sum(Rtest_hor(z) * source, weights)
 
     A_ref_1 = -Cl * source_projection_ref / wronskian
     A_hor_1 = -Cl * source_projection_hor / wronskian
@@ -266,6 +446,7 @@ def compute_kerr_scalar_green_diagnostics(
         omega=omega,
         radial_lambda=float(lam),
         angular_coupling=c_ang,
+        angular_coupling_cos2=c_ang_cos2,
         r_plus=float(params.rp),
         r_minus=float(params.rm),
         omega_h=float(params.omega_h),
@@ -276,7 +457,12 @@ def compute_kerr_scalar_green_diagnostics(
         N_inner=int(N_inner),
         mapping="sinh" if use_sinh else "linear",
         quad_order=int(quad_order),
-        radial_weight_model="legacy-bondi-dr-over-r2",
+        radial_weight_model=radial_weight_model,
+        radial_integral_method=(
+            "phase-channel-fourier-tail"
+            if radial_weight_model == "kerr-covariant-sigma-dr"
+            else "compact-z-gauss"
+        ),
         B_inc=B_inc,
         B_ref=B_ref,
         wronskian=wronskian,

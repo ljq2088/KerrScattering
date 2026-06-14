@@ -44,11 +44,10 @@ $1.485\times 10^{-8}$ and the worst flux residual is
 $3.714\times 10^{-9}$.  A 51-point frequency sweep resolves scalar
 superradiance, with amplification appearing only for
 $\omega<m\Omega_H$.  We also describe the implemented spheroidal cubic
-projector and a first Green-function radial diagnostic for weak
-$|\Phi|^2\Phi$ sources.  The latter is a diagnostic framework rather than a
-final nonlinear Kerr normalization, and it identifies the remaining task:
-deriving the covariant Kerr radial source weight and replacing finite
-diagnostic quadrature by controlled oscillatory-tail integration.
+projector and the self-channel first-order Green-function correction for weak
+$|\Phi|^2\Phi$ sources.  The nonlinear calculation uses the Kerr-covariant
+source weight $(r^2C^{(0)}+a^2C^{(2)})|R|^2R$ and evaluates the exterior
+oscillatory tail by phase-channel Fourier integration in $r_*$.
 \end{abstract}
 
 \maketitle
@@ -84,7 +83,7 @@ sets the scalar Teukolsky conventions.  Section~\ref{sec:spectral} describes
 the endpoint spectral discretization and amplitude extraction.
 Section~\ref{sec:validation} gives the benchmark and frequency-sweep results.
 Section~\ref{sec:nonlinear} describes the cubic spheroidal projector and the
-current nonlinear Green-function diagnostic.  Section~\ref{sec:spinminus2}
+self-channel nonlinear Green-function calculation.  Section~\ref{sec:spinminus2}
 summarizes the separate $s=-2$ benchmark side task.  We conclude in
 Sec.~\ref{sec:conclusion}.
 
@@ -336,42 +335,75 @@ For a weak complex scalar self-interaction,
 \Box\Phi+\epsilon |\Phi|^2\Phi=0,
 \end{equation}
 a single incident mode sources the angular structure
-$|S_{\ell m}|^2S_{\ell m}$.  This must be projected onto the spheroidal basis:
+$|S_{\ell m}|^2S_{\ell m}$.  This must be projected onto the spheroidal basis.
+The two angular coefficients needed by the Kerr scalar equation are
 \begin{equation}
-|S_{\ell m}|^2S_{\ell m}
-=\sum_{\ell'} C_{\ell'\ell m} S_{\ell' m},
-\end{equation}
-where
-\begin{equation}
-C_{\ell'\ell m}
+C^{(p)}_{\ell'\ell m}
 =\int \dd\Omega\,
-S^*_{\ell' m}|S_{\ell m}|^2S_{\ell m}.
+\cos^p\theta\,
+S^*_{\ell' m}|S_{\ell m}|^2S_{\ell m},
+\qquad p=0,2.
 \label{eq:cubic}
 \end{equation}
+For $a=0$, the checks $C^{(0)}_{000}=1/(4\pi)$,
+$C^{(2)}_{000}=1/(12\pi)$, and
+$C^{(0)}_{110}=9/(20\pi)$ are satisfied.
+
+Multiplying the nonlinear wave equation by
+$\Sigma=r^2+a^2\cos^2\theta$ and projecting onto a target harmonic gives, at
+first order in $\epsilon$,
+\begin{equation}
+\mathcal{L}_{\ell'} R^{(1)}_{\ell'm}
+=-\left[r^2 C^{(0)}_{\ell'\ell m}
+       +a^2 C^{(2)}_{\ell'\ell m}\right]
+|R^{(0)}_{\ell m}|^2R^{(0)}_{\ell m}.
+\label{eq:nonlinear_radial_source}
+\end{equation}
 The code evaluates Eq.~\eqref{eq:cubic} for every validated source mode and
-target channels $|m|\leq \ell'\leq \ell+4$.  The present table contains
-199 coupling rows from 37 source modes.  The self-channel coefficient ranges
+target channels $|m|\leq \ell'\leq \ell+4$.  The current coupling table
+contains 199 $C^{(0)}$ rows from 37 source modes.  The self-channel coefficient ranges
 from $7.958\times10^{-2}$ to $1.705\times10^{-1}$, while the largest
 off-diagonal coefficient is $8.318\times10^{-2}$ for
-$(\ell,m,a,\omega,\ell')=(2,0,0.5,0.1,4)$.  The spherical checks
-$C_{000}=1/(4\pi)$ and $C_{110}=9/(20\pi)$ are satisfied.
+$(\ell,m,a,\omega,\ell')=(2,0,0.5,0.1,4)$.
 
-The nonlinear radial diagnostic uses the validated homogeneous solutions and
-the conserved Wronskian to compute prototype Green-function source integrals.
-At present the radial source weight is explicitly labelled
-\texttt{legacy-bondi-dr-over-r2}; it is a diagnostic bridge from the
-Schwarzschild code, not a final Kerr self-interaction convention.  With four
-representative cases and quadrature orders $64,96,128,192$, the worst
-Wronskian consistency error is $3.094\times10^{-16}$.  The worst consecutive
-quadrature changes are $7.011\times10^{-5}$ for the reflected correction and
-$8.331\times10^{-5}$ for the horizon correction.  The run is resource guarded;
-the recorded peak process RSS for the current diagnostic table is 83.0 MB.
+For the self-channel results in Table~\ref{tab:nonlinear_diag}, the first-order
+outgoing and horizon corrections are computed from
+\begin{align}
+A_{\rm ref}^{(1)}
+&=-\frac{\epsilon}{W}\int_{\rp}^{\infty}
+R^{\rm in}(r)\,Q(r)\,\dd r,\\
+A_H^{(1)}
+&=-\frac{\epsilon}{W}\int_{\rp}^{\infty}
+R^{\rm up}(r)\,Q(r)\,\dd r,
+\end{align}
+with
+$Q=(r^2 C^{(0)}_{\ell\ell m}+a^2 C^{(2)}_{\ell\ell m})
+|R^{(0)}|^2R^{(0)}$ and
+$W=\Delta(R^{\rm in}R^{{\rm up}\prime}
+-R^{\rm up}R^{{\rm in}\prime})$.  The interior interval is integrated by
+Gauss quadrature in $z$, while the exterior interval is decomposed into
+phase channels $\exp(\ii n\omega r_*)$ with $n=-4,-2,0,2,4$ and integrated as
+a Fourier tail on $r_*\in[r_{*,{\rm match}},\infty)$.  This removes the
+endpoint oscillation that spoiled direct compactified Gauss convergence.
+
+With four representative cases and quadrature orders $64,96,128,192$, the
+worst Wronskian consistency error is $2.925\times10^{-16}$.  The worst
+consecutive quadrature changes are $1.847\times10^{-6}$ for the reflected
+correction and $5.398\times10^{-6}$ for the horizon correction.  The run is
+resource guarded; the recorded peak process RSS for the current table is
+85.4 MB.  A separate control scan shows that the production choices
+$N=256$ and the stable matching windows are required: comparing $N=256$ to
+$N=288$ changes the reflected correction by at most $1.1\times10^{-6}$ in the
+representative set, while deliberately coarser $N=224$ or overly far matching
+points can move the strongest reflected correction at the $4\times10^{-5}$
+level.
 
 \begin{table}[t]
-\caption{Prototype nonlinear Green-function diagnostic amplitudes at
-quadrature order $q=192$.  The amplitudes use the diagnostic
-\texttt{legacy-bondi-dr-over-r2} radial weight and should not yet be read as
-final Kerr nonlinear scattering observables.  Full complex values are stored in
+\caption{Self-channel weakly nonlinear Green-function amplitudes at quadrature
+order $q=192$.  The source model is
+\texttt{kerr-covariant-sigma-dr}, i.e. Eq.~\eqref{eq:nonlinear_radial_source},
+with exterior phase-channel Fourier-tail integration.  Full complex values are
+stored in
 \texttt{results/kerr\_scalar\_nonlinear\_diagnostics.csv}.}
 \label{tab:nonlinear_diag}
 \scriptsize
@@ -379,24 +411,26 @@ final Kerr nonlinear scattering observables.  Full complex values are stored in
 \begin{tabular}{lcccc}
 case & $(a,\omega)$ &
 $|A_{\rm ref}^{(1)}|$ & $|A_{H}^{(1)}|$ &
-$\max\delta A$\\
+$\max\delta_q A$\\
 \hline
-Schw. $(0,0)$ & $(0,0.10)$ & $2.808\times10^{-2}$ &
-$1.704\times10^{-2}$ & $2.103\times10^{-5}$\\
-Kerr sub. & $(0.5,0.24)$ & $7.780\times10^{2}$ &
-$1.836$ & $5.083\times10^{-7}$\\
-Kerr super. & $(0.5,0.30)$ & $1.197\times10^{2}$ &
-$7.645\times10^{-1}$ & $9.627\times10^{-7}$\\
-High spin & $(0.9,0.58)$ & $1.298\times10^{1}$ &
-$5.683\times10^{-1}$ & $3.164\times10^{-6}$\\
+Schw. $(0,0)$ & $(0,0.10)$ & $2.199\times10^{1}$ &
+$4.206$ & $1.363\times10^{-6}$\\
+Kerr sub. & $(0.5,0.24)$ & $2.117\times10^{7}$ &
+$2.609\times10^{4}$ & $8.278\times10^{-9}$\\
+Kerr super. & $(0.5,0.30)$ & $1.137\times10^{6}$ &
+$3.804\times10^{3}$ & $2.075\times10^{-9}$\\
+High spin & $(0.9,0.58)$ & $4.064\times10^{3}$ &
+$1.010\times10^{2}$ & $8.096\times10^{-8}$\\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
 
-These diagnostics show that the homogeneous Green-function skeleton is stable.
-The remaining nonlinear physics is the derivation of the Kerr covariant radial
-source weight and the replacement of finite diagnostic quadrature by an
-oscillatory-tail method with explicit convergence gates.
+The very large reflected corrections in the Kerr sub-threshold and
+near-superradiant cases are not numerical overflow: they follow from the
+large linear incident amplitudes entering the cubic source.  They should be
+interpreted perturbatively, i.e. the physical correction is
+$\epsilon A^{(1)}$ and remains small only when the self-coupling and incident
+field normalization keep $\epsilon |A^{(1)}|\ll |A^{(0)}|$.
 
 \section{Spin-minus-two benchmark side task}
 \label{sec:spinminus2}
@@ -443,11 +477,12 @@ balance provides a stringent convention-independent check.
 The linear scalar problem is closed at the level required for a publication
 draft: 37 GSN benchmark cases and 51 frequency-sweep points pass the stated
 acceptance gates, and the sweep resolves the expected Kerr superradiant
-amplification.  The cubic angular projector and first radial Green-function
-diagnostics are implemented, but the nonlinear source normalization is not yet
-final.  The next physics step is to derive the Kerr radial source weight from
-the covariant scalar equation and to introduce a controlled oscillatory-tail
-integration method for nonlinear amplitudes.
+amplification.  The cubic angular projector, the Kerr-covariant self-channel
+radial source, and the first-order nonlinear Green-function amplitudes are now
+implemented.  The nonlinear table is controlled by quadrature, spectral-order,
+and matching-window scans.  The next physics step is to extend this calculation
+from the representative self-channel cases to a broader coupled
+$\ell'$-channel nonlinear scattering survey.
 
 \begin{acknowledgments}
 This draft was generated from the numerical outputs in the KerrScattering
@@ -462,7 +497,9 @@ files used in this manuscript are
 \texttt{kerr\_scalar\_adaptive\_summary.csv},
 \texttt{kerr\_scalar\_frequency\_sweep.csv},
 \texttt{kerr\_scalar\_cubic\_couplings.csv}, and
-\texttt{kerr\_scalar\_nonlinear\_diagnostics.csv}.
+\texttt{kerr\_scalar\_nonlinear\_diagnostics.csv}.  The nonlinear control
+scan is stored in
+\texttt{kerr\_scalar\_nonlinear\_control\_scan.csv}.
 
 \begin{thebibliography}{9}
 

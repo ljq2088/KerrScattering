@@ -11,6 +11,7 @@ GSN_BENCHMARK = os.path.join(ROOT, "results", "kerr_scalar_gsn_benchmark.csv")
 SWEEP = os.path.join(ROOT, "results", "kerr_scalar_frequency_sweep.csv")
 COUPLINGS = os.path.join(ROOT, "results", "kerr_scalar_cubic_couplings.csv")
 NONLINEAR = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_diagnostics.csv")
+NONLINEAR_CONTROL = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_control_scan.csv")
 REPORT = os.path.join(ROOT, "docs", "kerr_scalar_validation_report.md")
 
 
@@ -47,6 +48,10 @@ def main():
     if os.path.exists(NONLINEAR):
         with open(NONLINEAR, newline="") as f:
             nonlinear_rows = list(csv.DictReader(f))
+    nonlinear_control_rows = []
+    if os.path.exists(NONLINEAR_CONTROL):
+        with open(NONLINEAR_CONTROL, newline="") as f:
+            nonlinear_control_rows = list(csv.DictReader(f))
 
     lines = [
         "# Kerr s=0 spectral validation report",
@@ -255,12 +260,14 @@ def main():
             "",
             "## Nonlinear radial diagnostics",
             "",
-            "`scripts/run_kerr_scalar_nonlinear_diagnostics.py` evaluates prototype",
-            "Green-function radial source integrals using the validated spectral",
-            "homogeneous solutions and the cubic angular projector. The present",
-            "radial source weight is explicitly labelled",
-            "`legacy-bondi-dr-over-r2`; it is a diagnostic bridge to the",
-            "Schwarzschild code, not yet a final Kerr self-interaction convention.",
+            "`scripts/run_kerr_scalar_nonlinear_diagnostics.py` evaluates",
+            "Green-function radial source integrals using the Kerr-covariant",
+            "cubic scalar source",
+            "`(r^2 C0 + a^2 C2) |R|^2 R` and the physical `dr` measure.",
+            "The exterior integral is evaluated after decomposing the outer",
+            "homogeneous solutions into `exp(i n omega r*)` phase channels,",
+            "so the oscillatory tail is integrated on `r* in [r*_match, inf)`",
+            "instead of by a compactified endpoint Gauss rule.",
             "",
             f"- Diagnostic cases: {len(diagnostic_cases)}",
             f"- Quadrature rows: {len(nonlinear_rows)}",
@@ -272,6 +279,27 @@ def main():
             lines.append(f"- Peak recorded process RSS: `{max(rss_values):.1f} MB`")
         if elapsed_values:
             lines.append(f"- Slowest diagnostic row: `{max(elapsed_values):.2f} s`")
+        if nonlinear_control_rows:
+            control_rows = [
+                row for row in nonlinear_control_rows
+                if row.get("rel_A_ref_to_base")
+            ]
+            max_control_ref = max(
+                float(row["rel_A_ref_to_base"]) for row in control_rows
+            )
+            max_control_hor = max(
+                float(row["rel_A_hor_to_base"]) for row in control_rows
+            )
+            lines.extend([
+                f"- Control scan rows: {len(nonlinear_control_rows)}",
+                "- Largest control-scan reflection change: "
+                f"`{max_control_ref:.3e}`",
+                "- Largest control-scan horizon change: "
+                f"`{max_control_hor:.3e}`",
+                "The largest reflection control changes occur in deliberately",
+                "coarser or farther matching tests; the production rows use",
+                "`N=256` and the stable matching window recorded in the CSV.",
+            ])
 
     lines.extend([
         "",
@@ -295,23 +323,23 @@ def main():
         "appears only for `omega < m Omega_H`, while the reported flux residuals",
         "remain below the acceptance gate.",
         "",
-        "The angular cubic projector and a first radial Green-function diagnostic",
-        "are now explicit. Wronskians are stable at machine precision; the remaining",
-        "nonlinear work is to fix the final Kerr source-weight convention and replace",
-        "the diagnostic finite-order quadrature by production oscillatory-tail",
-        "integration.",
+        "The angular cubic projector, Kerr-covariant cubic radial source, and",
+        "oscillatory-tail Green-function integration are now explicit. Wronskians",
+        "are stable at machine precision. The remaining nonlinear work is to set",
+        "broader production acceptance gates across more modes and, if needed,",
+        "replace the QUADPACK Fourier tail by a dedicated Levin/Filon integrator",
+        "for very high-frequency nonlinear tails.",
         "",
         "## Remaining PRD-level work",
         "",
-        "- Calibrate the Kerr cubic radial source weight from the covariant scalar",
-        "  field equation and spheroidal projection.",
-        "- Replace the diagnostic radial quadrature by production oscillatory-tail",
-        "  integration and set acceptance gates for `A_ref_1/A_hor_1` convergence.",
+        "- Extend the nonlinear table beyond the four representative modes.",
+        "- Add an independent oscillatory-tail integrator for high-frequency",
+        "  nonlinear source terms.",
         "",
         "Generated from `results/kerr_scalar_adaptive_summary.csv`,",
         "`results/kerr_scalar_frequency_sweep.csv`, and",
         "`results/kerr_scalar_cubic_couplings.csv`, plus nonlinear diagnostics",
-        "when available.",
+        "and control scans when available.",
         "",
     ])
 

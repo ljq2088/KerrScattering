@@ -155,12 +155,13 @@ def evaluate_scalar_spheroidal(mode, theta, phi=0.0):
 
 
 def scalar_cubic_coupling(l_source, m, a, omega, l_target=None,
-                          lmax_extra=16, quad_order=256):
-    """Project ``|S_lm|^2 S_lm`` onto a scalar spheroidal harmonic.
+                          lmax_extra=16, quad_order=256, cos_power=0):
+    """Project ``cos(theta)**p |S_lm|^2 S_lm`` onto a spheroidal harmonic.
 
     The returned coefficient is
 
-        C_{l'lm} = int dOmega conj(S_{l'm}) |S_lm|^2 S_lm,
+        C^{(p)}_{l'lm}
+        = int dOmega cos(theta)**p conj(S_{l'm}) |S_lm|^2 S_lm,
 
     with all spheroidal harmonics normalized to unit integral over the sphere.
     The same spheroidal parameter ``c = a omega`` is used for source and
@@ -170,6 +171,8 @@ def scalar_cubic_coupling(l_source, m, a, omega, l_target=None,
         l_target = l_source
     if l_source < abs(m) or l_target < abs(m):
         raise ValueError("Require l_source,l_target >= |m|.")
+    if cos_power < 0:
+        raise ValueError("cos_power must be non-negative.")
 
     c = a * omega
     source = scalar_spheroidal_mode(l_source, m, c, lmax_extra=lmax_extra)
@@ -180,11 +183,28 @@ def scalar_cubic_coupling(l_source, m, a, omega, l_target=None,
     source_vals = evaluate_scalar_spheroidal(source, theta, 0.0)
     target_vals = evaluate_scalar_spheroidal(target, theta, 0.0)
     integrand = np.conj(target_vals) * np.abs(source_vals) ** 2 * source_vals
+    if cos_power:
+        integrand = (x ** int(cos_power)) * integrand
     return 2.0 * np.pi * np.sum(w * integrand)
 
 
+def scalar_cubic_coupling_cos2(l_source, m, a, omega, l_target=None,
+                               lmax_extra=16, quad_order=256):
+    """Return the Kerr ``cos(theta)^2`` cubic angular projection."""
+    return scalar_cubic_coupling(
+        l_source,
+        m,
+        a,
+        omega,
+        l_target=l_target,
+        lmax_extra=lmax_extra,
+        quad_order=quad_order,
+        cos_power=2,
+    )
+
+
 def scalar_cubic_couplings(l_source, m, a, omega, l_targets,
-                           lmax_extra=16, quad_order=256):
+                           lmax_extra=16, quad_order=256, cos_power=0):
     """Return cubic source projection coefficients for several target modes."""
     return {
         int(l_target): scalar_cubic_coupling(
@@ -195,6 +215,7 @@ def scalar_cubic_couplings(l_source, m, a, omega, l_targets,
             l_target=int(l_target),
             lmax_extra=lmax_extra,
             quad_order=quad_order,
+            cos_power=cos_power,
         )
         for l_target in l_targets
     }
