@@ -1,10 +1,12 @@
-# Kerr 背景 s=0 Teukolsky 标量场散射：解析推导与项目约定
+# Kerr 背景 s=0 Teukolsky 标量场散射：解析推导、谱方法与数值验证
 
 ## 0. 摘要
 
 本文档给出当前 Schwarzschild Green-function 谱方法向 Kerr 背景的
 `s=0` 标量 Teukolsky 方程推广时需要的解析结构。目标不是只写出一条
-径向方程，而是把后续代码需要固定的所有约定连起来：
+径向方程，而是把解析推导、边界归一化、谱离散、散射振幅提取、
+外部 benchmark 和非线性 Green-function 诊断统一成一套可复现实验流程。
+本文已经对应当前分支中的实际代码和结果文件，而不再只是算法建议。
 
 1. Kerr 几何、tortoise 坐标和视界角速度。
 2. 复标量场 Klein-Gordon 方程的分离变量。
@@ -13,7 +15,9 @@
 5. `in/up/down/out` 四个齐次解、Wronskian 与散射振幅。
 6. 能流归一化、superradiance 条件和 Schwarzschild 极限。
 7. 弱非线性 `|Phi|^2 Phi` 源项在 Kerr spheroidal basis 下的角向投影。
-8. 项目代码中的 lambda-provider 接口和 Mathematica/GSN benchmark 分工。
+8. 端点直接配点的两域 Chebyshev 谱方法。
+9. GeneralizedSasakiNakamura.jl benchmark、频率扫描和三次角向投影结果。
+10. 非线性径向 Green-function 诊断及当前尚未定标的物理部分。
 
 本文采用 `G=c=M=1` 时可令 `M=1`，但公式中保留 `M`，便于和
 Schwarzschild 代码对照。
@@ -548,7 +552,187 @@ lambda = A_lm + a^2 omega^2 - 2 a m omega
 对 `s=-2`，优先直接使用外部包返回的 Teukolsky radial lambda，并在结果
 文件中保留 provider 名称，避免跨包约定混淆。
 
-## 12. benchmark 分工
+## 12. 代码实现现状
+
+当前分支已经把上面的解析结构落实为以下模块：
+
+```text
+src/teukolsky_scalar.py
+  s=0 spheroidal eigenvalue, radial lambda, angular mode, cubic coupling.
+
+src/kerr_scalar_spectral.py
+  Kerr s=0 in-mode spectral solver, direct endpoint rows, B_inc/B_ref extraction.
+
+src/kerr_scalar_nonlinear.py
+  Prototype Green-function source diagnostics using validated homogeneous modes.
+
+scripts/adaptive_kerr_scalar_gsn_validation.py
+  GSN benchmark comparison with adaptive spectral order.
+
+scripts/run_kerr_scalar_frequency_sweep.py
+  Frequency sweep and superradiance sampling.
+
+scripts/run_kerr_scalar_cubic_projector.py
+  Cubic spheroidal projector C_{l'lm}.
+
+scripts/run_kerr_scalar_nonlinear_diagnostics.py
+  Nonlinear radial Green-function diagnostics with RSS memory guard.
+```
+
+线性求解器采用的基本数值路线是：
+
+```text
+1. 先由 local scalar spheroidal matrix 得到 lambda。
+2. 在外域 [0,z_m] 分别求 down/up 解。
+3. 在内域 [z_m,1] 求 horizon-normalized in 解。
+4. 在 z_m 同时匹配 R 与 dR/dr。
+5. 解 2x2 线性系统得到 B_inc 与 B_ref。
+6. 用 Kerr flux identity 检查散射概率守恒。
+```
+
+这里最重要的实现约束是直接把 `z=0` 和 `z=1` 放进谱节点。边界不需要
+截断，因为剥离相位后的二阶方程在端点退化为一阶正则条件。矩阵中保留
+退化 ODE 行，并用相邻一行给出 `u(endpoint)=1` 的归一化。这一点使 Kerr
+实现保持了 Schwarzschild 谱方法的核心路线。
+
+## 13. 线性 benchmark 与频率扫描
+
+外部 benchmark 使用 GeneralizedSasakiNakamura.jl 的
+`UNIT_TEUKOLSKY_TRANS` 约定，即视界透射振幅取 `B_trans=1`。由于不同包的
+`r*` 加性常数不同，复振幅本身允许有常相位差；pass/fail 只使用
+`|B_inc|`、`|B_ref|` 和 flux balance。
+
+当前 validation gate 为：
+
+```text
+rel_abs_B_inc <= 1e-7
+rel_abs_B_ref <= 1e-7
+flux_balance_error <= 1e-8
+```
+
+当前 GSN benchmark 摘要为：
+
+```text
+GSN requested cases:          37
+usable GSN cases:             37
+excluded GSN cases:           0
+all cases passed:             true
+worst invariant score:        1.485e-08
+worst flux-balance residual:  3.714e-09
+```
+
+测试网格覆盖：
+
+```text
+Schwarzschild limit:
+  a=0, l=0,1, omega=0.01,0.1,0.5
+
+moderate Kerr:
+  a=0.5, l=0,1,2, m=0,1,2,
+  omega across low-frequency, near-threshold, and high-frequency regimes
+
+high spin Kerr:
+  a=0.9, l=2,3, m=2,
+  omega below and above omega=m Omega_H
+```
+
+最困难的线性 benchmark 是 `a=0.5, l=m=2, omega=1.0`。该点的
+`B_ref` 很小，因此相对误差对条件数和 phase convention 更敏感，但仍满足
+`1e-7` 的振幅模长目标。
+
+额外的 frequency sweep 包含 51 个点：
+
+```text
+schwarzschild_l0:
+  a=0, l=m=0, omega=0.01 ... 1.0, 11 points
+
+kerr_a05_l2m2:
+  a=0.5, l=m=2, omega=0.01 ... 1.0, 20 points
+
+kerr_a09_l2m2:
+  a=0.9, l=m=2, omega=0.02 ... 1.1, 20 points
+```
+
+扫描结果为：
+
+```text
+all sweep points passed:             true
+worst sweep score:                   9.467e-08
+worst sweep flux-balance residual:   7.351e-09
+maximum sampled amplification R-1:   4.970e-04
+location of maximum amplification:   a=0.9, l=m=2, omega=0.58
+```
+
+在旋转黑洞样本中，`R>1` 只出现在 `omega < m Omega_H` 的区域；越过阈值
+后反射率回到 `R<1`。这与第 6 节的 flux identity 一致，是当前代码
+捕捉 Kerr superradiance 的主要物理检查。
+
+## 14. 三次角向投影与非线性径向诊断
+
+弱非线性源项要求计算
+
+```text
+C_{l'lm}(a omega)
+  = int dOmega conjugate(S_l'm) |S_lm|^2 S_lm
+```
+
+当前代码已经对所有 37 个线性验证源模式计算 `|m| <= l' <= l+4` 的
+目标通道，结果写入 `results/kerr_scalar_cubic_couplings.csv`：
+
+```text
+source modes projected:       37
+coupling rows:                199
+self-channel coefficient min: 7.958e-02
+self-channel coefficient max: 1.705e-01
+largest off-diagonal:         8.318e-02
+largest off-diagonal case:    l=2, m=0, a=0.5, omega=0.1, l'=4
+```
+
+球对称极限已经用解析值检查：
+
+```text
+l=m=0:
+  C_000 = 1/(4 pi)
+
+l=1,m=0,a omega=0:
+  C_110 = 9/(20 pi)
+```
+
+非线性径向部分目前是 Green-function 诊断，而不是最终 Kerr 自相互作用
+归一化。它使用已经验证的齐次解和三次角向投影，计算
+
+```text
+source_projection_ref = int R_test_ref |R_in|^2 R_in dz/r_+
+source_projection_hor = int R_test_hor |R_in|^2 R_in dz/r_+
+A_ref_1 = -Cl source_projection_ref/W
+A_hor_1 = -Cl source_projection_hor/W
+```
+
+这里的径向权重被明确标记为
+
+```text
+legacy-bondi-dr-over-r2
+```
+
+即它是从 Schwarzschild/Bondi 代码迁移来的诊断权重，不是最终由 Kerr
+协变 Klein-Gordon 方程完全定标后的非线性源。当前诊断结果为：
+
+```text
+diagnostic cases:                         4
+quadrature rows:                          16
+worst Wronskian consistency error:        3.094e-16
+worst consecutive A_ref_1 quad change:    7.011e-05
+worst consecutive A_hor_1 quad change:    8.331e-05
+peak recorded process RSS:                83.0 MB
+slowest diagnostic row:                   0.20 s
+```
+
+这些数字说明齐次 Green-function 骨架和 Wronskian 归一化已经稳定，但径向
+源积分的尾部处理还没有达到线性散射 benchmark 的精度层级。下一步要把
+`legacy-bondi-dr-over-r2` 替换为从 Kerr 协变方程严格导出的源权重，并对
+无穷远振荡尾积分使用专门的 oscillatory quadrature 或渐近展开。
+
+## 15. s=-2 支线 benchmark 状态
 
 用户指定的支线 benchmark 为：
 
@@ -556,7 +740,8 @@ lambda = A_lm + a^2 omega^2 - 2 a m omega
 s = -2
 a = 0.5
 l = m = 2
-omega = 1e-4, 10.0
+omega = 1e-4, 0.1, 10.0
+quantity: homogeneous R_in amplitude coefficients
 ```
 
 当前分工：
@@ -569,22 +754,84 @@ omega = 1e-4:
   使用 Windows Mathematica kernel，路径 F:\mma，
   加载 F:\EMRI\Radial_flow\Radial_Function.wl，
   调用 ComputeAmplitudesMST。
+
+omega = 0.1:
+  使用 Mathematica MST 作为中频 benchmark。
 ```
 
-高频 GSN 给出 lambda 与 Teukolsky 振幅系数；低频 Mathematica/MST 给出
-`Incidence`、`Reflection`、`Transmission` 和 `Reflection/Incidence`。
-
-## 13. 当前结论
-
-本推导已经完成 `s=0` 标量 Teukolsky 方程从 Kerr Klein-Gordon 方程到径向
-散射振幅的主线。代码层面下一步不是重写所有 Schwarzschild 逻辑，而是先
-完成三个接口：
+当前结果摘要为：
 
 ```text
-1. lambda_provider: 统一 local/GSN/Mathematica/WSL helper 的本征值约定。
-2. scalar radial solver: 返回 R_in/R_up 及 B_inc/B_ref/B_trans。
-3. nonlinear source projector: 计算 spheroidal harmonic 的 C_{l'l m}。
+omega=1e-4, Mathematica MST:
+  B_inc = -1.5435347274666643e20 + 3.416432242244572e20 i
+  B_ref =  1.0210782613860754e4  - 2.281376866596801e4 i
+
+omega=0.1, Mathematica MST:
+  lambda = 3.667320713846837
+  B_inc = -1.1422820427e5 + 2.3264531432e5 i
+  B_ref = -4.2729694283   - 17.946405113 i
+
+omega=10.0, GSN:
+  lambda = -26.85215496939334
+  B_inc =  2.4675049712429978e1 - 5.0001332607188900e0 i
+  B_ref = -6.4579566171517927e-9 - 8.1445991065750824e-9 i
 ```
 
-完成这三件事后，Schwarzschild 的 Green-function 非线性修正才能自然迁移到
-Kerr。
+直接 Teukolsky 变量中的 Python 对比状态为：
+
+```text
+omega=1e-4:
+  B_inc relative error = 2.5e-8
+  B_ref relative error = 9.1e-12
+
+omega=0.1:
+  B_inc relative error = 2.7e-10
+  B_ref relative error = 5.3e-12
+
+omega=10.0:
+  B_inc relative error = 4.0e-7
+  B_ref relative error = 3.4e-1
+```
+
+高频 `omega=10.0` 的 `B_ref` 约为 `1e-8`，已经接近直接 Teukolsky 变量
+双精度匹配的有效地板；要把该行继续推到 benchmark 精度，稳定路线是演化
+Sasaki-Nakamura 变量，再用 Teukolsky-Sasaki-Nakamura 转换因子恢复振幅。
+因此 `s=-2` 支线目前作为 benchmark 接口和算法风险说明保留，不与
+`s=0` 标量求解器混合。
+
+## 16. 当前结论与文章状态
+
+本推导已经完成 `s=0` 标量 Teukolsky 方程从 Kerr Klein-Gordon 方程到径向
+散射振幅的主线，也完成了与 Schwarzschild 谱方法对应的数值实现。核心
+结果可以概括为：
+
+```text
+1. 使用 z=r_+/r 的两域 Chebyshev 谱方法可以直接包含 z=0 与 z=1。
+2. 端点二阶导系数退化给出正则导数条件，端点归一化取 u=1。
+3. B_inc/B_ref 通过 in 解与 down/up 解在中间点匹配得到。
+4. Kerr flux identity 给出 superradiance 条件 omega < m Omega_H。
+5. 37 个 GSN benchmark 全部通过，最坏 invariant error 为 1.485e-08。
+6. 51 个频率扫描点全部通过，且正确解析 Kerr scalar superradiance。
+7. 三次 spheroidal angular projector 已实现并通过球极限解析检查。
+8. Green-function 非线性径向骨架已实现，Wronskian 稳定到机器精度。
+```
+
+因此，对线性 `s=0` Kerr 标量散射问题，当前文章和代码已经形成闭环：
+
+```text
+解析方程 -> 边界条件 -> 谱离散 -> 振幅提取 -> flux 检查 -> GSN benchmark
+```
+
+如果目标是 PRD 级文章，线性部分已经具备核心数值证据。剩余需要补强的是
+非线性物理部分：
+
+```text
+1. 从 covariant scalar field equation 固定 Kerr cubic source 的径向权重。
+2. 把诊断用有限阶 quadrature 升级为可控的振荡尾积分。
+3. 给 A_ref_1/A_hor_1 设置和线性振幅同等级的收敛 gate。
+4. 若纳入 s=-2 支线，高频小反射振幅应改用 Sasaki-Nakamura 变量。
+```
+
+当前 PDF 因此应理解为 Kerr `s=0` 线性散射与非线性 Green-function 框架的
+完整项目文章草稿；线性散射部分可作为论文主体，非线性部分作为下一阶段
+物理定标和数值尾积分的明确路线图。
