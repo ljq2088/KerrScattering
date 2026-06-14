@@ -241,6 +241,16 @@ def main():
         max_ref_delta = max(float(row["rel_A_ref_from_previous"]) for row in finite_rows)
         max_hor_delta = max(float(row["rel_A_hor_from_previous"]) for row in finite_rows)
         diagnostic_cases = {row["label"] for row in nonlinear_rows}
+        rss_values = [
+            float(row["rss_mb_after"])
+            for row in nonlinear_rows
+            if row.get("rss_mb_after")
+        ]
+        elapsed_values = [
+            float(row["elapsed_s"])
+            for row in nonlinear_rows
+            if row.get("elapsed_s")
+        ]
         lines.extend([
             "",
             "## Nonlinear radial diagnostics",
@@ -258,6 +268,10 @@ def main():
             f"- Worst consecutive `A_ref_1` quadrature change: `{max_ref_delta:.3e}`",
             f"- Worst consecutive `A_hor_1` quadrature change: `{max_hor_delta:.3e}`",
         ])
+        if rss_values:
+            lines.append(f"- Peak recorded process RSS: `{max(rss_values):.1f} MB`")
+        if elapsed_values:
+            lines.append(f"- Slowest diagnostic row: `{max(elapsed_values):.2f} s`")
 
     lines.extend([
         "",

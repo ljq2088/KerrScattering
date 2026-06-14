@@ -130,6 +130,8 @@ Schwarzschild code, not yet a final Kerr self-interaction convention.
 - Worst Wronskian consistency error: `3.094e-16`
 - Worst consecutive `A_ref_1` quadrature change: `7.011e-05`
 - Worst consecutive `A_hor_1` quadrature change: `8.331e-05`
+- Peak recorded process RSS: `83.0 MB`
+- Slowest diagnostic row: `0.20 s`
 
 ## Current interpretation
 
