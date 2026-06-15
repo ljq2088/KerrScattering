@@ -89,7 +89,9 @@ template.  Section~\ref{sec:setup} defines the nonlinear Kerr scalar
 scattering problem.  Section~\ref{sec:methods} describes the endpoint spectral
 method and the nonlinear Green-function amplitudes.  Section~\ref{sec:results}
 reports the linear validation, superradiant frequency sweep, nonlinear
-self-channel balance, and the first target-channel matrix result.
+self-channel balance, and the first target-channel matrix result.  The
+appendices give the working derivations used by the code so that normalization
+and sign conventions can be checked without referring to a separate note.
 
 \section{Nonlinear scattering problem on Kerr}
 \label{sec:setup}
@@ -120,6 +122,23 @@ For the scalar mode
 R_{\ell m\omega}(r)S_{\ell m}(\theta;a\omega)
 e^{\ii m\phi-\ii\omega t},
 \end{equation}
+the scalar wave operator separates after multiplying by $\Sigma$.  Substitution
+gives the identity
+\begin{align}
+0={}&
+\frac{1}{R}\frac{\dd}{\dd r}\left(\Delta\frac{\dd R}{\dd r}\right)
++\frac{K^2}{\Delta}
+-a^2\omega^2+2am\omega
+\notag\\
+&+
+\frac{1}{S\sin\theta}
+\frac{\dd}{\dd\theta}\left(\sin\theta\frac{\dd S}{\dd\theta}\right)
++a^2\omega^2\cos^2\theta
+-\frac{m^2}{\sin^2\theta}.
+\label{eq:separatedidentity}
+\end{align}
+The $r$-dependent and $\theta$-dependent parts can therefore be set equal to a
+single separation constant $A_{\ell m}$.  With the convention used here,
 the angular equation is
 \begin{align}
 0={}&
@@ -178,6 +197,16 @@ so that
 \begin{equation}
 T^{(0)}+R^{(0)}=1.
 \end{equation}
+This follows directly from the conserved radial current
+$J=(2\ii)^{-1}\Delta(R^*R'-RR^{*'})$: the unit-horizon in mode gives
+$J_H=-p(\rp^2+a^2)$ at the future horizon and
+$J_\infty=-\omega|\Bin|^2+\omega|\Bref|^2$ at infinity.  Hence
+\begin{equation}
+\omega\left(|\Bin|^2-|\Bref|^2\right)=p(\rp^2+a^2),
+\label{eq:linearcurrentbalance}
+\end{equation}
+which is Eq.~\eqref{eq:linearRT}.  More details are collected in
+Appendix~\ref{app:details}.
 When $p<0$, $T^{(0)}<0$ and the reflected flux exceeds the incident flux:
 this is scalar superradiance.
 
@@ -228,6 +257,10 @@ S^*_{\ell'm}|S_{\ell m}|^2S_{\ell m},
 \qquad s=0,2 .
 \label{eq:C}
 \end{equation}
+The factor $r^2C^{(0)}+a^2C^{(2)}$ is simply the decomposition of
+$\Sigma|S_{\ell m}|^2S_{\ell m}$ into the target basis:
+the $r^2$ piece carries the ordinary spheroidal Gaunt coefficient, while the
+$a^2\cos^2\theta$ piece is a genuinely Kerr correction.
 This is the first structural difference from the Schwarzschild calculation:
 even a single incident spheroidal mode sources a target-channel matrix.
 
@@ -241,6 +274,14 @@ We solve Eq.~\eqref{eq:radial} on two Chebyshev subdomains in
 z=\frac{\rp}{r},\qquad z=0\leftrightarrow r=\infty,\qquad
 z=1\leftrightarrow r=\rp .
 \end{equation}
+The radial derivatives are converted by
+\begin{equation}
+\frac{\dd}{\dd r}=-\frac{z^2}{\rp}\frac{\dd}{\dd z},\qquad
+\frac{\dd^2}{\dd r^2}
+=\frac{z^4}{\rp^2}\frac{\dd^2}{\dd z^2}
++\frac{2z^3}{\rp^2}\frac{\dd}{\dd z}.
+\label{eq:zderivatives}
+\end{equation}
 The known phases are peeled off before discretization,
 \begin{align}
 R_{\rm in}&=e^{-\ii p r_*}u_{\rm in}(z),\\
@@ -250,6 +291,7 @@ R_{\rm up}&=\frac{e^{+\ii\omega r_*}}{r}u_{\rm up}(z).
 The transformed equation has the schematic form
 \begin{equation}
 B_2(z)u''(z)+B_1(z)u'(z)+B_0(z)u(z)=0.
+\label{eq:transformedu}
 \end{equation}
 At $z=0$ for down/up modes and at $z=1$ for the in mode, $B_2$ vanishes.
 Thus the endpoint row is a first-order regularity condition rather than an
@@ -268,7 +310,25 @@ R_{\rm in}=
 \Bin R_{\rm down}+\Bref R_{\rm up}.
 \label{eq:match}
 \end{equation}
-Matching both $R$ and $\dd R/\dd r$ gives the linear amplitudes.
+Matching both $R$ and $\dd R/\dd r$ gives the two-by-two linear system
+\begin{equation}
+\begin{pmatrix}
+R_{\rm down} & R_{\rm up}\\
+R_{\rm down}' & R_{\rm up}'
+\end{pmatrix}_{r_m}
+\begin{pmatrix}
+\Bin\\
+\Bref
+\end{pmatrix}
+=
+\begin{pmatrix}
+R_{\rm in}\\
+R_{\rm in}'
+\end{pmatrix}_{r_m}.
+\label{eq:matchsystem}
+\end{equation}
+This is the same algebraic matching used in the Schwarzschild spectral route;
+only the phase factors and the radial operator have changed.
 
 \subsection{Green-function nonlinear amplitudes}
 
@@ -303,6 +363,23 @@ R_{\ell'}^{\rm up}(r) Q_{\ell'\ell m}(r)\,\dd r.
 \end{align}
 These are the quantities directly computed by the code in unit-horizon
 normalization.
+
+The sign in Eqs.~\eqref{eq:Aref} and~\eqref{eq:AH} comes from
+$\mathcal{L}R^{(1)}=-Q$.  Equivalently, the Green function normalized by the
+jump condition
+$\Delta[\partial_rG]_{r=r'^{+}}^{r=r'^{-}}=1$ is
+\begin{equation}
+G_{\ell'}(r,r')
+=
+\frac{
+R_{\ell'}^{\rm in}(r_<)R_{\ell'}^{\rm up}(r_>)
+}{\W_{\ell'}},
+\label{eq:green}
+\end{equation}
+and $R^{(1)}=-\int GQ\,\dd r'$.  Taking $r$ to infinity picks out the
+coefficient of $R^{\rm up}$ and gives Eq.~\eqref{eq:Aref}; taking $r$ to the
+future horizon picks out the coefficient of $R^{\rm in}$ and gives
+Eq.~\eqref{eq:AH}.
 
 The outer part of the integrals is highly oscillatory.  On the outer domain,
 $R_{\rm in}$ is a sum of down and up phases, while $R_{\rm up}$ is outgoing.
@@ -354,9 +431,13 @@ For a self-channel source, conservation implies
 T^{(1)}+R^{(1)}=0,
 \label{eq:nonlinearbalance}
 \end{equation}
-up to numerical error.  Off-diagonal target channels are orthogonal to the
-linear outgoing channel in the angular integral.  They are first-order field
-amplitudes, but their direct energy-flux contribution starts at
+up to numerical error.  In the present cubic model this is the first-order
+part of the conserved $U(1)$ Klein-Gordon flux: the source
+$Q\propto |R_{\rm in}|^2R_{\rm in}$ gives a real overlap with
+$R_{\rm in}^*$, so it redistributes flux between horizon and infinity but does
+not create a net monochromatic current.  Off-diagonal target channels are
+orthogonal to the linear outgoing channel in the angular integral.  They are
+first-order field amplitudes, but their direct energy-flux contribution starts at
 $\calO(\epsilon^2)$.
 
 \section{Results}
@@ -509,6 +590,277 @@ off-diagonal horizon amplitudes, and replace or cross-check the QUADPACK
 Fourier-tail integral with a dedicated Levin or Filon oscillatory integrator.
 
 \appendix
+
+\section{Working derivations and normalizations}
+\label{app:details}
+
+\subsection{From the scalar wave equation to the radial equation}
+
+We use the mostly-plus convention for the Kerr line element.  The inverse
+metric components needed for the scalar wave equation are
+\begin{align}
+g^{tt}
+&=
+-\frac{(r^2+a^2)^2-a^2\Delta\sin^2\theta}{\Sigma\Delta},
+\\
+g^{t\phi}
+&=
+-\frac{2Mar}{\Sigma\Delta},
+\\
+g^{\phi\phi}
+&=
+\frac{\Delta-a^2\sin^2\theta}{\Sigma\Delta\sin^2\theta},
+\\
+g^{rr}&=\frac{\Delta}{\Sigma},\qquad
+g^{\theta\theta}=\frac{1}{\Sigma},
+\qquad
+\sqrt{-g}=\Sigma\sin\theta .
+\end{align}
+Thus
+\begin{align}
+\Sigma\Box\Phi
+={}&
+\frac{\partial}{\partial r}
+\left(\Delta\frac{\partial\Phi}{\partial r}\right)
++\frac{1}{\sin\theta}
+\frac{\partial}{\partial\theta}
+\left(\sin\theta\frac{\partial\Phi}{\partial\theta}\right)
+\notag\\
+&+\Sigma g^{tt}\frac{\partial^2\Phi}{\partial t^2}
++2\Sigma g^{t\phi}
+\frac{\partial^2\Phi}{\partial t\,\partial\phi}
++\Sigma g^{\phi\phi}
+\frac{\partial^2\Phi}{\partial\phi^2}.
+\label{eq:boxexpanded}
+\end{align}
+Substituting
+$\Phi=R(r)S(\theta)e^{\ii m\phi-\ii\omega t}$ gives
+\begin{align}
+0={}&
+\frac{1}{R}\frac{\dd}{\dd r}
+\left(\Delta\frac{\dd R}{\dd r}\right)
++\frac{1}{S\sin\theta}
+\frac{\dd}{\dd\theta}
+\left(\sin\theta\frac{\dd S}{\dd\theta}\right)
+\notag\\
+&+
+\frac{\omega^2\left[(r^2+a^2)^2-a^2\Delta\sin^2\theta\right]}
+{\Delta}
+-\frac{4Mar\omega m}{\Delta}
+\notag\\
+&-
+\frac{m^2(\Delta-a^2\sin^2\theta)}
+{\Delta\sin^2\theta}.
+\label{eq:beforeseparation}
+\end{align}
+Define the frequency-dependent part of Eq.~\eqref{eq:beforeseparation} as
+\begin{align}
+\mathcal{T}={}&
+\frac{\omega^2\left[(r^2+a^2)^2-a^2\Delta\sin^2\theta\right]}
+{\Delta}
+-\frac{4Mar\omega m}{\Delta}
+\notag\\
+&-
+\frac{m^2(\Delta-a^2\sin^2\theta)}
+{\Delta\sin^2\theta}.
+\end{align}
+Using $\Delta=r^2-2Mr+a^2$, this can be reorganized as
+\begin{align}
+\mathcal{T}={}&
+\frac{\left[(r^2+a^2)\omega-am\right]^2}{\Delta}
+-a^2\omega^2
++2am\omega
+\notag\\
+&+
+a^2\omega^2\cos^2\theta
+-\frac{m^2}{\sin^2\theta}.
+\label{eq:kerrsplit}
+\end{align}
+The first line on the right of Eq.~\eqref{eq:kerrsplit} is radial and the
+second line is angular.  Setting the angular part equal to $-A_{\ell m}$ gives
+the spheroidal equation in the main text.  The radial equation then becomes
+\begin{equation}
+\frac{\dd}{\dd r}
+\left(\Delta\frac{\dd R}{\dd r}\right)
++
+\left[
+\frac{K^2}{\Delta}
+-\left(A_{\ell m}+a^2\omega^2-2am\omega\right)
+\right]R=0,
+\end{equation}
+which is Eq.~\eqref{eq:radial} with
+$\lambda=A_{\ell m}+a^2\omega^2-2am\omega$.
+
+\subsection{Asymptotic branches and flux balance}
+
+Near the future horizon,
+\begin{align}
+\Delta&=(\rp-\rmn)(r-\rp)
++\calO\left((r-\rp)^2\right),
+\\
+K(\rp)&=(\rp^2+a^2)p.
+\end{align}
+Since $\Delta\,\dd/\dd r=(r^2+a^2)\dd/\dd r_*$, the leading radial equation is
+\begin{equation}
+\frac{\dd^2R}{\dd r_*^2}+p^2R=0,
+\qquad r\rightarrow\rp .
+\end{equation}
+The two local branches are therefore $e^{\mp\ii pr_*}$.  The in solution uses
+the future-horizon ingoing branch $e^{-\ii pr_*}$.  At infinity the same radial
+equation reduces to
+\begin{equation}
+\frac{\dd^2(rR)}{\dd r_*^2}+\omega^2(rR)=\calO(r^{-1})\,rR,
+\end{equation}
+which gives the two branches $e^{\mp\ii\omega r_*}/r$.
+
+For any homogeneous solution, the radial part of the Klein-Gordon current is
+\begin{equation}
+J[R]
+=
+\frac{1}{2\ii}
+\Delta\left(R^*\frac{\dd R}{\dd r}
+-R\frac{\dd R^*}{\dd r}\right),
+\qquad
+\frac{\dd J}{\dd r}=0 .
+\label{eq:currentappendix}
+\end{equation}
+For the horizon-normalized in mode,
+\begin{align}
+J_H&=-p(\rp^2+a^2),\\
+J_\infty&=-\omega|\Bin|^2+\omega|\Bref|^2 .
+\end{align}
+Equating the two gives Eq.~\eqref{eq:linearcurrentbalance}.  Dividing by the
+incident energy flux $\omega|\Bin|^2$ yields
+\begin{equation}
+\frac{p(\rp^2+a^2)}{\omega|\Bin|^2}
++
+\left|\frac{\Bref}{\Bin}\right|^2=1.
+\end{equation}
+This also fixes the sign convention for superradiance: if $p<0$, the horizon
+energy flux is negative relative to the incident flux and the reflected flux
+must be larger than the incident flux.
+
+\subsection{Endpoint collocation equations}
+
+After the compactification $z=\rp/r$, the horizon is a regular singular
+endpoint and infinity is an irregular endpoint before phase removal.  The
+phase factors used for the in, down, and up solutions remove precisely the
+non-analytic oscillatory pieces:
+\begin{equation}
+R=e^{\ii\sigma r_*}r^{-\nu}u(z),
+\qquad
+(\sigma,\nu)=(-p,0),(-\omega,1),(+\omega,1),
+\end{equation}
+for in, down, and up solutions respectively.  The remaining function has a
+regular endpoint expansion,
+\begin{equation}
+u(z)=u_0+u_1(z-z_e)+u_2(z-z_e)^2+\cdots ,
+\qquad z_e=0\ {\rm or}\ 1 .
+\end{equation}
+Inserting this expansion into Eq.~\eqref{eq:transformedu} gives
+\begin{equation}
+B_1(z_e)u_1+B_0(z_e)u_0=0,
+\qquad B_2(z_e)=0.
+\end{equation}
+This is the boundary equation used in the first or last collocation row.  One
+additional row sets the normalization $u_0=1$.  No artificial horizon cutoff is
+introduced; the endpoint itself is part of the spectral grid.
+
+\subsection{Green function and nonlinear amplitudes}
+
+Let $y_1=R_{\ell'}^{\rm in}$ and $y_2=R_{\ell'}^{\rm up}$ solve the target
+homogeneous equation.  For the Sturm-Liouville form
+\begin{equation}
+\mathcal{L}_{\ell'}y
+=
+\frac{\dd}{\dd r}\left(\Delta\frac{\dd y}{\dd r}\right)
++V_{\ell'}(r)y,
+\end{equation}
+the Wronskian
+\begin{equation}
+\W_{\ell'}=\Delta(y_1y_2'-y_2y_1')
+\end{equation}
+is constant.  The Green function
+\begin{equation}
+G(r,r')
+=
+\frac{y_1(r_<)y_2(r_>)}{\W_{\ell'}}
+\end{equation}
+is continuous at $r=r'$ and satisfies
+\begin{equation}
+\Delta\left[
+\frac{\partial G}{\partial r}
+\right]_{r=r'^{-}}^{r=r'^{+}}
+=1.
+\end{equation}
+Thus $\mathcal{L}_{\ell'}G=\delta(r-r')$.  Since the nonlinear radial equation
+is $\mathcal{L}_{\ell'}R_{\ell'}^{(1)}=-Q_{\ell'}$, the solution satisfying
+outgoing radiation at infinity and ingoing radiation at the future horizon is
+\begin{equation}
+R_{\ell'}^{(1)}(r)
+=
+-\int_{\rp}^{\infty}G(r,r')Q_{\ell'}(r')\,\dd r'.
+\end{equation}
+Taking $r\rightarrow\infty$ gives
+\begin{align}
+R_{\ell'}^{(1)}
+&\sim
+A_{{\rm ref},\ell'|\ell m}^{(1)}
+\frac{e^{+\ii\omega r_*}}{r},
+\\
+A_{{\rm ref},\ell'|\ell m}^{(1)}
+&=
+-\frac{1}{\W_{\ell'}}
+\int_{\rp}^{\infty}y_1Q_{\ell'}\,\dd r,
+\end{align}
+and taking $r\rightarrow\rp$ gives
+\begin{align}
+R_{\ell'}^{(1)}
+&\sim
+A_{H,\ell'|\ell m}^{(1)}e^{-\ii p_{\ell'}r_*},
+\\
+A_{H,\ell'|\ell m}^{(1)}
+&=
+-\frac{1}{\W_{\ell'}}
+\int_{\rp}^{\infty}y_2Q_{\ell'}\,\dd r.
+\end{align}
+These are the formulas used by the production scripts.
+
+\subsection{Why the first-order self-channel balance is expected}
+
+For the self channel, the source has the form
+\begin{equation}
+Q(r)=F(r)|R_{\rm in}|^2R_{\rm in},
+\qquad
+F(r)=r^2C^{(0)}_{\ell\ell m}+a^2C^{(2)}_{\ell\ell m},
+\end{equation}
+where $F(r)$ is real for the present real-frequency spheroidal basis.  Let
+$R_1$ solve $\mathcal{L}R_1=-Q$.  Combining this equation with the complex
+conjugate homogeneous equation for $R_{\rm in}^*$ gives
+\begin{equation}
+\frac{\dd}{\dd r}
+\left[
+\Delta\left(
+R_{\rm in}^*R_1'-R_1R_{\rm in}^{*'}
+\right)
+\right]
+=
+-R_{\rm in}^*Q
+=
+-F(r)|R_{\rm in}|^4 .
+\end{equation}
+The right-hand side is real.  Therefore the imaginary part of the bracket is
+constant between the horizon and infinity.  Evaluating that constant using the
+asymptotic amplitudes of $R_{\rm in}$ and $R_1$ gives precisely
+\begin{equation}
+\frac{2p(\rp^2+a^2)}{\omega|\Bin|^4}\mathrm{Re}\,\AH
++
+\frac{2\,\mathrm{Re}\left[\left(\Bref\right)^*\Aref\right]}{|\Bin|^4}
+=0,
+\end{equation}
+which is Eq.~\eqref{eq:nonlinearbalance}.  The numerical residual in
+Table~\ref{tab:flux} is therefore a direct measure of the combined spectral,
+matching, and oscillatory-quadrature error.
 
 \section{Schwarzschild limit}
 
