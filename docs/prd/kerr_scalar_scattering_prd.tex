@@ -83,8 +83,7 @@ sets the scalar Teukolsky conventions.  Section~\ref{sec:spectral} describes
 the endpoint spectral discretization and amplitude extraction.
 Section~\ref{sec:validation} gives the benchmark and frequency-sweep results.
 Section~\ref{sec:nonlinear} describes the cubic spheroidal projector and the
-self-channel nonlinear Green-function calculation.  Section~\ref{sec:spinminus2}
-summarizes the separate $s=-2$ benchmark side task.  We conclude in
+self-channel nonlinear Green-function calculation.  We conclude in
 Sec.~\ref{sec:conclusion}.
 
 \section{Scalar Teukolsky equation on Kerr}
@@ -432,37 +431,6 @@ interpreted perturbatively, i.e. the physical correction is
 $\epsilon A^{(1)}$ and remains small only when the self-coupling and incident
 field normalization keep $\epsilon |A^{(1)}|\ll |A^{(0)}|$.
 
-\section{Spin-minus-two benchmark side task}
-\label{sec:spinminus2}
-
-The repository also records a separate $s=-2$ benchmark task for
-$a=0.5$, $\ell=m=2$, and $\omega=10^{-4},0.1,10$.  Low and intermediate
-frequencies are compared against a Mathematica MST route~\cite{ManoSuzukiTakasugi1996},
-while the high frequency case uses GeneralizedSasakiNakamura.jl.  The direct
-Teukolsky-variable Python comparison gives relative errors
-\begin{align}
-\omega=10^{-4}:&\quad
-\delta \Bin/\Bin=2.5\times10^{-8},
-\notag\\
-&\quad
-\delta \Bref/\Bref=9.1\times10^{-12},\\
-\omega=0.1:&\quad
-\delta \Bin/\Bin=2.7\times10^{-10},
-\notag\\
-&\quad
-\delta \Bref/\Bref=5.3\times10^{-12},\\
-\omega=10:&\quad
-\delta \Bin/\Bin=4.0\times10^{-7},
-\notag\\
-&\quad
-\delta \Bref/\Bref=3.4\times10^{-1}.
-\end{align}
-The high-frequency reflected amplitude is approximately $10^{-8}$, close to
-the double-precision floor for direct Teukolsky-variable matching.  Pushing that
-case to benchmark accuracy should be done in the Sasaki--Nakamura
-variable~\cite{SasakiNakamura1982}, followed by the Teukolsky conversion.  This
-side task is therefore kept separate from the scalar solver.
-
 \section{Conclusions}
 \label{sec:conclusion}
 
@@ -513,17 +481,6 @@ Astrophys. J. \textbf{185}, 635 (1973).
 W. H. Press and S. A. Teukolsky,
 Floating orbits, superradiant scattering and the black-hole bomb,
 Nature \textbf{238}, 211 (1972).
-
-\bibitem{SasakiNakamura1982}
-M. Sasaki and T. Nakamura,
-A class of new perturbation equations for the Kerr geometry,
-Prog. Theor. Phys. \textbf{67}, 1788 (1982).
-
-\bibitem{ManoSuzukiTakasugi1996}
-S. Mano, H. Suzuki, and E. Takasugi,
-Analytic solutions of the Teukolsky equation and their low frequency
-expansions,
-Prog. Theor. Phys. \textbf{95}, 1079 (1996).
 
 \bibitem{GSN}
 R. K. L. Lo,
