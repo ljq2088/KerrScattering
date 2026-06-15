@@ -1,4 +1,4 @@
-\documentclass[aps,prd,twocolumn,nofootinbib,superscriptaddress,10pt]{revtex4-2}
+\documentclass[aps,prd,twocolumn,nofootinbib,superscriptaddress,10pt,floatfix]{revtex4-2}
 
 \usepackage{amsmath,amssymb,bm}
 \usepackage{graphicx}
@@ -35,10 +35,14 @@ $z=\rp/r$, with infinity and the future horizon retained as collocation
 endpoints.  After peeling the known phases, the degenerate endpoint rows of the
 radial equation provide regular first-order boundary conditions.  The linear
 horizon-normalized in mode is matched to down/up solutions at an intermediate
-radius to obtain $\Bin$ and $\Bref$.  Against 37 scalar
-GeneralizedSasakiNakamura.jl benchmark cases, the worst invariant amplitude
-error is $1.485\times10^{-8}$ and the worst flux residual is
-$3.714\times10^{-9}$.  For a cubic interaction
+radius to obtain $\Bin$ and $\Bref$.  Numerical accuracy is monitored
+internally through Chebyshev coefficient decay, collocation-equation
+residuals, Wronskian consistency, and nonlinear flux balance.  For the
+representative Kerr mode $(a,\ell,m,M\omega)=(0.5,2,2,0.30)$, the last
+16 normalized Chebyshev coefficients are below $3\times10^{-10}$ on the
+outer domains and below $2\times10^{-13}$ on the horizon domain; the
+corresponding maximum relative collocation residuals are $2.5\times10^{-8}$
+and $2.4\times10^{-11}$.  For a cubic interaction
 $\Box\Phi+\epsilon|\Phi|^2\Phi=0$, the Kerr factor
 $\Sigma=r^2+a^2\cos^2\theta$ generates a projected radial source
 $(r^2C^{(0)}_{\ell'\ell m}+a^2C^{(2)}_{\ell'\ell m})|R_{\ell m}|^2R_{\ell m}$.
@@ -88,8 +92,8 @@ The paper follows the structure of the Schwarzschild nonlinear Green-function
 template.  Section~\ref{sec:setup} defines the nonlinear Kerr scalar
 scattering problem.  Section~\ref{sec:methods} describes the endpoint spectral
 method and the nonlinear Green-function amplitudes.  Section~\ref{sec:results}
-reports the linear validation, superradiant frequency sweep, nonlinear
-self-channel balance, and the first target-channel matrix result.  The
+reports the spectral accuracy diagnostics, nonlinear self-channel balance, and
+the first target-channel matrix result.  The
 appendices give the working derivations used by the code so that normalization
 and sign conventions can be checked without referring to a separate note.
 
@@ -443,47 +447,60 @@ $\calO(\epsilon^2)$.
 \section{Results}
 \label{sec:results}
 
-\subsection{Linear validation and superradiance}
+\subsection{Spectral accuracy diagnostics}
 
-The linear solver was validated against GeneralizedSasakiNakamura.jl in the
-unit-Teukolsky-transmission convention~\cite{GSN}.  Complex phases were not
-used as pass/fail quantities because a shift of the Kerr tortoise coordinate
-changes them.  The benchmark gates were imposed on $|\Bin|$, $|\Bref|$, and
-the flux balance.
+The calculation is assessed with internal spectral diagnostics, following the
+same philosophy as the Schwarzschild nonlinear Green-function calculation.
+For the representative absorbing Kerr mode
+$(a,\ell,m,M\omega)=(0.5,2,2,0.30)$, Table~\ref{tab:quality} reports the
+tail of the Chebyshev expansion and the residual obtained by substituting the
+computed nodal solution back into the original collocation rows.  The single
+row used only to impose the normalization is excluded from the residual norm;
+the degenerate endpoint equation itself is retained.
 
-\begin{table}[b]
-\caption{Linear scalar validation summary.  The benchmark grid contains
-Schwarzschild, moderate-spin, high-spin, superradiant, and non-superradiant
-cases.}
-\begin{ruledtabular}
-\begin{tabular}{l c}
-quantity & value\\
-\hline
-usable GSN benchmark cases & 37\\
-frequency-sweep points & 51\\
-worst amplitude-magnitude error & $1.485\times10^{-8}$\\
-worst flux residual & $3.714\times10^{-9}$\\
-largest sampled superradiant gain & $4.970\times10^{-4}$\\
+\begin{center}
+\begin{minipage}{0.98\columnwidth}
+\refstepcounter{table}\label{tab:quality}
+\small
+\textbf{TABLE~\thetable.} Internal spectral accuracy diagnostics for
+$(a,\ell,m,M\omega)=(0.5,2,2,0.30)$ at $N=288$ and $r_m=40M$.  The coefficient
+tail is the maximum of the last 16 Chebyshev coefficients divided by the
+largest coefficient on the same subdomain.
+\begin{center}
+\begin{tabular}{l c c}
+\toprule
+branch & coefficient tail & max relative residual\\
+\midrule
+$u_{\rm down}$, outer & $2.73\times10^{-10}$ & $2.49\times10^{-8}$\\
+$u_{\rm up}$, outer & $2.73\times10^{-10}$ & $2.49\times10^{-8}$\\
+$u_{\rm in}$, inner & $1.73\times10^{-13}$ & $2.36\times10^{-11}$\\
+\bottomrule
 \end{tabular}
-\end{ruledtabular}
-\label{tab:linear}
-\end{table}
+\end{center}
+\end{minipage}
+\end{center}
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.47\textwidth]{../../figures/kerr_scalar_adaptive_errors.png}
-\includegraphics[width=0.47\textwidth]{../../figures/kerr_scalar_superradiance_amplification.png}
-\caption{Linear validation.  Left: invariant benchmark errors against
-GeneralizedSasakiNakamura.jl.  Right: frequency sweep showing scalar Kerr
-superradiant amplification only for $\omega<m\OmH$.}
-\label{fig:linear}
+\includegraphics[width=0.95\textwidth]{../../figures/kerr_scalar_spectral_quality.png}
+\caption{Spectral quality checks for the representative Kerr mode.  Left:
+normalized Chebyshev coefficient decay after phase peeling.  Right: relative
+collocation-equation residuals after the computed nodal values are substituted
+back into the regular endpoint and interior ODE rows.}
+\label{fig:quality}
 \end{figure*}
+
+Figure~\ref{fig:quality} shows the same information as a curve rather than as
+summary statistics.  The outer down and up curves lie on top of one another
+because they differ only by the sign of the peeled far-zone phase.  The inner
+in solution reaches a smaller coefficient floor; the larger outer residual is
+consistent with the larger condition number of the outer continuation matrix.
 
 \subsection{Self-channel nonlinear flux coefficients}
 
 Table~\ref{tab:flux} gives the fixed-incident self-channel coefficients of
-Eqs.~\eqref{eq:R1} and~\eqref{eq:T1}.  The Schwarzschild row is included as a
-limit check against the base problem.  For ordinary absorption
+Eqs.~\eqref{eq:R1} and~\eqref{eq:T1}.  The Schwarzschild row is kept only as a
+normalization reference to the base problem.  For ordinary absorption
 ($p>0$), a positive cubic coupling in the present sign convention increases
 the transmitted flux and decreases the reflected flux.  In the superradiant
 regime ($p<0$), $T^{(0)}<0$ and the signs reverse in the same flux-balance
@@ -519,6 +536,18 @@ a larger absolute residual, $-1.1\times10^{-8}$, because the two nonlinear
 flux terms are obtained from large nearly cancelling Green-function
 amplitudes.
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{../../figures/kerr_scalar_nonlinear_flux_convergence.png}
+\caption{Self-channel nonlinear flux convergence.  Left: relative change of
+the pair $T^{(1)},R^{(1)}$ against the largest-$N$ row in the scan.  Right:
+the nonlinear balance residual $|T^{(1)}+R^{(1)}|$.  The near-threshold
+$a=0.5$, $M\omega=0.24$ row is a cancellation-limited stress test; the
+absorbing $a=0.5$ row and the high-spin superradiant row reach balance
+residuals at the $10^{-12}$--$10^{-13}$ level by $N=256$--288.}
+\label{fig:fluxconv}
+\end{figure*}
+
 \subsection{Target-channel matrix}
 
 For the representative absorbing Kerr mode
@@ -527,33 +556,27 @@ target channels $\ell'=2,\ldots,6$.  Odd target channels vanish by angular
 parity in this case.  The production computation used $N=288$, $q=224$, and
 Fourier-tail tolerance $10^{-11}$.
 
-\begin{table}[b]
-\caption{Unit-horizon first-order Green-function amplitudes for the first Kerr
-target-channel scan.}
-\begin{ruledtabular}
+\begin{center}
+\begin{minipage}{0.98\columnwidth}
+\small
+\textbf{TABLE III.} Unit-horizon first-order Green-function amplitudes for the
+first Kerr target-channel scan.
+\begin{center}
 \begin{tabular}{c c c c}
+\toprule
 $\ell'$ & $|C^{(0)}_{\ell'\ell m}|$ &
 $|A_{{\rm ref},\ell'|\ell m}^{(1)}|$ & $|A_{H,\ell'|\ell m}^{(1)}|$\\
-\hline
+\midrule
 2 & $1.136\times10^{-1}$ & $1.137\times10^{6}$ & $3.804\times10^{3}$\\
 3 & $0$ & $0$ & $0$\\
 4 & $3.578\times10^{-2}$ & $1.362\times10^{4}$ & $1.319$\\
 5 & $0$ & $0$ & $0$\\
 6 & $5.341\times10^{-3}$ & $2.265\times10^{3}$ & $5.383\times10^{-7}$\\
+\bottomrule
 \end{tabular}
-\end{ruledtabular}
-\label{tab:channels}
-\end{table}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.95\textwidth]{../../figures/kerr_scalar_nonlinear_results.png}
-\caption{Nonlinear Kerr scalar results.  Left: unit-horizon Green-function
-amplitudes in the first active target-channel scan.  Right: fixed-incident
-self-channel nonlinear flux coefficients.  A symmetric logarithmic scale is
-used in the right panel to show both superradiant and absorbing cases.}
-\label{fig:nonlinear}
-\end{figure*}
+\end{center}
+\end{minipage}
+\end{center}
 
 A fixed-$q=224$ convergence scan over $N=224,256,288$ gives a largest
 reflected-amplitude change of $1.14\times10^{-4}$ relative to the $N=288$
@@ -569,7 +592,8 @@ only as an order-of-magnitude diagnostic at current double precision.
 The central conclusion is that the Schwarzschild nonlinear Green-function
 workflow extends cleanly to Kerr scalar scattering once the spheroidal angular
 projection and the Kerr flux normalization are handled explicitly.  The linear
-piece is already benchmarked to the level required for a production solver.
+piece is spectrally convergent in the phase-peeled variables and has small
+collocation residuals on the retained endpoint grid.
 The nonlinear self-channel reproduces the expected first-order flux balance
 after converting from unit-horizon to fixed incident normalization.  The Kerr
 geometry also exposes a new object absent from the simple Schwarzschild
@@ -588,6 +612,8 @@ The immediate numerical extensions are therefore clear: broaden the
 target-channel scan over $(a,\ell,m,\omega)$, set acceptance gates for the
 off-diagonal horizon amplitudes, and replace or cross-check the QUADPACK
 Fourier-tail integral with a dedicated Levin or Filon oscillatory integrator.
+
+\clearpage
 
 \appendix
 
@@ -932,11 +958,6 @@ JCAP \textbf{04}, 013 (2023).
 R. F. Rosato, K. Destounis, and P. Pani,
 Ringdown stability: Graybody factors as stable gravitational-wave observables,
 Phys. Rev. D \textbf{110}, L121501 (2024).
-
-\bibitem{GSN}
-R. K. L. Lo,
-GeneralizedSasakiNakamura.jl,
-\url{https://github.com/ricokaloklo/GeneralizedSasakiNakamura.jl}.
 
 \end{thebibliography}
 
