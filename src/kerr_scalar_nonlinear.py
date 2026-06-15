@@ -42,9 +42,11 @@ class KerrScalarGreenDiagnostics:
     M: float
     a: float
     l: int
+    l_target: int
     m: int
     omega: float
     radial_lambda: float
+    radial_lambda_source: float
     angular_coupling: complex
     angular_coupling_cos2: complex
     r_plus: float
@@ -57,10 +59,13 @@ class KerrScalarGreenDiagnostics:
     N_inner: int
     mapping: str
     quad_order: int
+    tail_epsrel: float
     radial_weight_model: str
     radial_integral_method: str
     B_inc: complex
     B_ref: complex
+    B_inc_target: complex
+    B_ref_target: complex
     wronskian: complex
     wronskian_outer: complex
     wronskian_relative_error: float
@@ -116,6 +121,79 @@ def _gauss_interval(a, b, order):
 
 def _complex_weighted_sum(values, weights):
     return np.sum(weights * values)
+
+
+def _solve_matched_mode(
+    l,
+    m,
+    omega,
+    params,
+    lam,
+    z_match,
+    N_outer,
+    N_inner,
+    active_mapping,
+    kappa_outer,
+    kappa_inner,
+):
+    """Solve down/up/in branches and match the in solution at z_match."""
+    down = _solve_branch(
+        N_outer, 0.0, z_match, "down", "left",
+        params, active_mapping, kappa_outer,
+        l, m, omega, lam,
+    )
+    up = _solve_branch(
+        N_outer, 0.0, z_match, "up", "left",
+        params, active_mapping, kappa_outer,
+        l, m, omega, lam,
+    )
+    inner = _solve_branch(
+        N_inner, z_match, 1.0, "in", "right",
+        params, active_mapping, kappa_inner,
+        l, m, omega, lam,
+    )
+
+    R_down, Rr_down = _field_and_radial_derivative(
+        z_match, down["u"][-1], down["uz"][-1], "down", params, omega, m
+    )
+    R_up, Rr_up = _field_and_radial_derivative(
+        z_match, up["u"][-1], up["uz"][-1], "up", params, omega, m
+    )
+    R_in, Rr_in = _field_and_radial_derivative(
+        z_match, inner["u"][0], inner["uz"][0], "in", params, omega, m
+    )
+
+    match_matrix = np.array([[R_down, R_up], [Rr_down, Rr_up]], dtype=complex)
+    B_inc, B_ref = np.linalg.solve(match_matrix, np.array([R_in, Rr_in]))
+    flux_norm = abs(B_inc) ** 2 - abs(B_ref) ** 2
+    if abs(flux_norm) <= 1e-300:
+        raise FloatingPointError("Degenerate in/up continuation normalization.")
+
+    down_eval = _BranchEvaluator(
+        down, 0.0, z_match, "down", params, omega, m, active_mapping, kappa_outer
+    )
+    up_eval = _BranchEvaluator(
+        up, 0.0, z_match, "up", params, omega, m, active_mapping, kappa_outer
+    )
+    inner_eval = _BranchEvaluator(
+        inner, z_match, 1.0, "in", params, omega, m, active_mapping, kappa_inner
+    )
+
+    return {
+        "lambda": lam,
+        "B_inc": B_inc,
+        "B_ref": B_ref,
+        "flux_norm": flux_norm,
+        "R_down": R_down,
+        "Rr_down": Rr_down,
+        "R_up": R_up,
+        "Rr_up": Rr_up,
+        "R_in": R_in,
+        "Rr_in": Rr_in,
+        "down_eval": down_eval,
+        "up_eval": up_eval,
+        "inner_eval": inner_eval,
+    }
 
 
 def _r_from_rstar(x, params):
@@ -174,10 +252,8 @@ def _outer_phase_projection(
     params,
     omega,
     a,
-    B_inc,
-    B_ref,
-    down_eval,
-    up_eval,
+    source_mode,
+    target_mode,
     c_ang,
     c_ang_cos2,
     epsrel=1e-9,
@@ -189,24 +265,29 @@ def _outer_phase_projection(
         def amplitude(x):
             r = _r_from_rstar(x, params)
             z = params.rp / r
-            down_amp = down_eval.u(z) / r
-            up_amp = up_eval.u(z) / r
+            source_down_amp = source_mode["down_eval"].u(z) / r
+            source_up_amp = source_mode["up_eval"].u(z) / r
+            target_down_amp = target_mode["down_eval"].u(z) / r
+            target_up_amp = target_mode["up_eval"].u(z) / r
             radial_weight = r**2 * c_ang + a**2 * c_ang_cos2
             dr_dx = delta(r, M=params.M, a=params.a) / (r**2 + a**2)
             source_prefactor = radial_weight * dr_dx
 
             field = [
-                (-1, B_inc, down_amp),
-                (1, B_ref, up_amp),
+                (-1, source_mode["B_inc"], source_down_amp),
+                (1, source_mode["B_ref"], source_up_amp),
             ]
             field_conj = [
-                (1, np.conj(B_inc), np.conj(down_amp)),
-                (-1, np.conj(B_ref), np.conj(up_amp)),
+                (1, np.conj(source_mode["B_inc"]), np.conj(source_down_amp)),
+                (-1, np.conj(source_mode["B_ref"]), np.conj(source_up_amp)),
             ]
             if test_kind == "ref":
-                tests = field
+                tests = [
+                    (-1, target_mode["B_inc"], target_down_amp),
+                    (1, target_mode["B_ref"], target_up_amp),
+                ]
             elif test_kind == "hor":
-                tests = [(1, 1.0 + 0.0j, up_amp)]
+                tests = [(1, 1.0 + 0.0j, target_up_amp)]
             else:
                 raise ValueError("test_kind must be 'ref' or 'hor'.")
 
@@ -244,9 +325,12 @@ def compute_kerr_scalar_green_diagnostics(
     mapping="auto",
     lmax_extra=16,
     radial_lambda=None,
+    radial_lambda_target=None,
+    l_target=None,
     angular_coupling=None,
     Cl=1.0,
     quad_order=240,
+    tail_epsrel=1e-9,
     radial_weight_model="kerr-covariant-sigma-dr",
     angular_coupling_cos2=None,
 ):
@@ -261,6 +345,12 @@ def compute_kerr_scalar_green_diagnostics(
         raise ValueError("omega must be nonzero.")
     if abs(a) >= M:
         raise ValueError("Require subextremal Kerr, |a| < M.")
+    if l < abs(m):
+        raise ValueError("Require l >= |m|.")
+    if l_target is None:
+        l_target = l
+    if l_target < abs(m):
+        raise ValueError("Require l_target >= |m|.")
     if quad_order < 16:
         raise ValueError("quad_order is too small for a stable diagnostic.")
     if radial_weight_model not in {
@@ -295,92 +385,96 @@ def compute_kerr_scalar_green_diagnostics(
         kappa_outer = 0.0
         kappa_inner = 0.0
 
-    lam = radial_lambda
-    if lam is None:
-        lam = teukolsky_lambda_s0(l, m, a, omega, lmax_extra=lmax_extra)
+    lam_source = radial_lambda
+    if lam_source is None:
+        lam_source = teukolsky_lambda_s0(l, m, a, omega, lmax_extra=lmax_extra)
+    lam_target = radial_lambda_target
+    if lam_target is None:
+        if l_target == l and radial_lambda is not None:
+            lam_target = radial_lambda
+        else:
+            lam_target = teukolsky_lambda_s0(
+                l_target, m, a, omega, lmax_extra=lmax_extra
+            )
     c_ang = angular_coupling
     if c_ang is None:
         c_ang = scalar_cubic_coupling(
-            l, m, a, omega, l_target=l, lmax_extra=lmax_extra
+            l, m, a, omega, l_target=l_target, lmax_extra=lmax_extra
         )
     c_ang_cos2 = angular_coupling_cos2
     if c_ang_cos2 is None:
         c_ang_cos2 = scalar_cubic_coupling_cos2(
-            l, m, a, omega, l_target=l, lmax_extra=lmax_extra
+            l, m, a, omega, l_target=l_target, lmax_extra=lmax_extra
         )
 
-    down = _solve_branch(
-        N_outer, 0.0, z_match, "down", "left",
-        params, active_mapping, kappa_outer,
-        l, m, omega, lam,
+    source_mode = _solve_matched_mode(
+        l, m, omega, params, lam_source, z_match,
+        N_outer, N_inner, active_mapping, kappa_outer, kappa_inner,
     )
-    up = _solve_branch(
-        N_outer, 0.0, z_match, "up", "left",
-        params, active_mapping, kappa_outer,
-        l, m, omega, lam,
-    )
-    inner = _solve_branch(
-        N_inner, z_match, 1.0, "in", "right",
-        params, active_mapping, kappa_inner,
-        l, m, omega, lam,
-    )
+    if l_target == l and abs(lam_target - lam_source) <= 1e-13:
+        target_mode = source_mode
+    else:
+        target_mode = _solve_matched_mode(
+            l_target, m, omega, params, lam_target, z_match,
+            N_outer, N_inner, active_mapping, kappa_outer, kappa_inner,
+        )
 
-    R_down, Rr_down = _field_and_radial_derivative(
-        z_match, down["u"][-1], down["uz"][-1], "down", params, omega, m
-    )
-    R_up, Rr_up = _field_and_radial_derivative(
-        z_match, up["u"][-1], up["uz"][-1], "up", params, omega, m
-    )
-    R_in, Rr_in = _field_and_radial_derivative(
-        z_match, inner["u"][0], inner["uz"][0], "in", params, omega, m
-    )
-
-    match_matrix = np.array([[R_down, R_up], [Rr_down, Rr_up]], dtype=complex)
-    B_inc, B_ref = np.linalg.solve(match_matrix, np.array([R_in, Rr_in]))
-
-    flux_norm = abs(B_inc) ** 2 - abs(B_ref) ** 2
-    if abs(flux_norm) <= 1e-300:
-        raise FloatingPointError("Degenerate in/up continuation normalization.")
-
-    down_eval = _BranchEvaluator(
-        down, 0.0, z_match, "down", params, omega, m, active_mapping, kappa_outer
-    )
-    up_eval = _BranchEvaluator(
-        up, 0.0, z_match, "up", params, omega, m, active_mapping, kappa_outer
-    )
-    inner_eval = _BranchEvaluator(
-        inner, z_match, 1.0, "in", params, omega, m, active_mapping, kappa_inner
-    )
-
-    def R0(z):
+    def R_source(z):
         z = np.asarray(z, dtype=float)
         out = np.empty(z.shape, dtype=complex)
         outer = z < z_match
         if np.any(outer):
-            out[outer] = B_inc * down_eval.R(z[outer]) + B_ref * up_eval.R(z[outer])
+            out[outer] = (
+                source_mode["B_inc"] * source_mode["down_eval"].R(z[outer])
+                + source_mode["B_ref"] * source_mode["up_eval"].R(z[outer])
+            )
         if np.any(~outer):
-            out[~outer] = inner_eval.R(z[~outer])
+            out[~outer] = source_mode["inner_eval"].R(z[~outer])
         return out
 
     def Rtest_ref(z):
-        return R0(z)
+        z = np.asarray(z, dtype=float)
+        out = np.empty(z.shape, dtype=complex)
+        outer = z < z_match
+        if np.any(outer):
+            out[outer] = (
+                target_mode["B_inc"] * target_mode["down_eval"].R(z[outer])
+                + target_mode["B_ref"] * target_mode["up_eval"].R(z[outer])
+            )
+        if np.any(~outer):
+            out[~outer] = target_mode["inner_eval"].R(z[~outer])
+        return out
 
     def Rtest_hor(z):
         z = np.asarray(z, dtype=float)
         out = np.empty(z.shape, dtype=complex)
         outer = z < z_match
         if np.any(outer):
-            out[outer] = up_eval.R(z[outer])
+            out[outer] = target_mode["up_eval"].R(z[outer])
         if np.any(~outer):
-            rin = inner_eval.R(z[~outer])
-            out[~outer] = (-np.conj(B_ref) * rin + B_inc * np.conj(rin)) / flux_norm
+            rin = target_mode["inner_eval"].R(z[~outer])
+            out[~outer] = (
+                -np.conj(target_mode["B_ref"]) * rin
+                + target_mode["B_inc"] * np.conj(rin)
+            ) / target_mode["flux_norm"]
         return out
 
     d_match = delta(params.rp / z_match, M=M, a=a)
-    wronskian = d_match * (R_in * Rr_up - R_up * Rr_in)
+    wronskian = d_match * (
+        target_mode["R_in"] * target_mode["Rr_up"]
+        - target_mode["R_up"] * target_mode["Rr_in"]
+    )
     wronskian_outer = d_match * (
-        (B_inc * R_down + B_ref * R_up) * Rr_up
-        - R_up * (B_inc * Rr_down + B_ref * Rr_up)
+        (
+            target_mode["B_inc"] * target_mode["R_down"]
+            + target_mode["B_ref"] * target_mode["R_up"]
+        )
+        * target_mode["Rr_up"]
+        - target_mode["R_up"]
+        * (
+            target_mode["B_inc"] * target_mode["Rr_down"]
+            + target_mode["B_ref"] * target_mode["Rr_up"]
+        )
     )
     wronskian_relative_error = float(
         abs(wronskian - wronskian_outer) / max(abs(wronskian), 1e-300)
@@ -390,7 +484,7 @@ def compute_kerr_scalar_green_diagnostics(
         z, z_weights = _gauss_interval(z_match, 1.0, quad_order)
         r = params.rp / z
         weights = z_weights * params.rp / z**2
-        R0_values = R0(z)
+        R0_values = R_source(z)
         cubic_radial = np.abs(R0_values) ** 2 * R0_values
         source = (r**2 * c_ang + a**2 * c_ang_cos2) * cubic_radial
         source_projection_ref = _complex_weighted_sum(Rtest_ref(z) * source, weights)
@@ -403,12 +497,11 @@ def compute_kerr_scalar_green_diagnostics(
             params,
             omega,
             a,
-            B_inc,
-            B_ref,
-            down_eval,
-            up_eval,
+            source_mode,
+            target_mode,
             c_ang,
             c_ang_cos2,
+            epsrel=tail_epsrel,
         )
         source_projection_hor += _outer_phase_projection(
             "hor",
@@ -416,12 +509,11 @@ def compute_kerr_scalar_green_diagnostics(
             params,
             omega,
             a,
-            B_inc,
-            B_ref,
-            down_eval,
-            up_eval,
+            source_mode,
+            target_mode,
             c_ang,
             c_ang_cos2,
+            epsrel=tail_epsrel,
         )
     else:
         z0, w0 = _gauss_interval(0.0, z_match, quad_order)
@@ -429,7 +521,7 @@ def compute_kerr_scalar_green_diagnostics(
         z = np.concatenate([z0, z1])
         z_weights = np.concatenate([w0, w1])
         weights = z_weights / params.rp
-        R0_values = R0(z)
+        R0_values = R_source(z)
         cubic_radial = np.abs(R0_values) ** 2 * R0_values
         source = c_ang * cubic_radial
         source_projection_ref = _complex_weighted_sum(Rtest_ref(z) * source, weights)
@@ -442,9 +534,11 @@ def compute_kerr_scalar_green_diagnostics(
         M=M,
         a=a,
         l=l,
+        l_target=int(l_target),
         m=m,
         omega=omega,
-        radial_lambda=float(lam),
+        radial_lambda=float(lam_target),
+        radial_lambda_source=float(lam_source),
         angular_coupling=c_ang,
         angular_coupling_cos2=c_ang_cos2,
         r_plus=float(params.rp),
@@ -457,14 +551,17 @@ def compute_kerr_scalar_green_diagnostics(
         N_inner=int(N_inner),
         mapping="sinh" if use_sinh else "linear",
         quad_order=int(quad_order),
+        tail_epsrel=float(tail_epsrel),
         radial_weight_model=radial_weight_model,
         radial_integral_method=(
             "phase-channel-fourier-tail"
             if radial_weight_model == "kerr-covariant-sigma-dr"
             else "compact-z-gauss"
         ),
-        B_inc=B_inc,
-        B_ref=B_ref,
+        B_inc=source_mode["B_inc"],
+        B_ref=source_mode["B_ref"],
+        B_inc_target=target_mode["B_inc"],
+        B_ref_target=target_mode["B_ref"],
         wronskian=wronskian,
         wronskian_outer=wronskian_outer,
         wronskian_relative_error=wronskian_relative_error,

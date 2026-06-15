@@ -431,6 +431,38 @@ interpreted perturbatively, i.e. the physical correction is
 $\epsilon A^{(1)}$ and remains small only when the self-coupling and incident
 field normalization keep $\epsilon |A^{(1)}|\ll |A^{(0)}|$.
 
+As a first step beyond the self-channel approximation, the code now supports
+distinct target channels $\ell'\ne\ell$ in Eq.~\eqref{eq:nonlinear_radial_source}.
+For the representative case $(a,\ell,m,\omega)=(0.5,2,2,0.30)$ and
+$N=288$, $q=224$, with Fourier-tail tolerance $10^{-11}$, the
+target-channel scan gives
+\begin{center}
+\begin{tabular}{c c c c}
+\toprule
+$\ell'$ & $|C^{(0)}_{\ell'\ell m}|$ &
+$|A_{\rm ref}^{(1)}|$ & $|A_H^{(1)}|$\\
+\midrule
+2 & $1.136\times10^{-1}$ & $1.137\times10^6$ & $3.804\times10^3$\\
+3 & $0$ & $0$ & $0$\\
+4 & $3.578\times10^{-2}$ & $1.362\times10^4$ & $1.319$\\
+5 & $0$ & $0$ & $0$\\
+6 & $5.341\times10^{-3}$ & $2.265\times10^3$ & $5.383\times10^{-7}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The odd target channels vanish by the angular projection symmetry for this
+mode.  A fixed-$q=224$ convergence scan over $N=224,256,288$ gives a
+largest reflected-amplitude change of $1.14\times10^{-4}$ relative to the
+$N=288$ row, and the change from $N=256$ to $N=288$ is at most
+$6.27\times10^{-7}$ over the active reflected channels.  The off-diagonal
+horizon amplitudes are much smaller and cancellation limited: $\ell'=4$ is
+stable at roughly the percent level between $N=256$ and $N=288$, while the
+$\ell'=6$ horizon value is a near-zero $10^{-7}$ quantity and should be read
+as an order-of-magnitude diagnostic in the present double-precision code.
+This table is therefore a robust first reflected-channel matrix output, while
+a wider survey over source modes, frequencies, and horizon-channel controls
+remains future production work.
+
 \section{Conclusions}
 \label{sec:conclusion}
 
@@ -445,12 +477,12 @@ balance provides a stringent convention-independent check.
 The linear scalar problem is closed at the level required for a publication
 draft: 37 GSN benchmark cases and 51 frequency-sweep points pass the stated
 acceptance gates, and the sweep resolves the expected Kerr superradiant
-amplification.  The cubic angular projector, the Kerr-covariant self-channel
-radial source, and the first-order nonlinear Green-function amplitudes are now
-implemented.  The nonlinear table is controlled by quadrature, spectral-order,
-and matching-window scans.  The next physics step is to extend this calculation
-from the representative self-channel cases to a broader coupled
-$\ell'$-channel nonlinear scattering survey.
+amplification.  The cubic angular projector, the Kerr-covariant radial source,
+and the first-order nonlinear Green-function amplitudes are now implemented.
+The nonlinear calculation has also been extended from the self-channel to a
+first representative $\ell'$ target-channel scan.  The next physics step is to
+turn this channel capability into a broad production survey with fixed incident
+normalization.
 
 \begin{acknowledgments}
 This draft was generated from the numerical outputs in the KerrScattering
@@ -467,7 +499,9 @@ files used in this manuscript are
 \texttt{kerr\_scalar\_cubic\_couplings.csv}, and
 \texttt{kerr\_scalar\_nonlinear\_diagnostics.csv}.  The nonlinear control
 scan is stored in
-\texttt{kerr\_scalar\_nonlinear\_control\_scan.csv}.
+\texttt{kerr\_scalar\_nonlinear\_control\_scan.csv}; the target-channel
+outputs are stored in \texttt{kerr\_scalar\_nonlinear\_channels.csv} and
+\texttt{kerr\_scalar\_nonlinear\_channel\_convergence.csv}.
 
 \begin{thebibliography}{9}
 

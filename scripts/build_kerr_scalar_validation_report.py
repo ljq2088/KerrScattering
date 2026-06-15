@@ -12,6 +12,10 @@ SWEEP = os.path.join(ROOT, "results", "kerr_scalar_frequency_sweep.csv")
 COUPLINGS = os.path.join(ROOT, "results", "kerr_scalar_cubic_couplings.csv")
 NONLINEAR = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_diagnostics.csv")
 NONLINEAR_CONTROL = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_control_scan.csv")
+NONLINEAR_CHANNELS = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_channels.csv")
+NONLINEAR_CHANNEL_CONVERGENCE = os.path.join(
+    ROOT, "results", "kerr_scalar_nonlinear_channel_convergence.csv"
+)
 REPORT = os.path.join(ROOT, "docs", "kerr_scalar_validation_report.md")
 
 
@@ -52,6 +56,14 @@ def main():
     if os.path.exists(NONLINEAR_CONTROL):
         with open(NONLINEAR_CONTROL, newline="") as f:
             nonlinear_control_rows = list(csv.DictReader(f))
+    nonlinear_channel_rows = []
+    if os.path.exists(NONLINEAR_CHANNELS):
+        with open(NONLINEAR_CHANNELS, newline="") as f:
+            nonlinear_channel_rows = list(csv.DictReader(f))
+    nonlinear_channel_convergence_rows = []
+    if os.path.exists(NONLINEAR_CHANNEL_CONVERGENCE):
+        with open(NONLINEAR_CHANNEL_CONVERGENCE, newline="") as f:
+            nonlinear_channel_convergence_rows = list(csv.DictReader(f))
 
     lines = [
         "# Kerr s=0 spectral validation report",
@@ -300,6 +312,103 @@ def main():
                 "coarser or farther matching tests; the production rows use",
                 "`N=256` and the stable matching window recorded in the CSV.",
             ])
+        if nonlinear_channel_rows:
+            active_channels = [
+                row for row in nonlinear_channel_rows
+                if row["status"] == "ok"
+            ]
+            skipped_channels = [
+                row for row in nonlinear_channel_rows
+                if row["status"] != "ok"
+            ]
+            strongest_ref = max(
+                active_channels,
+                key=lambda row: float(row["abs_A_ref_1"]),
+            )
+            lines.extend([
+                "",
+                "### Nonlinear target-channel scan",
+                "",
+                "`scripts/run_kerr_scalar_nonlinear_channels.py` performs the",
+                "first multi-`l'` extension of the nonlinear Green-function",
+                "calculation. The current tracked table scans",
+                "`kerr_a05_l2m2_super` with target channels `l'=2,...,6`.",
+                "",
+                f"- Channel rows: {len(nonlinear_channel_rows)}",
+                f"- Active radial solves: {len(active_channels)}",
+                f"- Skipped zero-coupling channels: {len(skipped_channels)}",
+                "- Strongest reflected channel: "
+                f"`l'={strongest_ref['l_target']}`, "
+                f"`|A_ref_1|={float(strongest_ref['abs_A_ref_1']):.3e}`",
+                "",
+                "| l' | |C0| | |A_ref_1| | |A_H_1| | status |",
+                "|---:|---:|---:|---:|:---|",
+            ])
+            for row in nonlinear_channel_rows:
+                lines.append(
+                    "| {lt} | {c0:.3e} | {aref:.3e} | {ahor:.3e} | {status} |".format(
+                        lt=row["l_target"],
+                        c0=float(row["abs_angular_coupling"]),
+                        aref=float(row["abs_A_ref_1"]),
+                        ahor=float(row["abs_A_hor_1"]),
+                        status=row["status"],
+                    )
+                )
+            if nonlinear_channel_convergence_rows:
+                non_reference_rows = [
+                    row for row in nonlinear_channel_convergence_rows
+                    if float(row["rel_A_ref_to_reference"]) > 0.0
+                    or float(row["rel_A_hor_to_reference"]) > 0.0
+                ]
+                max_conv_ref = max(
+                    float(row["rel_A_ref_to_reference"])
+                    for row in non_reference_rows
+                )
+                max_conv_hor = max(
+                    float(row["rel_A_hor_to_reference"])
+                    for row in non_reference_rows
+                )
+                max_abs_conv_ref = max(
+                    float(row["abs_delta_A_ref_to_reference"])
+                    for row in non_reference_rows
+                )
+                max_abs_conv_hor = max(
+                    float(row["abs_delta_A_hor_to_reference"])
+                    for row in non_reference_rows
+                )
+                lines.extend([
+                    "",
+                    "The multi-channel result is also checked against a higher-order",
+                    "reference row for each active target channel. The current",
+                    "convergence scan compares `(N,q)=(224,224),(256,224),(288,224)`.",
+                    "",
+                    "- Channel-convergence rows: "
+                    f"{len(nonlinear_channel_convergence_rows)}",
+                    "- Largest reflected-amplitude change to reference: "
+                    f"`{max_conv_ref:.3e}` relative, `{max_abs_conv_ref:.3e}` absolute",
+                    "- Largest horizon-amplitude change to reference: "
+                    f"`{max_conv_hor:.3e}` relative, `{max_abs_conv_hor:.3e}` absolute",
+                    "The large relative horizon value is caused by the nearly",
+                    "vanishing off-diagonal `l'=6` horizon amplitude; the reflected",
+                    "channel amplitudes are the robust multi-channel observables in",
+                    "the current double-precision implementation.",
+                    "",
+                    "| l' | N | q | rel A_ref | abs dA_ref | rel A_H | abs dA_H |",
+                    "|---:|---:|---:|---:|---:|---:|---:|",
+                ])
+                for row in nonlinear_channel_convergence_rows:
+                    lines.append(
+                        "| {lt} | {n} | {q} | {dref:.3e} | {adref:.3e} | "
+                        "{dhor:.3e} | {adhor:.3e} |".format(
+                            lt=row["l_target"],
+                            n=row["N_outer"],
+                            q=row["quad_order"],
+                            dref=float(row["rel_A_ref_to_reference"]),
+                            adref=float(row["abs_delta_A_ref_to_reference"]),
+                            dhor=float(row["rel_A_hor_to_reference"]),
+                            adhor=float(row["abs_delta_A_hor_to_reference"]),
+                        )
+                    )
 
     lines.extend([
         "",
@@ -325,8 +434,9 @@ def main():
         "",
         "The angular cubic projector, Kerr-covariant cubic radial source, and",
         "oscillatory-tail Green-function integration are now explicit. Wronskians",
-        "are stable at machine precision. The remaining nonlinear work is to set",
-        "broader production acceptance gates across more modes and, if needed,",
+        "are stable at machine precision. The target-channel implementation now",
+        "has a first active-channel convergence scan. The remaining nonlinear work",
+        "is to set broader production acceptance gates across more modes and, if needed,",
         "replace the QUADPACK Fourier tail by a dedicated Levin/Filon integrator",
         "for very high-frequency nonlinear tails.",
         "",
@@ -339,7 +449,7 @@ def main():
         "Generated from `results/kerr_scalar_adaptive_summary.csv`,",
         "`results/kerr_scalar_frequency_sweep.csv`, and",
         "`results/kerr_scalar_cubic_couplings.csv`, plus nonlinear diagnostics",
-        "and control scans when available.",
+        "channel scans, channel-convergence scans, and control scans when available.",
         "",
     ])
 

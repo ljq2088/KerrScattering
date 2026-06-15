@@ -109,6 +109,19 @@ def test_kerr_scalar_green_diagnostics_smoke():
     assert result.wronskian_relative_error < 1e-10
 
 
+def test_kerr_scalar_green_diagnostics_target_channel_smoke():
+    result = compute_kerr_scalar_green_diagnostics(
+        l=2, m=2, omega=0.3, a=0.5, l_target=4,
+        N_outer=64, N_inner=64, quad_order=48
+    )
+    assert result.status == "ok"
+    assert result.l == 2
+    assert result.l_target == 4
+    assert np.isfinite(result.A_ref_1)
+    assert np.isfinite(result.A_hor_1)
+    assert result.wronskian_relative_error < 1e-10
+
+
 def test_kerr_scalar_green_diagnostics_zero_coupling():
     result = compute_kerr_scalar_green_diagnostics(
         l=2, m=2, omega=0.3, a=0.5, N_outer=64, N_inner=64,

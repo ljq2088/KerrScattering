@@ -1,131 +1,136 @@
-# Schwarzschild Green-function Spectral Method
+# KerrScattering
 
-Multi-domain Chebyshev spectral method for Schwarzschild frequency-domain radial scattering and Green-function nonlinear amplitude correction.
+Chebyshev spectral solvers for scalar scattering and weak nonlinear
+Green-function amplitudes.  The current active branch focuses on the scalar
+Teukolsky equation on Kerr, `s=0`.
 
-## Method Overview
+## Current Scope
 
-This project solves the radial scattering problem for a scalar field on a Schwarzschild background using a multi-domain Chebyshev spectral method. The computation produces:
+The active physics target is the scalar field on Kerr:
 
-1. **Linear scattering coefficients**: transmission probability T and reflection probability R
-2. **Nonlinear amplitude corrections**: first-order corrections T1, R1 from a cubic (|φ|²φ) self-interaction
+```text
+s = 0
+Box Phi + epsilon |Phi|^2 Phi = 0
+```
 
-### Key Features
-- Compactified Bondi coordinate z = 2M/r
-- Multi-domain approach with matching at zp
-- Adaptive mesh refinement (AnMR) for low frequencies (ω < 0.1)
-- Green function matching for connection coefficients
-- Quadrature-based nonlinear correction integrals
+Previous non-scalar benchmark utilities are not part of the current scalar
+nonlinear scattering conclusion or documentation flow.
+
+## Main Results
+
+- Endpoint-collocation Kerr scalar spectral solver using `z = r_+/r`.
+- Direct inclusion of infinity (`z=0`) and the horizon (`z=1`) as collocation
+  endpoints.
+- Linear amplitude extraction for `B_inc` and `B_ref` by matching in/down/up
+  homogeneous solutions.
+- GSN benchmark validation on 37 usable scalar cases:
+  - worst amplitude-magnitude error: `1.485e-8`;
+  - worst flux residual: `3.714e-9`.
+- 51-point scalar frequency sweep resolving superradiance only for
+  `omega < m Omega_H`.
+- Kerr-covariant cubic scalar source
+
+  ```text
+  Q = (r^2 C0 + a^2 C2) |R|^2 R
+  ```
+
+  for weak nonlinear Green-function amplitudes.
+- Exterior nonlinear tail integration by explicit phase-channel Fourier
+  quadrature.
+
+## Important Files
+
+- `src/kerr_scalar_spectral.py`
+  Two-domain Chebyshev spectral solver for scalar Kerr in modes.
+
+- `src/teukolsky_scalar.py`
+  Scalar spheroidal harmonics, angular eigenvalues, Teukolsky lambda, and
+  cubic angular projectors.
+
+- `src/kerr_scalar_nonlinear.py`
+  Kerr-covariant weak nonlinear source and Green-function amplitudes.
+
+- `scripts/adaptive_kerr_scalar_gsn_validation.py`
+  Adaptive validation against GeneralizedSasakiNakamura.jl scalar benchmarks.
+
+- `scripts/run_kerr_scalar_frequency_sweep.py`
+  Scalar frequency sweep and superradiance data.
+
+- `scripts/run_kerr_scalar_nonlinear_diagnostics.py`
+  Self-channel weak nonlinear amplitude diagnostics.
+
+- `scripts/run_kerr_scalar_nonlinear_channels.py`
+  Multi-`l'` weak nonlinear target-channel amplitudes.
+
+- `scripts/run_kerr_scalar_nonlinear_channel_convergence.py`
+  Multi-`l'` spectral-order and quadrature convergence checks.
+
+- `scripts/run_kerr_scalar_nonlinear_control_scan.py`
+  Spectral-order and matching-radius control scan for nonlinear amplitudes.
+
+- `docs/kerr_scalar_current_work_zh.pdf`
+  Current Chinese derivation and status report for the scalar `s=0` project.
+
+- `docs/prd/kerr_scalar_scattering_prd.pdf`
+  Current PRD-style English manuscript draft.
 
 ## Quick Start
 
 ```bash
-cd KerrScatteringProb
-python scripts/run_reproduction.py       # Single frequency reproduction
-python scripts/run_parameter_sweep.py     # Multi-frequency sweep
-python scripts/run_convergence.py         # N-convergence test
-python scripts/run_teukolsky_scalar_demo.py  # Scalar s=0 Kerr/Teukolsky demo
-python scripts/run_kerr_scalar_spectral_demo.py  # Kerr s=0 spectral/IVP comparison
-python scripts/run_kerr_scalar_spectral_convergence.py  # Kerr s=0 spectral convergence
-julia --project=/home/ljq/code/GSN/GeneralizedSasakiNakamura.jl scripts/run_kerr_scalar_gsn_benchmark.jl
-python scripts/compare_kerr_scalar_gsn.py  # Kerr s=0 spectral/GSN benchmark comparison
-python scripts/adaptive_kerr_scalar_gsn_validation.py  # Scan N/r_match against GSN
-python scripts/run_kerr_scalar_frequency_sweep.py  # Kerr s=0 frequency sweep
-python scripts/run_kerr_scalar_cubic_projector.py  # Kerr s=0 cubic angular source projection
-python scripts/run_kerr_scalar_nonlinear_diagnostics.py  # Prototype nonlinear radial GF diagnostics
+python scripts/adaptive_kerr_scalar_gsn_validation.py
+python scripts/run_kerr_scalar_frequency_sweep.py
+python scripts/run_kerr_scalar_cubic_projector.py
+python scripts/run_kerr_scalar_nonlinear_diagnostics.py
+python scripts/run_kerr_scalar_nonlinear_channels.py
+python scripts/run_kerr_scalar_nonlinear_channel_convergence.py
+python scripts/run_kerr_scalar_nonlinear_control_scan.py
 python scripts/build_kerr_scalar_validation_report.py
+```
+
+Plotting:
+
+```bash
 python scripts/plot_kerr_scalar_validation.py
 python scripts/plot_kerr_scalar_frequency_sweep.py
-python scripts/compute_teukolsky_lambda.py --s 0 --l 2 --m 1 --a 0.5 --omega 0.1
-python scripts/run_spin_minus2_rin_comparison.py  # s=-2 R_in Binc/Bref comparison
-python -m pytest tests/test_basic_run.py  # Smoke test
 ```
 
-## Requirements
+Minimal smoke checks:
 
-- Python 3.8+
-- numpy, scipy, matplotlib
-
-## Project Structure
-
-```
-├── src/                          # Core computation
-│   ├── cheb.py                   # Chebyshev spectral tools
-│   ├── bondi.py                  # ODE operator construction
-│   └── gf_adaptive_match.py     # Main computation function
-├── scripts/                      # Runnable scripts
-│   ├── run_reproduction.py
-│   ├── run_parameter_sweep.py
-│   └── run_convergence.py
-├── tests/                        # Tests
-│   └── test_basic_run.py
-├── results/                      # Output data
-├── figures/                      # Output plots
-└── docs/                         # Documentation
-    ├── reproduction_log.md
-    └── method_summary.md
+```bash
+python -m compileall src scripts tests
+python -m pytest tests/test_basic_run.py tests/test_teukolsky_scalar.py
 ```
 
-## Reference
+If `pytest` is not installed in the active Python environment, use direct
+script smoke checks or install it into the local environment first.
 
-Based on MATLAB code: `GF_adaptive_match.m` and `MatlCheb-main`.
+## Nonlinear Interpretation
 
-## Kerr / Teukolsky Branch
+The nonlinear amplitudes currently reported are first-order response
+coefficients.  The physical correction is
 
-This branch adds first building blocks for extending the Schwarzschild scalar
-Green-function method to scalar (`s=0`) Teukolsky modes on Kerr:
+```text
+epsilon A^(1)
+```
 
-- `src/teukolsky_scalar.py`: scalar spheroidal eigenvalue, Kerr tortoise
-  coordinate, scalar radial Teukolsky ODE, and unit-horizon-amplitude in-mode
-  integration.
-- `src/kerr_scalar_spectral.py`: two-domain Chebyshev spectral matching for
-  scalar Kerr in modes. This follows the Schwarzschild spectral route with
-  Kerr `s=0` radial coefficients, direct `z=0,1` endpoint regularity rows,
-  phase peeling, and value/derivative matching for `B_inc` and `B_ref`.
-- `scripts/run_kerr_scalar_spectral_demo.py`: compares the Kerr `s=0` spectral
-  amplitudes against the direct radial IVP leading-asymptotic output.
-- `scripts/run_kerr_scalar_spectral_convergence.py`: scans spectral order and
-  records convergence diagnostics in `results/kerr_scalar_spectral_convergence.csv`.
-- `scripts/run_kerr_scalar_gsn_benchmark.jl`: runs external GSN scalar
-  Teukolsky benchmarks for selected Kerr modes.
-- `scripts/compare_kerr_scalar_gsn.py`: compares spectral amplitudes with GSN.
-  Magnitude errors are the convention-invariant benchmark; complex phase
-  factors are reported separately because tortoise-coordinate constants differ
-  across packages.
-- `scripts/adaptive_kerr_scalar_gsn_validation.py`: scans Chebyshev order and
-  matching radius for each usable GSN case; the summary table currently
-  verifies 37 cases with all amplitude-magnitude errors below `1e-7`.
-- `scripts/run_kerr_scalar_frequency_sweep.py`: computes self-converged
-  Schwarzschild and Kerr frequency sweeps for `R`, `T`, and superradiant
-  amplification using the same endpoint-collocation spectral route.
-- `scripts/run_kerr_scalar_cubic_projector.py`: computes scalar spheroidal
-  cubic source projection coefficients `C_{l'lm}` for the validated Kerr
-  modes; this is the angular input for the nonlinear Green-function extension.
-- `scripts/run_kerr_scalar_nonlinear_diagnostics.py`: evaluates prototype
-  nonlinear radial Green-function source integrals and quadrature convergence
-  diagnostics. These are explicitly marked as diagnostics until the final Kerr
-  cubic radial source weight is fixed.
-- `scripts/plot_kerr_scalar_frequency_sweep.py`: produces publication-style
-  frequency-sweep plots in `figures/kerr_scalar_frequency_rt.png` and
-  `figures/kerr_scalar_superradiance_amplification.png`.
-- `docs/kerr_scalar_validation_report.md` and `figures/kerr_scalar_*.png`:
-  current validation report and plots.
-- `docs/teukolsky_scalar_kerr.md` and `docs/teukolsky_scalar_kerr.pdf`:
-  derivation notes.
-- `scripts/probe_spin_minus2_benchmark.py`: environment probe for the requested
-  `s=-2`, `a=0.5`, `l=m=2` benchmark stack.
-- `scripts/run_spin_minus2_benchmark_suite.py`: split benchmark runner using
-  GSN for high frequency and Windows Mathematica/MST from `F:\mma` for low
-  frequency.
-- `scripts/run_spin_minus2_rin_comparison.py`: computes the requested
-  `s=-2, a=0.5, l=m=2` `R_in` incidence/reflection amplitudes at
-  `omega = 10, 0.1, 1e-4` and compares them against the GSN/MST benchmarks.
+and weak perturbation theory requires
 
-## Future Work
+```text
+epsilon |A^(1)| << |A^(0)|.
+```
 
-- Extension to Kerr (Teukolsky equation) with non-zero spin parameter
-- Higher angular modes (l > 0)
-- Convergence acceleration for the quadrature integrals
-- Physical calibration of the nonlinear coupling constant Cl
+Large `A_ref_1` values in near-superradiant or low-frequency Kerr cases arise
+from the unit-horizon-transmission normalization and the cubic source
+`|R|^2 R`; they should not be interpreted without specifying the physical
+incident normalization and coupling strength.
+
+## Next Work
+
+- Add fixed-incident-amplitude normalization.
+- Broaden the multi-channel nonlinear scan beyond the current representative
+  `kerr_a05_l2m2_super` case.
+- Add independent Levin/Filon-style oscillatory-tail integration for
+  cross-checks.
 
 ## License
 

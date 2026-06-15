@@ -141,6 +141,50 @@ The largest reflection control changes occur in deliberately
 coarser or farther matching tests; the production rows use
 `N=256` and the stable matching window recorded in the CSV.
 
+### Nonlinear target-channel scan
+
+`scripts/run_kerr_scalar_nonlinear_channels.py` performs the
+first multi-`l'` extension of the nonlinear Green-function
+calculation. The current tracked table scans
+`kerr_a05_l2m2_super` with target channels `l'=2,...,6`.
+
+- Channel rows: 5
+- Active radial solves: 3
+- Skipped zero-coupling channels: 2
+- Strongest reflected channel: `l'=2`, `|A_ref_1|=1.137e+06`
+
+| l' | |C0| | |A_ref_1| | |A_H_1| | status |
+|---:|---:|---:|---:|:---|
+| 2 | 1.136e-01 | 1.137e+06 | 3.804e+03 | ok |
+| 3 | 0.000e+00 | 0.000e+00 | 0.000e+00 | skipped-zero-angular-coupling |
+| 4 | 3.578e-02 | 1.362e+04 | 1.319e+00 | ok |
+| 5 | 0.000e+00 | 0.000e+00 | 0.000e+00 | skipped-zero-angular-coupling |
+| 6 | 5.341e-03 | 2.265e+03 | 5.383e-07 | ok |
+
+The multi-channel result is also checked against a higher-order
+reference row for each active target channel. The current
+convergence scan compares `(N,q)=(224,224),(256,224),(288,224)`.
+
+- Channel-convergence rows: 9
+- Largest reflected-amplitude change to reference: `1.140e-04` relative, `4.338e+01` absolute
+- Largest horizon-amplitude change to reference: `2.350e+00` relative, `1.017e-01` absolute
+The large relative horizon value is caused by the nearly
+vanishing off-diagonal `l'=6` horizon amplitude; the reflected
+channel amplitudes are the robust multi-channel observables in
+the current double-precision implementation.
+
+| l' | N | q | rel A_ref | abs dA_ref | rel A_H | abs dA_H |
+|---:|---:|---:|---:|---:|---:|---:|
+| 2 | 224 | 224 | 3.814e-05 | 4.338e+01 | 2.407e-08 | 9.158e-05 |
+| 2 | 256 | 224 | 2.450e-07 | 2.787e-01 | 1.492e-08 | 5.675e-05 |
+| 2 | 288 | 224 | 0.000e+00 | 0.000e+00 | 0.000e+00 | 0.000e+00 |
+| 4 | 224 | 224 | 1.140e-04 | 1.552e+00 | 7.706e-02 | 1.017e-01 |
+| 4 | 256 | 224 | 6.270e-07 | 8.538e-03 | 7.104e-03 | 9.373e-03 |
+| 4 | 288 | 224 | 0.000e+00 | 0.000e+00 | 0.000e+00 | 0.000e+00 |
+| 6 | 224 | 224 | 5.811e-07 | 1.316e-03 | 1.168e-01 | 6.289e-08 |
+| 6 | 256 | 224 | 2.454e-07 | 5.560e-04 | 2.350e+00 | 1.265e-06 |
+| 6 | 288 | 224 | 0.000e+00 | 0.000e+00 | 0.000e+00 | 0.000e+00 |
+
 ## Current interpretation
 
 The present validation covers the Schwarzschild limit, moderate Kerr spin,
@@ -163,8 +207,9 @@ remain below the acceptance gate.
 
 The angular cubic projector, Kerr-covariant cubic radial source, and
 oscillatory-tail Green-function integration are now explicit. Wronskians
-are stable at machine precision. The remaining nonlinear work is to set
-broader production acceptance gates across more modes and, if needed,
+are stable at machine precision. The target-channel implementation now
+has a first active-channel convergence scan. The remaining nonlinear work
+is to set broader production acceptance gates across more modes and, if needed,
 replace the QUADPACK Fourier tail by a dedicated Levin/Filon integrator
 for very high-frequency nonlinear tails.
 
@@ -177,4 +222,4 @@ for very high-frequency nonlinear tails.
 Generated from `results/kerr_scalar_adaptive_summary.csv`,
 `results/kerr_scalar_frequency_sweep.csv`, and
 `results/kerr_scalar_cubic_couplings.csv`, plus nonlinear diagnostics
-and control scans when available.
+channel scans, channel-convergence scans, and control scans when available.
