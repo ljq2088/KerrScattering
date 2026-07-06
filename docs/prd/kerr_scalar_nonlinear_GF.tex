@@ -432,9 +432,52 @@ finite interval is integrated by Gauss-Legendre quadrature in $z$.
 
 The amplitudes in Eqs.~\eqref{eq:Aref} and~\eqref{eq:AH} correspond to a
 linear solution with unit horizon transmission.  They are not themselves
-transmission or reflection coefficients.  To obtain the physical nonlinear
-scattering coefficients, we first fix the incident amplitude to unity.  The
-rescaled zeroth-order field is
+transmission or reflection coefficients.  Before any incident normalization,
+the direct Kerr analogue of Eq.~(12) of the Schwarzschild calculation is the
+raw energy-flux statement
+\begin{align}
+\mathcal{F}_{H}^{\rm unit}
+&\equiv
+\int_{\mathcal{H}^+}
+T_{\mu\nu}(\partial_t)^\mu \dd\Sigma^\nu
+\nonumber\\
+&=
+p(\rp^2+a^2)
+\left|1+\epsilon\AH\right|^2
+\nonumber\\
+&=
+p(\rp^2+a^2)
+\left[1+2\epsilon\,\mathrm{Re}\,\AH
++\calO(\epsilon^2)\right],
+\label{eq:fluxreadH}\\
+\mathcal{F}_{\mathcal I}^{\rm unit}
+&\equiv
+-\int_{\mathcal{I}^+}
+T_{\mu\nu}(\partial_t)^\mu \dd\Sigma^\nu
+\nonumber\\
+&=
+\omega\left\{
+|\Bin|^2-\left|\Bref+\epsilon\Aref\right|^2
+\right\}
+\nonumber\\
+&=
+\omega\left[
+|\Bin|^2-|\Bref|^2
+\right.
+\nonumber\\
+&\qquad\left.
+-2\epsilon\,\mathrm{Re}\left[(\Bref)^*\Aref\right]
++\calO(\epsilon^2)\right].
+\label{eq:fluxreadI}
+\end{align}
+The first line is the future-horizon flux, while the second is the net
+large-radius flux, incident minus reflected, with the same orientation
+convention as the Schwarzschild template.  Thus the object corresponding to
+the reflected correction in Eq.~\eqref{eq:fluxreadI} has the opposite sign from
+the net flux correction.
+
+To obtain the physical nonlinear scattering coefficients, we then fix the
+incident amplitude to unity.  The rescaled zeroth-order field is
 \begin{equation}
 R_{\rm phys}^{(0)}=\alpha R_{\rm in},\qquad \alpha=\frac{1}{\Bin}.
 \end{equation}
@@ -454,40 +497,20 @@ and horizon amplitudes are
 +
 \epsilon\,\frac{\AH}{|\Bin|^2\Bin}.
 \end{align}
-Now expand the fluxes defined in Sec.~\ref{sec:setup}.  This is the Kerr
-version of the flux-read equation that plays the role of Eq.~(12) in the
-Schwarzschild template:
+The incident flux is now $\mathcal{F}_{\rm in}=\omega$.  The transmitted
+horizon flux and the reflected flux are expanded as
 \begin{align}
-\mathcal{F}_{H}
-&\equiv
-\int_{\mathcal{H}^+}
-T_{\mu\nu}(\partial_t)^\mu \dd\Sigma^\nu
-\nonumber\\
+\frac{p(\rp^2+a^2)}{\omega}
+\left|\mathcal{H}_{\rm phys}\right|^2
 &=
-p(\rp^2+a^2)\left|\mathcal{H}_{\rm phys}\right|^2
+T^{(0)}+\epsilon T^{(1)}+\calO(\epsilon^2),
 \nonumber\\
+\left|\mathcal{R}_{\rm phys}\right|^2
 &=
-\omega\left[T^{(0)}+\epsilon T^{(1)}
-+\calO(\epsilon^2)\right],
-\label{eq:fluxreadH}\\
-\mathcal{F}_{\rm ref}
-&\equiv
-\int_{\mathcal{I}^+_{\rm out}}
-T_{\mu\nu}(\partial_t)^\mu \dd\Sigma^\nu
-\nonumber\\
-&=
-\omega\left|\mathcal{R}_{\rm phys}\right|^2
-\nonumber\\
-&=
-\omega\left[R^{(0)}+\epsilon R^{(1)}
-+\calO(\epsilon^2)\right].
-\label{eq:fluxreadI}
+R^{(0)}+\epsilon R^{(1)}+\calO(\epsilon^2).
 \end{align}
-The incident flux is fixed to $\mathcal{F}_{\rm in}=\omega$.  Therefore
-energy conservation is read as
-$\mathcal{F}_{\rm in}=\mathcal{F}_{H}+\mathcal{F}_{\rm ref}$, or
-$T^{(0)}+R^{(0)}=1$ and $T^{(1)}+R^{(1)}=0$ order by order.  The first
-nonlinear flux coefficients are the interference terms
+The first nonlinear scattering coefficients are therefore the interference
+terms
 \begin{align}
 R^{(1)}
 &=
