@@ -454,12 +454,40 @@ and horizon amplitudes are
 +
 \epsilon\,\frac{\AH}{|\Bin|^2\Bin}.
 \end{align}
-Now expand the fluxes defined in Sec.~\ref{sec:setup}.  At infinity
-$|\mathcal{R}_{\rm phys}|^2=R^{(0)}+\epsilon R^{(1)}+\calO(\epsilon^2)$,
-and at the horizon
-$[p(\rp^2+a^2)/\omega]|\mathcal{H}_{\rm phys}|^2
-=T^{(0)}+\epsilon T^{(1)}+\calO(\epsilon^2)$.  The first nonlinear flux
-coefficients are therefore the interference terms
+Now expand the fluxes defined in Sec.~\ref{sec:setup}.  This is the Kerr
+version of the flux-read equation that plays the role of Eq.~(12) in the
+Schwarzschild template:
+\begin{align}
+\mathcal{F}_{H}
+&\equiv
+\int_{\mathcal{H}^+}
+T_{\mu\nu}(\partial_t)^\mu \dd\Sigma^\nu
+\nonumber\\
+&=
+p(\rp^2+a^2)\left|\mathcal{H}_{\rm phys}\right|^2
+\nonumber\\
+&=
+\omega\left[T^{(0)}+\epsilon T^{(1)}
++\calO(\epsilon^2)\right],
+\label{eq:fluxreadH}\\
+\mathcal{F}_{\rm ref}
+&\equiv
+\int_{\mathcal{I}^+_{\rm out}}
+T_{\mu\nu}(\partial_t)^\mu \dd\Sigma^\nu
+\nonumber\\
+&=
+\omega\left|\mathcal{R}_{\rm phys}\right|^2
+\nonumber\\
+&=
+\omega\left[R^{(0)}+\epsilon R^{(1)}
++\calO(\epsilon^2)\right].
+\label{eq:fluxreadI}
+\end{align}
+The incident flux is fixed to $\mathcal{F}_{\rm in}=\omega$.  Therefore
+energy conservation is read as
+$\mathcal{F}_{\rm in}=\mathcal{F}_{H}+\mathcal{F}_{\rm ref}$, or
+$T^{(0)}+R^{(0)}=1$ and $T^{(1)}+R^{(1)}=0$ order by order.  The first
+nonlinear flux coefficients are the interference terms
 \begin{align}
 R^{(1)}
 &=
@@ -487,6 +515,14 @@ error.
 
 \section{Results}
 \label{sec:results}
+
+Following the Schwarzschild nonlinear Green-function presentation, the results
+are organized around the flux readout in
+Eqs.~\eqref{eq:fluxreadH}--\eqref{eq:fluxreadI}: first the internal spectral
+accuracy checks that control the amplitudes, then the self-channel flux
+coefficients and their balance residual, and finally the target-channel
+amplitudes whose direct contribution to the total energy flux starts at
+quadratic order.
 
 \subsection{Spectral accuracy diagnostics}
 
