@@ -27,34 +27,30 @@
 \date{\today}
 
 \begin{abstract}
-We formulate and compute the leading weakly nonlinear scattering response of a
-self-interacting complex scalar field on Kerr.  The calculation is the rotating
-black-hole continuation of a Schwarzschild nonlinear Green-function spectral
-method.  The scalar Teukolsky equation is solved in the compact coordinate
-$z=\rp/r$, with infinity and the future horizon retained as collocation
-endpoints.  After peeling the known phases, the degenerate endpoint rows of the
-radial equation provide regular first-order boundary conditions.  The linear
-horizon-normalized in mode is matched to down/up solutions at an intermediate
-radius to obtain $\Bin$ and $\Bref$.  Numerical accuracy is monitored
-internally through Chebyshev coefficient decay, collocation-equation
-residuals, Wronskian consistency, and nonlinear flux balance.  For the
-representative Kerr mode $(a,\ell,m,M\omega)=(0.5,2,2,0.30)$, the last
-16 normalized Chebyshev coefficients are below $3\times10^{-10}$ on the
-outer domains and below $2\times10^{-13}$ on the horizon domain.  With the
-relative residual normalized by the original radial-equation terms, the
-corresponding maximum residuals are $9.2\times10^{-10}$ on the outer domains
-and $2.4\times10^{-11}$ on the horizon domain.  For a cubic interaction
-$\Box\Phi+\epsilon|\Phi|^2\Phi=0$, the Kerr factor
-$\Sigma=r^2+a^2\cos^2\theta$ generates a projected radial source
-$(r^2C^{(0)}_{\ell'\ell m}+a^2C^{(2)}_{\ell'\ell m})|R_{\ell m}|^2R_{\ell m}$.
-We compute the first-order Green-function amplitudes for self and target
-channels, including a representative $\ell'=2,\ldots,6$ channel scan for
-$(a,\ell,m,M\omega)=(0.5,2,2,0.30)$.  For the self channel, converting the
-unit-horizon response to fixed incident normalization gives
-$T^{(1)}+R^{(1)}\simeq0$, the Kerr analogue of the nonlinear balance law in
-the Schwarzschild problem.  Off-diagonal target channels are nonzero at the
-field-amplitude level but enter energy flux only at quadratic order in the
-nonlinear correction.
+We reformulate the Schwarzschild nonlinear Green-function scattering
+construction for a weakly self-interacting complex scalar field on Kerr.  The
+logic follows the energy-flux definition of scattering coefficients: solve the
+linear in problem, use the cubic self-interaction as a source for the first
+nonlinear field, and read the corrections $T^{(1)}$ and $R^{(1)}$ from the
+first-order terms in the horizon and infinity fluxes.  The scalar Teukolsky
+equation is solved in the compact coordinate $z=\rp/r$, with infinity and the
+future horizon retained as collocation endpoints.  After the known horizon and
+far-zone phases are peeled, the degenerate endpoint rows of the radial equation
+become regular first-order boundary conditions.  For
+$(a,\ell,m,M\omega)=(0.5,2,2,0.30)$ the last 16 normalized Chebyshev
+coefficients are below $3\times10^{-10}$ on the outer domains and below
+$2\times10^{-13}$ on the horizon domain; the maximum residual of the original
+radial equation, normalized by
+$|\Delta R''|+|\Delta'R'|+|(K^2/\Delta-\lambda)R|$, is
+$9.2\times10^{-10}$ on the outer domains and $2.4\times10^{-11}$ on the
+horizon domain.  The Kerr factor $\Sigma=r^2+a^2\cos^2\theta$ projects the
+cubic source to
+$(r^2C^{(0)}_{\ell'\ell m}+a^2C^{(2)}_{\ell'\ell m})|R_{\ell m}|^2R_{\ell m}$,
+so one incident spheroidal mode sources a target-channel matrix.  In the self
+channel the flux coefficients satisfy $T^{(1)}+R^{(1)}\simeq0$ after fixed
+incident normalization, while off-diagonal target channels are first-order field
+amplitudes whose direct energy-flux contribution begins at quadratic order in
+the nonlinear correction.
 \end{abstract}
 
 \maketitle
@@ -73,11 +69,14 @@ quasinormal modes~\cite{Oshita2022,Rosato2024}.
 
 The nonlinear scattering problem is less developed.  The Schwarzschild
 calculation used as the template for the present work considers a weak
-self-interaction and computes the first nonlinear correction by feeding the
-linear in solution into a Green-function source.  Its central structure is
-simple: solve the homogeneous scattering problem accurately, project the
-nonlinear source onto partial waves, impose no incoming nonlinear radiation,
-and read off the first-order correction to the horizon and infinity fluxes.
+self-interaction and defines the nonlinear scattering coefficients in the same
+way as the linear ones: by the energy flux through the future event horizon and
+future null infinity.  Its central structure is simple.  First solve the
+homogeneous in problem accurately.  Next use the linear wave as the source for
+the first nonlinear field.  Finally impose no incoming nonlinear radiation and
+read the first-order correction from the flux expansion.  In this form the
+nonlinear balance law $T^{(1)}+R^{(1)}=0$ is a flux statement, not a statement
+about the raw Green-function amplitudes.
 
 Here we carry this strategy to the scalar Teukolsky equation on Kerr, keeping
 the same computational philosophy as the Schwarzschild spectral code.  The new
@@ -89,14 +88,14 @@ radial power: multiplying the equation by
 $\Sigma=r^2+a^2\cos^2\theta$ produces two angular projectors and couples the
 source mode $(\ell,m)$ to target channels $\ell'$ of the same $m$.
 
-The paper follows the structure of the Schwarzschild nonlinear Green-function
-template.  Section~\ref{sec:setup} defines the nonlinear Kerr scalar
-scattering problem.  Section~\ref{sec:methods} describes the endpoint spectral
-method and the nonlinear Green-function amplitudes.  Section~\ref{sec:results}
-reports the spectral accuracy diagnostics, nonlinear self-channel balance, and
-the first target-channel matrix result.  The
-appendices give the working derivations used by the code so that normalization
-and sign conventions can be checked without referring to a separate note.
+The paper follows the logic of the Schwarzschild nonlinear Green-function
+template.  Section~\ref{sec:setup} defines the Kerr scalar problem, the weak
+nonlinear expansion, and the flux coefficients.  Section~\ref{sec:methods}
+describes the endpoint spectral solver and the Green-function construction.
+Section~\ref{sec:results} reports spectral accuracy diagnostics, nonlinear
+self-channel flux balance, and the first target-channel matrix result.  The
+appendices give working derivations used by the code so that normalization and
+sign conventions can be checked without referring to a separate note.
 
 \section{Nonlinear scattering problem on Kerr}
 \label{sec:setup}
@@ -174,7 +173,26 @@ K=(r^2+a^2)\omega-am,\qquad
 For $a\omega=0$, $S_{\ell m}$ reduces to the spherical harmonic and
 $\lambda=\ell(\ell+1)$.
 
-\subsection{Linear boundary conditions and fluxes}
+\subsection{Weak nonlinear expansion}
+
+We take the self-interacting scalar equation to be
+\begin{equation}
+\Box\Phi+\epsilon|\Phi|^2\Phi=0,\qquad |\epsilon|\ll1,
+\label{eq:nonlineareq}
+\end{equation}
+and expand
+\begin{equation}
+\Phi=\Phi^{(0)}+\epsilon\Phi^{(1)}+\calO(\epsilon^2).
+\label{eq:eps_expansion}
+\end{equation}
+The zeroth-order field is a single monochromatic spheroidal mode
+Eq.~\eqref{eq:radial}.  The first-order field is sourced only by this linear
+solution; no independent incoming nonlinear radiation is supplied.  This is
+the Kerr analogue of the Schwarzschild setup in which the nonlinear
+coefficients are extracted from the flux of the perturbative field rather than
+from a separate scattering experiment.
+
+\subsection{Linear scattering coefficients from energy flux}
 
 The horizon-normalized in solution is defined by
 \begin{equation}
@@ -190,7 +208,27 @@ R_{\ell m\omega}^{\rm in}\sim
 \label{eq:linearbc}
 \end{equation}
 With this convention the incident amplitude is $\Bin$, the reflected amplitude
-is $\Bref$, and the horizon transmission amplitude is unity.  The invariant
+is $\Bref$, and the horizon transmission amplitude is unity.
+
+The energy flux is where the scattering coefficients enter.  For the complex
+scalar stress tensor,
+\begin{equation}
+T_{\mu\nu}
+=\nabla_{(\mu}\Phi\nabla_{\nu)}\Phi^*
+-\frac{1}{2}g_{\mu\nu}\nabla_\alpha\Phi\nabla^\alpha\Phi^*
++\calO(\epsilon),
+\end{equation}
+the radial part of the associated mode flux is equivalently encoded in the
+conserved current
+\begin{equation}
+J[R]=\frac{\Delta}{2\ii}
+\left(R^*\frac{\dd R}{\dd r}-R\frac{\dd R^*}{\dd r}\right).
+\label{eq:radialcurrent}
+\end{equation}
+An incoming far-zone wave with amplitude $A_{\rm in}$ carries flux
+$\omega|A_{\rm in}|^2$, an outgoing far-zone wave with amplitude $A_{\rm out}$
+carries flux $\omega|A_{\rm out}|^2$, and an ingoing horizon wave with amplitude
+$A_H$ carries horizon flux $p(\rp^2+a^2)|A_H|^2$.  Therefore the invariant
 linear reflection and transmission factors for a unit incident wave are
 \begin{equation}
 R^{(0)}=\left|\frac{\Bref}{\Bin}\right|^2,
@@ -202,8 +240,7 @@ so that
 \begin{equation}
 T^{(0)}+R^{(0)}=1.
 \end{equation}
-This follows directly from the conserved radial current
-$J=(2\ii)^{-1}\Delta(R^*R'-RR^{*'})$: the unit-horizon in mode gives
+For the horizon-normalized mode, Eq.~\eqref{eq:radialcurrent} gives
 $J_H=-p(\rp^2+a^2)$ at the future horizon and
 $J_\infty=-\omega|\Bin|^2+\omega|\Bref|^2$ at infinity.  Hence
 \begin{equation}
@@ -215,18 +252,11 @@ Appendix~\ref{app:details}.
 When $p<0$, $T^{(0)}<0$ and the reflected flux exceeds the incident flux:
 this is scalar superradiance.
 
-\subsection{Weak cubic source}
+\subsection{Projected first-order source}
 
-We take the self-interacting scalar equation to be
-\begin{equation}
-\Box\Phi+\epsilon|\Phi|^2\Phi=0,\qquad |\epsilon|\ll1,
-\end{equation}
-and expand
-\begin{equation}
-\Phi=\Phi^{(0)}+\epsilon\Phi^{(1)}+\calO(\epsilon^2).
-\end{equation}
-For a monochromatic source mode $(\ell,m,\omega)$, the cubic term has the same
-time and azimuthal dependence.  We therefore write
+For a monochromatic source mode $(\ell,m,\omega)$, the cubic term in
+Eq.~\eqref{eq:nonlineareq} has the same time and azimuthal dependence.  We
+therefore write
 \begin{equation}
 \Phi^{(1)}
 =
@@ -267,7 +297,12 @@ $\Sigma|S_{\ell m}|^2S_{\ell m}$ into the target basis:
 the $r^2$ piece carries the ordinary spheroidal Gaunt coefficient, while the
 $a^2\cos^2\theta$ piece is a genuinely Kerr correction.
 This is the first structural difference from the Schwarzschild calculation:
-even a single incident spheroidal mode sources a target-channel matrix.
+even a single incident spheroidal mode sources a target-channel matrix.  The
+self channel $\ell'=\ell$ interferes with the linear field in the boundary
+fluxes and gives the first nonlinear corrections $T^{(1)}$ and $R^{(1)}$.
+The off-diagonal channels are genuine first-order fields, but they are
+orthogonal to the linear outgoing channel in the angular flux and therefore
+contribute to the total energy flux only at $\calO(\epsilon^2)$.
 
 \section{Methods}
 \label{sec:methods}
@@ -393,12 +428,13 @@ phase channels $\exp(\ii n\omega r_*)$ with $n=-4,-2,0,2,4$.  We integrate
 the exterior tail in $r_*$ with Fourier-weighted quadrature, while the inner
 finite interval is integrated by Gauss-Legendre quadrature in $z$.
 
-\subsection{Fixed incident normalization and nonlinear balance}
+\subsection{From Green amplitudes to flux coefficients}
 
 The amplitudes in Eqs.~\eqref{eq:Aref} and~\eqref{eq:AH} correspond to a
-linear solution with unit horizon transmission.  To compare with the
-Schwarzschild nonlinear scattering coefficients, we fix the incident amplitude
-to unity.  The rescaled field is
+linear solution with unit horizon transmission.  They are not themselves
+transmission or reflection coefficients.  To obtain the physical nonlinear
+scattering coefficients, we first fix the incident amplitude to unity.  The
+rescaled zeroth-order field is
 \begin{equation}
 R_{\rm phys}^{(0)}=\alpha R_{\rm in},\qquad \alpha=\frac{1}{\Bin}.
 \end{equation}
@@ -418,7 +454,12 @@ and horizon amplitudes are
 +
 \epsilon\,\frac{\AH}{|\Bin|^2\Bin}.
 \end{align}
-The first nonlinear corrections to the flux coefficients are
+Now expand the fluxes defined in Sec.~\ref{sec:setup}.  At infinity
+$|\mathcal{R}_{\rm phys}|^2=R^{(0)}+\epsilon R^{(1)}+\calO(\epsilon^2)$,
+and at the horizon
+$[p(\rp^2+a^2)/\omega]|\mathcal{H}_{\rm phys}|^2
+=T^{(0)}+\epsilon T^{(1)}+\calO(\epsilon^2)$.  The first nonlinear flux
+coefficients are therefore the interference terms
 \begin{align}
 R^{(1)}
 &=
@@ -436,14 +477,13 @@ For a self-channel source, conservation implies
 T^{(1)}+R^{(1)}=0,
 \label{eq:nonlinearbalance}
 \end{equation}
-up to numerical error.  In the present cubic model this is the first-order
-part of the conserved $U(1)$ Klein-Gordon flux: the source
-$Q\propto |R_{\rm in}|^2R_{\rm in}$ gives a real overlap with
-$R_{\rm in}^*$, so it redistributes flux between horizon and infinity but does
-not create a net monochromatic current.  Off-diagonal target channels are
-orthogonal to the linear outgoing channel in the angular integral.  They are
-first-order field amplitudes, but their direct energy-flux contribution starts at
-$\calO(\epsilon^2)$.
+up to numerical error.  In the present cubic model this is the first-order part
+of the conserved $U(1)$ Klein-Gordon flux.  Equivalently, the source
+$Q\propto |R_{\rm in}|^2R_{\rm in}$ has a real overlap with $R_{\rm in}^*$, so
+it redistributes the flux between horizon and infinity but does not create a net
+monochromatic current.  The numerical quantity $T^{(1)}+R^{(1)}$ is therefore a
+direct diagnostic of the combined spectral, matching, and oscillatory-integral
+error.
 
 \section{Results}
 \label{sec:results}
@@ -550,6 +590,8 @@ absorbing $a=0.5$ row and the high-spin superradiant row reach balance
 residuals at the $10^{-12}$--$10^{-13}$ level by $N=256$--288.}
 \label{fig:fluxconv}
 \end{figure*}
+
+\clearpage
 
 \subsection{Target-channel matrix}
 
