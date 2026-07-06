@@ -40,9 +40,10 @@ internally through Chebyshev coefficient decay, collocation-equation
 residuals, Wronskian consistency, and nonlinear flux balance.  For the
 representative Kerr mode $(a,\ell,m,M\omega)=(0.5,2,2,0.30)$, the last
 16 normalized Chebyshev coefficients are below $3\times10^{-10}$ on the
-outer domains and below $2\times10^{-13}$ on the horizon domain; the
-corresponding maximum relative collocation residuals are $2.5\times10^{-8}$
-and $2.4\times10^{-11}$.  For a cubic interaction
+outer domains and below $2\times10^{-13}$ on the horizon domain.  With the
+relative residual normalized by the original radial-equation terms, the
+corresponding maximum residuals are $9.2\times10^{-10}$ on the outer domains
+and $2.4\times10^{-11}$ on the horizon domain.  For a cubic interaction
 $\Box\Phi+\epsilon|\Phi|^2\Phi=0$, the Kerr factor
 $\Sigma=r^2+a^2\cos^2\theta$ generates a projected radial source
 $(r^2C^{(0)}_{\ell'\ell m}+a^2C^{(2)}_{\ell'\ell m})|R_{\ell m}|^2R_{\ell m}$.
@@ -453,10 +454,10 @@ The calculation is assessed with internal spectral diagnostics, following the
 same philosophy as the Schwarzschild nonlinear Green-function calculation.
 For the representative absorbing Kerr mode
 $(a,\ell,m,M\omega)=(0.5,2,2,0.30)$, Table~\ref{tab:quality} reports the
-tail of the Chebyshev expansion and the residual obtained by substituting the
-computed nodal solution back into the original collocation rows.  The single
-row used only to impose the normalization is excluded from the residual norm;
-the degenerate endpoint equation itself is retained.
+tail of the Chebyshev expansion and the residual obtained by reconstructing
+the radial field and substituting it back into the original radial equation at
+the interior collocation nodes.  The residual denominator is the local sum of
+absolute operator terms, not a coefficient-only scale.
 
 \begin{center}
 \begin{minipage}{0.98\columnwidth}
@@ -469,11 +470,11 @@ largest coefficient on the same subdomain.
 \begin{center}
 \begin{tabular}{l c c}
 \toprule
-branch & coefficient tail & max relative residual\\
+branch & coefficient tail & max relative radial residual\\
 \midrule
-$u_{\rm down}$, outer & $2.73\times10^{-10}$ & $2.49\times10^{-8}$\\
-$u_{\rm up}$, outer & $2.73\times10^{-10}$ & $2.49\times10^{-8}$\\
-$u_{\rm in}$, inner & $1.73\times10^{-13}$ & $2.36\times10^{-11}$\\
+$u_{\rm down}$, outer & $2.73\times10^{-10}$ & $9.16\times10^{-10}$\\
+$u_{\rm up}$, outer & $2.73\times10^{-10}$ & $9.16\times10^{-10}$\\
+$u_{\rm in}$, inner & $1.73\times10^{-13}$ & $2.30\times10^{-11}$\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -485,16 +486,18 @@ $u_{\rm in}$, inner & $1.73\times10^{-13}$ & $2.36\times10^{-11}$\\
 \includegraphics[width=0.95\textwidth]{../../figures/kerr_scalar_spectral_quality.png}
 \caption{Spectral quality checks for the representative Kerr mode.  Left:
 normalized Chebyshev coefficient decay after phase peeling.  Right: relative
-collocation-equation residuals after the computed nodal values are substituted
-back into the regular endpoint and interior ODE rows.}
+residual of the original radial equation at interior collocation nodes, with
+the denominator
+$|\Delta R''|+|\Delta'R'|+|(K^2/\Delta-\lambda)R|$.}
 \label{fig:quality}
 \end{figure*}
 
 Figure~\ref{fig:quality} shows the same information as a curve rather than as
 summary statistics.  The outer down and up curves lie on top of one another
 because they differ only by the sign of the peeled far-zone phase.  The inner
-in solution reaches a smaller coefficient floor; the larger outer residual is
-consistent with the larger condition number of the outer continuation matrix.
+in solution reaches a smaller coefficient floor.  The residual normalization in
+the right panel includes the reconstructed field and its derivatives, so it is
+invariant under a constant rescaling of the homogeneous solution.
 
 \subsection{Self-channel nonlinear flux coefficients}
 
@@ -593,7 +596,7 @@ The central conclusion is that the Schwarzschild nonlinear Green-function
 workflow extends cleanly to Kerr scalar scattering once the spheroidal angular
 projection and the Kerr flux normalization are handled explicitly.  The linear
 piece is spectrally convergent in the phase-peeled variables and has small
-collocation residuals on the retained endpoint grid.
+original radial-equation residuals on the retained endpoint grid.
 The nonlinear self-channel reproduces the expected first-order flux balance
 after converting from unit-horizon to fixed incident normalization.  The Kerr
 geometry also exposes a new object absent from the simple Schwarzschild

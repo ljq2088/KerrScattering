@@ -65,15 +65,16 @@ def plot_quality():
         rows = [
             row for row in residual_rows
             if row["branch"] == branch and row["subdomain"] == subdomain
+            and row.get("radial_relative_residual", "")
         ]
         z = np.array([float(row["z"]) for row in rows])
-        rel = np.array([float(row["relative_residual"]) for row in rows])
+        rel = np.array([float(row["radial_relative_residual"]) for row in rows])
         order = np.argsort(z)
         ax.semilogy(z[order], np.maximum(rel[order], 1e-18), lw=1.1,
                     color=style["color"], label=style["label"])
     ax.set_xlabel(r"compact coordinate $z=r_+/r$")
-    ax.set_ylabel("relative ODE residual")
-    ax.set_title("collocation equation residual")
+    ax.set_ylabel("relative radial residual")
+    ax.set_title(r"original $R$ equation residual")
     ax.grid(True, which="both", alpha=0.25)
     ax.legend(frameon=False, fontsize=8)
 
