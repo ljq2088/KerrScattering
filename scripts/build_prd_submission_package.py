@@ -53,10 +53,13 @@ SCRIPT_FILES = [
     ROOT / "scripts" / "check_prd_citations.py",
     ROOT / "scripts" / "check_prd_manuscript_numbers.py",
     ROOT / "scripts" / "check_prd_submission_ready.py",
+    ROOT / "scripts" / "check_prd_style.py",
     ROOT / "scripts" / "plot_kerr_scalar_axisymmetric_accuracy.py",
     ROOT / "scripts" / "plot_kerr_scalar_low_frequency_axisymmetric.py",
     ROOT / "scripts" / "plot_kerr_scalar_nonlinear_axisymmetric_base_like.py",
+    ROOT / "scripts" / "plot_kerr_scalar_spin_limit.py",
     ROOT / "scripts" / "render_prd_cover_letter.py",
+    ROOT / "scripts" / "run_kerr_scalar_spin_limit.py",
     ROOT / "scripts" / "write_prd_artifact_manifest.py",
     ROOT / "scripts" / "write_prd_reproducibility_report.py",
 ]
@@ -166,6 +169,7 @@ Useful checks from the package root:
 python scripts\\check_prd_artifacts.py
 python scripts\\check_prd_citations.py
 python scripts\\check_prd_manuscript_numbers.py
+python scripts\\check_prd_style.py
 python scripts\\check_prd_submission_ready.py
 ```
 
