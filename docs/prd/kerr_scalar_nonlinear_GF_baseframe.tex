@@ -188,9 +188,26 @@ field theory,
 T_{\mu\nu}=-\frac{2}{\sqrt{-g}}\frac{\delta S_\Phi}{\delta g^{\mu\nu}} .
 \label{eq:stress_tensor}
 \end{equation}
-The conserved energy current is the associated Killing current.  In
-particular, the quartic term is proportional to the metric in
-$T^\mu{}_\nu$ and cannot itself carry radial flux because $\delta^r{}_t=0$.
+For later use, the explicit tensor and the associated stationary Killing
+energy flux are
+\begin{align}
+T_{\mu\nu}={}&\nabla_\mu\Phi^*\nabla_\nu\Phi \\[-2pt]
+&+\nabla_\nu\Phi^*\nabla_\mu\Phi
+ +g_{\mu\nu}\left[-\nabla_\alpha\Phi^*\nabla^\alpha\Phi
+ +\frac{\epsilon}{2}|\Phi|^4\right],
+\label{eq:stress_tensor_explicit}\\
+j_E^\mu={}&-T^\mu{}_{\nu}\xi^\nu=-T^\mu{}_t,\qquad \xi=\partial_t,
+\nonumber\\
+\mathcal F_E^{\rm out}(r)={}&\int_0^{2\pi}\!\dd\phi\int_0^\pi\!\dd\theta\,
+\sqrt{-g}\,j_E^r, \\[-2pt]
+\mathcal F_E^H={}&-\lim_{r\to r_+}\mathcal F_E^{\rm out}(r).
+\label{eq:energy_flux}
+\end{align}
+The reversed horizon orientation in the last definition makes positive
+$\mathcal F_E^H$ correspond to absorption when $p>0$.  The quartic term is
+proportional to $\delta^r{}_t$ in $T^r{}_t$ and therefore does not itself
+carry radial flux; the nonlinear boundary correction comes from the
+interference of the zeroth- and first-order kinetic terms.
 We now expand the field as
 \begin{equation}
 \Phi=\Phi^{(0)}+\epsilon\Phi^{(1)}+\calO(\epsilon^2).
@@ -269,16 +286,22 @@ When quoting absorption by the future horizon, the horizon boundary
 orientation is reversed, so that positive absorption corresponds to positive
 $\mathcal F_E^H=-\mathcal F_E^\mathrm{out}|_{r=r_+}$ for $p>0$.
 For a single Fourier mode, the energy current is the mode frequency times
-the radial Klein--Gordon current, up to one common normalization.  Consequently
-the asymptotic magnitudes scale as
-$\mathcal F_{E,\infty}^{\rm in}\propto\omega^2|B^{\rm inc}|^2$,
-$\mathcal F_{E,\infty}^{\rm ref}\propto\omega^2|B^{\rm ref}|^2$, and
-$\mathcal F_{E,H}\propto\omega p(r_+^2+a^2)$.  Their ratios give
+the radial Klein--Gordon current, up to one common positive normalization
+$\mathcal N$.  Consequently,
+\begin{equation}
+\begin{aligned}
+\mathcal F_{E,\infty}^{\rm in}&=\mathcal N\omega^2|B^{\rm inc}|^2,\\
+\mathcal F_{E,\infty}^{\rm ref}&=\mathcal N\omega^2|B^{\rm ref}|^2,\\
+\mathcal F_{E,H}&=\mathcal N\omega p(r_+^2+a^2).
+\end{aligned}
+\label{eq:mode_fluxes}
+\end{equation}
+Their ratios give
 Eq.~\eqref{eq:linear_coefficients}, including the sign of the horizon flux
 when $p<0$.  The self-interaction contributes a term proportional to
-$\delta^r{}_t$ in the mixed stress tensor and therefore does not add a radial boundary
-flux; at first order, the nonlinear flux correction is the interference term
-between $\Phi^{(0)}$ and $\Phi^{(1)}$ derived below.
+$\delta^r{}_t$ in the mixed stress tensor and therefore does not add a radial
+boundary flux; at first order, the nonlinear flux correction is the
+interference term between $\Phi^{(0)}$ and $\Phi^{(1)}$ derived below.
 
 For real $\omega$ the conserved radial current gives
 \begin{equation}
