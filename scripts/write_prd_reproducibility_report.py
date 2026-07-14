@@ -7,7 +7,7 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -94,6 +94,12 @@ def fenced(text: str) -> str:
 
 
 def main() -> None:
+    source_date_epoch = int(
+        os.environ.get("SOURCE_DATE_EPOCH", DEFAULT_SOURCE_DATE_EPOCH)
+    )
+    build_timestamp = datetime.fromtimestamp(
+        source_date_epoch, tz=timezone.utc
+    ).isoformat(timespec="seconds")
     with MANIFEST.open(encoding="utf-8") as handle:
         manifest = json.load(handle)
 
@@ -127,9 +133,8 @@ def main() -> None:
     lines: list[str] = [
         "# Kerr Scalar PRD Reproducibility Report",
         "",
-        f"Generated: {datetime.now().isoformat(timespec='seconds')}",
-        "Build `SOURCE_DATE_EPOCH`: "
-        f"`{os.environ.get('SOURCE_DATE_EPOCH', DEFAULT_SOURCE_DATE_EPOCH)}`",
+        f"Generated from build epoch: `{build_timestamp}`",
+        f"Build `SOURCE_DATE_EPOCH`: `{source_date_epoch}`",
         "",
         "This report records the local artifacts used by the active PRD-style "
         "draft `docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex`.",

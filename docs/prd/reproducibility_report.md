@@ -1,6 +1,6 @@
 # Kerr Scalar PRD Reproducibility Report
 
-Generated: 2026-07-14T21:51:33
+Generated from build epoch: `2024-01-01T00:00:00+00:00`
 Build `SOURCE_DATE_EPOCH`: `1704067200`
 
 This report records the local artifacts used by the active PRD-style draft `docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex`.
