@@ -20,6 +20,7 @@ SLOPE_CSV = ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_slopes.cs
 PRODUCTION_CSV = ROOT / "results" / "kerr_scalar_axisymmetric_production_convergence.csv"
 CHANNEL_CSV = ROOT / "results" / "kerr_scalar_nonlinear_channels.csv"
 SUPERRADIANT_CSV = ROOT / "results" / "kerr_scalar_nonlinear_m2_superradiant.csv"
+SPIN_LIMIT_CSV = ROOT / "results" / "kerr_scalar_spin_limit.csv"
 SWEEP_CSVS = {
     0: [
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
@@ -363,6 +364,44 @@ def check_superradiant_table(tex: str) -> None:
             tolerance = max(0.15 * abs(shown), 1.0e-15)
             assert_close(f"superradiant table omega={omega} column={index}", shown, actual, tolerance)
 
+
+def check_spin_limit_table(tex: str) -> None:
+    rows = {round(float(row["a"]), 8): row for row in read_csv_rows(SPIN_LIMIT_CSV)}
+    table_match = re.search(
+        r"\\label\{tab:spin-limit\}(?P<body>.*?)\\end\{table\*\}",
+        tex,
+        re.DOTALL,
+    )
+    if table_match is None:
+        raise AssertionError("Could not find spin-limit table")
+
+    found: dict[float, list[float]] = {}
+    for line in table_match.group("body").splitlines():
+        line = line.strip()
+        if not re.match(r"^0\.[0-9]+\s*&", line):
+            continue
+        parts = [part.strip() for part in line.rstrip("\\").split("&")]
+        if len(parts) != 6:
+            raise AssertionError(f"Malformed spin-limit row: {line}")
+        a = float(parts[0])
+        found[round(a, 8)] = [parse_tex_value(part) for part in parts[1:]]
+
+    if sorted(found) != sorted(rows):
+        raise AssertionError("Spin-limit table rows do not match the tracked CSV")
+
+    for a, shown_values in found.items():
+        row = rows[a]
+        actual_values = [
+            float(row["T1"]),
+            float(row["R1"]),
+            abs(float(row["linear_balance"])),
+            abs(float(row["nonlinear_balance"])),
+            float(row["wronskian_relative_error"]),
+        ]
+        for index, (shown, actual) in enumerate(zip(shown_values, actual_values)):
+            tolerance = max(0.15 * abs(shown), 1.0e-15)
+            assert_close(f"spin-limit table a={a} column={index}", shown, actual, tolerance)
+
 def main() -> None:
     tex = TEX.read_text(encoding="utf-8")
     check_table_i(tex)
@@ -372,6 +411,7 @@ def main() -> None:
     check_production_convergence(tex)
     check_target_channels(tex)
     check_superradiant_table(tex)
+    check_spin_limit_table(tex)
     print("PRD manuscript numeric checks passed.")
 
 

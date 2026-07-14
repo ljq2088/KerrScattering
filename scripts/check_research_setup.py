@@ -32,6 +32,7 @@ def main() -> int:
         "docs/literature/paper_cards.md",
         "docs/literature/seed_arxiv_ids.txt",
         "tools/mcp/gravity_research_server.py",
+        "scripts/check_literature_learning_gates.py",
     ]
     missing = [item for item in required if not (ROOT / item).is_file()]
     if missing:
@@ -76,6 +77,17 @@ def main() -> int:
     }
     if not required_gates.issubset(gate_ids):
         fail(f"learning gates missing: {sorted(required_gates - gate_ids)}")
+
+    gate_check = subprocess.run(
+        [sys.executable, "scripts/check_literature_learning_gates.py"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+    )
+    if gate_check.returncode:
+        fail(f"literature learning-gate audit failed:\n{gate_check.stdout}\n{gate_check.stderr}")
 
     check = subprocess.run(
         [sys.executable, "scripts/check_mcp_server.py"],

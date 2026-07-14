@@ -17,6 +17,7 @@ FIGURES = [
     ROOT / "figures" / "kerr_scalar_nonlinear_axisymmetric_fig2.png",
     ROOT / "figures" / "kerr_scalar_axisymmetric_accuracy.png",
     ROOT / "figures" / "kerr_scalar_nonlinear_superradiant_m2.png",
+    ROOT / "figures" / "kerr_scalar_spin_limit.png",
 ]
 
 CSV_SCHEMAS = {
@@ -86,6 +87,12 @@ CSV_SCHEMAS = {
     ROOT / "results" / "kerr_scalar_nonlinear_m2_superradiant.csv": [
         "l", "m", "omega", "p_horizon", "superradiant", "T0", "T1",
         "R1", "nonlinear_balance", "abs_nonlinear_balance",
+        "wronskian_relative_error", "status",
+    ],
+    ROOT / "results" / "kerr_scalar_spin_limit.csv": [
+        "l", "m", "a", "omega", "radial_lambda", "B_inc", "B_ref",
+        "T0", "R0", "linear_balance", "T1", "R1", "nonlinear_balance",
+        "abs_nonlinear_balance", "flux_normalization_condition_number",
         "wronskian_relative_error", "status",
     ],
 }

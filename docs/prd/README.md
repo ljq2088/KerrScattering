@@ -46,6 +46,7 @@ The active draft uses the following tracked inputs:
 - `../../figures/kerr_scalar_nonlinear_axisymmetric_fig2.png`
 - `../../figures/kerr_scalar_axisymmetric_accuracy.png`
 - `../../figures/kerr_scalar_nonlinear_superradiant_m2.png`
+- `../../figures/kerr_scalar_spin_limit.png`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv`
@@ -62,6 +63,7 @@ The active draft uses the following tracked inputs:
 - `../../results/kerr_scalar_nonlinear_channels.csv`
 - `../../results/kerr_scalar_nonlinear_channel_convergence.csv`
 - `../../results/kerr_scalar_nonlinear_m2_superradiant.csv`
+- `../../results/kerr_scalar_spin_limit.csv`
 
 To rebuild the plotted quantities after the numerical sweeps already exist:
 
@@ -70,6 +72,7 @@ cd ..\..
 python scripts\plot_kerr_scalar_low_frequency_axisymmetric.py
 python scripts\plot_kerr_scalar_nonlinear_axisymmetric_base_like.py
 python scripts\plot_kerr_scalar_axisymmetric_accuracy.py
+python scripts\plot_kerr_scalar_spin_limit.py
 python scripts\build_prd_convergence_summary.py
 ```
 
@@ -216,6 +219,14 @@ python scripts\run_kerr_scalar_nonlinear_frequency_sweep.py `
   --N 320 --quad-order 320 --tail-epsrel 1e-11 `
   --r-match 40 --max-rss-mb 1500
 python scripts\plot_kerr_scalar_nonlinear_superradiant.py
+```
+
+The internal Kerr-to-Schwarzschild continuity audit used in the active draft
+is reproduced with the bounded serial commands:
+
+```powershell
+python scripts\run_kerr_scalar_spin_limit.py --max-rss-mb 1500
+python scripts\plot_kerr_scalar_spin_limit.py
 ```
 
 The channel CSV includes the flux-normalization condition indicator

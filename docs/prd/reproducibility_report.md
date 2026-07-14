@@ -9,10 +9,10 @@ This report records the local artifacts used by the active PRD-style draft `docs
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 59064 | `33eb62bb64b1e225bf6d8c9e334161731500ab17e49cdf51088a0e8e6e357daa` |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 800908 | `5a47b47771a39dc29eb23b7a8a990b22bae2ffb12530746005ca78b2385eff6b` |
-| kerr_scalar_nonlinear_GF_baseframe.pdf | 800908 | `5a47b47771a39dc29eb23b7a8a990b22bae2ffb12530746005ca78b2385eff6b` |
-| docs/prd/artifact_manifest.json | 8455 | `7f12289d7827ae9409d04daec2cd168b01cf988d9e96bc8194a0058216acab16` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 62500 | `360398edc280bb54724049f7d3b9855e36f16cb00179ca6b4ed75f181332be5f` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 900851 | `9d6e8896fd73e3bfb98fb5016e441965073f8d35b21b7b66359c2960ae9013f2` |
+| kerr_scalar_nonlinear_GF_baseframe.pdf | 900851 | `9d6e8896fd73e3bfb98fb5016e441965073f8d35b21b7b66359c2960ae9013f2` |
+| docs/prd/artifact_manifest.json | 9311 | `5a57d76fe9f538513596c89eeb6441130973abd8e52f1e9f9a59775b94b00118` |
 
 ## Frozen Figure And CSV Inputs
 
@@ -22,6 +22,7 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | figures/kerr_scalar_nonlinear_axisymmetric_fig2.png | figure | 2016x780 px | 169154 | `e09c0dcc1ccabb15` |
 | figures/kerr_scalar_axisymmetric_accuracy.png | figure | 2064x648 px | 197352 | `dd442939630be16f` |
 | figures/kerr_scalar_nonlinear_superradiant_m2.png | figure | 1700x718 px | 87486 | `79f208721a1439ea` |
+| figures/kerr_scalar_spin_limit.png | figure | 2034x747 px | 111671 | `b25da671217485bf` |
 | results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv | csv | 12 rows | 8878 | `80f8ee263ec4b51b` |
 | results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv | csv | 13 rows | 9616 | `68acae26d7f0f092` |
 | results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv | csv | 13 rows | 9599 | `255497f8267fb41c` |
@@ -38,6 +39,7 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | results/kerr_scalar_nonlinear_channels.csv | csv | 5 rows | 3570 | `bb913a4ce431312a` |
 | results/kerr_scalar_nonlinear_channel_convergence.csv | csv | 9 rows | 7501 | `f5b1cb3f3b03fbcb` |
 | results/kerr_scalar_nonlinear_m2_superradiant.csv | csv | 10 rows | 7412 | `ab6ba593e7734dbb` |
+| results/kerr_scalar_spin_limit.csv | csv | 6 rows | 3693 | `e8c25732b3aa49c7` |
 
 ## Checks
 

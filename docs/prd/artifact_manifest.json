@@ -33,6 +33,14 @@
       "width_px": 1700
     },
     {
+      "height_px": 747,
+      "kind": "figure",
+      "path": "figures/kerr_scalar_spin_limit.png",
+      "sha256": "b25da671217485bfd05d0d465ac6dfa61301a14b90d118c9762bd42b3478b829",
+      "size_bytes": 111671,
+      "width_px": 2034
+    },
+    {
       "kind": "csv",
       "path": "results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
       "required_columns": [
@@ -306,6 +314,32 @@
       "rows": 10,
       "sha256": "ab6ba593e7734dbb7f6f73f1658b09df4946672f280916ead4b578c8ae0626c6",
       "size_bytes": 7412
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_spin_limit.csv",
+      "required_columns": [
+        "l",
+        "m",
+        "a",
+        "omega",
+        "radial_lambda",
+        "B_inc",
+        "B_ref",
+        "T0",
+        "R0",
+        "linear_balance",
+        "T1",
+        "R1",
+        "nonlinear_balance",
+        "abs_nonlinear_balance",
+        "flux_normalization_condition_number",
+        "wronskian_relative_error",
+        "status"
+      ],
+      "rows": 6,
+      "sha256": "e8c25732b3aa49c7eb0c6e94c2409c732734b1d9922c5c5f79f6142ab0a2aa27",
+      "size_bytes": 3693
     }
   ],
   "description": "Frozen input artifacts used by docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex",
