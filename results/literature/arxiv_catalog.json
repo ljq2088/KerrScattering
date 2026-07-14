@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-07-14T14:09:51.312993+00:00",
+  "generated_utc": "2026-07-14T15:04:12.285049+00:00",
   "source": "arXiv API metadata; PDFs are not downloaded",
-  "count": 39,
+  "count": 43,
   "records": [
     {
       "arxiv_id": "gr-qc/0306120",
@@ -89,6 +89,96 @@
         "primary_category": "gr-qc",
         "categories": [
           "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/9712056",
+      "module": "mino-sasaki-tanaka-reaction",
+      "priority": "A",
+      "reason": "Matched-asymptotic derivation of gravitational radiation reaction and tail-driven motion.",
+      "metadata": {
+        "arxiv_id": "gr-qc/9712056v1",
+        "title": "Gravitational Radiation Reaction",
+        "authors": [
+          "Yasushi Mino",
+          "Misao Sasaki",
+          "Takahiro Tanaka"
+        ],
+        "published": "1997-12-12T08:59:09+00:00",
+        "updated": "1997-12-12T08:59:09+00:00",
+        "summary": "We consider the radiation reaction to the motion of a point-like particle of mass $m$ and specific spin $S$ traveling on a curved background. Assuming $S=O(Gm)$ and $Gm\\ll L$ where $L$ is the length scale of the background curvature, we divide the spacetime into two regions; the external region where the metric is approximated by the background metric plus perturbations due to a point-like particle and the internal region where the metric is approximated by that of a black hole plus perturbations due to the tidal effect of the background curvature, and use the technique of the matched asymptotic expansion to construct an approximate metric which is valid over the entire region. In this way, we avoid the divergent self-gravity at the position of the particle and derive the equations of motion from the consistency condition of the matching. The matching is done to the order necessary to include the effect of radiation reaction of $O(Gm)$ with respect to the background metric as well as the effect of spin-induced force. The reaction term of $O(Gm)$ is found to be completely due to tails of radiation, that is, due to curvature scattering of gravitational waves. In other words, the reaction force is found to depend on the entire history of the particle trajectory. Defining a regularized metric which consists of the back- ground metric plus the tail part of the perturbed metric, we find the equations of motion reduce to the geodesic equation on this regularized metric, except for the spin-induced force which is locally expressed in terms of the curvature and spin tensors. Some implications of the result and future issues are briefly discussed.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/9712056v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/0202086",
+      "module": "detweiler-whiting-split",
+      "priority": "A",
+      "reason": "Singular/regular Green-function decomposition underlying gravitational self-force.",
+      "metadata": {
+        "arxiv_id": "gr-qc/0202086v3",
+        "title": "Self-force via a Green's function decomposition",
+        "authors": [
+          "Steven Detweiler",
+          "Bernard F. Whiting"
+        ],
+        "published": "2002-02-25T20:34:29+00:00",
+        "updated": "2002-11-21T19:07:39+00:00",
+        "summary": "The gravitational field of a particle of small mass μmoving through curved spacetime is naturally decomposed into two parts each of which satisfies the perturbed Einstein equations through O(μ). One part is an inhomogeneous field which, near the particle, looks like the μ/r field distorted by the local Riemann tensor; it does not depend on the behavior of the source in either the infinite past or future. The other part is a homogeneous field and includes the ``tail term''; it completely determines the self force effects of the particle interacting with its own gravitational field, including radiation reaction. Self force effects for scalar, electromagnetic and gravitational fields are all described in this manner.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/0202086v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/9912010",
+      "module": "barack-ori-mode-sum",
+      "priority": "A",
+      "reason": "Foundational scalar mode-sum regularization for local self-force calculations.",
+      "metadata": {
+        "arxiv_id": "gr-qc/9912010v2",
+        "title": "Mode sum regularization approach for the self-force in black hole spacetime",
+        "authors": [
+          "Leor Barack",
+          "Amos Ori"
+        ],
+        "published": "1999-12-02T15:19:54+00:00",
+        "updated": "2000-01-18T17:42:17+00:00",
+        "summary": "We present a method for calculating the self-force (the ``radiation reaction force'') acting on a charged particle moving in a strong field orbit in black hole spacetime. In this approach, one first calculates the contribution to the self-force due to each multipole mode of the particle's field. Then, the sum over modes is evaluated, subject to a certain regularization procedure. Here we develop this regularization procedure for a scalar charge on a Schwarzschild background, and present the results of its implementation for radial trajectories (not necessarily geodesic).",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/9912010v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1807.01699",
+      "module": "pn-gravity-eft",
+      "priority": "A",
+      "reason": "Effective-field-theory organization of post-Newtonian gravity and gravitational-wave observables.",
+      "metadata": {
+        "arxiv_id": "1807.01699v3",
+        "title": "Effective Field Theories of Post-Newtonian Gravity: A comprehensive review",
+        "authors": [
+          "Michèle Levi"
+        ],
+        "published": "2018-07-04T17:58:36+00:00",
+        "updated": "2020-06-18T12:54:21+00:00",
+        "summary": "[Abridged] This review article presents the progress made over the last decade, since the introduction of effective field theories (EFTs) into post-Newtonian (PN) gravity. These have been put forward in the context of gravitational waves (GWs) from the compact binary inspiral. The mature development of this interdisciplinary field has resulted in significant advances of wide interest to physics at several levels serving various purposes. The field has firmly demonstrated, that seemingly disparate physical domains, such as quantum field theory and classical gravity, are related, and that the EFT framework is a universal one, where it has been proven to supply a robust methodology to boost progress in the development of PN theory. The review is aimed at a broad audience, from general readers new to the field, to specialists and experts in related subjects.\n  The review begins with an overview of the introduction of EFTs into classical gravity and their development. Then, the basic ideas, which form the conceptual foundation of EFTs, are provided, and the strategy of a multi-stage EFT framework, which is utilized for the PN binary inspiral problem, is outlined. The main body of the review is then dedicated to presenting in detail the study of each of the effective theories at each of the intermediate scales in the problem, up to the actual GW observables. The review is concluded with the multiple prospects of building on the progress in the field, and using further modern field theory insights and tools, to specifically address the study of GWs, as well as to broadly expand our fundamental understanding of gauge and gravity theories across the classical and quantum regimes.",
+        "pdf_url": "https://arxiv.org/pdf/1807.01699v3",
+        "primary_category": "hep-th",
+        "categories": [
+          "hep-th",
+          "gr-qc",
+          "hep-ph"
         ]
       }
     },

@@ -30,6 +30,16 @@ belongs to layer 1 with a prescribed nonlinear field response. Its
 first-order coefficient `A^(1)` is not a coefficient of `h^(1)`, not a
 worldline force, and not an EMRI waveform correction.
 
+The foundational reading chain is now explicit. Matched asymptotic radiation
+reaction explains how a small-body expansion produces a tail-dependent force;
+the Detweiler--Whiting construction separates the locally singular field from
+the regular field that enters the force; mode-sum regularization turns the
+large-multipole asymptotics into a numerical prescription; and post-Newtonian
+effective field theory provides a complementary weak-field organization of
+near-zone dynamics, radiation-zone matching, and waveform observables. These
+are prerequisite layers, not alternative names for the present scalar
+response.
+
 ## 2. Kerr separation and the EMRI source lattice
 
 For a Fourier convention `exp(-i omega t + i m phi)`, a separated mode has
@@ -177,6 +187,16 @@ The next concrete code milestone is an orbit/source interface that feeds a
 single convention-tagged `(l,m,k,n,omega)` mode into the existing radial
 backend without changing the scalar manuscript's scope.
 
+## 9. Promotion rule for new knowledge
+
+The agent promotes a literature conclusion only when its record contains all
+five items: convention extraction, equation reproduction, an implementation
+target, an independent validation, and an explicit scope statement. The
+machine-readable versions are in `learning_gates.json`; the Chinese execution
+protocol is in `advanced_learning_protocol_zh.md`. This prevents a benchmark
+or a review-paper summary from being mistaken for a completed self-force or
+EMRI waveform calculation.
+
 ## Primary reading anchors
 
 - [Sasaki--Tagoshi, gr-qc/0306120](https://arxiv.org/abs/gr-qc/0306120)
@@ -187,3 +207,7 @@ backend without changing the scalar manuscript's scope.
 - [Khalvati et al., 2410.17310](https://arxiv.org/abs/2410.17310)
 - [Rahman--Takahashi, 2507.06923](https://arxiv.org/abs/2507.06923)
 - [Vu et al., 2606.04998](https://arxiv.org/abs/2606.04998)
+- [Mino--Sasaki--Tanaka, gr-qc/9712056](https://arxiv.org/abs/gr-qc/9712056)
+- [Detweiler--Whiting, gr-qc/0202086](https://arxiv.org/abs/gr-qc/0202086)
+- [Barack--Ori, gr-qc/9912010](https://arxiv.org/abs/gr-qc/9912010)
+- [Levi, 1807.01699](https://arxiv.org/abs/1807.01699)

@@ -22,6 +22,10 @@
 
 ## 1. 八个学习模块
 
+每个模块的方程、实现目标和验收条件由 `learning_gates.json` 管理。阅读顺序
+必须从固定背景和辐射反作用的概念基础开始，再进入正则化、EMRI 源格点和波形
+相位；不能从一个高精度径向振幅直接跳到自力结论。
+
 ### A. 广义相对论和黑洞几何
 
 目标：熟练使用 Kerr 的 `Delta`、`Sigma`、视界生成元、Killing 向量和守恒量，
@@ -64,7 +68,8 @@ omega_mkn = m Omega_phi + k Omega_theta + n Omega_r
 
 ### E. 引力自力与正则化
 
-阅读 `0908.1664`、`1305.1789`、`1506.06245`、`1711.09607`、`2209.05450`。
+先阅读 `gr-qc/9712056` 和 `gr-qc/0202086`，再阅读 `gr-qc/9912010`、
+`0908.1664`、`1305.1789`、`1506.06245`、`1711.09607`、`2209.05450`。
 掌握 `h_ret=h_S+h_R`、Detweiler--Whiting 分解、mode-sum 大 `l` 渐近、puncture、
 规范依赖，以及耗散/保守自力的区别。
 
@@ -124,3 +129,7 @@ python scripts/build_literature_manifest.py
 python scripts/check_literature_catalog.py
 python scripts/check_research_setup.py
 ```
+
+更细的执行顺序和每周验收循环见
+`docs/literature/advanced_learning_protocol_zh.md`；MCP 可以通过
+`get_learning_gate` 返回单个模块的机器可读门槛。

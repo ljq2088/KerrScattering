@@ -22,7 +22,7 @@ from mcp.server.fastmcp import FastMCP
 MCP_INSTRUCTIONS = """Local research tools for the KerrScattering project.
 Use arXiv and Zotero tools for read-only literature metadata and bibliography
 work. Use the local literature-card tools to recover project-specific transfer
-notes, but treat the primary paper as authoritative. Use Mathematica only for
+notes and learning-gate tools to plan derivations and validation, but treat the primary paper as authoritative. Use Mathematica only for
 an explicitly requested finite evaluation; do not use it to edit files or
 execute unrelated system commands. Return exact paths, identifiers, errors,
 and timeouts. Literature claims still require a primary-source check and
@@ -84,6 +84,20 @@ def get_literature_card(module: str) -> str:
             card = "## " + section.strip()
             break
     return _json({"ok": True, "module": module, "seed": record, "card": card})
+
+
+@mcp.tool()
+def get_learning_gate(module_id: str | None = None) -> str:
+    """Return machine-checkable derivation and validation gates."""
+
+    path = _project_root() / "docs/literature/learning_gates.json"
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    modules = payload.get("modules", [])
+    if module_id:
+        modules = [item for item in modules if item.get("id") == module_id.strip()]
+        if not modules:
+            return _json({"ok": False, "module_id": module_id, "error": "gate_not_found"})
+    return _json({"ok": True, "count": len(modules), "modules": modules})
 
 
 @mcp.tool()

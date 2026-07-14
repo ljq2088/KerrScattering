@@ -29,6 +29,7 @@ async def main() -> int:
                 "export_zotero_bibtex",
                 "list_literature_modules",
                 "get_literature_card",
+                "get_learning_gate",
                 "evaluate_mathematica",
                 "research_environment",
             }
@@ -38,10 +39,12 @@ async def main() -> int:
             result = await session.call_tool("research_environment", {})
             modules = await session.call_tool("list_literature_modules", {"priority": "A"})
             card = await session.call_tool("get_literature_card", {"module": "bhpt-self-force"})
+            gate = await session.call_tool("get_learning_gate", {"module_id": "emri-source-lattice"})
             print(f"MCP tools: {', '.join(names)}")
             print(f"environment probe returned {len(result.content)} content blocks")
             print(f"literature module probe returned {len(modules.content)} content blocks")
             print(f"paper-card probe returned {len(card.content)} content blocks")
+            print(f"learning-gate probe returned {len(gate.content)} content blocks")
     return 0
 
 

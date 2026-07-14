@@ -55,6 +55,10 @@ def main() -> int:
         "2410.17310": "Relativistic EMRI waveforms",
         "2507.06923": "Post-adiabatic EMRI waveforms",
         "2606.04998": "Numerical-relativity methods for self-force",
+        "gr-qc/9712056": "Mino--Sasaki--Tanaka radiation reaction",
+        "gr-qc/0202086": "Detweiler--Whiting singular/regular split",
+        "gr-qc/9912010": "Barack--Ori mode-sum regularization",
+        "1807.01699": "Post-Newtonian gravity as an effective field theory",
     }
     for arxiv_id, label in required_cards.items():
         if arxiv_id not in cards or label not in cards:

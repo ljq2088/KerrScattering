@@ -3,6 +3,10 @@ gr-qc/0306120|teukolsky-kerr|A|Analytic Kerr perturbation theory and post-Newton
 gr-qc/9603020|mst-teukolsky|A|MST hypergeometric and Coulomb-wave solutions, low-frequency expansions, and normalization identities.
 2306.16469|gsn-kerr|A|Generalized Sasaki-Nakamura homogeneous solutions for scalar, electromagnetic, and gravitational perturbations.
 2302.11624|spectral-black-hole-perturbations|A|Chebyshev endpoint factoring and spectral convergence diagnostics for black-hole perturbations.
+gr-qc/9712056|mino-sasaki-tanaka-reaction|A|Matched-asymptotic derivation of gravitational radiation reaction and tail-driven motion.
+gr-qc/0202086|detweiler-whiting-split|A|Singular/regular Green-function decomposition underlying gravitational self-force.
+gr-qc/9912010|barack-ori-mode-sum|A|Foundational scalar mode-sum regularization for local self-force calculations.
+1807.01699|pn-gravity-eft|A|Effective-field-theory organization of post-Newtonian gravity and gravitational-wave observables.
 astro-ph/0703495|emri-overview|B|Early EMRI review connecting astrophysics, data analysis, and tests of strong-field gravity.
 1102.0529|green-functions-self-force|A|Foundational review of point particles, Green functions, singular fields, and self-force.
 gr-qc/0509122|emri-adiabatic|B|Limitations of dissipative/adiabatic self-force approximations and secular phase effects.

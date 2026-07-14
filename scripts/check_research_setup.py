@@ -26,6 +26,8 @@ def main() -> int:
         "docs/literature/gravity_literature_map.md",
         "docs/literature/deep_learning_curriculum.md",
         "docs/literature/deep_learning_curriculum_zh.md",
+        "docs/literature/advanced_learning_protocol_zh.md",
+        "docs/literature/learning_gates.json",
         "docs/literature/convention_ledger.md",
         "docs/literature/paper_cards.md",
         "docs/literature/seed_arxiv_ids.txt",
@@ -59,6 +61,21 @@ def main() -> int:
     ]
     if len(seed_lines) != len(records):
         fail(f"seed/catalog count mismatch: {len(seed_lines)} != {len(records)}")
+
+    gates = json.loads((ROOT / "docs/literature/learning_gates.json").read_text(encoding="utf-8"))
+    gate_ids = {item.get("id") for item in gates.get("modules", [])}
+    required_gates = {
+        "fixed-background-bhpt",
+        "radiation-reaction",
+        "singular-regular-self-force",
+        "emri-source-lattice",
+        "gw-waveform-phase",
+        "pn-eft-gravity",
+        "nonlinear-ringdown",
+        "numerical-methods",
+    }
+    if not required_gates.issubset(gate_ids):
+        fail(f"learning gates missing: {sorted(required_gates - gate_ids)}")
 
     check = subprocess.run(
         [sys.executable, "scripts/check_mcp_server.py"],

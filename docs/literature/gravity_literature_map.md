@@ -98,6 +98,28 @@ complementary layers with different error norms.
 
 Primary anchors: `2410.17310`, `2507.06923`, `2606.04998`.
 
+## 9. Foundations of self-force and waveform approximations
+
+The conceptual chain is now explicit rather than implicit:
+
+```text
+matched asymptotics -> radiation-reaction tail
+                    -> singular/regular field split
+                    -> mode-sum or effective-source regularization
+                    -> orbit actions and EMRI source lattice
+                    -> waveform phase and detector observable
+```
+
+Mino--Sasaki--Tanaka supplies the first arrow, Detweiler--Whiting supplies the
+singular/regular distinction, and Barack--Ori supplies a concrete mode-sum
+implementation. The post-Newtonian EFT literature supplies a complementary
+weak-field organization and makes the near-zone/far-zone matching question
+explicit. None of these changes the scope of the active fixed-background
+scalar manuscript; they define the prerequisites for a future self-force or
+waveform branch.
+
+Primary anchors: `gr-qc/9712056`, `gr-qc/0202086`, `gr-qc/9912010`, `1807.01699`.
+
 ## Transfer gate
 
 Before importing a result, record:

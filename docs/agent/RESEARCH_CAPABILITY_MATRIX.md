@@ -16,6 +16,7 @@
 | 引力波建模 | 绝热、post-adiabatic、多尺度相位和共振 | `docs/literature/gravity_literature_map.md` | 将径向误差、源模态截断、轨道积分误差和累积相位误差分开 |
 | 科学软件 | MATLAB、Python、WSL、Wolfram 和 Julia 的可复现实验 | `AGENTS.md`、`tools/mcp/`、`scripts/` | 记录命令、版本、内存峰值、输出路径和 git 提交 |
 | 文献研究 | arXiv 元数据、原始论文证据、Zotero 读库、文献卡片 | `scripts/build_literature_manifest.py`、本地 MCP | 每张卡片写清可迁移结论和不相容假设 |
+| 学习门槛 | 方程、实现目标、独立检验和适用范围的机器可读 gates | `docs/literature/learning_gates.json`、`get_learning_gate` | 缺少独立验证或 scope statement 的文献结论不得晋级 |
 | 论文生产 | REVTeX/PRD、图表、引用、数值和提交门槛 | `scripts/check_prd_*.py` | 两次构建相同，PDF 可视检查通过，作者元数据齐全才称 submission-ready |
 
 ## 三条硬边界

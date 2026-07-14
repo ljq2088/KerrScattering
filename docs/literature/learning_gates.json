@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "purpose": "Machine-checkable study gates for gravity, EMRI, gravitational-wave, and self-force research.",
+  "modules": [
+    {
+      "id": "fixed-background-bhpt",
+      "title": "固定背景黑洞微扰",
+      "prerequisites": ["Kerr geometry", "Teukolsky separation"],
+      "equations": ["Teukolsky angular equation", "Teukolsky radial equation", "Wronskian identity"],
+      "implementation_targets": ["RadialConvention", "HomogeneousSolution", "field-dependent residual"],
+      "acceptance_tests": ["endpoint relation", "Chebyshev tail", "order refinement", "flux balance"]
+    },
+    {
+      "id": "radiation-reaction",
+      "title": "辐射反作用与匹配渐近展开",
+      "prerequisites": ["linearized gravity", "matched asymptotic expansions"],
+      "equations": ["g = g0 + eta h1 + O(eta^2)", "tail field equation", "regular-field geodesic equation"],
+      "implementation_targets": ["eta bookkeeping", "dissipative/conservative split", "slow-time labels"],
+      "acceptance_tests": ["identify perturbative order", "distinguish local and tail terms", "state gauge dependence"]
+    },
+    {
+      "id": "singular-regular-self-force",
+      "title": "奇异场、正则场与 mode-sum",
+      "prerequisites": ["Green functions", "local Hadamard expansion", "spherical/spheroidal modes"],
+      "equations": ["h_ret = h_S + h_R", "F_l^ret - A L - B - C/L", "puncture residual equation"],
+      "implementation_targets": ["regularization parameters", "mode-sum tail", "effective-source interface"],
+      "acceptance_tests": ["large-l scaling", "regularized-mode convergence", "gauge declaration"]
+    },
+    {
+      "id": "emri-source-lattice",
+      "title": "Kerr 测地线与 EMRI 源格点",
+      "prerequisites": ["Kerr geodesics", "Mino time", "action-angle variables"],
+      "equations": ["omega_mkn = m Omega_phi + k Omega_theta + n Omega_r", "slow time T = eta t"],
+      "implementation_targets": ["OrbitConstants", "Frequencies", "ModeLabel"],
+      "acceptance_tests": ["Mino-time/direct-integration agreement", "mode-lattice truncation", "resonance flag"]
+    },
+    {
+      "id": "gw-waveform-phase",
+      "title": "引力波波形与多尺度相位",
+      "prerequisites": ["source mode amplitudes", "flux balance", "orbit evolution"],
+      "equations": ["dJ/dT = F0(J) + eta F1(J,q) + ...", "delta Phi = integral delta Omega dt"],
+      "implementation_targets": ["source truncation budget", "orbit integrator", "phase-error report"],
+      "acceptance_tests": ["instantaneous-vs-accumulated error", "adiabatic/post-adiabatic comparison", "resonance crossing diagnostic"]
+    },
+    {
+      "id": "pn-eft-gravity",
+      "title": "后牛顿引力与 EFT",
+      "prerequisites": ["worldline action", "scale separation", "multipole expansion"],
+      "equations": ["near-zone/far-zone matching", "radiation-reaction effective action", "PN waveform phase"],
+      "implementation_targets": ["approximation-order ledger", "matching-scale diagnostic", "waveform convention map"],
+      "acceptance_tests": ["identify expansion parameter", "separate gauge from observable", "compare PN and BHPT domains"]
+    },
+    {
+      "id": "nonlinear-ringdown",
+      "title": "二阶微扰、非线性散射与 ringdown",
+      "prerequisites": ["linear QNMs", "Teukolsky source construction", "conserved bilinear forms"],
+      "equations": ["L[h2] = S[h1,h1]", "Kerr QNM bilinear projection", "mode-coupling frequency selection"],
+      "implementation_targets": ["quadratic source API", "QNM continuation boundary", "nonlinear observable label"],
+      "acceptance_tests": ["do not call a real-frequency fit a QNM coefficient", "source-order check", "late-time tail check"]
+    },
+    {
+      "id": "numerical-methods",
+      "title": "数值方法与可重复科学软件",
+      "prerequisites": ["complex linear algebra", "spectral differentiation", "error budgets"],
+      "equations": ["field-dependent relative residual", "conditioned linear solve", "convergence model"],
+      "implementation_targets": ["bounded-memory sweep", "independent solver audit", "deterministic manuscript build"],
+      "acceptance_tests": ["low/intermediate/high-frequency cases", "condition-number report", "double-build hash"]
+    }
+  ]
+}
