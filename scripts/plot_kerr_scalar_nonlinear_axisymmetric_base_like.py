@@ -17,15 +17,15 @@ OUT_TABLE = os.path.join(ROOT, "results", "kerr_scalar_nonlinear_axisymmetric_fi
 INPUTS = {
     0: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
-        "results/tmp_kerr_axisymmetric_refine_l0.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv",
     ],
     1: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv",
-        "results/tmp_kerr_axisymmetric_refine_l1.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv",
     ],
     2: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv",
-        "results/tmp_kerr_axisymmetric_refine_l2.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv",
     ],
 }
 

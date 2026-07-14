@@ -32,13 +32,13 @@ CSV_SCHEMAS = {
         "omega", "B_inc", "B_ref", "T0", "R0", "linear_balance",
         "T1", "R1", "nonlinear_balance", "abs_nonlinear_balance",
     ],
-    ROOT / "results" / "tmp_kerr_axisymmetric_refine_l0.csv": [
+    ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l0.csv": [
         "omega", "T1", "R1", "linear_balance", "nonlinear_balance",
     ],
-    ROOT / "results" / "tmp_kerr_axisymmetric_refine_l1.csv": [
+    ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l1.csv": [
         "omega", "T1", "R1", "linear_balance", "nonlinear_balance",
     ],
-    ROOT / "results" / "tmp_kerr_axisymmetric_refine_l2.csv": [
+    ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l2.csv": [
         "omega", "T1", "R1", "linear_balance", "nonlinear_balance",
     ],
     ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_fit_table.csv": [

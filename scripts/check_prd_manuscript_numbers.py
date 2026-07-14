@@ -23,15 +23,15 @@ SUPERRADIANT_CSV = ROOT / "results" / "kerr_scalar_nonlinear_m2_superradiant.csv
 SWEEP_CSVS = {
     0: [
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
-        ROOT / "results" / "tmp_kerr_axisymmetric_refine_l0.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l0.csv",
     ],
     1: [
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_hires_l1.csv",
-        ROOT / "results" / "tmp_kerr_axisymmetric_refine_l1.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l1.csv",
     ],
     2: [
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_hires_l2.csv",
-        ROOT / "results" / "tmp_kerr_axisymmetric_refine_l2.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l2.csv",
     ],
 }
 

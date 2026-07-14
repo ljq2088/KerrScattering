@@ -91,7 +91,7 @@
     },
     {
       "kind": "csv",
-      "path": "results/tmp_kerr_axisymmetric_refine_l0.csv",
+      "path": "results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv",
       "required_columns": [
         "omega",
         "T1",
@@ -105,7 +105,7 @@
     },
     {
       "kind": "csv",
-      "path": "results/tmp_kerr_axisymmetric_refine_l1.csv",
+      "path": "results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv",
       "required_columns": [
         "omega",
         "T1",
@@ -119,7 +119,7 @@
     },
     {
       "kind": "csv",
-      "path": "results/tmp_kerr_axisymmetric_refine_l2.csv",
+      "path": "results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv",
       "required_columns": [
         "omega",
         "T1",

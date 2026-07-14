@@ -1,6 +1,6 @@
 # Kerr Scalar PRD Reproducibility Report
 
-Generated: 2026-07-14T21:24:33
+Generated: 2026-07-14T21:29:18
 
 This report records the local artifacts used by the active PRD-style draft `docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex`.
 
@@ -11,7 +11,7 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 57750 | `afd53e74d5b19c100c9f4adb16ee7202876c9692c97100a4990bc8a7aefd3738` |
 | docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 795193 | `a64c365ee86f14eebf6674499658ff4363bfe29b6be5bf8320eab62d28f67b7b` |
 | kerr_scalar_nonlinear_GF_baseframe.pdf | 795193 | `a64c365ee86f14eebf6674499658ff4363bfe29b6be5bf8320eab62d28f67b7b` |
-| docs/prd/artifact_manifest.json | 8339 | `1b13d7e14b0766ef9c80a10833557d47f198491f1db909245b053593ece8f997` |
+| docs/prd/artifact_manifest.json | 8378 | `17e4c20a2ab8f95aef562a7da2298408715958b6a6f351f960d6f8ec0d13cf65` |
 
 ## Frozen Figure And CSV Inputs
 
@@ -24,9 +24,9 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv | csv | 12 rows | 8878 | `80f8ee263ec4b51b` |
 | results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv | csv | 13 rows | 9616 | `68acae26d7f0f092` |
 | results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv | csv | 13 rows | 9599 | `255497f8267fb41c` |
-| results/tmp_kerr_axisymmetric_refine_l0.csv | csv | 4 rows | 3153 | `8ce315828307fa20` |
-| results/tmp_kerr_axisymmetric_refine_l1.csv | csv | 3 rows | 2454 | `5c4203c1f3fbbe15` |
-| results/tmp_kerr_axisymmetric_refine_l2.csv | csv | 2 rows | 1744 | `8bf89e24b207d34d` |
+| results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv | csv | 4 rows | 3153 | `8ce315828307fa20` |
+| results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv | csv | 3 rows | 2454 | `5c4203c1f3fbbe15` |
+| results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv | csv | 2 rows | 1744 | `8bf89e24b207d34d` |
 | results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv | csv | 3 rows | 916 | `fb941582e78ba557` |
 | results/kerr_scalar_low_frequency_axisymmetric_slopes.csv | csv | 3 rows | 272 | `f7be0dfd358c9f50` |
 | results/kerr_scalar_axisymmetric_spectral_coefficients.csv | csv | 723 rows | 77593 | `c16c276517f1511c` |

@@ -9,9 +9,9 @@ tracked result files:
 - `kerr_scalar_nonlinear_axisymmetric_hires_l0.csv`
 - `kerr_scalar_nonlinear_axisymmetric_hires_l1.csv`
 - `kerr_scalar_nonlinear_axisymmetric_hires_l2.csv`
-- `tmp_kerr_axisymmetric_refine_l0.csv`
-- `tmp_kerr_axisymmetric_refine_l1.csv`
-- `tmp_kerr_axisymmetric_refine_l2.csv`
+- `kerr_scalar_nonlinear_axisymmetric_refine_l0.csv`
+- `kerr_scalar_nonlinear_axisymmetric_refine_l1.csv`
+- `kerr_scalar_nonlinear_axisymmetric_refine_l2.csv`
 - `kerr_scalar_nonlinear_axisymmetric_fit_table.csv`
 - `kerr_scalar_low_frequency_axisymmetric_slopes.csv`
 - `kerr_scalar_axisymmetric_spectral_coefficients.csv`

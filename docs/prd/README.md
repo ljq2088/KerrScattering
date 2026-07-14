@@ -47,9 +47,9 @@ The active draft uses the following tracked inputs:
 - `../../results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv`
-- `../../results/tmp_kerr_axisymmetric_refine_l0.csv`
-- `../../results/tmp_kerr_axisymmetric_refine_l1.csv`
-- `../../results/tmp_kerr_axisymmetric_refine_l2.csv`
+- `../../results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv`
+- `../../results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv`
+- `../../results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv`
 - `../../results/kerr_scalar_low_frequency_axisymmetric_slopes.csv`
 - `../../results/kerr_scalar_axisymmetric_spectral_coefficients.csv`
@@ -71,7 +71,7 @@ python scripts\plot_kerr_scalar_axisymmetric_accuracy.py
 python scripts\build_prd_convergence_summary.py
 ```
 
-To only check that the rounded numbers in Tables I--V and the low-frequency
+To only check that the rounded numbers in Tables I--VI and the low-frequency
 slopes still agree with the tracked CSV data, and that the frozen figure/CSV
 artifacts have not drifted:
 

@@ -13,15 +13,15 @@ RESIDUAL = os.path.join(ROOT, "results", "kerr_scalar_axisymmetric_spectral_resi
 AXISYM_INPUTS = {
     0: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
-        "results/tmp_kerr_axisymmetric_refine_l0.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv",
     ],
     1: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv",
-        "results/tmp_kerr_axisymmetric_refine_l1.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv",
     ],
     2: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv",
-        "results/tmp_kerr_axisymmetric_refine_l2.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv",
     ],
 }
 OUT_FIG = os.path.join(ROOT, "figures", "kerr_scalar_axisymmetric_accuracy.png")
