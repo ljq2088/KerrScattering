@@ -18,8 +18,10 @@ python scripts\build_prd_manuscript.py
 
 The wrapper checks required figure/CSV artifacts, checks manuscript numbers
 against the tracked CSV files, verifies the frozen artifact manifest, runs
-`pdflatex` twice, fails on unresolved references/citations or overfull boxes,
-copies the PDF to the repository root, and removes LaTeX auxiliary files.
+`pdflatex` three times, fails on unresolved references/citations or overfull boxes,
+copies the PDF to the repository root, and removes LaTeX auxiliary files.  It
+sets `SOURCE_DATE_EPOCH=1704067200` by default so repeated builds have the
+same PDF metadata and SHA-256; callers may override that variable deliberately.
 
 For manual debugging, run LaTeX directly:
 

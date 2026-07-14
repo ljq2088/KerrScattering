@@ -1,6 +1,7 @@
 # Kerr Scalar PRD Reproducibility Report
 
-Generated: 2026-07-14T21:41:54
+Generated: 2026-07-14T21:51:33
+Build `SOURCE_DATE_EPOCH`: `1704067200`
 
 This report records the local artifacts used by the active PRD-style draft `docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex`.
 
@@ -9,8 +10,8 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
 | docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 58568 | `c14dc9bf39ddd7f6602c42f4cfa2970748bad0ddce454b46ce5cd63d42a7ce6e` |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 796542 | `8d1efbafc664501a3ef796568485454e194396b17d3564787bc081320179dd0a` |
-| kerr_scalar_nonlinear_GF_baseframe.pdf | 796542 | `8d1efbafc664501a3ef796568485454e194396b17d3564787bc081320179dd0a` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 796531 | `275c66dcb083b2eea7e9450b8925594682e9cf098ba2b5702979e98f60e09a70` |
+| kerr_scalar_nonlinear_GF_baseframe.pdf | 796531 | `275c66dcb083b2eea7e9450b8925594682e9cf098ba2b5702979e98f60e09a70` |
 | docs/prd/artifact_manifest.json | 8378 | `17e4c20a2ab8f95aef562a7da2298408715958b6a6f351f960d6f8ec0d13cf65` |
 
 ## Frozen Figure And CSV Inputs

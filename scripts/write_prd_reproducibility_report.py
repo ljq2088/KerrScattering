@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime
@@ -16,6 +17,7 @@ MANIFEST = ROOT / "docs" / "prd" / "artifact_manifest.json"
 TEX = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.tex"
 PDF = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.pdf"
 ROOT_PDF = ROOT / "kerr_scalar_nonlinear_GF_baseframe.pdf"
+DEFAULT_SOURCE_DATE_EPOCH = "1704067200"
 
 
 def sha256_file(path: Path) -> str:
@@ -126,6 +128,8 @@ def main() -> None:
         "# Kerr Scalar PRD Reproducibility Report",
         "",
         f"Generated: {datetime.now().isoformat(timespec='seconds')}",
+        "Build `SOURCE_DATE_EPOCH`: "
+        f"`{os.environ.get('SOURCE_DATE_EPOCH', DEFAULT_SOURCE_DATE_EPOCH)}`",
         "",
         "This report records the local artifacts used by the active PRD-style "
         "draft `docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex`.",

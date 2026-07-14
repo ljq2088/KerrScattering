@@ -5,7 +5,7 @@ The script is intentionally small and conservative:
 1. verify required figure/CSV artifacts exist, have expected schemas, and
    match the frozen artifact manifest;
 2. verify manuscript display numbers against tracked CSV files;
-3. run pdflatex twice in the manuscript directory;
+3. run pdflatex three times in the manuscript directory;
 4. fail on unresolved references, citation warnings, overfull boxes, or TeX
    errors in the final log;
 5. copy the generated PDF to the repository root for convenient inspection;
@@ -15,6 +15,7 @@ The script is intentionally small and conservative:
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -27,6 +28,8 @@ TEX_DIR = ROOT / "docs" / "prd"
 TEX_NAME = "kerr_scalar_nonlinear_GF_baseframe.tex"
 PDF_NAME = "kerr_scalar_nonlinear_GF_baseframe.pdf"
 LOG_NAME = "kerr_scalar_nonlinear_GF_baseframe.log"
+# Fix the PDF metadata timestamp unless a caller intentionally overrides it.
+DEFAULT_SOURCE_DATE_EPOCH = "1704067200"
 AUX_NAMES = [
     "kerr_scalar_nonlinear_GF_baseframe.aux",
     "kerr_scalar_nonlinear_GF_baseframe.log",
@@ -54,7 +57,9 @@ FAIL_PATTERNS = [
 
 def run(command: list[str], *, cwd: Path = ROOT) -> None:
     print("+", " ".join(command))
-    subprocess.run(command, cwd=cwd, check=True)
+    env = os.environ.copy()
+    env.setdefault("SOURCE_DATE_EPOCH", DEFAULT_SOURCE_DATE_EPOCH)
+    subprocess.run(command, cwd=cwd, check=True, env=env)
 
 
 def run_pdflatex() -> None:
