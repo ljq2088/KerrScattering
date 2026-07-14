@@ -18,8 +18,9 @@ scalar spheroidal harmonics, and the Sigma-weighted nonlinear source.
 
 The numerical results in the submitted draft focus on the axisymmetric Kerr
 sample `a=0.5`, `m=0`, and `l=0,1,2`.  The data show Breit-Wigner-type peaks in
-the first-order nonlinear transmission coefficients, peak locations close to
-the real parts of the corresponding scalar Kerr quasinormal modes, and
+the first-order nonlinear transmission coefficients, with peak locations on
+the same frequency scale as the real parts of the corresponding scalar Kerr
+quasinormal modes, and
 high-frequency exponential tails with finite-window effective temperatures
 close to the Kerr Hawking temperature.  The numerical accuracy is assessed
 internally by Chebyshev coefficient tails, direct residuals of the radial
