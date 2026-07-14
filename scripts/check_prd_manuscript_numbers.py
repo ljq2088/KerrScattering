@@ -206,6 +206,26 @@ def check_low_frequency_slopes(tex: str) -> None:
         )
 
 
+def check_peak_fit_quality(tex: str) -> None:
+    rows = {int(row["l"]): row for row in read_csv_rows(FIT_CSV)}
+    match = re.search(
+        r"relative RMS residuals of these peak fits .*? are\s*"
+        r"\$(?P<r0>[0-9.]+)\\%\$,\s*"
+        r"\$(?P<r1>[0-9.]+)\\%\$, and\s*"
+        r"\$(?P<r2>[0-9.]+)\\%\$",
+        tex,
+        flags=re.DOTALL,
+    )
+    if match is None:
+        raise AssertionError("Could not find Lorentzian peak-fit quality statement")
+    for ell in [0, 1, 2]:
+        assert_decimal(
+            f"Lorentzian peak relative RMS l={ell}",
+            match.group(f"r{ell}"),
+            100.0 * float(rows[ell]["peak_rms_over_peak"]),
+        )
+
+
 def check_production_convergence(tex: str) -> None:
     rows = read_csv_rows(PRODUCTION_CSV)
     grouped = {}
@@ -348,6 +368,7 @@ def main() -> None:
     check_table_i(tex)
     check_table_ii(tex)
     check_low_frequency_slopes(tex)
+    check_peak_fit_quality(tex)
     check_production_convergence(tex)
     check_target_channels(tex)
     check_superradiant_table(tex)

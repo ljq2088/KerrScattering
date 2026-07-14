@@ -87,10 +87,22 @@ def fit_peak(omega, t1):
         try:
             popt, _ = curve_fit(lorentzian, x, y, p0=p0, bounds=bounds, maxfev=20000)
             amp, w0, gamma, offset = popt
-            return float(w0), float(abs(gamma)), float(lorentzian(w0, *popt))
+            prediction = lorentzian(x, *popt)
+            rmse = float(np.sqrt(np.mean((y - prediction) ** 2)))
+            peak_scale = max(abs(y_peak), np.finfo(float).tiny)
+            r2_denominator = float(np.sum((y - np.mean(y)) ** 2))
+            r2 = float(
+                1.0 - np.sum((y - prediction) ** 2) / r2_denominator
+                if r2_denominator > 0.0
+                else np.nan
+            )
+            return (
+                float(w0), float(abs(gamma)), float(lorentzian(w0, *popt)),
+                rmse / peak_scale, r2, len(x),
+            )
         except Exception:
             pass
-    return w_peak, np.nan, y_peak
+    return w_peak, np.nan, y_peak, np.nan, np.nan, len(x)
 
 
 def fit_tail_temperature(omega, t1, qnm_real, w_peak):
@@ -125,7 +137,7 @@ def main():
 
     table_rows = []
     for ell, (_, omega, t1, balance) in data.items():
-        w_peak, gamma, y_peak = fit_peak(omega, t1)
+        w_peak, gamma, y_peak, peak_rms_over_peak, peak_r2, peak_fit_points = fit_peak(omega, t1)
         q = qnms[ell]
         tfit, rms_log, tail_intercept, tail_slope, tail_min, tail_max = fit_tail_temperature(
             omega, t1, q.real, w_peak
@@ -135,6 +147,9 @@ def main():
                 "l": ell,
                 "omega_peak": w_peak,
                 "gamma": gamma,
+                "peak_rms_over_peak": peak_rms_over_peak,
+                "peak_r2": peak_r2,
+                "peak_fit_points": peak_fit_points,
                 "qnm_real": float(q.real),
                 "qnm_imag_abs": float(abs(q.imag)),
                 "pi_Tfit": float(np.pi * tfit),
@@ -152,7 +167,8 @@ def main():
     os.makedirs(os.path.dirname(OUT_TABLE), exist_ok=True)
     with open(OUT_TABLE, "w", newline="") as f:
         fieldnames = [
-            "l", "omega_peak", "gamma", "qnm_real", "qnm_imag_abs",
+            "l", "omega_peak", "gamma", "peak_rms_over_peak", "peak_r2",
+            "peak_fit_points", "qnm_real", "qnm_imag_abs",
             "pi_Tfit", "Tfit_over_TH_minus_1_abs", "tail_rms_log",
             "tail_intercept", "tail_slope", "tail_omega_min", "tail_omega_max",
             "max_T1", "max_balance",

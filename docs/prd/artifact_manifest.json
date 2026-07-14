@@ -140,13 +140,16 @@
         "gamma",
         "qnm_real",
         "qnm_imag_abs",
+        "peak_rms_over_peak",
+        "peak_r2",
+        "peak_fit_points",
         "pi_Tfit",
         "Tfit_over_TH_minus_1_abs",
         "tail_rms_log"
       ],
       "rows": 3,
-      "sha256": "fb941582e78ba55713db8cb01d787b094d987ee471e1fd88c7d7556f0e8fc784",
-      "size_bytes": 916
+      "sha256": "069685f48edb0f68530df0f13c97e61b543b9c7a80763638ff658afd36adc575",
+      "size_bytes": 1080
     },
     {
       "kind": "csv",

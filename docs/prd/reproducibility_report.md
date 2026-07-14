@@ -9,10 +9,10 @@ This report records the local artifacts used by the active PRD-style draft `docs
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 58634 | `5f0009d5b425f11fa00332533d6a106069a22632f93ba11108d5b99213934706` |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 796602 | `6cbfaf86542392a902c883759f7e1c7675eb6d72f7770dc3a47cd8f7b682fd41` |
-| kerr_scalar_nonlinear_GF_baseframe.pdf | 796602 | `6cbfaf86542392a902c883759f7e1c7675eb6d72f7770dc3a47cd8f7b682fd41` |
-| docs/prd/artifact_manifest.json | 8378 | `17e4c20a2ab8f95aef562a7da2298408715958b6a6f351f960d6f8ec0d13cf65` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 59064 | `33eb62bb64b1e225bf6d8c9e334161731500ab17e49cdf51088a0e8e6e357daa` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 800908 | `5a47b47771a39dc29eb23b7a8a990b22bae2ffb12530746005ca78b2385eff6b` |
+| kerr_scalar_nonlinear_GF_baseframe.pdf | 800908 | `5a47b47771a39dc29eb23b7a8a990b22bae2ffb12530746005ca78b2385eff6b` |
+| docs/prd/artifact_manifest.json | 8455 | `7f12289d7827ae9409d04daec2cd168b01cf988d9e96bc8194a0058216acab16` |
 
 ## Frozen Figure And CSV Inputs
 
@@ -28,7 +28,7 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv | csv | 4 rows | 3153 | `8ce315828307fa20` |
 | results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv | csv | 3 rows | 2454 | `5c4203c1f3fbbe15` |
 | results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv | csv | 2 rows | 1744 | `8bf89e24b207d34d` |
-| results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv | csv | 3 rows | 916 | `fb941582e78ba557` |
+| results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv | csv | 3 rows | 1080 | `069685f48edb0f68` |
 | results/kerr_scalar_low_frequency_axisymmetric_slopes.csv | csv | 3 rows | 272 | `f7be0dfd358c9f50` |
 | results/kerr_scalar_axisymmetric_spectral_coefficients.csv | csv | 723 rows | 77593 | `c16c276517f1511c` |
 | results/kerr_scalar_axisymmetric_spectral_residuals.csv | csv | 720 rows | 159937 | `ea06533b4f44ccea` |
