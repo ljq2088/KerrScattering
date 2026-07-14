@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TEX = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.tex"
 FIT_CSV = ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_fit_table.csv"
 TAIL_WINDOW_CSV = ROOT / "results" / "kerr_scalar_nonlinear_tail_window_sensitivity.csv"
+PEAK_WINDOW_CSV = ROOT / "results" / "kerr_scalar_nonlinear_peak_window_sensitivity.csv"
 SLOPE_CSV = ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_slopes.csv"
 LOW_WINDOW_CSV = ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_window_sensitivity.csv"
 PRODUCTION_CSV = ROOT / "results" / "kerr_scalar_axisymmetric_production_convergence.csv"
@@ -298,6 +299,40 @@ def check_peak_fit_quality(tex: str) -> None:
         )
 
 
+def check_peak_window_sensitivity(tex: str) -> None:
+    rows = read_csv_rows(PEAK_WINDOW_CSV)
+    match = re.search(
+        r"fitted centers vary by at most\s*"
+        r"\$([0-9.]+)\\times10\^{-([0-9]+)}\$,\s*"
+        r"\$([0-9.]+)\\times10\^{-([0-9]+)}\$, and\s*"
+        r"\$([0-9.]+)\\times10\^{-([0-9]+)}\$.*?"
+        r"half-widths vary by\s*"
+        r"\$([0-9.]+)\\times10\^{-([0-9]+)}\$,\s*"
+        r"\$([0-9.]+)\\times10\^{-([0-9]+)}\$, and\s*"
+        r"\$([0-9.]+)\\times10\^{-([0-9]+)}\$",
+        tex,
+        flags=re.DOTALL,
+    )
+    if match is None:
+        raise AssertionError("Could not find peak-window sensitivity statement")
+    grouped: dict[int, list[dict[str, str]]] = {}
+    for row in rows:
+        grouped.setdefault(int(row["l"]), []).append(row)
+    centers = []
+    widths = []
+    for ell in [0, 1, 2]:
+        subset = grouped[ell]
+        centers.append(max(float(row["omega_peak"]) for row in subset) - min(float(row["omega_peak"]) for row in subset))
+        widths.append(max(float(row["gamma"]) for row in subset) - min(float(row["gamma"]) for row in subset))
+    for index, actual in enumerate(centers):
+        shown = float(match.group(1 + 2 * index)) * 10.0 ** -int(match.group(2 + 2 * index))
+        assert_close(f"peak center sensitivity l={index}", shown, actual, 0.15 * shown)
+    for index, actual in enumerate(widths):
+        offset = 7 + 2 * index
+        shown = float(match.group(offset)) * 10.0 ** -int(match.group(offset + 1))
+        assert_close(f"peak width sensitivity l={index}", shown, actual, 0.15 * shown)
+
+
 def check_tail_window_table(tex: str) -> None:
     rows = read_csv_rows(TAIL_WINDOW_CSV)
     table_match = re.search(
@@ -533,6 +568,7 @@ def main() -> None:
     check_low_frequency_slopes(tex)
     check_low_frequency_window_table(tex)
     check_peak_fit_quality(tex)
+    check_peak_window_sensitivity(tex)
     check_tail_window_table(tex)
     check_production_convergence(tex)
     check_target_channels(tex)

@@ -212,6 +212,22 @@
     },
     {
       "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_peak_window_sensitivity.csv",
+      "required_columns": [
+        "l",
+        "threshold",
+        "points",
+        "omega_peak",
+        "gamma",
+        "peak_rms_over_peak",
+        "peak_r2"
+      ],
+      "rows": 12,
+      "sha256": "625d62b08266d17098311bd8e79151d1e443263e6ffd3f1355a6a9db73ed63b7",
+      "size_bytes": 1266
+    },
+    {
+      "kind": "csv",
       "path": "results/kerr_scalar_nonlinear_tail_window_sensitivity.csv",
       "required_columns": [
         "l",
