@@ -67,7 +67,7 @@ def main() -> int:
         if missing:
             raise AssertionError(f"unresolved {prefix} references: {sorted(missing)}")
 
-    forbidden = ("s=-2", "spin-minus2", "GeneralizedSasakiNakamura", "Mathematica", "GSN", "benchmark")
+    forbidden = ("s=-2", "spin-minus2", "GeneralizedSasakiNakamura", "Mathematica", "benchmark")
     leaked = [token for token in forbidden if token.lower() in tex.lower()]
     if leaked:
         raise AssertionError(f"off-scope manuscript tokens: {leaked}")

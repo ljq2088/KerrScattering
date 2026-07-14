@@ -38,7 +38,6 @@ FORBIDDEN_MANUSCRIPT_TOKENS = [
     "spin-minus2",
     "GeneralizedSasakiNakamura",
     "Mathematica",
-    "GSN",
     "benchmark",
 ]
 

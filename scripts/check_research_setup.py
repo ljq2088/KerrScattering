@@ -23,6 +23,7 @@ def main() -> int:
         ".agents/skills/gravity-theory-research/SKILL.md",
         "docs/agent/RESEARCH_AGENT_ARCHITECTURE.md",
         "docs/agent/RESEARCH_CAPABILITY_MATRIX.md",
+        "docs/agent/RESEARCH_CAPABILITY_STATUS_2026-07-15.md",
         "docs/literature/gravity_literature_map.md",
         "docs/literature/deep_learning_curriculum.md",
         "docs/literature/deep_learning_curriculum_zh.md",
