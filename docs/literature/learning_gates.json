@@ -35,6 +35,14 @@
       "acceptance_tests": ["Mino-time/direct-integration agreement", "mode-lattice truncation", "resonance flag"]
     },
     {
+      "id": "emri-waveform-transfer",
+      "title": "EMRI 径向响应到波形相位",
+      "prerequisites": ["source mode lattice", "infinity/horizon fluxes", "adiabatic evolution"],
+      "equations": ["Z_infty,Z_H from source/Wronskian projections", "dJ_A/dT = F_A^(0) + eta F_A^(1) + ...", "delta Phi = integral delta Omega dt"],
+      "implementation_targets": ["FluxRecord", "AdiabaticOrbitStepper", "PhaseErrorBudget"],
+      "acceptance_tests": ["flux reconstruction from retained modes", "adiabatic orbit integration refinement", "instantaneous-to-accumulated phase propagation", "horizon-absorption sign check"]
+    },
+    {
       "id": "gw-waveform-phase",
       "title": "引力波波形与多尺度相位",
       "prerequisites": ["source mode amplitudes", "flux balance", "orbit evolution"],

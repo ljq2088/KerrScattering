@@ -465,3 +465,56 @@ full literature review; the source paper remains authoritative for equations.
 - **Experiment:** for a future overlap study, compare one invariant flux or
   phase coefficient in a declared weak-field limit, including the matching
   convention and truncation order.
+
+## Kerr adiabatic inspiral and horizon absorption
+
+- **Source:** Hughes, arXiv:gr-qc/9910091,
+  https://arxiv.org/abs/gr-qc/9910091
+- **Problem/order:** adiabatic radiation reaction for circular, inclined
+  orbits around Kerr at leading order in the mass ratio.
+- **Core idea:** energy and angular-momentum fluxes, including horizon
+  absorption, constrain the evolution of the orbit and the Carter constant
+  for this restricted family.
+- **Transfer:** a radial amplitude is useful only after its infinity and
+  horizon pieces are converted into fluxes and inserted into an orbit model.
+  Horizon absorption can change both inspiral time and waveform phase.
+- **Incompatibility:** the current fixed-frequency scalar response has no
+  small-body worldline, adiabatic time, or gravitational Carter-flux law.
+- **Experiment:** use a convention-tagged pair of horizon/infinity amplitudes
+  to build one flux-balance record before attempting an orbit evolution.
+
+## Kerr inspiral trajectories and multi-harmonic waveforms
+
+- **Source:** Hughes, arXiv:gr-qc/0104041,
+  https://arxiv.org/abs/gr-qc/0104041
+- **Problem/order:** adiabatic inspiral trajectories and waveforms for
+  circular, inclined Kerr orbits.
+- **Core idea:** the signal is a sum of slowly evolving harmonic voices, and
+  rapid spin makes horizon coupling important to the accumulated phase.
+- **Transfer:** the future source interface must preserve mode labels and
+  phases instead of collapsing a spectrum to a single effective frequency.
+  Radial solver errors should be propagated to phase error, not reported only
+  as pointwise amplitude errors.
+- **Incompatibility:** the current paper solves a fixed real-frequency scalar
+  problem and does not evolve orbital constants.
+- **Experiment:** inject a controlled fractional perturbation into one mode,
+  integrate its phase over a bounded toy inspiral, and report the resulting
+  phase budget separately from radial residuals.
+
+## Generic eccentric and inclined EMRI waveform snapshots
+
+- **Source:** Drasco and Hughes, arXiv:gr-qc/0509101,
+  https://arxiv.org/abs/gr-qc/0509101
+- **Problem/order:** frequency-domain gravitational waves from generic bound
+  Kerr geodesics, with simultaneous eccentricity and inclination.
+- **Core idea:** radial, polar, and azimuthal orbital motions create distinct
+  harmonic voices; infinity and horizon fluxes are computed mode by mode and
+  can drive an adiabatic evolution.
+- **Transfer:** this supplies the concrete hierarchy
+  `(E,L_z,Q) -> (Omega_r,Omega_theta,Omega_phi) -> (l,m,k,n) -> omega`
+  that a future KerrScattering source layer must implement.
+- **Incompatibility:** a single `(l,m,omega)` scalar response is only the
+  radial backend of this hierarchy and cannot be called an EMRI waveform.
+- **Experiment:** validate mode-lattice truncation independently of radial
+  spectral order, then compare the reconstructed flux with the sum of retained
+  source modes.

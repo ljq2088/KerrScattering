@@ -33,6 +33,9 @@ gr-qc/0701069|self-force-flux-balance|A|Mode-sum gravitational self-force with a
 2112.11168|nonlinear-ringdown|B|Absorption-induced nonlinear mode excitation and its relevance to ringdown analysis.
 gr-qc/0202090|kerr-geodesic-frequencies|A|Action-angle variables and invariant fundamental frequencies for bound Kerr geodesics.
 0906.1420|kerr-geodesic-analytics|A|Analytic bound Kerr geodesics in Mino time and the radial, polar, and azimuthal frequencies.
+gr-qc/9910091|kerr-adiabatic-inspiral|A|Kerr circular inclined-orbit evolution from gravitational-wave fluxes and horizon absorption.
+gr-qc/0104041|kerr-inspiral-waveforms|A|Adiabatic Kerr inspiral trajectories and multi-harmonic gravitational-wave phase evolution.
+gr-qc/0509101|generic-emri-waveform-snapshots|A|Generic eccentric and inclined Kerr EMRI waveforms with infinity and horizon fluxes.
 0904.3810|emri-teukolsky-waveforms|A|Frequency-domain Teukolsky waveforms for eccentric and inclined Kerr geodesics with flux validation.
 1103.0287|scalar-self-force-kerr|A|Frequency-domain scalar self-force on eccentric equatorial Kerr orbits using extended homogeneous solutions and mode-sum regularization.
 1408.2885|scalar-self-force-inclined|B|Scalar self-force on inclined circular Kerr orbits and mode-sum regularization of all force components.

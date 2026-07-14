@@ -29,7 +29,16 @@ OrbitConstants(E, Lz, Q, p, e, theta_minus)
 The current fixed-frequency module can become the radial backend for this
 interface, but it does not provide orbital evolution or a waveform phase.
 
-Primary anchors: `gr-qc/0202090`, `0906.1420`, `0904.3810`, `2101.04592`.
+Primary anchors: `gr-qc/0202090`, `0906.1420`, `0904.3810`, `2101.04592`,
+`gr-qc/9910091`, `gr-qc/0104041`, `gr-qc/0509101`.
+
+The older adiabatic waveform chain is retained as a distinct training step:
+Hughes connects horizon/infinity fluxes to circular inclined-orbit evolution;
+his follow-up makes the accumulated signal a sum of slowly evolving harmonic
+voices; Drasco--Hughes extends the picture to generic eccentric and inclined
+geodesics. These papers are the cleanest bridge from the present radial
+amplitude backend to a genuine EMRI source lattice, while still remaining
+separate from conservative and second-order self-force.
 
 ## 3. Green functions, fluxes, and radiation reaction
 

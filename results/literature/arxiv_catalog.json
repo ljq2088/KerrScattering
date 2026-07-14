@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-07-14T15:04:12.285049+00:00",
+  "generated_utc": "2026-07-14T16:07:23.688094+00:00",
   "source": "arXiv API metadata; PDFs are not downloaded",
-  "count": 43,
+  "count": 46,
   "records": [
     {
       "arxiv_id": "gr-qc/0306120",
@@ -806,6 +806,73 @@
         "categories": [
           "gr-qc",
           "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/9910091",
+      "module": "kerr-adiabatic-inspiral",
+      "priority": "A",
+      "reason": "Kerr circular inclined-orbit evolution from gravitational-wave fluxes and horizon absorption.",
+      "metadata": {
+        "arxiv_id": "gr-qc/9910091v3",
+        "title": "The evolution of circular, non-equatorial orbits of Kerr black holes due to gravitational-wave emission",
+        "authors": [
+          "Scott A. Hughes"
+        ],
+        "published": "1999-10-26T18:32:02+00:00",
+        "updated": "2001-01-05T22:22:39+00:00",
+        "summary": "A major focus of much current research in gravitation theory is on understanding how radiation reaction drives the evolution of a binary system, particularly in the extreme mass ratio limit. Such research is of direct relevance to gravitational-wave sources for space-based detectors (such as LISA). We present here a study of the radiative evolution of circular (i.e., constant Boyer-Lindquist coordinate radius), non-equatorial Kerr black hole orbits. Recent theorems have shown that, at least in an adiabatic evolution, such orbits evolve from one circular configuration into another, changing only their radius and inclination angle. This constrains the system's evolution in such a way that the change in its Carter constant can be deduced from knowledge of gravitational wave fluxes propagating to infinity and down the black hole's horizon. Thus, in this particular case, a local radiation reaction force is not needed. In accordance with post-Newtonian weak-field predictions, we find that inclined orbits radiatively evolve to larger inclination angles (although the post-Newtonian prediction overestimates the rate of this evolution in the strong field by a factor $\\lesssim 3$). We also find that the gravitational waveforms emitted by these orbits are rather complicated, particularly when the hole is rapidly spinning, as the radiation is influenced by many harmonics of the orbital frequencies.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/9910091v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/0104041",
+      "module": "kerr-inspiral-waveforms",
+      "priority": "A",
+      "reason": "Adiabatic Kerr inspiral trajectories and multi-harmonic gravitational-wave phase evolution.",
+      "metadata": {
+        "arxiv_id": "gr-qc/0104041v2",
+        "title": "Evolution of circular, non-equatorial orbits of Kerr black holes due to gravitational-wave emission: II. Inspiral trajectories and gravitational waveforms",
+        "authors": [
+          "Scott A. Hughes"
+        ],
+        "published": "2001-04-13T23:16:07+00:00",
+        "updated": "2001-05-24T22:01:45+00:00",
+        "summary": "The inspiral of a ``small'' ($μ\\sim 1-100 M_\\odot$) compact body into a ``large'' ($M \\sim 10^{5-7} M_\\odot$) black hole is a key source of gravitational radiation for the space-based gravitational-wave observatory LISA. The waves from such inspirals will probe the extreme strong-field nature of the Kerr metric. In this paper, I investigate the properties of a restricted family of such inspirals (the inspiral of circular, inclined orbits) with an eye toward understanding observable properties of the gravitational waves that they generate. Using results previously presented to calculate the effects of radiation reaction, I assemble the inspiral trajectories (assuming that radiation reacts adiabatically, so that over short timescales the trajectory is approximately geodesic) and calculate the wave generated as the compact body spirals in. I do this analysis for several black hole spins, sampling a range that should be indicative of what spins we will encounter in nature. The spin has a very strong impact on the waveform. In particular, when the hole rotates very rapidly, tidal coupling between the inspiraling body and the event horizon has a very strong influence on the inspiral time scale, which in turn has a big impact on the gravitational wave phasing. The gravitational waves themselves are very usefully described as ``multi-voice chirps'': the wave is a sum of ``voices'', each corresponding to a different harmonic of the fundamental orbital frequencies. Each voice has a rather simple phase evolution. Searching for extreme mass ratio inspirals voice-by-voice may be more effective than searching for the summed waveform all at once.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/0104041v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/0509101",
+      "module": "generic-emri-waveform-snapshots",
+      "priority": "A",
+      "reason": "Generic eccentric and inclined Kerr EMRI waveforms with infinity and horizon fluxes.",
+      "metadata": {
+        "arxiv_id": "gr-qc/0509101v2",
+        "title": "Gravitational wave snapshots of generic extreme mass ratio inspirals",
+        "authors": [
+          "Steve Drasco",
+          "Scott A. Hughes"
+        ],
+        "published": "2005-09-26T21:53:09+00:00",
+        "updated": "2006-01-19T23:19:18+00:00",
+        "summary": "Using black hole perturbation theory, we calculate the gravitational waves produced by test particles moving on bound geodesic orbits about rotating black holes. The orbits we consider are generic - simultaneously eccentric and inclined. The waves can be described as having radial, polar, and azimuthal \"voices\", each of which can be made to dominate by varying eccentricity and inclination. Although each voice is generally apparent in the waveform, the radial voice is prone to overpowering the others. We also compute the radiative fluxes of energy and axial angular momentum at infinity and through the event horizon. These fluxes, coupled to a prescription for the radiative evolution of the Carter constant, will be used in future work to adiabatically evolve through a sequence of generic orbits. This will enable the calculation of inspiral waveforms that, while lacking certain important features, will approximate those expected from astrophysical extreme mass ratio captures sufficiently well to aid development of measurement algorithms on a relatively short timescale.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/0509101v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph"
         ]
       }
     },
