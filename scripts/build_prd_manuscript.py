@@ -5,11 +5,12 @@ The script is intentionally small and conservative:
 1. verify required figure/CSV artifacts exist, have expected schemas, and
    match the frozen artifact manifest;
 2. verify manuscript display numbers against tracked CSV files;
-3. run pdflatex three times in the manuscript directory;
-4. fail on unresolved references, citation warnings, overfull boxes, or TeX
+3. verify the PRD document structure and active scope;
+4. run pdflatex three times in the manuscript directory;
+5. fail on unresolved references, citation warnings, overfull boxes, or TeX
    errors in the final log;
-5. copy the generated PDF to the repository root for convenient inspection;
-6. remove auxiliary LaTeX files unless requested otherwise.
+6. copy the generated PDF to the repository root for convenient inspection;
+7. remove auxiliary LaTeX files unless requested otherwise.
 """
 
 from __future__ import annotations
@@ -119,6 +120,7 @@ def main() -> None:
     run([sys.executable, str(ROOT / "scripts" / "check_prd_artifacts.py")])
     run([sys.executable, str(ROOT / "scripts" / "check_prd_manuscript_numbers.py")])
     run([sys.executable, str(ROOT / "scripts" / "check_prd_citations.py")])
+    run([sys.executable, str(ROOT / "scripts" / "check_prd_style.py")])
     run_pdflatex()
     check_latex_log()
     copy_pdf()

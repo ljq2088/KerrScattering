@@ -120,6 +120,11 @@ def main() -> None:
             False,
         ),
         (
+            "PRD style and structure audit",
+            [sys.executable, str(ROOT / "scripts" / "check_prd_style.py")],
+            False,
+        ),
+        (
             "Submission readiness audit",
             [sys.executable, str(ROOT / "scripts" / "check_prd_submission_ready.py")],
             True,
@@ -171,6 +176,7 @@ def main() -> None:
             "python scripts\\write_prd_artifact_manifest.py",
             "python scripts\\build_prd_manuscript.py",
             "python scripts\\check_prd_citations.py",
+            "python scripts\\check_prd_style.py",
             "python scripts\\check_prd_submission_ready.py",
             "```",
             "",

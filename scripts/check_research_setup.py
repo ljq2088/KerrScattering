@@ -33,6 +33,7 @@ def main() -> int:
         "docs/literature/seed_arxiv_ids.txt",
         "tools/mcp/gravity_research_server.py",
         "scripts/check_literature_learning_gates.py",
+        "scripts/check_prd_style.py",
     ]
     missing = [item for item in required if not (ROOT / item).is_file()]
     if missing:

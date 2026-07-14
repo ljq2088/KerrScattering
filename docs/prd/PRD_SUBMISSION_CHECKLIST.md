@@ -38,6 +38,7 @@ author metadata.
 | Manuscript builds cleanly | PASS | `python scripts/build_prd_manuscript.py` passes. |
 | Figure/CSV artifacts are frozen | PASS | `docs/prd/artifact_manifest.json` is checked by `scripts/check_prd_artifacts.py`. |
 | Manuscript table numbers match CSVs | PASS | `scripts/check_prd_manuscript_numbers.py` passes. |
+| PRD style and structure audit | PASS | `scripts/check_prd_style.py` verifies REVTeX options, required sections, abstract, cross-references, data/code statement, and active scope. |
 | Data/code availability text | PASS | The manuscript has a `Data and code availability` section and local reproducibility report. |
 | Cover letter template | PASS | `docs/prd/cover_letter.template.md` contains a PRD-ready cover-letter draft to finalize with real corresponding-author details. |
 | Final metadata file | BLOCKED | `docs/prd/submission_metadata.json` has not yet been created from the template with final author and reference details. |
@@ -91,6 +92,7 @@ The current draft makes only the claims supported by the tracked data:
 
    ```powershell
    python scripts/build_prd_manuscript.py
+   python scripts/check_prd_style.py
    python scripts/check_prd_submission_ready.py
    ```
 

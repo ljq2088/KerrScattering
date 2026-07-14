@@ -67,6 +67,14 @@ Status: **PASS**
 PRD citation integrity passed (34 cited keys, 34 bibliography entries)
 ```
 
+### PRD style and structure audit
+
+Status: **PASS**
+
+```text
+PRD style and structure audit passed.
+```
+
 ### Submission readiness audit
 
 Status: **EXPECTED BLOCKERS**
@@ -85,6 +93,7 @@ PRD submission readiness audit: NOT READY
 python scripts\write_prd_artifact_manifest.py
 python scripts\build_prd_manuscript.py
 python scripts\check_prd_citations.py
+python scripts\check_prd_style.py
 python scripts\check_prd_submission_ready.py
 ```
 
