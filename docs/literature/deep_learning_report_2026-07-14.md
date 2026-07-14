@@ -198,7 +198,7 @@ or a review-paper summary from being mistaken for a completed self-force or
 EMRI waveform calculation.
 
 The executable audit `scripts/check_literature_learning_gates.py` currently
-passes all eight modules and 25 acceptance tests. This is evidence that the
+passes all nine modules and 29 acceptance tests. This is evidence that the
 research workflow is specified and testable; it is not a claim that the active
 repository already contains an EMRI orbit integrator, a singular-field
 regularization code, or a gravitational self-force waveform.

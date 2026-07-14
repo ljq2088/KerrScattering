@@ -282,6 +282,21 @@ def check_peak_fit_quality(tex: str) -> None:
             100.0 * float(rows[ell]["peak_rms_over_peak"]),
         )
 
+    r2_match = re.search(
+        r"coefficient of determination of the three fits is\s*"
+        r"\$R\^2=([0-9.]+)\$,\s*\$([0-9.]+)\$, and\s*\$([0-9.]+)\$",
+        tex,
+        flags=re.DOTALL,
+    )
+    if r2_match is None:
+        raise AssertionError("Could not find Lorentzian peak-fit R^2 statement")
+    for ell, group in enumerate((1, 2, 3)):
+        assert_decimal(
+            f"Lorentzian peak R^2 l={ell}",
+            r2_match.group(group),
+            float(rows[ell]["peak_r2"]),
+        )
+
 
 def check_tail_window_table(tex: str) -> None:
     rows = read_csv_rows(TAIL_WINDOW_CSV)

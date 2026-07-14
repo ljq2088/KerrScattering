@@ -121,7 +121,8 @@ cannot be replaced by the finite cubic source used here
 \cite{Wei2025,Berens2024}.
 
 This work carries the same chain to the scalar Teukolsky equation in Kerr
-spacetime with spin weight $s=0$.  The aim is to keep the observable definition
+spacetime with spin weight $s=0$, within the standard analytic black-hole
+perturbation framework~\cite{SasakiTagoshi}.  The aim is to keep the observable definition
 and the flux logic of the Schwarzschild work unchanged while replacing the
 radial and angular equations by their Kerr counterparts.  Rotation produces
 three changes.  First, the horizon flux is proportional to
@@ -639,10 +640,22 @@ positions are $M\omega_{\rm peak}=0.1299$, $0.3100$, and $0.5022$ for
 $\ell=0,1,2$, while the QNM real parts are $0.1124$, $0.2979$, and $0.4920$.
 The corresponding fractional offsets are approximately $16\%$, $4.1\%$, and
 $2.1\%$.
-This is the Kerr version of the Breit-Wigner-type resonance observed in the
-Schwarzschild nonlinear coefficients.  The comparison is qualitative rather
-than a precision QNM determination: the nonlinear coefficient is a real-frequency flux observable,
-whereas the QNM frequencies are poles of the analytically continued response.
+To make the comparison quantitative without identifying the flux with a pole,
+we fit the selected samples to the four-parameter profile
+\begin{equation}
+T_\ell^{(1)}(\omega)=T_{\rm off}+
+\frac{A\,\gamma^2}{(M\omega-\omega_p)^2+\gamma^2} .
+\label{eq:lorentzian}
+\end{equation}
+Here $\omega_p$ is the fitted center in units $M=1$, and $\gamma$ is the
+half-width parameter of the interpolation.  This is the Kerr version of the
+Breit-Wigner-type resonance observed in the Schwarzschild nonlinear
+coefficients, not a claim that the flux itself is a meromorphic response.
+The coefficient of determination of the three fits is $R^2=0.9974$,
+$0.9979$, and $0.9991$ for $\ell=0,1,2$, respectively.  The comparison is
+qualitative rather than a precision QNM determination: the nonlinear
+coefficient is a real-frequency flux observable, whereas the QNM frequencies
+are poles of the analytically continued response.
 The quoted $\omega_{\rm peak}$ and $\gamma$ are parameters of the numerical
 Lorentzian interpolation used to locate a broad feature; they are not a
 claim that the nonlinear flux has been analytically continued to a QNM pole.
@@ -1429,6 +1442,12 @@ Analytic solutions of the Teukolsky equation and their low frequency
 expansions,
 Prog. Theor. Phys. \textbf{95}, 1079 (1996),
 arXiv:gr-qc/9603020.
+
+\bibitem{SasakiTagoshi}
+M.~Sasaki and H.~Tagoshi,
+Analytic black hole perturbation approach to gravitational radiation,
+Living Rev. Relativ. \textbf{6}, 6 (2003),
+arXiv:gr-qc/0306120.
 
 \bibitem{ChungWagleYunes2023}
 A.~K.-W. Chung, P.~Wagle, and N.~Yunes,
