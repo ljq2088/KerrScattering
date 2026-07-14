@@ -9,9 +9,9 @@ This report records the local artifacts used by the active PRD-style draft `docs
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 70704 | `4ac937fd3d57ff21593d184982fe03395e573678ed95fa34fea67dd2fb86fc3e` |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 913235 | `34395f10214763cd7a75fe21b5b6b76f16adc31521dda15e67e74f37c891e9ee` |
-| kerr_scalar_nonlinear_GF_baseframe.pdf | 913235 | `34395f10214763cd7a75fe21b5b6b76f16adc31521dda15e67e74f37c891e9ee` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 71610 | `7e95f69dc5ad9e5144f629e733f52b78000daa24f246523d5cf09184f032aedf` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 913961 | `653f20effe85001e6508244edc4ff8d08dbab03429851690f34426f49fe67d54` |
+| kerr_scalar_nonlinear_GF_baseframe.pdf | 913961 | `653f20effe85001e6508244edc4ff8d08dbab03429851690f34426f49fe67d54` |
 | docs/prd/artifact_manifest.json | 11341 | `2c791c2a5379b6609a2af963aedf03c033dfd6576cf8bf82f298c5c2dc8ca392` |
 
 ## Frozen Figure And CSV Inputs
@@ -68,7 +68,7 @@ PRD manuscript numeric checks passed.
 Status: **PASS**
 
 ```text
-PRD citation integrity passed (40 cited keys, 40 bibliography entries)
+PRD citation integrity passed (42 cited keys, 42 bibliography entries)
 ```
 
 ### PRD style and structure audit
