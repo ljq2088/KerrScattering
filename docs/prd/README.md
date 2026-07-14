@@ -53,6 +53,8 @@ The active draft uses the following tracked inputs:
 - `../../results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv`
+- `../../results/kerr_scalar_nonlinear_control_scan.csv`
+- `../../results/kerr_scalar_nonlinear_diagnostics.csv`
 - `../../results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv`
 - `../../results/kerr_scalar_nonlinear_tail_window_sensitivity.csv`
 - `../../results/kerr_scalar_low_frequency_axisymmetric_slopes.csv`
@@ -80,7 +82,13 @@ python scripts\plot_kerr_scalar_spin_limit.py
 python scripts\build_prd_convergence_summary.py
 ```
 
-To only check that the rounded numbers in Tables I--VI and the low-frequency
+The package is self-contained for the manuscript build, all listed artifact
+checks, and regeneration of the figures and compact tables from the included
+CSV inputs.  The expensive raw frequency sweeps and channel scans require the
+full repository checkout and solver source tree; their commands below are
+reproduction recipes for that checkout, not package-local commands.
+
+To only check that the rounded numbers in Tables I--IX and the low-frequency
 slopes still agree with the tracked CSV data, and that the frozen figure/CSV
 artifacts have not drifted:
 

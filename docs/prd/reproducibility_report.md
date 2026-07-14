@@ -12,7 +12,7 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 66856 | `390f63bff4119a7590965a754a6639bcfb613835ba14fb04f89f9efcc5fa323c` |
 | docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 908589 | `40a110b88043d1a7b45855ab8b09d989fa0909d5d36324fcb7095deedbb83dda` |
 | kerr_scalar_nonlinear_GF_baseframe.pdf | 908589 | `40a110b88043d1a7b45855ab8b09d989fa0909d5d36324fcb7095deedbb83dda` |
-| docs/prd/artifact_manifest.json | 10150 | `600b3ad6c911a6734373035795f1070e9dde81903d0e4182e449f217f15b92ab` |
+| docs/prd/artifact_manifest.json | 11341 | `2c791c2a5379b6609a2af963aedf03c033dfd6576cf8bf82f298c5c2dc8ca392` |
 
 ## Frozen Figure And CSV Inputs
 
@@ -29,6 +29,8 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv | csv | 4 rows | 3153 | `8ce315828307fa20` |
 | results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv | csv | 3 rows | 2454 | `5c4203c1f3fbbe15` |
 | results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv | csv | 2 rows | 1744 | `8bf89e24b207d34d` |
+| results/kerr_scalar_nonlinear_control_scan.csv | csv | 24 rows | 8970 | `de9ae6a3b1716795` |
+| results/kerr_scalar_nonlinear_diagnostics.csv | csv | 16 rows | 9831 | `4481c891a4b40fb5` |
 | results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv | csv | 3 rows | 1080 | `069685f48edb0f68` |
 | results/kerr_scalar_nonlinear_tail_window_sensitivity.csv | csv | 12 rows | 1376 | `7310eeb06cc9e294` |
 | results/kerr_scalar_low_frequency_axisymmetric_slopes.csv | csv | 3 rows | 272 | `f7be0dfd358c9f50` |

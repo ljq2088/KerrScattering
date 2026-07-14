@@ -54,6 +54,7 @@ SCRIPT_FILES = [
     ROOT / "scripts" / "check_prd_manuscript_numbers.py",
     ROOT / "scripts" / "check_prd_submission_ready.py",
     ROOT / "scripts" / "check_prd_style.py",
+    ROOT / "scripts" / "build_prd_convergence_summary.py",
     ROOT / "scripts" / "plot_kerr_scalar_axisymmetric_accuracy.py",
     ROOT / "scripts" / "plot_kerr_scalar_low_frequency_axisymmetric.py",
     ROOT / "scripts" / "analyze_kerr_scalar_low_frequency_window_sensitivity.py",

@@ -42,6 +42,18 @@ CSV_SCHEMAS = {
     ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l2.csv": [
         "omega", "T1", "R1", "linear_balance", "nonlinear_balance",
     ],
+    ROOT / "results" / "kerr_scalar_nonlinear_control_scan.csv": [
+        "label", "scan", "l", "m", "a", "omega", "N_outer", "N_inner",
+        "r_match", "quad_order", "A_ref_1", "A_hor_1",
+        "wronskian_relative_error", "status",
+    ],
+    ROOT / "results" / "kerr_scalar_nonlinear_diagnostics.csv": [
+        "label", "l", "m", "a", "omega", "quad_order", "N_outer",
+        "N_inner", "r_match", "mapping", "radial_weight_model",
+        "radial_integral_method", "angular_coupling",
+        "angular_coupling_cos2", "wronskian", "wronskian_relative_error",
+        "A_ref_1", "A_hor_1", "status",
+    ],
     ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_fit_table.csv": [
         "l", "omega_peak", "gamma", "qnm_real", "qnm_imag_abs",
         "peak_rms_over_peak", "peak_r2", "peak_fit_points", "pi_Tfit",
