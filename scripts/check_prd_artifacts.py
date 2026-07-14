@@ -47,6 +47,10 @@ CSV_SCHEMAS = {
         "peak_rms_over_peak", "peak_r2", "peak_fit_points", "pi_Tfit",
         "Tfit_over_TH_minus_1_abs", "tail_rms_log",
     ],
+    ROOT / "results" / "kerr_scalar_nonlinear_tail_window_sensitivity.csv": [
+        "l", "window", "omega_min", "omega_max", "points", "pi_Tfit",
+        "tail_rms_log", "abs_Tfit_over_TH_minus_1",
+    ],
     ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_slopes.csv": [
         "l", "T0_slope", "T1_slope",
     ],

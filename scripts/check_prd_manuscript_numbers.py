@@ -16,6 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TEX = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.tex"
 FIT_CSV = ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_fit_table.csv"
+TAIL_WINDOW_CSV = ROOT / "results" / "kerr_scalar_nonlinear_tail_window_sensitivity.csv"
 SLOPE_CSV = ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_slopes.csv"
 PRODUCTION_CSV = ROOT / "results" / "kerr_scalar_axisymmetric_production_convergence.csv"
 CHANNEL_CSV = ROOT / "results" / "kerr_scalar_nonlinear_channels.csv"
@@ -227,6 +228,59 @@ def check_peak_fit_quality(tex: str) -> None:
         )
 
 
+def check_tail_window_table(tex: str) -> None:
+    rows = read_csv_rows(TAIL_WINDOW_CSV)
+    table_match = re.search(
+        r"\\label\{tab:tail-window\}(?P<body>.*?)\\end\{table\*\}",
+        tex,
+        re.DOTALL,
+    )
+    if table_match is None:
+        raise AssertionError("Could not find the tail-window sensitivity table")
+
+    grouped: dict[int, list[dict[str, str]]] = {}
+    for row in rows:
+        grouped.setdefault(int(row["l"]), []).append(row)
+
+    found: dict[int, list[float | tuple[float, float]]] = {}
+    for line in table_match.group("body").splitlines():
+        line = line.strip()
+        if not re.match(r"^[012]\s*&", line):
+            continue
+        parts = [part.strip() for part in line.rstrip("\\").split("&")]
+        if len(parts) != 6:
+            raise AssertionError(f"Malformed tail-window row: {line}")
+        ell = int(parts[0])
+        base_window = re.fullmatch(r"\$\[([0-9.]+),([0-9.]+)\]\$", parts[1])
+        range_window = re.fullmatch(r"\$\[([0-9.]+),([0-9.]+)\]\$", parts[3])
+        if base_window is None or range_window is None:
+            raise AssertionError(f"Malformed tail-window range: {line}")
+        found[ell] = [
+            (float(base_window.group(1)), float(base_window.group(2))),
+            float(parts[2]),
+            (float(range_window.group(1)), float(range_window.group(2))),
+            parse_tex_value(parts[4]),
+            float(parts[5].rstrip("\\%")),
+        ]
+
+    if sorted(found) != [0, 1, 2]:
+        raise AssertionError("Could not find all tail-window sensitivity rows")
+
+    for ell, shown in found.items():
+        actual = grouped[ell]
+        base = next(row for row in actual if row["window"] == "base")
+        pi_values = [float(row["pi_Tfit"]) for row in actual]
+        rms_values = [float(row["tail_rms_log"]) for row in actual]
+        delta_values = [float(row["abs_Tfit_over_TH_minus_1"]) for row in actual]
+        assert_close(f"tail-window l={ell} baseline min", shown[0][0], float(base["omega_min"]), 1e-12)
+        assert_close(f"tail-window l={ell} baseline max", shown[0][1], float(base["omega_max"]), 1e-12)
+        assert_decimal(f"tail-window l={ell} baseline piT", f"{shown[1]:.4f}", float(base["pi_Tfit"]))
+        assert_decimal(f"tail-window l={ell} range min", f"{shown[2][0]:.4f}", min(pi_values))
+        assert_decimal(f"tail-window l={ell} range max", f"{shown[2][1]:.4f}", max(pi_values))
+        assert_close(f"tail-window l={ell} max RMS", shown[3], max(rms_values), 0.15 * 10.0 ** int(f"{shown[3]:.0e}".split("e")[-1]))
+        assert_decimal(f"tail-window l={ell} max Hawking offset", f"{shown[4]:.2f}", 100.0 * max(delta_values))
+
+
 def check_production_convergence(tex: str) -> None:
     rows = read_csv_rows(PRODUCTION_CSV)
     grouped = {}
@@ -408,6 +462,7 @@ def main() -> None:
     check_table_ii(tex)
     check_low_frequency_slopes(tex)
     check_peak_fit_quality(tex)
+    check_tail_window_table(tex)
     check_production_convergence(tex)
     check_target_channels(tex)
     check_superradiant_table(tex)
