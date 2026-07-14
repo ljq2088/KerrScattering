@@ -27,7 +27,7 @@ prescribed scalar field on a fixed background.
 | Independent literature route | MST/GSN are treated as convention-aware audits or future backends, not silently identified with the direct Teukolsky variable. | `docs/literature/core_reading_notes.md`; `Hughes2000` and `Lo2023` in the manuscript bibliography. |
 | EMRI transfer | The radial solver is specified as one backend component for a future source lattice. | `docs/literature/EMRI_TRANSFER_PROTOCOL_ZH.md`; gate `emri-source-lattice`. |
 | Self-force | The mass-ratio expansion, singular/regular split, gauge declaration, mode-sum/effective-source route, and long-time phase budget are understood as separate layers. | `docs/literature/deep_learning_report_2026-07-14.md`; gates `singular-regular-self-force` and `gw-waveform-phase`. |
-| Agent tooling | Repository rules, a reusable gravity skill, optional stdio MCP, literature metadata/cards, and deterministic audits are wired together. | `AGENTS.md`, `.agents/skills/gravity-theory-research/SKILL.md`, `.codex/config.toml`, `scripts/check_research_setup.py`. |
+| Agent tooling | Repository rules, a progressively loaded gravity skill, its `agents/openai.yaml` metadata, optional stdio MCP, literature metadata/cards, and deterministic audits are wired together. | `AGENTS.md`, `.agents/skills/gravity-theory-research/SKILL.md`, `.agents/skills/gravity-theory-research/agents/openai.yaml`, `.codex/config.toml`, `scripts/check_research_setup.py`. |
 
 ## Literature transfer protocol
 
@@ -72,6 +72,8 @@ level:
 - `AGENTS.md` supplies repository-scoped instructions;
 - `.agents/skills/gravity-theory-research/SKILL.md` supplies the reusable
   derivation-to-validation workflow;
+- `.agents/skills/gravity-theory-research/agents/openai.yaml` supplies the
+  skill's display metadata and invocation contract;
 - `.codex/config.toml` registers an optional local stdio MCP server;
 - `tools/mcp/gravity_research_server.py` exposes read-only arXiv metadata,
   read-only Zotero queries, bounded explicitly supplied Wolfram evaluations,
@@ -87,6 +89,11 @@ The official design anchors are the OpenAI documentation for
 [configuration reference](https://developers.openai.com/codex/config-reference).
 The local MCP is explicitly a bridge and is not presented as an official arXiv,
 Zotero, or Wolfram connector.
+
+The setup audit also checks the skill front matter and UI metadata. This keeps
+the repository aligned with Codex's progressive-disclosure skill model: the
+short description participates in discovery, while the full gravity workflow
+is loaded only when the task matches it.
 
 ## Promotion criteria for future physics
 

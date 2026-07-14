@@ -3,26 +3,27 @@
 This project uses a project-scoped research agent rather than a hidden claim
 that the model has been retrained on gravity. Its capability is made explicit
 by four layers: instructions, reusable skills, MCP tools, and executable
-audits. The design follows the official OpenAI agent and MCP guidance listed
+audits. The design follows the current Codex skill and MCP guidance listed
 below, while keeping the local implementation independent of the OpenAI
 Agents SDK.
 
 ## Official design anchors
 
-- [Agents SDK quickstart](https://openai.github.io/openai-agents-python/quickstart/):
-  an agent is configured with instructions, tools, and a reproducible runtime.
-- [Agents](https://openai.github.io/openai-agents-python/agents/):
-  instructions, tools, MCP servers, handoffs, and guardrails are separate
-  configuration surfaces.
-- [MCP in the Agents SDK](https://openai.github.io/openai-agents-python/mcp/):
-  local stdio, Streamable HTTP, and hosted MCP are distinct transports;
-  tool filtering, approval, caching, and tracing are explicit choices.
-- [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt):
-  skills are reusable workflows containing instructions, examples, and
-  supporting resources.
-- [Plugins in Codex](https://help.openai.com/en/articles/20001256-plugins-in-codex):
-  plugins package skills and approved app/tool dependencies for repeatable
-  workflows.
+- [Build skills](https://developers.openai.com/codex/build-skills): a skill is
+  a directory with a required `SKILL.md`; Codex loads full instructions only
+  after selecting the skill, so descriptions must be concise and specific.
+- [Codex MCP extension](https://developers.openai.com/codex/extend/mcp): MCP
+  transports, server configuration, and tool exposure are explicit rather
+  than hidden inside the research prompt.
+- [AGENTS.md configuration](https://developers.openai.com/codex/agent-configuration/agents-md):
+  project instructions are scoped by repository location and remain separate
+  from reusable skills.
+- [Codex configuration reference](https://developers.openai.com/codex/config-reference):
+  project-local configuration is checked as configuration, not treated as
+  prose documentation.
+- [Plugins](https://developers.openai.com/codex/plugins): plugins are the
+  distribution boundary when multiple skills and tool dependencies should be
+  shared beyond one repository.
 
 ## Local implementation
 
@@ -32,6 +33,9 @@ AGENTS.md
 
 .agents/skills/gravity-theory-research/SKILL.md
   -> reusable workflow: paper -> derivation -> experiment -> validation
+
+.agents/skills/gravity-theory-research/agents/openai.yaml
+  -> optional UI metadata and the skill invocation contract
 
 tools/mcp/gravity_research_server.py
   -> stdio MCP bridge
@@ -52,6 +56,14 @@ does not mutate the repository through MCP, and does not execute Mathematica
 unless the caller supplies the expression and a timeout. Wolfram paths,
 MATLAB, WSL, and Zotero endpoints are reported by `research_environment()`;
 their availability is an environment fact that must be checked at runtime.
+
+The skill follows progressive disclosure: the front matter is short enough for
+skill discovery, while the detailed gravity workflow stays in `SKILL.md` and
+the literature files. The project audit checks both the front matter and the
+optional `openai.yaml` contract so a broken skill cannot silently become the
+research agent's default workflow. MCP registration remains in
+`.codex/config.toml`, where the local stdio command and its approval policy are
+visible and independently testable.
 
 ## Research call policy
 

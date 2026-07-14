@@ -21,6 +21,7 @@ def main() -> int:
         "AGENTS.md",
         ".codex/config.toml",
         ".agents/skills/gravity-theory-research/SKILL.md",
+        ".agents/skills/gravity-theory-research/agents/openai.yaml",
         "docs/agent/RESEARCH_AGENT_ARCHITECTURE.md",
         "docs/agent/RESEARCH_CAPABILITY_MATRIX.md",
         "docs/agent/RESEARCH_CAPABILITY_STATUS_2026-07-15.md",
@@ -39,6 +40,17 @@ def main() -> int:
     missing = [item for item in required if not (ROOT / item).is_file()]
     if missing:
         fail(f"missing research files: {missing}")
+
+    skill_text = (ROOT / ".agents/skills/gravity-theory-research/SKILL.md").read_text(encoding="utf-8")
+    if not skill_text.startswith("---\n") or "name: gravity-theory-research" not in skill_text:
+        fail("skill front matter is missing the required name")
+    if "description:" not in skill_text.split("---\n", 2)[1]:
+        fail("skill front matter is missing the required description")
+
+    skill_ui = (ROOT / ".agents/skills/gravity-theory-research/agents/openai.yaml").read_text(encoding="utf-8")
+    for marker in ("display_name:", "short_description:", "default_prompt:"):
+        if marker not in skill_ui:
+            fail(f"skill UI metadata is missing {marker}")
 
     with (ROOT / ".codex/config.toml").open("rb") as handle:
         config = tomllib.load(handle)
