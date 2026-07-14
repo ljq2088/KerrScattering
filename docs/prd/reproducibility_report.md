@@ -9,10 +9,10 @@ This report records the local artifacts used by the active PRD-style draft `docs
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 64940 | `33e61ab92659e3114b70e25fb2f4e9f4d6d39f3202cc67065ef0146a63a01308` |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 905675 | `ed7f93d5a14345f4cadfad0068f87633322e6798eed9ff28cf9db264f52d5b0c` |
-| kerr_scalar_nonlinear_GF_baseframe.pdf | 905675 | `ed7f93d5a14345f4cadfad0068f87633322e6798eed9ff28cf9db264f52d5b0c` |
-| docs/prd/artifact_manifest.json | 9753 | `027835d932eb37527b8ee2a3744ff42d175a24456510463b5b32bfcb35add123` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 65996 | `bdc2e61527056d015015bc88f7a9719c197b041b7662af3b57933ce9e6899d3d` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 907368 | `7f71c9c1ec480b0387d52c0d4f3e42775668515f2803d96c878899200e5ed0e5` |
+| kerr_scalar_nonlinear_GF_baseframe.pdf | 907368 | `7f71c9c1ec480b0387d52c0d4f3e42775668515f2803d96c878899200e5ed0e5` |
+| docs/prd/artifact_manifest.json | 10150 | `600b3ad6c911a6734373035795f1070e9dde81903d0e4182e449f217f15b92ab` |
 
 ## Frozen Figure And CSV Inputs
 
@@ -32,6 +32,7 @@ This report records the local artifacts used by the active PRD-style draft `docs
 | results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv | csv | 3 rows | 1080 | `069685f48edb0f68` |
 | results/kerr_scalar_nonlinear_tail_window_sensitivity.csv | csv | 12 rows | 1376 | `7310eeb06cc9e294` |
 | results/kerr_scalar_low_frequency_axisymmetric_slopes.csv | csv | 3 rows | 272 | `f7be0dfd358c9f50` |
+| results/kerr_scalar_low_frequency_axisymmetric_window_sensitivity.csv | csv | 9 rows | 779 | `cdf48c17abb14b59` |
 | results/kerr_scalar_axisymmetric_spectral_coefficients.csv | csv | 723 rows | 77593 | `c16c276517f1511c` |
 | results/kerr_scalar_axisymmetric_spectral_residuals.csv | csv | 720 rows | 159937 | `ea06533b4f44ccea` |
 | results/kerr_scalar_axisymmetric_spectral_quality_summary.csv | csv | 3 rows | 1132 | `0114d2e345631ba2` |

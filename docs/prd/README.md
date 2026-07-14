@@ -56,6 +56,7 @@ The active draft uses the following tracked inputs:
 - `../../results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv`
 - `../../results/kerr_scalar_nonlinear_tail_window_sensitivity.csv`
 - `../../results/kerr_scalar_low_frequency_axisymmetric_slopes.csv`
+- `../../results/kerr_scalar_low_frequency_axisymmetric_window_sensitivity.csv`
 - `../../results/kerr_scalar_axisymmetric_spectral_coefficients.csv`
 - `../../results/kerr_scalar_axisymmetric_spectral_residuals.csv`
 - `../../results/kerr_scalar_axisymmetric_spectral_quality_summary.csv`
@@ -71,6 +72,7 @@ To rebuild the plotted quantities after the numerical sweeps already exist:
 ```powershell
 cd ..\..
 python scripts\plot_kerr_scalar_low_frequency_axisymmetric.py
+python scripts\analyze_kerr_scalar_low_frequency_window_sensitivity.py
 python scripts\plot_kerr_scalar_nonlinear_axisymmetric_base_like.py
 python scripts\analyze_kerr_scalar_tail_window_sensitivity.py
 python scripts\plot_kerr_scalar_axisymmetric_accuracy.py

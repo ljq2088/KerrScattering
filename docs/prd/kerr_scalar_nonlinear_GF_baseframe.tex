@@ -538,9 +538,9 @@ Rather than importing the Schwarzschild scaling unchanged, we perform a direct
 Kerr low-frequency experiment for $a=0.5$, $m=0$, and $\ell=0,1,2$.
 
 The result is shown in Fig.~\ref{fig:lowfreq}.  A log-log fit over the first
-four available low-frequency points gives
+four available low-frequency points gives the local slopes
 \begin{equation}
-T_\ell^{(1)}\propto\omega^{\alpha_\ell},\qquad
+T_\ell^{(1)}\sim\omega^{\alpha_\ell},\qquad
 \alpha_0\simeq2.50,\quad
 \alpha_1\simeq5.48,\quad
 \alpha_2\simeq8.74 .
@@ -549,10 +549,31 @@ The corresponding linear slopes are approximately
 $2.34$, $5.25$, and $8.52$.  Thus, in the present Kerr normalization the
 nonlinear transmission correction follows the same centrifugal-barrier
 hierarchy as the linear transmission coefficient in the accessible
-low-frequency window.  The reflected coefficient is harder to extract at the
+low-frequency window.  These are finite-window fitted exponents rather than
+analytic asymptotic indices: repeating the fit with three, four, and five
+points gives the ranges in Table~\ref{tab:low-window}.  The reflected coefficient is harder to extract at the
 lowest frequencies because the infinity-side interference integral contains a
 large cancellation; this is why Eq.~\eqref{eq:first_order_balance} is reported
 alongside the coefficients.
+
+\begin{table*}[t]
+\caption{Sensitivity of the low-frequency log-log slopes to the number of
+points retained in the fit.  The baseline column uses the four-point fit quoted
+in the text; the ranges use three, four, and five points.  The last two columns
+give the largest log-space RMS residual over those fits.}
+\label{tab:low-window}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c}
+$\ell$ & baseline $(\alpha_0,\alpha_1)$
+& range of $\alpha_0$ & range of $\alpha_1$
+& $\max\sigma_{0,\log}$ & $\max\sigma_{1,\log}$\\
+\hline
+0 & $(2.34,2.50)$ & $[2.31,2.37]$ & $[2.46,2.50]$ & $3.44\times10^{-2}$ & $3.33\times10^{-2}$\\
+1 & $(5.25,5.48)$ & $[4.88,5.51]$ & $[5.03,5.80]$ & $2.92\times10^{-1}$ & $3.66\times10^{-1}$\\
+2 & $(8.52,8.74)$ & $[7.92,9.05]$ & $[8.07,9.35]$ & $4.48\times10^{-1}$ & $5.10\times10^{-1}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
 
 \begin{figure*}[t]
 \centering

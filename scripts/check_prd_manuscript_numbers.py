@@ -18,6 +18,7 @@ TEX = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.tex"
 FIT_CSV = ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_fit_table.csv"
 TAIL_WINDOW_CSV = ROOT / "results" / "kerr_scalar_nonlinear_tail_window_sensitivity.csv"
 SLOPE_CSV = ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_slopes.csv"
+LOW_WINDOW_CSV = ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_window_sensitivity.csv"
 PRODUCTION_CSV = ROOT / "results" / "kerr_scalar_axisymmetric_production_convergence.csv"
 CHANNEL_CSV = ROOT / "results" / "kerr_scalar_nonlinear_channels.csv"
 SUPERRADIANT_CSV = ROOT / "results" / "kerr_scalar_nonlinear_m2_superradiant.csv"
@@ -207,6 +208,60 @@ def check_low_frequency_slopes(tex: str) -> None:
             float(slopes[ell]["T0_slope"]),
         )
 
+
+def check_low_frequency_window_table(tex: str) -> None:
+    rows = read_csv_rows(LOW_WINDOW_CSV)
+    table_match = re.search(
+        r"\\label\{tab:low-window\}(?P<body>.*?)\\end\{table\*\}",
+        tex,
+        re.DOTALL,
+    )
+    if table_match is None:
+        raise AssertionError("Could not find the low-frequency window table")
+
+    grouped: dict[int, list[dict[str, str]]] = {}
+    for row in rows:
+        grouped.setdefault(int(row["l"]), []).append(row)
+
+    found: dict[int, list[object]] = {}
+    for line in table_match.group("body").splitlines():
+        line = line.strip()
+        if not re.match(r"^[012]\s*&", line):
+            continue
+        parts = [part.strip() for part in line.rstrip("\\").split("&")]
+        if len(parts) != 6:
+            raise AssertionError(f"Malformed low-frequency window row: {line}")
+        baseline = re.fullmatch(r"\$\(([0-9.]+),([0-9.]+)\)\$", parts[1])
+        range0 = re.fullmatch(r"\$\[([0-9.]+),([0-9.]+)\]\$", parts[2])
+        range1 = re.fullmatch(r"\$\[([0-9.]+),([0-9.]+)\]\$", parts[3])
+        if baseline is None or range0 is None or range1 is None:
+            raise AssertionError(f"Malformed low-frequency window range: {line}")
+        found[int(parts[0])] = [
+            (float(baseline.group(1)), float(baseline.group(2))),
+            (float(range0.group(1)), float(range0.group(2))),
+            (float(range1.group(1)), float(range1.group(2))),
+            parse_tex_value(parts[4]),
+            parse_tex_value(parts[5]),
+        ]
+
+    if sorted(found) != [0, 1, 2]:
+        raise AssertionError("Could not find all low-frequency window rows")
+
+    for ell, shown in found.items():
+        actual = grouped[ell]
+        base = next(row for row in actual if int(row["points"]) == 4)
+        t0 = [float(row["T0_slope"]) for row in actual]
+        t1 = [float(row["T1_slope"]) for row in actual]
+        rms0 = max(float(row["T0_rms_log"]) for row in actual)
+        rms1 = max(float(row["T1_rms_log"]) for row in actual)
+        assert_decimal(f"low-window l={ell} baseline T0", f"{shown[0][0]:.2f}", float(base["T0_slope"]))
+        assert_decimal(f"low-window l={ell} baseline T1", f"{shown[0][1]:.2f}", float(base["T1_slope"]))
+        assert_decimal(f"low-window l={ell} T0 range min", f"{shown[1][0]:.2f}", min(t0))
+        assert_decimal(f"low-window l={ell} T0 range max", f"{shown[1][1]:.2f}", max(t0))
+        assert_decimal(f"low-window l={ell} T1 range min", f"{shown[2][0]:.2f}", min(t1))
+        assert_decimal(f"low-window l={ell} T1 range max", f"{shown[2][1]:.2f}", max(t1))
+        assert_close(f"low-window l={ell} T0 RMS", shown[3], rms0, 0.15 * 10.0 ** int(f"{shown[3]:.0e}".split("e")[-1]))
+        assert_close(f"low-window l={ell} T1 RMS", shown[4], rms1, 0.15 * 10.0 ** int(f"{shown[4]:.0e}".split("e")[-1]))
 
 def check_peak_fit_quality(tex: str) -> None:
     rows = {int(row["l"]): row for row in read_csv_rows(FIT_CSV)}
@@ -461,6 +516,7 @@ def main() -> None:
     check_table_i(tex)
     check_table_ii(tex)
     check_low_frequency_slopes(tex)
+    check_low_frequency_window_table(tex)
     check_peak_fit_quality(tex)
     check_tail_window_table(tex)
     check_production_convergence(tex)

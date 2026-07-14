@@ -54,6 +54,9 @@ CSV_SCHEMAS = {
     ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_slopes.csv": [
         "l", "T0_slope", "T1_slope",
     ],
+    ROOT / "results" / "kerr_scalar_low_frequency_axisymmetric_window_sensitivity.csv": [
+        "l", "points", "T0_slope", "T1_slope", "T0_rms_log", "T1_rms_log",
+    ],
     ROOT / "results" / "kerr_scalar_axisymmetric_spectral_coefficients.csv": [
         "branch", "subdomain", "k", "abs_coeff", "normalized_abs_coeff",
     ],

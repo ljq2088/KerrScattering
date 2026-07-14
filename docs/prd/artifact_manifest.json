@@ -190,6 +190,21 @@
     },
     {
       "kind": "csv",
+      "path": "results/kerr_scalar_low_frequency_axisymmetric_window_sensitivity.csv",
+      "required_columns": [
+        "l",
+        "points",
+        "T0_slope",
+        "T1_slope",
+        "T0_rms_log",
+        "T1_rms_log"
+      ],
+      "rows": 9,
+      "sha256": "cdf48c17abb14b597adb2ee170cc80ec536f5ed0de2cc41e7cd376030e086fa2",
+      "size_bytes": 779
+    },
+    {
+      "kind": "csv",
       "path": "results/kerr_scalar_axisymmetric_spectral_coefficients.csv",
       "required_columns": [
         "branch",

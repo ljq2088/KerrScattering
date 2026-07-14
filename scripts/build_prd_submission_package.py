@@ -56,6 +56,7 @@ SCRIPT_FILES = [
     ROOT / "scripts" / "check_prd_style.py",
     ROOT / "scripts" / "plot_kerr_scalar_axisymmetric_accuracy.py",
     ROOT / "scripts" / "plot_kerr_scalar_low_frequency_axisymmetric.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_low_frequency_window_sensitivity.py",
     ROOT / "scripts" / "plot_kerr_scalar_nonlinear_axisymmetric_base_like.py",
     ROOT / "scripts" / "analyze_kerr_scalar_tail_window_sensitivity.py",
     ROOT / "scripts" / "plot_kerr_scalar_spin_limit.py",
