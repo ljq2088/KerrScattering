@@ -57,6 +57,13 @@ The machine-readable catalogue and promotion tests are in
 and `docs/literature/learning_gates.json`. The current audit resolves 46
 records and checks 9 modules with 29 acceptance tests.
 
+A focused 2025--2026 frontier update is recorded in
+`docs/literature/research_frontier_update_2026-07-15.md`. It transfers four
+primary-paper lessons about eccentric second-order self-force, generic
+effective sources, second-order puncture structure, and conserved Kerr
+bilinear forms. These are explicitly marked as watchlist material until the
+corresponding implementation and validation gates exist.
+
 ## Agent construction and official anchors
 
 The project follows the official Codex configuration model at the project

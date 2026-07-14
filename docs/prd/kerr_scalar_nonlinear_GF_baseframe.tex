@@ -510,6 +510,23 @@ The current conservation identity gives the first-order balance law
 T^{(1)}+R^{(1)}=0.
 \label{eq:first_order_balance}
 \end{equation}
+The local reason for this identity is visible directly in the radial equation.
+Let $J^{(1)}$ be the term linear in $\epsilon$ in the radial Klein--Gordon
+current.  The cross-current identity gives
+\begin{equation}
+\frac{\dd J^{(1)}}{\dd r}
+=-\operatorname{Im}\!\left[
+\left(R^{\rm in}_{\ell m\omega}\right)^*Q_{\ell\ell m}(r)
+\right]=0,
+\label{eq:first_order_local_current}
+\end{equation}
+because the self-channel projectors are real for a real spheroidal parameter
+and $Q_{\ell\ell m}\propto|R^{\rm in}|^2R^{\rm in}$.  Thus the smooth cubic
+source changes the two boundary currents through interference, but does not
+inject net Killing energy into the stationary mode at this perturbative order.
+Equation~\eqref{eq:first_order_balance} is the boundary form of this local
+identity, while the field residual and spectral tail remain independent
+discretization diagnostics.
 Numerically this equation is the most useful global precision diagnostic,
 because it tests the homogeneous normalization, the nonlinear Green integral,
 and the flux normalization simultaneously.  The fixed-incident normalization
@@ -1142,7 +1159,10 @@ files.  The artifact
 manifest records file sizes and SHA-256 hashes for the figure and CSV inputs,
 including the target-channel values in Table~\ref{tab:channels}; a human-readable
 snapshot is provided in ``docs/prd/reproducibility\_report.md''.  No external
-experimental data are used.
+experimental data are used.  In the CSV files, ``status=ok'' records a
+completed solver call; the manuscript acceptance decision is a separate
+postprocessing predicate on the recorded absolute first-order balance
+residual, $|T^{(1)}+R^{(1)}|$.
 
 \appendix
 

@@ -98,6 +98,11 @@ python scripts\check_prd_citations.py
 python scripts\check_prd_manuscript_numbers.py
 ```
 
+The CSV field `status=ok` means that the solver call completed.  The manuscript
+acceptance gate is applied separately to the recorded absolute first-order
+flux-balance residual; therefore a completed row can be retained in the audit
+trail while being excluded from a high-precision claim.
+
 After intentionally regenerating one of the listed figures or CSV files, update
 the manifest before rebuilding:
 
