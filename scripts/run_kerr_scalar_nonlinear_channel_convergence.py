@@ -130,6 +130,9 @@ def main(argv=None):
                 "B_ref_source": fmt_complex(result.B_ref),
                 "B_inc_target": fmt_complex(result.B_inc_target),
                 "B_ref_target": fmt_complex(result.B_ref_target),
+                "flux_normalization_condition_number": (
+                    f"{result.flux_normalization_condition_number:.16e}"
+                ),
                 "wronskian_relative_error": f"{result.wronskian_relative_error:.16e}",
                 "A_ref_1": fmt_complex(result.A_ref_1),
                 "A_hor_1": fmt_complex(result.A_hor_1),
@@ -175,7 +178,8 @@ def main(argv=None):
         "N_inner", "r_match", "quad_order", "tail_epsrel",
         "angular_coupling", "angular_coupling_cos2", "abs_angular_coupling",
         "abs_angular_coupling_cos2", "B_inc_source", "B_ref_source",
-        "B_inc_target", "B_ref_target", "wronskian_relative_error",
+        "B_inc_target", "B_ref_target", "flux_normalization_condition_number",
+        "wronskian_relative_error",
         "A_ref_1", "A_hor_1", "abs_A_ref_1", "abs_A_hor_1",
         "abs_delta_A_ref_to_reference", "abs_delta_A_hor_to_reference",
         "rel_A_ref_to_reference", "rel_A_hor_to_reference", "elapsed_s",

@@ -1,0 +1,12 @@
+# Project-scoped Codex configuration for KerrScattering.
+# The server is local and optional; it does not replace the global Codex config.
+
+[mcp_servers.gravity_research]
+command = "python"
+args = ["tools/mcp/gravity_research_server.py"]
+cwd = "C:\\Users\\12511\\Documents\\谱方法计算Kerr散射振幅\\KerrScattering"
+enabled = true
+required = false
+startup_timeout_sec = 30
+tool_timeout_sec = 300
+default_tools_approval_mode = "prompt"

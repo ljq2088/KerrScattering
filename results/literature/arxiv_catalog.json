@@ -1,0 +1,939 @@
+{
+  "generated_utc": "2026-07-14T11:21:48.105401+00:00",
+  "source": "arXiv API metadata; PDFs are not downloaded",
+  "count": 39,
+  "records": [
+    {
+      "arxiv_id": "gr-qc/0306120",
+      "module": "teukolsky-kerr",
+      "priority": "A",
+      "reason": "Analytic Kerr perturbation theory and post-Newtonian expansions based on Teukolsky methods.",
+      "metadata": {
+        "arxiv_id": "gr-qc/0306120v1",
+        "title": "Analytic black hole perturbation approach to gravitational radiation",
+        "authors": [
+          "Misao Sasaki",
+          "Hideyuki Tagoshi"
+        ],
+        "published": "2003-06-27T08:31:03+00:00",
+        "updated": "2003-06-27T08:31:03+00:00",
+        "summary": "We review analytic methods to perform the post-Newtonian expansion of gravitational waves induced by a particle orbiting a massive compact body, based on the black hole perturbation theory. There exist two different methods of the post-Newtonian expansion. Both are based the Teukolsky equation. In one method, the Teukolsky equation is transformed into a Regge-Wheeler type equation that reduces to the standard Klein-Gordon equation in the flat space limit, while in the other method, which were introduced by Mano, Suzuki and Takasugi relatively recently, the Teukolsky equation is directly used in its original form. The former has an advantage that it is intuitively easy to understand how various curved space effects come into play. However, it becomes increasingly complicated when one goes on to higher and higher post-Newtonian orders. In contrast, the latter has an advantage that a systematic calculation to higher post-Newtonian orders is relatively easily implementable, but otherwise so mathematical that it is hard to understand the interplay of higher order terms. In this paper, we review both methods so that their pros and cons may be clearly seen. We also review some results of calculations of gravitational radiation emitted by a particle orbiting a black hole.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/0306120v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/9603020",
+      "module": "mst-teukolsky",
+      "priority": "A",
+      "reason": "MST hypergeometric and Coulomb-wave solutions, low-frequency expansions, and normalization identities.",
+      "metadata": {
+        "arxiv_id": "gr-qc/9603020v3",
+        "title": "Analytic Solutions of the Teukolsky Equation and their Low Frequency Expansions",
+        "authors": [
+          "Shuhei Mano",
+          "Hisao Suzuki",
+          "Eiichi Takasugi"
+        ],
+        "published": "1996-03-13T11:36:48+00:00",
+        "updated": "1996-03-19T11:02:41+00:00",
+        "summary": "Analytic solutions of the Teukolsky equation in Kerr geometries are presented in the form of series of hypergeometric functions and Coulomb wave functions. Relations between these solutions are established. The solutions provide a very powerful method not only for examining the general properties of solutions and physical quantities when they are applied to, but also for numerical computations. The solutions are given in the expansion of a small parameter $ε\\equiv 2Mω$, $M$ being the mass of black hole, which corresponds to Post-Minkowski expansion by $G$ and to post-Newtonian expansion when they are applied to the gravitational radiation from a particle in circular orbit around a black hole. It is expected that these solutions will become a powerful weapon to construct the theoretical template towards LIGO and VIRGO projects.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/9603020v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2306.16469",
+      "module": "gsn-kerr",
+      "priority": "A",
+      "reason": "Generalized Sasaki-Nakamura homogeneous solutions for scalar, electromagnetic, and gravitational perturbations.",
+      "metadata": {
+        "arxiv_id": "2306.16469v2",
+        "title": "Recipes for computing radiation from a Kerr black hole using a generalized Sasaki-Nakamura formalism: Homogeneous solutions",
+        "authors": [
+          "Rico K. L. Lo"
+        ],
+        "published": "2023-06-28T18:00:39+00:00",
+        "updated": "2025-01-02T21:33:05+00:00",
+        "summary": "Central to black hole perturbation theory calculations is the Teukolsky equation that governs the propagation and the generation of radiation emitted by Kerr black holes. However, it is plagued by a long-ranged potential associated with the perturbation equation and hence a direct numerical integration of the equation is challenging. Sasaki and Nakamura devised a formulation that transforms the equation into a new equation that is free from the issue for the case of outgoing gravitational radiation. The formulation was later generalized by Hughes to work for any type of radiation. In this work, we revamp the Generalized Sasaki-Nakamura (GSN) formalism and explicitly show the transformations that convert solutions between the Teukolsky and the GSN formalism for both in- and outgoing radiation of scalar, electromagnetic, and gravitational type. We derive all necessary ingredients for the GSN formalism to be used in numerical computations. In particular, we present a new numerical implementation of the formalism, GeneralizedSasakiNakamura.jl, that computes homogeneous solutions to both perturbation equations in the Teukolsky and the GSN formalism. The code works well at low frequencies and is even better at high frequencies by leveraging the fact that black holes are highly permeable to waves at high frequencies. This work lays the foundation for an efficient scheme to compute gravitational radiation from Kerr black holes and an alternative way to compute quasinormal modes of Kerr black holes.",
+        "pdf_url": "https://arxiv.org/pdf/2306.16469v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2302.11624",
+      "module": "spectral-black-hole-perturbations",
+      "priority": "A",
+      "reason": "Chebyshev endpoint factoring and spectral convergence diagnostics for black-hole perturbations.",
+      "metadata": {
+        "arxiv_id": "2302.11624v2",
+        "title": "Spectral Method for the Gravitational Perturbations of Black Holes: Schwarzschild Background Case",
+        "authors": [
+          "Adrian Ka-Wai Chung",
+          "Pratik Wagle",
+          "Nicolas Yunes"
+        ],
+        "published": "2023-02-22T20:02:08+00:00",
+        "updated": "2023-06-16T14:59:55+00:00",
+        "summary": "We develop a novel technique through spectral decompositions to study the gravitational perturbations of a black hole, without needing to decouple the linearized field equations into master equations and separate their radial and angular dependence. We first spectrally decompose the metric perturbation in a Legendre and Chebyshev basis for the angular and radial sectors respectively, using input from the asymptotic behavior of the perturbation at spatial infinity and at the black hole event horizon. This spectral decomposition allows us to then transform the linearized Einstein equations (a coupled set of partial differential equations) into a linear matrix equation. By solving the linear matrix equation for its generalized eigenvalues, we can estimate the complex quasinormal frequencies of the fundamental mode and various overtones of the gravitational perturbations simultaneously and to high accuracy. We apply this technique to perturbations of a nonspinning, Schwarzschild black hole in general relativity and find the complex quasinormal frequencies of two fundamental modes and their first two overtones. We demonstrate that the technique is robust and accurate, in the Schwarzschild case leading to relative fractional errors of $\\leq 10^{-10} - 10^{-8}$ for the fundamental modes, $\\leq 10^{-7} - 10^{-6}$ for their first overtones, $\\leq 10^{-7} - 10^{-4}$ for their second overtones. This method can be applied to any black hole spacetime, irrespective of its Petrov type, making the numerical technique extremely powerful in the study of black hole ringdown in and outside general relativity.",
+        "pdf_url": "https://arxiv.org/pdf/2302.11624v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "astro-ph/0703495",
+      "module": "emri-overview",
+      "priority": "B",
+      "reason": "Early EMRI review connecting astrophysics, data analysis, and tests of strong-field gravity.",
+      "metadata": {
+        "arxiv_id": "astro-ph/0703495v2",
+        "title": "Intermediate and Extreme Mass-Ratio Inspirals -- Astrophysics, Science Applications and Detection using LISA",
+        "authors": [
+          "Pau Amaro-Seoane",
+          "Jonathan R. Gair",
+          "Marc Freitag",
+          "M. Coleman Miller",
+          "Ilya Mandel",
+          "Curt J. Cutler",
+          "Stanislav Babak"
+        ],
+        "published": "2007-03-19T16:01:36+00:00",
+        "updated": "2007-07-14T13:40:14+00:00",
+        "summary": "Black hole binaries with extreme ($\\gtrsim 10^4:1$) or intermediate ($\\sim 10^2-10^4:1$) mass ratios are among the most interesting gravitational wave sources that are expected to be detected by the proposed Laser Interferometer Space Antenna. These sources have the potential to tell us much about astrophysics, but are also of unique importance for testing aspects of the general theory of relativity in the strong field regime. Here we discuss these sources from the perspectives of astrophysics, data analysis, and applications to testing general relativity, providing both a description of the current state of knowledge and an outline of some of the outstanding questions that still need to be addressed. This review grew out of discussions at a workshop in September 2006 hosted by the Albert Einstein Institute in Golm, Germany.",
+        "pdf_url": "https://arxiv.org/pdf/astro-ph/0703495v2",
+        "primary_category": "astro-ph",
+        "categories": [
+          "astro-ph",
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1102.0529",
+      "module": "green-functions-self-force",
+      "priority": "A",
+      "reason": "Foundational review of point particles, Green functions, singular fields, and self-force.",
+      "metadata": {
+        "arxiv_id": "1102.0529v3",
+        "title": "The motion of point particles in curved spacetime",
+        "authors": [
+          "Eric Poisson",
+          "Adam Pound",
+          "Ian Vega"
+        ],
+        "published": "2011-02-02T18:40:22+00:00",
+        "updated": "2011-09-26T00:05:55+00:00",
+        "summary": "This review is concerned with the motion of a point scalar charge, a point electric charge, and a point mass in a specified background spacetime. In each of the three cases the particle produces a field that behaves as outgoing radiation in the wave zone, and therefore removes energy from the particle. In the near zone the field acts on the particle and gives rise to a self-force that prevents the particle from moving on a geodesic of the background spacetime. The field's action on the particle is difficult to calculate because of its singular nature: the field diverges at the position of the particle. But it is possible to isolate the field's singular part and show that it exerts no force on the particle. What remains after subtraction is a smooth field that is fully responsible for the self-force. The mathematical tools required to derive the equations of motion of a point scalar charge, a point electric charge, and a point mass in a specified background spacetime are developed here from scratch. The review begins with a discussion of the basic theory of bitensors. It then applies the theory to the construction of convenient coordinate systems to chart a neighbourhood of the particle's word line. It continues with a thorough discussion of Green's functions in curved spacetime. The review presents a detailed derivation of each of the three equations of motion. Because the notion of a point mass is problematic in general relativity, the review concludes with an alternative derivation of the equations of motion that applies to a small body of arbitrary internal structure.",
+        "pdf_url": "https://arxiv.org/pdf/1102.0529v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/0509122",
+      "module": "emri-adiabatic",
+      "priority": "B",
+      "reason": "Limitations of dissipative/adiabatic self-force approximations and secular phase effects.",
+      "metadata": {
+        "arxiv_id": "gr-qc/0509122v2",
+        "title": "Limitations of the adiabatic approximation to the gravitational self-force",
+        "authors": [
+          "Adam Pound",
+          "Eric Poisson",
+          "Bernhard G. Nickel"
+        ],
+        "published": "2005-09-29T19:48:40+00:00",
+        "updated": "2005-11-28T19:22:42+00:00",
+        "summary": "A small body moving in the field of a much larger black hole and subjected to its own gravity moves on an accelerated world line in the background spacetime of the large black hole. The acceleration is produced by the body's gravitational self-force, which is constructed from the body's retarded gravitational field. The adiabatic approximation to the gravitational self-force is obtained instead from the half-retarded minus half-advanced field; it is known to produce the same dissipative effects as the true self-force. We argue that the adiabatic approximation is limited, because it discards important conservative terms which lead to the secular evolution of some orbital elements. We argue further that this secular evolution has measurable consequences; in particular, it affects the phasing of the orbit and the phasing of the associated gravitational wave. Our argument rests on a simple toy model involving a point electric charge moving slowly in the weak gravitational field of a central mass; the charge is also subjected to its electromagnetic self-force. In this simple context the true self-force is known explicitly and it can cleanly be separated into conservative and radiation-reaction pieces. We observe that the conservative part of the self-force produces a secular regression of the orbit's periapsis. We explain how the conclusions reached on the basis of the toy model can be extended to the gravitational self-force, and to fast motions and strong fields. While the limitations of the adiabatic approximation are quite severe in a post-Newtonian context in which the motion is slow and the gravitational field weak, they appear to be less so for rapid motions and strong fields.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/0509122v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1305.1789",
+      "module": "second-order-self-force",
+      "priority": "A",
+      "reason": "Short derivation and interpretation of second-order self-force motion.",
+      "metadata": {
+        "arxiv_id": "1305.1789v1",
+        "title": "Second-order gravitational self-force -- a quick summary",
+        "authors": [
+          "Adam Pound"
+        ],
+        "published": "2013-05-08T12:07:11+00:00",
+        "updated": "2013-05-08T12:07:11+00:00",
+        "summary": "In order to extract physical parameters from the waveform of an extreme-mass-ratio binary, one requires a second-order--accurate description of the motion of the smaller of the two objects in the binary. Using a method of matched asymptotic expansions, I derive the second-order equation of motion of a small, nearly spherical and non-rotating compact object in an arbitrary vacuum spacetime. I find that the motion is geodesic in a certain locally defined effective metric satisfying the vacuum Einstein equation through second order, and I outline a method of numerically calculating this effective metric.",
+        "pdf_url": "https://arxiv.org/pdf/1305.1789v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1506.06245",
+      "module": "self-force-formulations",
+      "priority": "A",
+      "reason": "Matched asymptotic expansions, gauge freedom, self-consistent and osculating descriptions.",
+      "metadata": {
+        "arxiv_id": "1506.06245v1",
+        "title": "Motion of small objects in curved spacetimes: An introduction to gravitational self-force",
+        "authors": [
+          "Adam Pound"
+        ],
+        "published": "2015-06-20T14:32:03+00:00",
+        "updated": "2015-06-20T14:32:03+00:00",
+        "summary": "In recent years, asymptotic approximation schemes have been developed to describe the motion of a small compact object through a vacuum background to any order in perturbation theory. The schemes are based on rigorous methods of matched asymptotic expansions, which account for the object's finite size, require no \"regularization\" of divergent quantities, and are valid for strong fields and relativistic speeds. Up to couplings of the object's multipole moments to the external background curvature, these schemes have established that at least through second order in perturbation theory, the object's motion satisfies a generalized equivalence principle: it moves on a geodesic of a certain smooth metric satisfying the vacuum Einstein equation. I describe the foundations of this result, particularly focusing on the fundamental notion of how a small object's motion is represented in perturbation theory. The three common representations of perturbed motion are (i) the \"Gralla-Wald\" description in terms of small deviations from a reference geodesic, (ii) the \"self-consistent\" description in terms of a worldline that obeys a self-accelerated equation of motion, and (iii) the \"osculating geodesics\" description, which utilizes both (i) and (ii). Because of the coordinate freedom in general relativity, any coordinate description of motion in perturbation theory is intimately related to the theory's gauge freedom. In this review I describe asymptotic solutions of the Einstein equations adapted to each of the three representations of motion, and I discuss the gauge freedom associated with each. I conclude with a discussion of how gauge freedom must be refined in the context of long-term dynamics.",
+        "pdf_url": "https://arxiv.org/pdf/1506.06245v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1805.10385",
+      "module": "self-force-review",
+      "priority": "A",
+      "reason": "Comprehensive review of self-force and radiation reaction for EMRIs.",
+      "metadata": {
+        "arxiv_id": "1805.10385v2",
+        "title": "Self-force and radiation reaction in general relativity",
+        "authors": [
+          "Leor Barack",
+          "Adam Pound"
+        ],
+        "published": "2018-05-25T22:48:11+00:00",
+        "updated": "2018-11-19T12:44:05+00:00",
+        "summary": "[Abridged] This review surveys the theory of gravitational self-force in curved spacetime and its application to the gravitational two-body problem in the extreme-mass-ratio regime. We first lay the relevant formal foundation, describing the rigorous derivation of the equation of self-forced motion using matched asymptotic expansions and other ideas. We then review the progress that has been achieved in numerically calculating the self-force and its physical effects in the astrophysical scenario of a compact object inspiralling into a (rotating) massive black hole. We highlight the way in which, nowadays, self-force calculations make a fruitful contact with other approaches to the two-body problem and help inform an accurate universal model of binary black hole inspirals, valid across all mass ratios. We conclude with a summary of the state of the art, open problems and prospects. Our review is aimed at non-specialist readers and is for the most part self-contained and non-technical; only elementary-level acquaintance with General Relativity is assumed. Where useful, we draw on analogies with familiar concepts from Newtonian gravity or classical electrodynamics.",
+        "pdf_url": "https://arxiv.org/pdf/1805.10385v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/0701069",
+      "module": "self-force-flux-balance",
+      "priority": "A",
+      "reason": "Mode-sum gravitational self-force with an explicit dissipative flux-balance check.",
+      "metadata": {
+        "arxiv_id": "gr-qc/0701069v3",
+        "title": "Gravitational self force on a particle in circular orbit around a Schwarzschild black hole",
+        "authors": [
+          "Leor Barack",
+          "Norichika Sago"
+        ],
+        "published": "2007-01-15T16:19:48+00:00",
+        "updated": "2010-08-27T11:19:17+00:00",
+        "summary": "We calculate the gravitational self force acting on a pointlike particle of mass $μ$, set in a circular geodesic orbit around a Schwarzschild black hole. Our calculation is done in the Lorenz gauge: For given orbital radius, we first solve directly for the Lorenz-gauge metric perturbation using numerical evolution in the time domain; We then compute the (finite) back-reaction force from each of the multipole modes of the perturbation; Finally, we apply the ``mode sum'' method to obtain the total, physical self force. The {\\em temporal} component of the self force (which is gauge invariant) describes the dissipation of orbital energy through gravitational radiation. Our results for this component are consistent, to within the computational accuracy, with the total flux of gravitational-wave energy radiated to infinity and through the event horizon. The {\\em radial} component of the self force (which is gauge dependent) is calculated here for the first time. It describes a conservative shift in the orbital parameters away from their geodesic values. We thus obtain the $O(μ)$ correction to the specific energy and angular momentum parameters (in the Lorenz gauge), as well as the $O(μ)$ shift in the orbital frequency (which is gauge invariant).",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/0701069v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1703.09722",
+      "module": "lisa-emri-science",
+      "priority": "B",
+      "reason": "LISA EMRI rates, parameter measurement, and tests of Kerr multipolar structure.",
+      "metadata": {
+        "arxiv_id": "1703.09722v2",
+        "title": "Science with the space-based interferometer LISA. V: Extreme mass-ratio inspirals",
+        "authors": [
+          "Stanislav Babak",
+          "Jonathan Gair",
+          "Alberto Sesana",
+          "Enrico Barausse",
+          "Carlos F. Sopuerta",
+          "Christopher P. L. Berry",
+          "Emanuele Berti",
+          "Pau Amaro-Seoane",
+          "Antoine Petiteau",
+          "Antoine Klein"
+        ],
+        "published": "2017-03-28T18:00:17+00:00",
+        "updated": "2018-04-11T11:52:26+00:00",
+        "summary": "The space-based Laser Interferometer Space Antenna (LISA) will be able to observe the gravitational-wave signals from systems comprised of a massive black hole and a stellar-mass compact object. These systems are known as extreme-mass-ratio inspirals (EMRIs) and are expected to complete $\\sim 10^4$-$10^5$ cycles in band, thus allowing exquisite measurements of their parameters. In this work, we attempt to quantify the astrophysical uncertainties affecting the predictions for the number of EMRIs detectable by LISA, and find that competing astrophysical assumptions produce a variance of about three orders of magnitude in the expected intrinsic EMRI rate. However, we find that irrespective of the astrophysical model, at least a few EMRIs per year should be detectable by the LISA mission, with up to a few thousands per year under the most optimistic astrophysical assumptions. We also investigate the precision with which LISA will be able to extract the parameters of these sources. We find that typical fractional statistical errors with which the intrinsic parameters (redshifted masses, massive black hole spin and orbital eccentricity) can be recovered are $\\sim 10^{-6}$-$10^{-4}$. Luminosity distance (which is required to infer true masses) is inferred to about $10\\%$ precision and sky position is localized to a few square degrees, while tests of the multipolar structure of the Kerr metric can be performed to percent-level precision or better.",
+        "pdf_url": "https://arxiv.org/pdf/1703.09722v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.CO",
+          "astro-ph.GA"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2101.04592",
+      "module": "bhpt-self-force",
+      "priority": "A",
+      "reason": "Unified review of black-hole perturbation theory, Kerr orbital mechanics, and post-adiabatic self-force waveforms.",
+      "metadata": {
+        "arxiv_id": "2101.04592v4",
+        "title": "Black hole perturbation theory and gravitational self-force",
+        "authors": [
+          "Adam Pound",
+          "Barry Wardell"
+        ],
+        "published": "2021-01-12T16:44:53+00:00",
+        "updated": "2024-01-25T01:29:56+00:00",
+        "summary": "Much of the success of gravitational-wave astronomy rests on perturbation theory. Historically, perturbative analysis of gravitational-wave sources has largely focused on post-Newtonian theory. However, strong-field perturbation theory is essential in many cases such as the quasinormal ringdown following the merger of a binary system, tidally perturbed compact objects, and extreme-mass-ratio inspirals. In this review, motivated primarily by small-mass-ratio binaries but not limited to them, we provide an overview of essential methods in (i) black hole perturbation theory, (ii) orbital mechanics in Kerr spacetime, and (iii) gravitational self-force theory. Our treatment of black hole perturbation theory covers most common methods, including the Teukolsky and Regge-Wheeler-Zerilli equations, methods of metric reconstruction, and Lorenz-gauge formulations, presenting them in a new consistent and self-contained form. Our treatment of orbital mechanics covers quasi-Keplerian and action-angle descriptions of bound geodesics and accelerated orbits, osculating geodesics, near-identity averaging transformations, multiscale expansions, and orbital resonances. Our summary of self-force theory's foundations is brief, covering the main ideas and results of matched asymptotic expansions, local expansion methods, puncture schemes, and point particle descriptions. We conclude by combining the above methods in a multiscale expansion of the perturbative Einstein equations, leading to adiabatic and post-adiabatic evolution schemes. Our presentation is intended primarily as a reference for practitioners but includes a variety of new results. In particular, we present the first complete post-adiabatic waveform-generation framework for generic (nonresonant) orbits in Kerr.",
+        "pdf_url": "https://arxiv.org/pdf/2101.04592v4",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "0905.2975",
+      "module": "qnm-ringdown",
+      "priority": "B",
+      "reason": "Quasinormal-mode framework, non-Hermitian spectra, and black-hole spectroscopy.",
+      "metadata": {
+        "arxiv_id": "0905.2975v2",
+        "title": "Quasinormal modes of black holes and black branes",
+        "authors": [
+          "Emanuele Berti",
+          "Vitor Cardoso",
+          "Andrei O. Starinets"
+        ],
+        "published": "2009-05-19T05:15:43+00:00",
+        "updated": "2009-07-29T07:41:21+00:00",
+        "summary": "Quasinormal modes are eigenmodes of dissipative systems. Perturbations of classical gravitational backgrounds involving black holes or branes naturally lead to quasinormal modes. The analysis and classification of the quasinormal spectra requires solving non-Hermitian eigenvalue problems for the associated linear differential equations. Within the recently developed gauge-gravity duality, these modes serve as an important tool for determining the near-equilibrium properties of strongly coupled quantum field theories, in particular their transport coefficients, such as viscosity, conductivity and diffusion constants. In astrophysics, the detection of quasinormal modes in gravitational wave experiments would allow precise measurements of the mass and spin of black holes as well as new tests of general relativity. This review is meant as an introduction to the subject, with a focus on the recent developments in the field.",
+        "pdf_url": "https://arxiv.org/pdf/0905.2975v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE",
+          "hep-ph",
+          "hep-th"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1602.03837",
+      "module": "gw-observation",
+      "priority": "B",
+      "reason": "First direct gravitational-wave detection and the connection between waveform and black-hole ringdown.",
+      "metadata": {
+        "arxiv_id": "1602.03837v1",
+        "title": "Observation of Gravitational Waves from a Binary Black Hole Merger",
+        "authors": [
+          "The LIGO Scientific Collaboration",
+          "the Virgo Collaboration"
+        ],
+        "published": "2016-02-11T19:26:44+00:00",
+        "updated": "2016-02-11T19:26:44+00:00",
+        "summary": "On September 14, 2015 at 09:50:45 UTC the two detectors of the Laser Interferometer Gravitational-Wave Observatory simultaneously observed a transient gravitational-wave signal. The signal sweeps upwards in frequency from 35 to 250 Hz with a peak gravitational-wave strain of $1.0 \\times 10^{-21}$. It matches the waveform predicted by general relativity for the inspiral and merger of a pair of black holes and the ringdown of the resulting single black hole. The signal was observed with a matched-filter signal-to-noise ratio of 24 and a false alarm rate estimated to be less than 1 event per 203 000 years, equivalent to a significance greater than 5.1 σ. The source lies at a luminosity distance of $410^{+160}_{-180}$ Mpc corresponding to a redshift $z = 0.09^{+0.03}_{-0.04}$. In the source frame, the initial black hole masses are $36^{+5}_{-4} M_\\odot$ and $29^{+4}_{-4} M_\\odot$, and the final black hole mass is $62^{+4}_{-4} M_\\odot$, with $3.0^{+0.5}_{-0.5} M_\\odot c^2$ radiated in gravitational waves. All uncertainties define 90% credible intervals.These observations demonstrate the existence of binary stellar-mass black hole systems. This is the first direct detection of gravitational waves and the first observation of a binary black hole merger.",
+        "pdf_url": "https://arxiv.org/pdf/1602.03837v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2104.04582",
+      "module": "emri-waveforms-data",
+      "priority": "B",
+      "reason": "Fast relativistic EMRI waveform generation and implications for inference.",
+      "metadata": {
+        "arxiv_id": "2104.04582v2",
+        "title": "FastEMRIWaveforms: New tools for millihertz gravitational-wave data analysis",
+        "authors": [
+          "Michael L. Katz",
+          "Alvin J. K. Chua",
+          "Lorenzo Speri",
+          "Niels Warburton",
+          "Scott A. Hughes"
+        ],
+        "published": "2021-04-09T19:39:18+00:00",
+        "updated": "2021-09-27T16:59:06+00:00",
+        "summary": "We present the FastEMRIWaveforms (FEW) package, a collection of tools to build and analyze extreme mass ratio inspiral (EMRI) waveforms. Here, we expand on the Physical Review Letter that introduced the first fast and accurate fully-relativistic EMRI waveform template model. We discuss the construction of the overall framework; constituent modules; and the general methods used to accelerate EMRI waveforms. Because the fully relativistic FEW model waveforms are for now limited to eccentric orbits in the Schwarzschild spacetime, we also introduce an improved Augmented Analytic Kludge (AAK) model that describes generic Kerr inspirals. Both waveform models can be accelerated using graphics processing unit (GPU) hardware. With the GPU-accelerated waveforms in hand, a variety of studies are performed including an analysis of EMRI mode content, template mismatch, and fully Bayesian Markov Chain Monte Carlo-based EMRI parameter estimation. We find relativistic EMRI waveform templates can be generated with fewer harmonic modes ($\\sim10-100$) without biasing signal extraction. However, we show for the first time that extraction of a relativistic injection with semi-relativistic amplitudes can lead to strong bias and anomalous structure in the posterior distribution for certain regions of parameter space.",
+        "pdf_url": "https://arxiv.org/pdf/2104.04582v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2109.00056",
+      "module": "emri-waveforms-self-force",
+      "priority": "B",
+      "reason": "Near-identity-transform inspirals and Teukolsky waveform construction for eccentric EMRIs.",
+      "metadata": {
+        "arxiv_id": "2109.00056v2",
+        "title": "Highly eccentric EMRI waveforms via fast self-forced inspirals",
+        "authors": [
+          "Jonathan McCart",
+          "Thomas Osburn",
+          "Justin Y. J. Burton"
+        ],
+        "published": "2021-08-31T19:42:17+00:00",
+        "updated": "2021-10-13T21:45:31+00:00",
+        "summary": "We present new developments and comparisons of competing inspiral and waveform models for highly eccentric non-spinning extreme and intermediate mass-ratio inspirals (EMRIs and IMRIs). Starting from our high eccentricity self-force library, we apply the near-identity transform (NIT) technique to rapidly compute highly eccentric self-forced inspirals for the first time. Upon evaluating our approximate NIT results via comparison with full self-force inspirals, we couple our accurate and streamlined inspiral data to potential waveform generation schemes. We find that, although high eccentricity strains the NIT method, NIT inspirals are consistent with full self-force inspirals for EMRIs. However, our NIT implementation (at 1st post-adiabatic order) is not able to achieve LISA-motivated accuracy goals for highly eccentric IMRIs. Our most sophisticated waveforms are devised through a new technique that efficiently connects NIT orbital parameters to Teukolsky amplitudes and phases. We compare these sophisticated Teukolsky waveforms to those with synthesized (summing over harmonics) amplitudes based on a kludge. We find that, assuming identical worldlines (so that dephasing is negligible), kludge waveforms compare favorably to Teukolsky waveforms for non-spinning bodies.",
+        "pdf_url": "https://arxiv.org/pdf/2109.00056v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2310.08438",
+      "module": "emri-spinning-body",
+      "priority": "B",
+      "reason": "Osculating-geodesic and near-identity waveform model for a spinning small body in Kerr.",
+      "metadata": {
+        "arxiv_id": "2310.08438v1",
+        "title": "Extreme mass-ratio inspiral and waveforms for a spinning body into a Kerr black hole via osculating geodesics and near-identity transformations",
+        "authors": [
+          "Lisa V. Drummond",
+          "Philip Lynch",
+          "Alexandra G. Hanselman",
+          "Devin R. Becker",
+          "Scott A. Hughes"
+        ],
+        "published": "2023-10-12T16:02:10+00:00",
+        "updated": "2023-10-12T16:02:10+00:00",
+        "summary": "Understanding the orbits of spinning bodies in curved spacetime is important for modeling binary black hole systems with small mass ratios. At zeroth order in mass ratio, the smaller body moves on a geodesic. Post-geodesic effects are needed to model the system accurately. One very important post-geodesic effect is the gravitational self-force, which describes the small body's interaction with its own contribution to a binary's spacetime. Another post-geodesic effect, the spin-curvature force, is due to the smaller body's spin coupling to spacetime curvature. In this paper, we combine the leading orbit-averaged backreaction of point-particle gravitational-wave emission with the spin-curvature force to construct the worldline and gravitational waveform for a spinning body spiraling into a Kerr black hole. We use an osculating geodesic integrator, which treats the worldline as evolution through a sequence of geodesic orbits, as well as near-identity transformations, which eliminate dependence on orbital phases, allowing for fast computation of inspirals. The resulting inspirals and waveforms include all critical dynamical effects which govern such systems (orbit and precession frequencies, inspiral, strong-field gravitational-wave amplitudes), and as such form an effective first model for the inspiral of spinning bodies into Kerr black holes. We emphasize that our present calculation is not self consistent, since we neglect effects which enter at the same order as effects we include. However, our analysis demonstrates that the impact of spin-curvature forces can be incorporated into EMRI waveform tools with relative ease. The calculation is sufficiently modular that it should not be difficult to include neglected post-geodesic effects as efficient tools for computing them become available. (Abridged)",
+        "pdf_url": "https://arxiv.org/pdf/2310.08438v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2406.04108",
+      "module": "second-order-gsf-eob",
+      "priority": "B",
+      "reason": "Comparison of second-order self-force information with EOB inspiral dynamics.",
+      "metadata": {
+        "arxiv_id": "2406.04108v1",
+        "title": "Comparing second-order gravitational self-force and effective-one-body waveforms from inspiralling, quasi-circular black hole binaries with a non-spinning primary and a spinning secondary",
+        "authors": [
+          "Angelica Albertini",
+          "Alessandro Nagar",
+          "Josh Mathews",
+          "Georgios Lukes-Gerakopoulos"
+        ],
+        "published": "2024-06-06T14:25:15+00:00",
+        "updated": "2024-06-06T14:25:15+00:00",
+        "summary": "We present the first comparison of waveforms evaluated using the effective-one-body (EOB) approach and gravitational self-force (GSF) theory for inspiralling black hole binaries with a non-spinning primary and a spinning secondary. This paper belongs to a series of papers comparing the EOB model TEOBResumS to GSF results, where the latter are used to benchmark the EOB analytical choices in the large-mass-ratio regime. In this work, we explore the performance of two gauge choices for the gyro-gravitomagnetic functions GS, GS* entering the spin-orbit sector within the EOB dynamics. In particular, we consider the usual gauge of TEOBResumS, where GS and GS* only depend on the inverse radius and the radial momentum, and a different gauge where these functions also depend on the azimuthal momentum. The latter choice allows us to exploit as prefactor in GS* the complete expression GKS* for a spinning particle on Kerr. As done previously, we employ both waveform alignments in the time domain and a gauge-invariant frequency-domain analysis to gain a more complete understanding of the impact of the new analytical choice. The frequency-domain analysis is particularly useful in confirming that the gyro-gravitomagnetic functions in the new chosen gauge bring the EOB spin contribution at 1st post-adiabatic order closer to the GSF one. We finally implement the improved functions within the public code for TEOBResumS-Dalí, which already incorporates eccentricity. In this way, we upgrade the EOB model for extreme-mass-ratio inspirals presented in our previous work.",
+        "pdf_url": "https://arxiv.org/pdf/2406.04108v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2410.23950",
+      "module": "self-force-memory",
+      "priority": "B",
+      "reason": "Kerr self-force calculation of gravitational-wave memory and second-order matching issues.",
+      "metadata": {
+        "arxiv_id": "2410.23950v2",
+        "title": "Gravitational memory: new results from post-Newtonian and self-force theory",
+        "authors": [
+          "Kevin Cunningham",
+          "Chris Kavanagh",
+          "Adam Pound",
+          "David Trestini",
+          "Niels Warburton",
+          "Jakob Neef"
+        ],
+        "published": "2024-10-31T14:05:17+00:00",
+        "updated": "2025-02-27T11:00:37+00:00",
+        "summary": "We compute the (displacement) gravitational wave memory due to a quasicircular inspiral of two black holes using a variety of perturbative techniques. Within post-Newtonian theory, we extend previous results for non-spinning binaries to 3.5PN order. Using the gravitational self-force approach, we compute the memory at first order in the mass ratio for inspirals into a Kerr black hole. We do this both numerically and via a double post-Newtonian--self-force expansion which we carry out to 5PN order. At second order in the self-force approach, near-zone calculations encounter an infrared divergence associated with memory, which is resolved through matching the near-zone solution to a post-Minkowskian expansion in the far zone. We describe that matching procedure for the first time and show how it introduces nonlocal-in-time memory effects into the two-body dynamics at second order in the mass ratio, as was also predicted by recent 5PN calculations within the effective field theory approach. We then compute the gravitational-wave memory through second order in the mass ratio (excluding certain possible memory distortion effects) and find that it agrees well with recent results from numerical relativity simulations for near-comparable-mass binaries.",
+        "pdf_url": "https://arxiv.org/pdf/2410.23950v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "hep-th"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2504.09640",
+      "module": "second-order-gsf-eccentric",
+      "priority": "A",
+      "reason": "Second-order self-force formulation for eccentric EMRIs, including puncture fields and two-timescale structure.",
+      "metadata": {
+        "arxiv_id": "2504.09640v2",
+        "title": "Toward Second-Order Self-Force for Eccentric Extreme-Mass Ratio Inspirals in Schwarzschild Spacetime",
+        "authors": [
+          "Yi-Xiang Wei",
+          "Xian-Long Zhu",
+          "Jian-dong Zhang",
+          "Jianwei Mei"
+        ],
+        "published": "2025-04-13T16:27:35+00:00",
+        "updated": "2025-09-24T08:35:03+00:00",
+        "summary": "An Extreme Mass Ratio Inspiral (EMRI), which corresponds to a small compact object inspirals around a massive black hole in the center of a galaxy, is one of the most important sources for future space-borne gravitational-wave (GW) detectors such as TianQin and LISA. By analyzing the emitted GW signals, we can probe the theory of gravity and the nature of black holes in the strong field region. To achieve these objectives, the second-order self-force effect should be considered in the waveform modeling. Up to now, the waveform of EMRIs including the second-order self-force effect is only achieved for the circular orbit on Schwarzschild background. In this work, we generalized the calculation of the second-order self-force to the eccentric orbits on Schwarzschild spacetime. We calculated the puncture field, and give the form of two-timescale expansion for the field equations. The corresponding numerical calculation and programming can be performed based on these results.",
+        "pdf_url": "https://arxiv.org/pdf/2504.09640v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2403.20311",
+      "module": "kerr-metric-reconstruction",
+      "priority": "A",
+      "reason": "Explicit reconstruction of linearized metric perturbations on Kerr from Teukolsky modes, relevant for fluxes and nonlinear extensions.",
+      "metadata": {
+        "arxiv_id": "2403.20311v4",
+        "title": "Gravitational Waves on Kerr Black Holes I: Reconstruction of Linearized Metric Perturbations",
+        "authors": [
+          "Roman Berens",
+          "Trevor Gravely",
+          "Alexandru Lupsasca"
+        ],
+        "published": "2024-03-29T17:32:15+00:00",
+        "updated": "2025-10-10T19:40:33+00:00",
+        "summary": "The gravitational perturbations of a rotating Kerr black hole are notoriously complicated, even at the linear level. In 1973, Teukolsky showed that their physical degrees of freedom are encoded in two gauge-invariant Weyl curvature scalars that obey a separable wave equation. Determining these scalars is sufficient for many purposes, such as the computation of energy fluxes. However, some applications -- such as second-order perturbation theory -- require the reconstruction of metric perturbations. In principle, this problem was solved long ago, but in practice, the solution has never been worked out explicitly. Here, we do so by writing down the metric perturbation (in either ingoing or outgoing radiation gauge) that corresponds to a given mode of either Weyl scalar. Our formulas make no reference to the Hertz potential (an intermediate quantity that plays no fundamental role) and involve only the radial and angular Kerr modes, but not their derivatives, which can be altogether eliminated using the Teukolsky--Starobinsky identities. We expect these analytic results to prove useful in numerical studies and for extending black hole perturbation theory beyond the linear regime.",
+        "pdf_url": "https://arxiv.org/pdf/2403.20311v4",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "hep-th"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2604.06053",
+      "module": "emri-kerr-symmetry-tests",
+      "priority": "B",
+      "reason": "LISA EMRI waveform constraints on Kerr multipolar structure and symmetry-breaking deviations.",
+      "metadata": {
+        "arxiv_id": "2604.06053v2",
+        "title": "Probing Kerr Symmetry Breaking with LISA Extreme-Mass-Ratio Inspirals",
+        "authors": [
+          "Pablo F. Muguruza",
+          "Carlos F. Sopuerta"
+        ],
+        "published": "2026-04-07T16:41:35+00:00",
+        "updated": "2026-04-09T13:09:44+00:00",
+        "summary": "Extreme-Mass-Ratio Inspirals (EMRIs) are one of the main sources of gravitational waves expected in the low-frequency band, where space-based detectors like Laser Interferometer Space Antenna (LISA) will operate. The large number of gravitational-wave cycles accumulated in the EMRI signal in the strong-field regime makes them precise probes of the local spacetime geometry, highly sensitive to deviations from the Kerr black hole paradigm. In this work, we investigate EMRIs around generic, non-Kerr compact objects characterized by a rich multipolar structure. At leading post-Newtonian and linear mass-ratio orders, we incorporate in the waveform model both axisymmetric and non-axisymmetric components of the mass quadrupole and octupole moments, parameterizing the breaking of two fundamental symmetries of the Kerr metric. We study the impact of these modifications on the waveform following the philosophy of EMRI \\emph{Analytic Kludge} models. Then, using Fisher-matrix analysis, we assess LISA's capability to constrain deviations of the multipole moments from their Kerr values and the detection of symmetry-breaking effects. We analyze how effectively LISA will probe models beyond General Relativity that predict horizon-scale modifications, such as the fuzzball model proposed in string theory. Our results demonstrate that future LISA observations of EMRIs will provide powerful tests of black hole structure and the underlying theory of gravity. In particular, with one year of LISA data from the inspiral of a $10 M_{\\odot}$ compact object into a rotating supermassive black hole of $10^{6} M_{\\odot}$ and signal-to-noise ratio of 30, it will be possible to place tight bounds on deviations from the two fundamental symmetries of the Kerr metric, constraining equatorial symmetry breaking to the $10^{-2}$ level and axial symmetry breaking to the $10^{-3}$ level.",
+        "pdf_url": "https://arxiv.org/pdf/2604.06053v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2305.19332",
+      "module": "second-order-teukolsky",
+      "priority": "A",
+      "reason": "Kerr second-order Teukolsky formulation, nonlinear source, and infrared behavior.",
+      "metadata": {
+        "arxiv_id": "2305.19332v3",
+        "title": "Second-order Teukolsky formalism in Kerr spacetime: formulation and nonlinear source",
+        "authors": [
+          "Andrew Spiers",
+          "Adam Pound",
+          "Jordan Moxon"
+        ],
+        "published": "2023-05-30T18:01:04+00:00",
+        "updated": "2023-06-06T09:14:10+00:00",
+        "summary": "To fully exploit the capabilities of next-generation gravitational wave detectors, we need to significantly improve the accuracy of our models of gravitational-wave-emitting systems. This paper focuses on one way of doing so: by taking black hole perturbation theory to second perturbative order. Such calculations are critical for the development of nonlinear ringdown models and of gravitational self-force models of extreme-mass-ratio inspirals. In the most astrophysically realistic case of a Kerr background, a second-order Teukolsky equation presents the most viable avenue for calculating second-order perturbations. Motivated by this, we analyse two second-order Teukolsky formalisms and advocate for the one that is well-behaved for gravitational self-force calculations and which meshes naturally with recent metric reconstruction methods due to Green, Hollands, and Zimmerman [CQG 37, 075001 (2020)] and others. Our main result is an expression for the nonlinear source term in the second-order field equation; we make this available, along with other useful tools, in an accompanying Mathematica notebook. Using our expression for the source, we also show that infrared divergences at second order can be evaded by adopting a Bondi--Sachs gauge.",
+        "pdf_url": "https://arxiv.org/pdf/2305.19332v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2210.15935",
+      "module": "kerr-qnm-nonlinear",
+      "priority": "A",
+      "reason": "Conserved currents, Kerr QNM orthogonality, and nonlinear mode-coupling projections.",
+      "metadata": {
+        "arxiv_id": "2210.15935v3",
+        "title": "Conserved currents for Kerr and orthogonality of quasinormal modes",
+        "authors": [
+          "Stephen R. Green",
+          "Stefan Hollands",
+          "Laura Sberna",
+          "Vahid Toomani",
+          "Peter Zimmerman"
+        ],
+        "published": "2022-10-28T06:47:50+00:00",
+        "updated": "2024-02-19T10:28:34+00:00",
+        "summary": "We introduce a bilinear form for Weyl scalar perturbations of Kerr. The form is symmetric and conserved, and we show that, when combined with a suitable renormalization prescription involving complex r integration contours, quasinormal modes are orthogonal in the bilinear form for different (l, m, n). These properties are apparently not evident consequences of standard properties for the radial and angular solutions to the decoupled Teukolsky relations and rely on the Petrov type D character of Kerr and its t-$φ$ reflection isometry. We show that quasinormal mode excitation coefficients are given precisely by the projection with respect to our bilinear form. These properties can make our bilinear form useful to set up a framework for nonlinear quasinormal mode coupling in Kerr. We also provide a general discussion on conserved local currents and their associated local symmetry operators for metric and Weyl perturbations, identifying a collection containing an increasing number of derivatives.",
+        "pdf_url": "https://arxiv.org/pdf/2210.15935v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2603.04501",
+      "module": "nonlinear-gravity-scattering",
+      "priority": "A",
+      "reason": "Nonlinear Einstein-Klein-Gordon and vacuum wave scattering, harmonic generation, and spectral broadening.",
+      "metadata": {
+        "arxiv_id": "2603.04501v1",
+        "title": "Nonlinear Dynamics in General Relativity",
+        "authors": [
+          "Vitor Cardoso",
+          "Jaime Redondo-Yuste",
+          "Ulrich Sperhake",
+          "Furkan Tuncer"
+        ],
+        "published": "2026-03-04T19:00:03+00:00",
+        "updated": "2026-03-04T19:00:03+00:00",
+        "summary": "Black holes and gravitational waves are consequences of the nonlinear character of the Einstein equations. Yet, the remarkable properties of General Relativity point to the existence of other effects. Here we uncover new nonlinear facets of gravity. We establish higher harmonic generation, spectral broadening and focusing in the Einstein Klein-Gordon system. In vacuum, we show that scattering of monochromatic waves at quadratic order is weakly sensitive to frequency, at large wavelengths. These aspects can both explain the seemingly smooth behavior of mergers, but also caution us against too simplistic an interpretation of waveforms.",
+        "pdf_url": "https://arxiv.org/pdf/2603.04501v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "hep-th"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2306.17221",
+      "module": "frequency-domain-effective-source",
+      "priority": "A",
+      "reason": "Effective-source and extended-particular-solution prototype for frequency-domain eccentric self-force calculations.",
+      "metadata": {
+        "arxiv_id": "2306.17221v2",
+        "title": "Applying the effective-source approach to frequency-domain self-force calculations for eccentric orbits",
+        "authors": [
+          "Benjamin Leather",
+          "Niels Warburton"
+        ],
+        "published": "2023-06-29T18:00:03+00:00",
+        "updated": "2023-10-24T11:44:16+00:00",
+        "summary": "Extreme mass-ratio inspirals (EMRIs) are expected to have considerable eccentricity when emitting gravitational waves (GWs) in the LISA band. Developing GW templates that remain phase accurate over these long inspirals requires the use of second-order self-force theory and practical second-order self-force calculations are now emerging for quasi-circular EMRIs. These calculations rely on effective-source regularization techniques in the frequency domain that presently are specialized to circular orbits. Here we make a first step towards more generic second-order calculations by extending the frequency domain effective-source approach to eccentric orbits. In order to overcome the slow convergence of the Fourier sum over radial modes, we develop a new extended effective-sources approach which builds upon the method of extended particular solutions. To demonstrate our new computational technique we apply it a toy scalar-field problem which is conceptually similar to the gravitational case.",
+        "pdf_url": "https://arxiv.org/pdf/2306.17221v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2112.11168",
+      "module": "nonlinear-ringdown",
+      "priority": "B",
+      "reason": "Absorption-induced nonlinear mode excitation and its relevance to ringdown analysis.",
+      "metadata": {
+        "arxiv_id": "2112.11168v1",
+        "title": "Nonlinear effects in the black hole ringdown: absorption-induced mode excitation",
+        "authors": [
+          "Laura Sberna",
+          "Pablo Bosch",
+          "William E. East",
+          "Stephen R. Green",
+          "Luis Lehner"
+        ],
+        "published": "2021-12-21T13:04:18+00:00",
+        "updated": "2021-12-21T13:04:18+00:00",
+        "summary": "Gravitational-wave observations of black hole ringdowns are commonly used to characterize binary merger remnants and to test general relativity. These analyses assume linear black hole perturbation theory, in particular that the ringdown can be described in terms of quasinormal modes even for times approaching the merger. Here we investigate a nonlinear effect during the ringdown, namely how a mode excited at early times can excite additional modes as it is absorbed by the black hole. This is a third-order secular effect: the change in the black-hole mass causes a shift in the mode spectrum, so that the original mode is projected onto the new ones. Using nonlinear simulations, we study the ringdown of a spherically-symmetric scalar field around an asymptotically anti-de Sitter black hole, and we find that this \"absorption-induced mode excitation\" (AIME) is the dominant nonlinear effect. We show that this effect takes place well within the nonadiabatic regime, so we can analytically estimate it using a sudden mass-change approximation. Adapting our estimation technique to asymptotically-flat Schwarzschild black holes, we expect AIME to play a role in the analysis and interpretation of current and future gravitational wave observations.",
+        "pdf_url": "https://arxiv.org/pdf/2112.11168v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE",
+          "hep-th"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "gr-qc/0202090",
+      "module": "kerr-geodesic-frequencies",
+      "priority": "A",
+      "reason": "Action-angle variables and invariant fundamental frequencies for bound Kerr geodesics.",
+      "metadata": {
+        "arxiv_id": "gr-qc/0202090v1",
+        "title": "Celestial mechanics in Kerr spacetime",
+        "authors": [
+          "Wolfram Schmidt"
+        ],
+        "published": "2002-02-26T13:16:24+00:00",
+        "updated": "2002-02-26T13:16:24+00:00",
+        "summary": "The dynamical parameters conventionally used to specify the orbit of a test particle in Kerr spacetime are the energy $E$, the axial component of the angular momentum, $L_{z}$, and Carter's constant $Q$. These parameters are obtained by solving the Hamilton-Jacobi equation for the dynamical problem of geodesic motion. Employing the action-angle variable formalism, on the other hand, yields a different set of constants of motion, namely, the fundamental frequencies $ω_{r}$, $ω_θ$ and $ω_φ$ associated with the radial, polar and azimuthal components of orbital motion. These frequencies, naturally, determine the time scales of orbital motion and, furthermore, the instantaneous gravitational wave spectrum in the adiabatic approximation. In this article, it is shown that the fundamental frequencies are geometric invariants and explicit formulas in terms of quadratures are derived. The numerical evaluation of these formulas in the case of a rapidly rotating black hole illustrates the behaviour of the fundamental frequencies as orbital parameters such as the semi-latus rectum $p$, the eccentricity $e$ or the inclination parameter $θ_{-}$ are varied. The limiting cases of circular, equatorial and Keplerian motion are investigated as well and it is shown that known results are recovered from the general formulas.",
+        "pdf_url": "https://arxiv.org/pdf/gr-qc/0202090v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "0906.1420",
+      "module": "kerr-geodesic-analytics",
+      "priority": "A",
+      "reason": "Analytic bound Kerr geodesics in Mino time and the radial, polar, and azimuthal frequencies.",
+      "metadata": {
+        "arxiv_id": "0906.1420v2",
+        "title": "Analytical solutions of bound timelike geodesic orbits in Kerr spacetime",
+        "authors": [
+          "Ryuichi Fujita",
+          "Wataru Hikida"
+        ],
+        "published": "2009-06-08T06:59:58+00:00",
+        "updated": "2012-08-27T16:36:33+00:00",
+        "summary": "We derive the analytical solutions of the bound timelike geodesic orbits in Kerr spacetime. The analytical solutions are expressed in terms of the elliptic integrals using Mino time $λ$ as the independent variable. Mino time decouples the radial and polar motion of a particle and hence leads to forms more useful to estimate three fundamental frequencies, radial, polar and azimuthal motion, for the bound timelike geodesics in Kerr spacetime. This paper gives the first derivation of the analytical expressions of the fundamental frequencies. This paper also gives the first derivation of the analytical expressions of all coordinates for the bound timelike geodesics using Mino time. These analytical expressions should be useful not only to investigate physical properties of Kerr geodesics but more importantly to applications related to the estimation of gravitational waves from the extreme mass ratio inspirals.",
+        "pdf_url": "https://arxiv.org/pdf/0906.1420v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "0904.3810",
+      "module": "emri-teukolsky-waveforms",
+      "priority": "A",
+      "reason": "Frequency-domain Teukolsky waveforms for eccentric and inclined Kerr geodesics with flux validation.",
+      "metadata": {
+        "arxiv_id": "0904.3810v2",
+        "title": "An Efficient Numerical Method for Computing Gravitational Waves Induced by a Particle Moving on Eccentric Inclined Orbits around a Kerr Black Hole",
+        "authors": [
+          "Ryuichi Fujita",
+          "Wataru Hikida",
+          "Hideyuki Tagoshi"
+        ],
+        "published": "2009-04-24T07:27:26+00:00",
+        "updated": "2009-05-20T11:26:59+00:00",
+        "summary": "We develop a numerical code to compute gravitational waves induced by a particle moving on eccentric inclined orbits around a Kerr black hole. For such systems, the black hole perturbation method is applicable. The gravitational waves can be evaluated by solving the Teukolsky equation with a point like source term, which is computed from the stress-energy tensor of a test particle moving on generic bound geodesic orbits. In our previous papers, we computed the homogeneous solutions of the Teukolsky equation using a formalism developed by Mano, Suzuki and Takasugi and showed that we could compute gravitational waves efficiently and very accurately in the case of circular orbits on the equatorial plane. Here, we apply this method to eccentric inclined orbits. The geodesics around a Kerr black hole have three constants of motion: energy, angular momentum and the Carter constant. We compute the rates of change of the Carter constant as well as those of energy and angular momentum. This is the first time that the rate of change of the Carter constant has been evaluated accurately. We also treat the case of highly eccentric orbits with $e=0.9$. To confirm the accuracy of our codes, several tests are performed. We find that the accuracy is only limited by the truncation of $\\ell$-, $k$- and $n$-modes, where $\\ell$ is the index of the spin-weighted spheroidal harmonics, and $n$ and $k$ are the harmonics of the radial and polar motion, respectively. When we set the maximum of $\\ell$ to 20, we obtain a relative accuracy of $10^{-5}$ even in the highly eccentric case of $e=0.9$. The accuracy is better for lower eccentricity. Our numerical code is expected to be useful for computing templates of the extreme mass ratio inspirals, which is one of the main targets of the Laser Interferometer Space Antenna (LISA).",
+        "pdf_url": "https://arxiv.org/pdf/0904.3810v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1103.0287",
+      "module": "scalar-self-force-kerr",
+      "priority": "A",
+      "reason": "Frequency-domain scalar self-force on eccentric equatorial Kerr orbits using extended homogeneous solutions and mode-sum regularization.",
+      "metadata": {
+        "arxiv_id": "1103.0287v3",
+        "title": "Self force on a scalar charge in Kerr spacetime: eccentric equatorial orbits",
+        "authors": [
+          "Niels Warburton",
+          "Leor Barack"
+        ],
+        "published": "2011-03-01T21:14:08+00:00",
+        "updated": "2015-02-26T19:36:42+00:00",
+        "summary": "We present a numerical code for calculating the self force on a scalar charge moving in a bound (eccentric) geodesic in the equatorial plane of a Kerr black hole. We work in the frequency domain and make use of the method of extended homogeneous solutions [Phys.\\ Rev.\\ D {\\bf 78}, 084021 (2008)], in conjunction with mode-sum regularization. Our work is part of a program to develop a computational architecture for fast and efficient self-force calculations, alternative to time-domain methods. We find that our frequency-domain method outperforms existing time-domain schemes for small eccentricities, and, remarkably, remains competitive up to eccentricities as high as $\\sim 0.7$. As an application of our code we (i) compute the conservative scalar-field self-force correction to the innermost stable circular equatorial orbit, as a function of the Kerr spin parameter; and (ii) calculate the variation in the rest mass of the scalar particle along the orbit, caused by the component of the self force tangent to the four-velocity.",
+        "pdf_url": "https://arxiv.org/pdf/1103.0287v3",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1408.2885",
+      "module": "scalar-self-force-inclined",
+      "priority": "B",
+      "reason": "Scalar self-force on inclined circular Kerr orbits and mode-sum regularization of all force components.",
+      "metadata": {
+        "arxiv_id": "1408.2885v2",
+        "title": "Self force on a scalar charge in Kerr spacetime: inclined circular orbits",
+        "authors": [
+          "Niels Warburton"
+        ],
+        "published": "2014-08-13T00:24:35+00:00",
+        "updated": "2015-02-02T23:40:45+00:00",
+        "summary": "Accurately modeling astrophysical extreme-mass-ratio-insprials requires calculating the gravitational self-force for orbits in Kerr spacetime. The necessary calculation techniques are typically very complex and, consequently, toy scalar-field models are often developed in order to establish a particular calculational approach. To that end, I present a calculation of the scalar-field self-force for a particle moving on a (fixed) inclined circular geodesic of a background Kerr black hole. I make the calculation in the frequency-domain and demonstrate how to apply the mode-sum regularization procedure to all four components of the self-force. I present results for a number of strong-field orbits which can be used as benchmarks for emerging self-force calculation techniques in Kerr spacetime.",
+        "pdf_url": "https://arxiv.org/pdf/1408.2885v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1711.09607",
+      "module": "gravitational-self-force-generic-kerr",
+      "priority": "A",
+      "reason": "First gravitational self-force calculation on generic bound Kerr geodesics with reconstruction, regularization, and flux-balance validation.",
+      "metadata": {
+        "arxiv_id": "1711.09607v1",
+        "title": "Gravitational self-force on generic bound geodesics in Kerr spacetime",
+        "authors": [
+          "Maarten van de Meent"
+        ],
+        "published": "2017-11-27T10:07:47+00:00",
+        "updated": "2017-11-27T10:07:47+00:00",
+        "summary": "In this work we present the first calculation of the gravitational self-force on generic bound geodesics in Kerr spacetime to first order in the mass-ratio. That is, the local correction to equations of motion for a compact object orbiting a larger rotating black hole due to its own impact on the gravitational field. This includes both dissipative and conservative effects. Our method builds on and extends earlier methods for calculating the gravitational self-force on equatorial orbits. In particular we reconstruct the local metric perturbation in the outgoing radiation gauge from the Weyl scalar $ψ_4$, which in turn is obtained by solving the Teukolsky equation using semi-analytical frequency domain methods. The gravitational self-force is subsequently obtained using (spherical) $l$-mode regularization.\n  We test our implementation by comparing the large $l$-behaviour against the analytically known regularization parameters. In addition we validate our results be comparing the long-term average changes to the energy, angular momentum, and Carter constant to changes to these constants of motion inferred from the gravitational wave flux to infinity and down the horizon.",
+        "pdf_url": "https://arxiv.org/pdf/1711.09607v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2209.05450",
+      "module": "self-force-regularization-generic",
+      "priority": "A",
+      "reason": "Higher-order Detweiler-Whiting mode-sum regularization parameters for generic Kerr orbits.",
+      "metadata": {
+        "arxiv_id": "2209.05450v1",
+        "title": "Self-force regularization of a point particle for generic orbits in Kerr spacetime: electromagnetic and gravitational cases",
+        "authors": [
+          "Anna Heffernan"
+        ],
+        "published": "2022-09-12T17:51:00+00:00",
+        "updated": "2022-09-12T17:51:00+00:00",
+        "summary": "The self-force is the leading method in modelling waveforms for extreme mass ratio inspirals, a key target of ESA's future space-based gravitational wave detector LISA. In modelling these systems, one approximates the smaller body as a point particle leading to problematic singularities that need to be removed. Modelling of this singular structure has settled on the Detweiler-Whiting singular field as the gold standard. As a solution to the governing wave equation itself, on removal, it leaves a smooth regular field that is a solution to the homogeneous wave equation, much like its well established flat spacetime counterpart. The mode-sum method enables subtraction of this singularity mode by mode via a spherical harmonic decomposition. The more modes one has, the faster the convergence in the $\\ell$-sum, making these expressions highly beneficial, especially considering the heavy computational burden of waveform production. Until recently, only the two leading orders were known for generic orbits in Kerr spacetime. In a previous paper, we produced the next non-zero parameter for a scalar charged particle in curved spacetime, laying the groundwork for the electromagnetic and gravitational case which we present here.",
+        "pdf_url": "https://arxiv.org/pdf/2209.05450v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.HE",
+          "hep-th"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "1409.4419",
+      "module": "frequency-domain-self-force-workflow",
+      "priority": "B",
+      "reason": "Extended-homogeneous-solution and mode-sum workflow with explicit long-term phase-error targets.",
+      "metadata": {
+        "arxiv_id": "1409.4419v2",
+        "title": "Lorenz gauge gravitational self-force calculations of eccentric binaries using a frequency domain procedure",
+        "authors": [
+          "Thomas Osburn",
+          "Erik Forseth",
+          "Charles Evans",
+          "Seth Hopper"
+        ],
+        "published": "2014-09-15T20:00:09+00:00",
+        "updated": "2014-12-11T16:42:45+00:00",
+        "summary": "We present an algorithm for calculating the metric perturbations and gravitational self-force for extreme-mass-ratio inspirals (EMRIs) with eccentric orbits. The massive black hole is taken to be Schwarzschild and metric perturbations are computed in Lorenz gauge. The perturbation equations are solved as coupled systems of ordinary differential equations in the frequency domain. Accurate local behavior of the metric is attained through use of the method of extended homogeneous solutions and mode-sum regularization is used to find the self-force. We focus on calculating the self-force with sufficient accuracy to ensure its error contributions to the phase in a long term orbital evolution will be $δΦ\\lesssim 10^{-2}$ radians. This requires the orbit-averaged force to have fractional errors $\\lesssim 10^{-8}$ and the oscillatory part of the self-force to have errors $\\lesssim 10^{-3}$ (a level frequently easily exceeded). Our code meets this error requirement in the oscillatory part, extending the reach to EMRIs with eccentricities of $e \\lesssim 0.8$, if augmented by use of fluxes for the orbit-averaged force, or to eccentricities of $e \\lesssim 0.5$ when used as a stand-alone code. Further, we demonstrate accurate calculations up to orbital separations of $a \\simeq 100 M$, beyond that required for EMRI models and useful for comparison with post-Newtonian theory. Our principal developments include (1) use of fully constrained field equations, (2) discovery of analytic solutions for even-parity static modes, (3) finding a pre-conditioning technique for outer homogeneous solutions, (4) adaptive use of quad-precision and (5) jump conditions to handle near-static modes, and (6) a hybrid scheme for high eccentricities.",
+        "pdf_url": "https://arxiv.org/pdf/1409.4419v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2410.17310",
+      "module": "relativistic-emri-waveforms",
+      "priority": "A",
+      "reason": "Fully relativistic adiabatic EMRI waveforms and their impact on LISA inference and environmental tests.",
+      "metadata": {
+        "arxiv_id": "2410.17310v2",
+        "title": "Impact of relativistic waveforms in LISA's science objectives with extreme-mass-ratio inspirals",
+        "authors": [
+          "Hassan Khalvati",
+          "Alessandro Santini",
+          "Francisco Duque",
+          "Lorenzo Speri",
+          "Jonathan Gair",
+          "Huan Yang",
+          "Richard Brito"
+        ],
+        "published": "2024-10-22T18:00:00+00:00",
+        "updated": "2025-04-28T15:58:23+00:00",
+        "summary": "Extreme-Mass-Ratio Inspirals (EMRIs) are one of the key targets for future space-based gravitational wave detectors, such as LISA. The scientific potential of these sources can only be fully realized with fast and accurate waveform models. In this work, we extend the \\textsc{FastEMRIWaveform} (\\texttt{FEW}) framework by providing fully relativistic waveforms at adiabatic order for circular, equatorial orbits in Kerr spacetime, for mass ratios up to $10^{-3}$. We investigate the significance of including relativistic corrections in the waveform for both vacuum and non-vacuum environments. Specifically, we develop relativistic non-vacuum EMRI waveforms including two different environmental effects in the EMRI waveforms: power-law migration torques, and superradiance scalar clouds. For EMRIs in vacuum, we find that non-relativistic waveforms incorrectly estimate the predicted source's horizon redshift by approximately $35\\%$ error. Our analysis shows that incorporating relativistic corrections enhances constraints on accretion disks, modeled through power-law torques, and improves the constraints on disk parameter estimates (error $\\simeq 8\\%$), representing a significant improvement over previous estimates. Additionally, we assess the evidence for models in a scenario where ignoring the accretion disk biases the parameter estimation (PE), reporting a $\\log_{10}$ Bayes factor of $1.1$ in favor of the accretion disk model. In a fully relativistic setup, we also estimate the parameters of superradiant scalar clouds with relative errors $\\simeq 0.3\\%$ for the scalar cloud's mass. These results demonstrate that incorporating relativistic effects is essential for LISA science objectives with EMRIs.",
+        "pdf_url": "https://arxiv.org/pdf/2410.17310v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc",
+          "astro-ph.GA",
+          "astro-ph.HE",
+          "astro-ph.IM",
+          "hep-ph"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2507.06923",
+      "module": "post-adiabatic-emri-environment",
+      "priority": "B",
+      "reason": "First post-adiabatic EMRI waveform construction with environmental corrections and phase sensitivity.",
+      "metadata": {
+        "arxiv_id": "2507.06923v2",
+        "title": "Post-adiabatic waveforms from extreme mass ratio inspirals in the presence of dark matter",
+        "authors": [
+          "Mostafizur Rahman",
+          "Takuya Takahashi"
+        ],
+        "published": "2025-07-09T14:59:52+00:00",
+        "updated": "2026-03-04T05:56:22+00:00",
+        "summary": "Extreme mass-ratio inspirals (EMRIs), in which a solar mass compact object is whirling around a supermassive black hole, act as precise tracers of the spacetime geometry and astrophysical environment around the supermassive black hole. These systems are highly sensitive to even the smallest deviations from the vacuum general relativity scenario. However, detecting these signals requires highly accurate waveform modeling up to the first post-adiabatic order, incorporating self-force effects, system parameters, and environmental influences. In this paper, we focus on the impact of dark matter on gravitational waveforms. Cold dark matter in galactic centers can be redistributed by the gravitational pull of a supermassive black hole, forming a dense, spike-like profile. When an EMRI evolves in such an environment, the interaction between the binary and the surrounding dark matter can leave distinctive imprints on the emitted waveform, and thus offer a novel way to probe the nature and distribution of dark matter. We specifically examine how dark matter modifies the background spacetime. By treating these modifications perturbatively, we present a framework to incorporate dark matter environmental effects into gravitational waveform modeling at the first post-adiabatic order.",
+        "pdf_url": "https://arxiv.org/pdf/2507.06923v2",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    },
+    {
+      "arxiv_id": "2606.04998",
+      "module": "numerical-relativity-self-force",
+      "priority": "A",
+      "reason": "High-order discontinuous-Galerkin and horizon-penetrating numerical-relativity route toward generic second-order self-force in Kerr.",
+      "metadata": {
+        "arxiv_id": "2606.04998v1",
+        "title": "Self-force calculations with numerical relativity methods",
+        "authors": [
+          "Nils L. Vu",
+          "Nami Nishimura",
+          "Thomas Osburn",
+          "Jonathan E. Thompson",
+          "Lawrence E. Kidder",
+          "Samuel D. Upton",
+          "Barry Wardell"
+        ],
+        "published": "2026-06-03T15:16:34+00:00",
+        "updated": "2026-06-03T15:16:34+00:00",
+        "summary": "To model gravitational waveforms from extreme mass-ratio inspirals (EMRIs) for the upcoming LISA space mission, gravitational self-force calculations are needed to second order in perturbation theory. However, to date these calculations have only been attempted for the simplest case of circular orbits in Schwarzschild spacetime. In this work, we present a new computational method aimed at performing generic second-order self-force calculations in Kerr spacetime using methods from the adjacent field of numerical relativity. We perform an $m$-mode separation of variables, add null (\"$vtu$\") slicing in horizon-penetrating coordinates, and solve the resulting elliptic PDEs using high-order discontinuous Galerkin discretization, adaptive mesh-refinement, and an iterative Krylov-type linear solver with parallelizable multigrid-Schwarz preconditioning. We find that our method achieves exponential convergence for the self-force on a scalar point charge in Kerr spacetime up to spins of $a=0.998$ (Thorne limit) on circular equatorial orbits as close as the ISCO (prograde and retrograde), despite the non-smooth puncture on the grid. We solve for 20 $m$-modes in parallel in a few seconds and retain the flexibility to extend the method to gravitational self-force and more generic orbits in the future. The code to perform these calculations is publicly available in the open-source numerical relativity code SpECTRE.",
+        "pdf_url": "https://arxiv.org/pdf/2606.04998v1",
+        "primary_category": "gr-qc",
+        "categories": [
+          "gr-qc"
+        ]
+      }
+    }
+  ]
+}

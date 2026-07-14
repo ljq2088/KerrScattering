@@ -1,0 +1,14 @@
+PRD reproducibility environment snapshot
+Generated: 2026-07-14
+
+Python: 3.13.13
+NumPy: 2.4.4
+SciPy: 1.17.1
+Matplotlib: 3.10.8
+qnm: 0.4.4
+TeX Live: 2026
+
+The qnm package supplies the scalar Kerr reference frequencies used in the
+figures and Table I.  The numerical amplitude data and figures remain frozen
+by docs/prd/artifact_manifest.json; this file records the local software
+versions used to build the active draft.

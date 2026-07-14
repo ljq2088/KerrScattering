@@ -1,0 +1,26 @@
+{
+  "submission": {
+    "journal": "Physical Review D",
+    "manuscript_type": "Regular Article",
+    "title": "Weakly nonlinear scalar scattering from a Kerr black hole",
+    "corresponding_author": "First Author",
+    "cover_letter_template": "docs/prd/cover_letter.template.md",
+    "cover_letter_output": "docs/prd/cover_letter.md",
+    "data_availability_statement": "The numerical data used in the figures and tables are included with the project under results/. The plotting, checking, and build scripts are included under scripts/."
+  },
+  "authors": [
+    {
+      "name": "First Author",
+      "email": "first.author@example.edu",
+      "affiliations": [
+        "Department of Physics, Example University, City, Country"
+      ]
+    },
+    {
+      "name": "Second Author",
+      "affiliations": [
+        "Institute for Theoretical Physics, Example Academy, City, Country"
+      ]
+    }
+  ]
+}

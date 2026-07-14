@@ -66,6 +66,7 @@ class KerrScalarGreenDiagnostics:
     B_ref: complex
     B_inc_target: complex
     B_ref_target: complex
+    flux_normalization_condition_number: float
     wronskian: complex
     wronskian_outer: complex
     wronskian_relative_error: float
@@ -168,6 +169,9 @@ def _solve_matched_mode(
     flux_norm = abs(B_inc) ** 2 - abs(B_ref) ** 2
     if abs(flux_norm) <= 1e-300:
         raise FloatingPointError("Degenerate in/up continuation normalization.")
+    flux_normalization_condition_number = float(
+        (abs(B_inc) ** 2 + abs(B_ref) ** 2) / abs(flux_norm)
+    )
 
     down_eval = _BranchEvaluator(
         down, 0.0, z_match, "down", params, omega, m, active_mapping, kappa_outer
@@ -184,6 +188,7 @@ def _solve_matched_mode(
         "B_inc": B_inc,
         "B_ref": B_ref,
         "flux_norm": flux_norm,
+        "flux_normalization_condition_number": flux_normalization_condition_number,
         "R_down": R_down,
         "Rr_down": Rr_down,
         "R_up": R_up,
@@ -562,6 +567,9 @@ def compute_kerr_scalar_green_diagnostics(
         B_ref=source_mode["B_ref"],
         B_inc_target=target_mode["B_inc"],
         B_ref_target=target_mode["B_ref"],
+        flux_normalization_condition_number=(
+            target_mode["flux_normalization_condition_number"]
+        ),
         wronskian=wronskian,
         wronskian_outer=wronskian_outer,
         wronskian_relative_error=wronskian_relative_error,

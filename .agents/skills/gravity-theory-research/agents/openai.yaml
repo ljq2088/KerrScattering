@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gravity Theory Research"
+  short_description: "Kerr black-hole derivations, spectral numerics, and reproducible papers"
+  default_prompt: "Apply the gravity-theory-research workflow to this task and preserve explicit conventions, diagnostics, and reproducibility evidence."

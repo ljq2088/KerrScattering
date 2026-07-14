@@ -1,0 +1,310 @@
+{
+  "artifacts": [
+    {
+      "height_px": 780,
+      "kind": "figure",
+      "path": "figures/kerr_scalar_low_frequency_axisymmetric.png",
+      "sha256": "e80025cc25b633aa2c812154df21f5404a244e602ee8ec837245039349cbf33d",
+      "size_bytes": 98629,
+      "width_px": 2016
+    },
+    {
+      "height_px": 780,
+      "kind": "figure",
+      "path": "figures/kerr_scalar_nonlinear_axisymmetric_fig2.png",
+      "sha256": "e09c0dcc1ccabb15771a72ee65d9daecda87cd8ef286cf141aaada539040b7be",
+      "size_bytes": 169154,
+      "width_px": 2016
+    },
+    {
+      "height_px": 648,
+      "kind": "figure",
+      "path": "figures/kerr_scalar_axisymmetric_accuracy.png",
+      "sha256": "dd442939630be16f2fac3982c33bd35987679e36c63400b122263d9479ce2e93",
+      "size_bytes": 197352,
+      "width_px": 2064
+    },
+    {
+      "height_px": 718,
+      "kind": "figure",
+      "path": "figures/kerr_scalar_nonlinear_superradiant_m2.png",
+      "sha256": "79f208721a1439ea3c04ca43d3b87479aaeed548963160a1e95965c903b24a81",
+      "size_bytes": 87486,
+      "width_px": 1700
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
+      "required_columns": [
+        "omega",
+        "B_inc",
+        "B_ref",
+        "T0",
+        "R0",
+        "linear_balance",
+        "T1",
+        "R1",
+        "nonlinear_balance",
+        "abs_nonlinear_balance"
+      ],
+      "rows": 12,
+      "sha256": "80f8ee263ec4b51bb3998b5d182adb2972bb1438da3bbf2acc50d25a40addaa1",
+      "size_bytes": 8878
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv",
+      "required_columns": [
+        "omega",
+        "B_inc",
+        "B_ref",
+        "T0",
+        "R0",
+        "linear_balance",
+        "T1",
+        "R1",
+        "nonlinear_balance",
+        "abs_nonlinear_balance"
+      ],
+      "rows": 13,
+      "sha256": "68acae26d7f0f092b48658809fa4628cb192fbdff483c8fadaa2c01e3f816a3c",
+      "size_bytes": 9616
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv",
+      "required_columns": [
+        "omega",
+        "B_inc",
+        "B_ref",
+        "T0",
+        "R0",
+        "linear_balance",
+        "T1",
+        "R1",
+        "nonlinear_balance",
+        "abs_nonlinear_balance"
+      ],
+      "rows": 13,
+      "sha256": "255497f8267fb41c46a7168435b3634096458cb16af4eaca5e8185d40b3822c2",
+      "size_bytes": 9599
+    },
+    {
+      "kind": "csv",
+      "path": "results/tmp_kerr_axisymmetric_refine_l0.csv",
+      "required_columns": [
+        "omega",
+        "T1",
+        "R1",
+        "linear_balance",
+        "nonlinear_balance"
+      ],
+      "rows": 4,
+      "sha256": "8ce315828307fa20606547d0ab4972356050c5f450376893ec1dbaf6935dfd52",
+      "size_bytes": 3153
+    },
+    {
+      "kind": "csv",
+      "path": "results/tmp_kerr_axisymmetric_refine_l1.csv",
+      "required_columns": [
+        "omega",
+        "T1",
+        "R1",
+        "linear_balance",
+        "nonlinear_balance"
+      ],
+      "rows": 3,
+      "sha256": "5c4203c1f3fbbe15667e12d9889d3d9b0cbb3d62a0faf7a7cb937ec3656af1a9",
+      "size_bytes": 2454
+    },
+    {
+      "kind": "csv",
+      "path": "results/tmp_kerr_axisymmetric_refine_l2.csv",
+      "required_columns": [
+        "omega",
+        "T1",
+        "R1",
+        "linear_balance",
+        "nonlinear_balance"
+      ],
+      "rows": 2,
+      "sha256": "8bf89e24b207d34dadfb4fc206284c83a5cdb11c1ad4ba00b43d1c983e4f59c0",
+      "size_bytes": 1744
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_axisymmetric_fit_table.csv",
+      "required_columns": [
+        "l",
+        "omega_peak",
+        "gamma",
+        "qnm_real",
+        "qnm_imag_abs",
+        "pi_Tfit",
+        "Tfit_over_TH_minus_1_abs",
+        "tail_rms_log"
+      ],
+      "rows": 3,
+      "sha256": "fb941582e78ba55713db8cb01d787b094d987ee471e1fd88c7d7556f0e8fc784",
+      "size_bytes": 916
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_low_frequency_axisymmetric_slopes.csv",
+      "required_columns": [
+        "l",
+        "T0_slope",
+        "T1_slope"
+      ],
+      "rows": 3,
+      "sha256": "f7be0dfd358c9f50e0edc6432d4de288a87feecbde7c09474761e3362e852d4a",
+      "size_bytes": 272
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_axisymmetric_spectral_coefficients.csv",
+      "required_columns": [
+        "branch",
+        "subdomain",
+        "k",
+        "abs_coeff",
+        "normalized_abs_coeff"
+      ],
+      "rows": 723,
+      "sha256": "c16c276517f1511cd7100c37366ac8459fdf934168467bfbbd2f2a39f8fb3da9",
+      "size_bytes": 77593
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_axisymmetric_spectral_residuals.csv",
+      "required_columns": [
+        "branch",
+        "subdomain",
+        "node_index",
+        "relative_residual",
+        "radial_relative_residual",
+        "term_scale"
+      ],
+      "rows": 720,
+      "sha256": "ea06533b4f44cceaae5b9494ba509a933b26c515e04e15dad65c86a8cf35a990",
+      "size_bytes": 159937
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_axisymmetric_spectral_quality_summary.csv",
+      "required_columns": [
+        "case",
+        "branch",
+        "subdomain",
+        "coeff_tail_ratio",
+        "max_radial_relative_residual"
+      ],
+      "rows": 3,
+      "sha256": "0114d2e345631ba272215d52d4bbf3b95e4889a3df6f9c92a583153f6dcf8439",
+      "size_bytes": 1132
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_convergence_summary.csv",
+      "required_columns": [
+        "case",
+        "N_reference",
+        "N_test_max_relative_A_ref",
+        "N_test_max_relative_A_H",
+        "r_match_reference",
+        "r_match_test_max_relative_A_ref",
+        "r_match_test_max_relative_A_H",
+        "quad_reference",
+        "quad_test_max_relative_A_ref",
+        "quad_test_max_relative_A_H",
+        "max_Wronskian_relative_error"
+      ],
+      "rows": 3,
+      "sha256": "227e6e4f0195e8824162d2a238b82bb89539fd565ea6b99e320b9765cd3e380d",
+      "size_bytes": 800
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_axisymmetric_production_convergence.csv",
+      "required_columns": [
+        "label",
+        "config",
+        "N",
+        "quad_order",
+        "A_ref_1",
+        "A_hor_1",
+        "T1",
+        "R1",
+        "nonlinear_balance",
+        "rel_A_ref_to_reference",
+        "rel_A_hor_to_reference",
+        "rel_T1_to_reference",
+        "rel_R1_to_reference",
+        "rss_after_mb"
+      ],
+      "rows": 15,
+      "sha256": "1a6ef6a975a211f8c000df5c2bc333388f2436327beb891efc43f43450d2f8ce",
+      "size_bytes": 9155
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_channels.csv",
+      "required_columns": [
+        "l_source",
+        "l_target",
+        "m",
+        "a",
+        "omega",
+        "angular_coupling",
+        "angular_coupling_cos2",
+        "abs_A_ref_1",
+        "abs_A_hor_1",
+        "wronskian_relative_error",
+        "status"
+      ],
+      "rows": 5,
+      "sha256": "bb913a4ce431312acd7112c96203094c61bd2dc143a3b7b0b19c0a3e16b7006e",
+      "size_bytes": 3570
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_channel_convergence.csv",
+      "required_columns": [
+        "l_source",
+        "l_target",
+        "N_outer",
+        "quad_order",
+        "rel_A_ref_to_reference",
+        "rel_A_hor_to_reference",
+        "wronskian_relative_error",
+        "status"
+      ],
+      "rows": 9,
+      "sha256": "f5b1cb3f3b03fbcb592fb44f7689b97a37edb51995c6596ccdceafc7e4af1bd0",
+      "size_bytes": 7501
+    },
+    {
+      "kind": "csv",
+      "path": "results/kerr_scalar_nonlinear_m2_superradiant.csv",
+      "required_columns": [
+        "l",
+        "m",
+        "omega",
+        "p_horizon",
+        "superradiant",
+        "T0",
+        "T1",
+        "R1",
+        "nonlinear_balance",
+        "abs_nonlinear_balance",
+        "wronskian_relative_error",
+        "status"
+      ],
+      "rows": 10,
+      "sha256": "ab6ba593e7734dbb7f6f73f1658b09df4946672f280916ead4b578c8ae0626c6",
+      "size_bytes": 7412
+    }
+  ],
+  "description": "Frozen input artifacts used by docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex",
+  "root": "KerrScattering"
+}

@@ -1,0 +1,40 @@
+# arxiv_id|module|priority|reason for inclusion
+gr-qc/0306120|teukolsky-kerr|A|Analytic Kerr perturbation theory and post-Newtonian expansions based on Teukolsky methods.
+gr-qc/9603020|mst-teukolsky|A|MST hypergeometric and Coulomb-wave solutions, low-frequency expansions, and normalization identities.
+2306.16469|gsn-kerr|A|Generalized Sasaki-Nakamura homogeneous solutions for scalar, electromagnetic, and gravitational perturbations.
+2302.11624|spectral-black-hole-perturbations|A|Chebyshev endpoint factoring and spectral convergence diagnostics for black-hole perturbations.
+astro-ph/0703495|emri-overview|B|Early EMRI review connecting astrophysics, data analysis, and tests of strong-field gravity.
+1102.0529|green-functions-self-force|A|Foundational review of point particles, Green functions, singular fields, and self-force.
+gr-qc/0509122|emri-adiabatic|B|Limitations of dissipative/adiabatic self-force approximations and secular phase effects.
+1305.1789|second-order-self-force|A|Short derivation and interpretation of second-order self-force motion.
+1506.06245|self-force-formulations|A|Matched asymptotic expansions, gauge freedom, self-consistent and osculating descriptions.
+1805.10385|self-force-review|A|Comprehensive review of self-force and radiation reaction for EMRIs.
+gr-qc/0701069|self-force-flux-balance|A|Mode-sum gravitational self-force with an explicit dissipative flux-balance check.
+1703.09722|lisa-emri-science|B|LISA EMRI rates, parameter measurement, and tests of Kerr multipolar structure.
+2101.04592|bhpt-self-force|A|Unified review of black-hole perturbation theory, Kerr orbital mechanics, and post-adiabatic self-force waveforms.
+0905.2975|qnm-ringdown|B|Quasinormal-mode framework, non-Hermitian spectra, and black-hole spectroscopy.
+1602.03837|gw-observation|B|First direct gravitational-wave detection and the connection between waveform and black-hole ringdown.
+2104.04582|emri-waveforms-data|B|Fast relativistic EMRI waveform generation and implications for inference.
+2109.00056|emri-waveforms-self-force|B|Near-identity-transform inspirals and Teukolsky waveform construction for eccentric EMRIs.
+2310.08438|emri-spinning-body|B|Osculating-geodesic and near-identity waveform model for a spinning small body in Kerr.
+2406.04108|second-order-gsf-eob|B|Comparison of second-order self-force information with EOB inspiral dynamics.
+2410.23950|self-force-memory|B|Kerr self-force calculation of gravitational-wave memory and second-order matching issues.
+2504.09640|second-order-gsf-eccentric|A|Second-order self-force formulation for eccentric EMRIs, including puncture fields and two-timescale structure.
+2403.20311|kerr-metric-reconstruction|A|Explicit reconstruction of linearized metric perturbations on Kerr from Teukolsky modes, relevant for fluxes and nonlinear extensions.
+2604.06053|emri-kerr-symmetry-tests|B|LISA EMRI waveform constraints on Kerr multipolar structure and symmetry-breaking deviations.
+2305.19332|second-order-teukolsky|A|Kerr second-order Teukolsky formulation, nonlinear source, and infrared behavior.
+2210.15935|kerr-qnm-nonlinear|A|Conserved currents, Kerr QNM orthogonality, and nonlinear mode-coupling projections.
+2603.04501|nonlinear-gravity-scattering|A|Nonlinear Einstein-Klein-Gordon and vacuum wave scattering, harmonic generation, and spectral broadening.
+2306.17221|frequency-domain-effective-source|A|Effective-source and extended-particular-solution prototype for frequency-domain eccentric self-force calculations.
+2112.11168|nonlinear-ringdown|B|Absorption-induced nonlinear mode excitation and its relevance to ringdown analysis.
+gr-qc/0202090|kerr-geodesic-frequencies|A|Action-angle variables and invariant fundamental frequencies for bound Kerr geodesics.
+0906.1420|kerr-geodesic-analytics|A|Analytic bound Kerr geodesics in Mino time and the radial, polar, and azimuthal frequencies.
+0904.3810|emri-teukolsky-waveforms|A|Frequency-domain Teukolsky waveforms for eccentric and inclined Kerr geodesics with flux validation.
+1103.0287|scalar-self-force-kerr|A|Frequency-domain scalar self-force on eccentric equatorial Kerr orbits using extended homogeneous solutions and mode-sum regularization.
+1408.2885|scalar-self-force-inclined|B|Scalar self-force on inclined circular Kerr orbits and mode-sum regularization of all force components.
+1711.09607|gravitational-self-force-generic-kerr|A|First gravitational self-force calculation on generic bound Kerr geodesics with reconstruction, regularization, and flux-balance validation.
+2209.05450|self-force-regularization-generic|A|Higher-order Detweiler-Whiting mode-sum regularization parameters for generic Kerr orbits.
+1409.4419|frequency-domain-self-force-workflow|B|Extended-homogeneous-solution and mode-sum workflow with explicit long-term phase-error targets.
+2410.17310|relativistic-emri-waveforms|A|Fully relativistic adiabatic EMRI waveforms and their impact on LISA inference and environmental tests.
+2507.06923|post-adiabatic-emri-environment|B|First post-adiabatic EMRI waveform construction with environmental corrections and phase sensitivity.
+2606.04998|numerical-relativity-self-force|A|High-order discontinuous-Galerkin and horizon-penetrating numerical-relativity route toward generic second-order self-force in Kerr.
