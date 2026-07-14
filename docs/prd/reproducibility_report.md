@@ -9,9 +9,9 @@ This report records the local artifacts used by the active PRD-style draft `docs
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 58568 | `c14dc9bf39ddd7f6602c42f4cfa2970748bad0ddce454b46ce5cd63d42a7ce6e` |
-| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 796531 | `275c66dcb083b2eea7e9450b8925594682e9cf098ba2b5702979e98f60e09a70` |
-| kerr_scalar_nonlinear_GF_baseframe.pdf | 796531 | `275c66dcb083b2eea7e9450b8925594682e9cf098ba2b5702979e98f60e09a70` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex | 58634 | `5f0009d5b425f11fa00332533d6a106069a22632f93ba11108d5b99213934706` |
+| docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf | 796602 | `6cbfaf86542392a902c883759f7e1c7675eb6d72f7770dc3a47cd8f7b682fd41` |
+| kerr_scalar_nonlinear_GF_baseframe.pdf | 796602 | `6cbfaf86542392a902c883759f7e1c7675eb6d72f7770dc3a47cd8f7b682fd41` |
 | docs/prd/artifact_manifest.json | 8378 | `17e4c20a2ab8f95aef562a7da2298408715958b6a6f351f960d6f8ec0d13cf65` |
 
 ## Frozen Figure And CSV Inputs

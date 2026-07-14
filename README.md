@@ -97,7 +97,8 @@ nonlinear scattering conclusion or documentation flow.
   work, with the latest verified transfer conclusions.
 
 - `tools/mcp/gravity_research_server.py`
-  Local read-only-first MCP bridge for arXiv, Zotero, and Mathematica.
+  Local read-only-first MCP bridge for arXiv, Zotero, Mathematica, and the
+  project literature cards.
 
 - `docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex`
   Active REVTeX/PRD-style Kerr scalar nonlinear-scattering manuscript.
@@ -113,6 +114,7 @@ Research-agent smoke checks:
 python scripts/check_mcp_server.py
 python scripts/build_literature_manifest.py
 python scripts/check_literature_catalog.py
+python scripts/check_research_setup.py
 ```
 
 ```bash

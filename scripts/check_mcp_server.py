@@ -27,6 +27,8 @@ async def main() -> int:
                 "zotero_status",
                 "search_zotero",
                 "export_zotero_bibtex",
+                "list_literature_modules",
+                "get_literature_card",
                 "evaluate_mathematica",
                 "research_environment",
             }
@@ -34,8 +36,12 @@ async def main() -> int:
             if missing:
                 raise RuntimeError(f"MCP tools missing: {sorted(missing)}")
             result = await session.call_tool("research_environment", {})
+            modules = await session.call_tool("list_literature_modules", {"priority": "A"})
+            card = await session.call_tool("get_literature_card", {"module": "bhpt-self-force"})
             print(f"MCP tools: {', '.join(names)}")
             print(f"environment probe returned {len(result.content)} content blocks")
+            print(f"literature module probe returned {len(modules.content)} content blocks")
+            print(f"paper-card probe returned {len(card.content)} content blocks")
     return 0
 
 

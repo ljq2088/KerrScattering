@@ -21,16 +21,69 @@ from mcp.server.fastmcp import FastMCP
 
 MCP_INSTRUCTIONS = """Local research tools for the KerrScattering project.
 Use arXiv and Zotero tools for read-only literature metadata and bibliography
-work. Use Mathematica only for an explicitly requested finite evaluation; do
-not use it to edit files or execute unrelated system commands. Return exact
-paths, identifiers, errors, and timeouts. Literature claims still require a
-primary-source check and should not be inferred from metadata alone."""
+work. Use the local literature-card tools to recover project-specific transfer
+notes, but treat the primary paper as authoritative. Use Mathematica only for
+an explicitly requested finite evaluation; do not use it to edit files or
+execute unrelated system commands. Return exact paths, identifiers, errors,
+and timeouts. Literature claims still require a primary-source check and
+should not be inferred from metadata alone."""
 
 mcp = FastMCP("gravity-research", instructions=MCP_INSTRUCTIONS)
 
 
 def _json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, indent=2, default=str)
+
+
+def _project_root() -> Path:
+    return Path(__file__).resolve().parents[2]
+
+
+def _seed_records() -> list[dict[str, str]]:
+    path = _project_root() / "docs/literature/seed_arxiv_ids.txt"
+    records = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        arxiv_id, module, priority, reason = line.split("|", 3)
+        records.append(
+            {
+                "arxiv_id": arxiv_id,
+                "module": module,
+                "priority": priority,
+                "reason": reason,
+            }
+        )
+    return records
+
+
+@mcp.tool()
+def list_literature_modules(priority: str | None = None) -> str:
+    """List the maintained project literature modules and their priorities."""
+
+    records = _seed_records()
+    if priority:
+        records = [record for record in records if record["priority"].upper() == priority.upper()]
+    return _json({"ok": True, "count": len(records), "records": records})
+
+
+@mcp.tool()
+def get_literature_card(module: str) -> str:
+    """Return a local paper card and seed metadata for one literature module."""
+
+    module = module.strip()
+    records = [record for record in _seed_records() if record["module"] == module]
+    if not records:
+        return _json({"ok": False, "module": module, "error": "module_not_found"})
+    record = records[0]
+    base_id = record["arxiv_id"].split("v", 1)[0]
+    cards_text = (_project_root() / "docs/literature/paper_cards.md").read_text(encoding="utf-8")
+    card = None
+    for section in cards_text.split("\n## ")[1:]:
+        if base_id in section:
+            card = "## " + section.strip()
+            break
+    return _json({"ok": True, "module": module, "seed": record, "card": card})
 
 
 @mcp.tool()

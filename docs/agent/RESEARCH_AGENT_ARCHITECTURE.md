@@ -29,7 +29,10 @@ the user explicitly requests a separate manuscript.
 
 The local MCP server is a bridge, not an official arXiv, Zotero, or Wolfram
 service. It provides read-only arXiv metadata, read-only Zotero queries, an
-explicitly requested bounded Mathematica evaluation, and environment checks.
+explicitly requested bounded Mathematica evaluation, environment checks, and
+read-only access to the maintained project literature modules and paper cards.
+Run `python scripts/check_research_setup.py` to audit the complete local
+research setup before a long derivation or numerical scan.
 
 ## Research protocol
 
