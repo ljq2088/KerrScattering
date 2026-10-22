@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import os
 import sys
@@ -15,7 +16,10 @@ from scripts.run_kerr_scalar_nonlinear_diagnostics import (
     fmt_complex,
     require_memory_room,
 )
-from src.kerr_scalar_nonlinear import compute_kerr_scalar_green_diagnostics
+from src.kerr_scalar_nonlinear import (
+    compute_kerr_scalar_green_diagnostics,
+    fixed_incident_flux_coefficients,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +27,22 @@ SWEEPS = {
     0: [0.02, 0.04, 0.06, 0.075, 0.09, 0.11, 0.14, 0.18, 0.24, 0.32, 0.45, 0.60],
     1: [0.04, 0.08, 0.12, 0.18, 0.22, 0.25, 0.28, 0.32, 0.38, 0.45, 0.55, 0.70, 0.85],
     2: [0.08, 0.14, 0.20, 0.28, 0.35, 0.42, 0.46, 0.50, 0.55, 0.62, 0.72, 0.85, 1.00],
+}
+DENSE_SWEEPS = {
+    0: [round(0.02 + 0.005 * index, 12) for index in range(45)],
+    1: [round(0.12 + 0.01 * index, 12) for index in range(33)],
+    2: [round(0.28 + 0.01 * index, 12) for index in range(39)],
+}
+TAIL_SWEEPS = {
+    0: [
+        0.18, 0.185, 0.19, 0.195, 0.20, 0.205, 0.21, 0.215, 0.22,
+        0.225, 0.23, 0.235, 0.24, 0.28, 0.32, 0.38, 0.45, 0.52, 0.60,
+    ],
+    1: [
+        0.38, 0.39, 0.40, 0.41, 0.42, 0.43, 0.44, 0.45, 0.50,
+        0.55, 0.62, 0.70, 0.77, 0.85,
+    ],
+    2: [0.62, 0.63, 0.64, 0.65, 0.66, 0.72, 0.78, 0.85, 0.92, 1.00],
 }
 
 FIELDS = [
@@ -36,36 +56,56 @@ FIELDS = [
 ]
 
 
-def main() -> None:
-    for ell, omegas in SWEEPS.items():
-        output = ROOT / "results" / f"kerr_scalar_nonlinear_axisymmetric_hires_l{ell}.csv"
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--suite",
+        choices=("hires", "dense", "tail", "all"),
+        default="hires",
+        help="Frequency grid to regenerate.",
+    )
+    parser.add_argument("--max-rss-mb", type=float, default=800.0)
+    return parser.parse_args(argv)
+
+
+def run_suite(
+    sweeps: dict[int, list[float]],
+    output_tag: str,
+    max_rss_mb: float,
+    quad_order: int,
+) -> None:
+    for ell, omegas in sweeps.items():
+        output = ROOT / "results" / (
+            f"kerr_scalar_nonlinear_axisymmetric_{output_tag}_l{ell}.csv"
+        )
         rows = []
         for omega in omegas:
-            rss_before = require_memory_room(1500.0, f"before ell={ell} omega={omega}")
+            rss_before = require_memory_room(
+                max_rss_mb, f"before ell={ell} omega={omega}"
+            )
             start = time.perf_counter()
             print(
-                f"Running axisymmetric ell={ell} omega={omega:g} N=240 q=192 "
+                f"Running axisymmetric ell={ell} omega={omega:g} "
+                f"N=240 q={quad_order} "
                 f"RSS={rss_before:.1f} MB" if rss_before is not None else
-                f"Running axisymmetric ell={ell} omega={omega:g} N=240 q=192"
+                f"Running axisymmetric ell={ell} omega={omega:g} "
+                f"N=240 q={quad_order}"
             )
             result = compute_kerr_scalar_green_diagnostics(
                 ell, 0, omega, a=0.5, l_target=ell,
                 N_outer=240, N_inner=240, r_match=40.0,
-                quad_order=192, tail_epsrel=1e-11,
+                quad_order=quad_order, tail_epsrel=1e-11,
                 radial_weight_model="kerr-covariant-sigma-dr",
             )
             elapsed = time.perf_counter() - start
             rss_after = current_rss_mb()
             b_inc = result.B_inc
             b_ref = result.B_ref
-            horizon_factor = result.p_horizon * (result.r_plus**2 + result.a**2) / omega
-            norm4 = abs(b_inc) ** 4
-            t0 = horizon_factor / abs(b_inc) ** 2
-            r0 = abs(b_ref / b_inc) ** 2
-            t1 = 2.0 * horizon_factor * result.A_hor_1.real / norm4
-            r1 = 2.0 * (b_ref.conjugate() * result.A_ref_1).real / norm4
+            flux = fixed_incident_flux_coefficients(result)
+            t0, r0 = flux.T0, flux.R0
+            t1, r1 = flux.T1, flux.R1
             rows.append({
-                "label": f"kerr_a0.5_l{ell}m0_hires", "l": ell, "m": 0,
+                "label": f"kerr_a0.5_l{ell}m0_{output_tag}", "l": ell, "m": 0,
                 "a": "5.0000000000000000e-01", "omega": f"{omega:.16e}",
                 "omega_h": f"{result.omega_h:.16e}",
                 "m_omega_h": f"{0.0:.16e}",
@@ -76,8 +116,8 @@ def main() -> None:
                 "B_inc": fmt_complex(b_inc), "B_ref": fmt_complex(b_ref),
                 "A_ref_1_unit_horizon": fmt_complex(result.A_ref_1),
                 "A_hor_1_unit_horizon": fmt_complex(result.A_hor_1),
-                "A_ref_1_fixed_incident": fmt_complex(result.A_ref_1 / (norm4 ** 0.5 * b_inc)),
-                "A_hor_1_fixed_incident": fmt_complex(result.A_hor_1 / (norm4 ** 0.5 * b_inc)),
+                "A_ref_1_fixed_incident": fmt_complex(flux.A_ref_fixed_incident),
+                "A_hor_1_fixed_incident": fmt_complex(flux.A_hor_fixed_incident),
                 "T0": f"{t0:.16e}", "R0": f"{r0:.16e}",
                 "linear_balance": f"{t0 + r0:.16e}",
                 "T1": f"{t1:.16e}", "R1": f"{r1:.16e}",
@@ -98,6 +138,16 @@ def main() -> None:
             writer.writeheader()
             writer.writerows(rows)
         print(f"Wrote {output}")
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = parse_args(argv)
+    if args.suite in ("hires", "all"):
+        run_suite(SWEEPS, "hires", args.max_rss_mb, 192)
+    if args.suite in ("dense", "all"):
+        run_suite(DENSE_SWEEPS, "dense", args.max_rss_mb, 192)
+    if args.suite in ("tail", "all"):
+        run_suite(TAIL_SWEEPS, "tail_q2048", args.max_rss_mb, 2048)
 
 
 if __name__ == "__main__":

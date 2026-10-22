@@ -22,6 +22,10 @@ author metadata.
 - APS style basics also flags the data availability statement as a submission
   item:
   https://journals.aps.org/authors/style-basics
+- APS requires substantive AI assistance with derivations, code, simulations,
+  data analysis, or scientific drafting to be disclosed with the tool,
+  purpose, and author verification:
+  https://journals.aps.org/authors/appropriate-use-ai-tools
 - The APS Author Guide for REVTeX 4.2 says REVTeX should handle author and
   affiliation grouping, with one `\author` macro per author and optional
   `\email` for an author's email address:
@@ -38,14 +42,16 @@ author metadata.
 | Manuscript builds cleanly | PASS | `python scripts/build_prd_manuscript.py` passes. |
 | Figure/CSV artifacts are frozen | PASS | `docs/prd/artifact_manifest.json` is checked by `scripts/check_prd_artifacts.py`. |
 | Manuscript table numbers match CSVs | PASS | `scripts/check_prd_manuscript_numbers.py` passes. |
-| PRD style and structure audit | PASS | `scripts/check_prd_style.py` verifies REVTeX options, required sections, abstract, cross-references, data/code statement, and active scope. |
-| Data/code availability text | PASS | The manuscript has a `Data and code availability` section and local reproducibility report. |
+| PRD style and structure audit | PASS | `scripts/check_prd_style.py` verifies REVTeX options, required sections, abstract, cross-references, data/code statement, active scope, fixed-frequency complex-field closure, flux normalization, and residual definitions. |
+| Data/code availability text | PASS | The manuscript states the current review-stage access route and the planned versioned public archive without presenting the moving development branch as a frozen release. |
+| AI-use disclosure | PASS | The Methods and Acknowledgments identify OpenAI Codex, its uses in code/numerics/drafting, and the authors' independent verification and responsibility. |
+| Public archive citation | PREPUBLICATION | Deposit the frozen data/software package in a versioned archive and replace the provisional data statement with a persistent data citation before publication.  APS requires publicly shared data and software to be cited in the reference list. |
 | Cover letter template | PASS | `docs/prd/cover_letter.template.md` contains a PRD-ready cover-letter draft to finalize with real corresponding-author details. |
 | Final metadata file | BLOCKED | `docs/prd/submission_metadata.json` has not yet been created from the template with final author and reference details. |
 | Final cover letter | BLOCKED | `docs/prd/cover_letter.md` is generated only after final metadata is available. |
 | Visual PDF sanity check | PASS | The latest rendered PDF pages have no overlapping text, clipped figures, or stuck-float warning. |
-| Author list | BLOCKED | `\author{KerrScattering Collaboration}` is still a placeholder. |
-| Affiliations | BLOCKED | `\affiliation{KerrScattering Project}` is still a placeholder. |
+| Author list | BLOCKED | `\author{Author list to be inserted}` is the only intentionally unfinished manuscript block. |
+| Affiliations | BLOCKED | Affiliations will be supplied together with the final author list. |
 | Corresponding email | BLOCKED | No `\email{...}` command is present. |
 | Schwarzschild companion citation | PASS | The active manuscript does not cite an unpublished local companion; a formal companion reference is optional. |
 | Final submission package | BLOCKED | `scripts/check_prd_submission_ready.py` fails only until the external author metadata, final metadata file, and cover letter are supplied. |
@@ -55,6 +61,16 @@ author metadata.
 The current draft makes only the claims supported by the tracked data:
 
 - Kerr scalar field, spin weight `s=0`.
+- The nonlinear field is complex and the `U(1)`-invariant
+  $|\Phi|^2\Phi$ source closes at the incident $(\omega,m)$.  The manuscript
+  explicitly distinguishes this from a real-scalar $\Phi^3$ problem, which
+  would generate additional temporal harmonics.
+- The perturbative coefficient $\epsilon$ is signed.  In the action convention
+  used in the paper, a conventional positive quartic potential
+  $V=\lambda|\Phi|^4/2$ corresponds to $\epsilon=-\lambda$.
+- $T^{(1)}$ and $R^{(1)}$ are quoted per unit incident-amplitude squared.  For
+  general incident amplitude ${\cal A}_{\rm in}$, the physical correction is
+  $\epsilon|{\cal A}_{\rm in}|^2(T^{(1)},R^{(1)})$ to first order.
 - Axisymmetric sample: `a=0.5`, `m=0`, `l=0,1,2`.
 - Self-channel first-order flux coefficients, justified because only the
   target channel that matches the zeroth-order angular mode interferes in the
@@ -67,12 +83,35 @@ The current draft makes only the claims supported by the tracked data:
   the superradiant threshold and explicit rejection of cancellation-limited
   near-threshold points.
 - Accuracy is assessed internally by Chebyshev coefficient tails, the radial
-  Teukolsky residual with the field-dependent denominator, and the linear and
-  first-order flux balances.
+  Teukolsky residual with the field-dependent denominator on 1800 off-grid
+  validation points, and the linear and first-order flux balances.
+- The spheroidal basis and angular Gauss--Legendre quadrature have a separate
+  tracked convergence audit; active-setting changes are at or below
+  `5.3e-14` relative to a larger angular reference calculation.
 - The high-frequency fit is described as a finite-window effective temperature,
-  not as a proof of an exact theorem.
-- Low-frequency reflected coefficients are explicitly identified as
-  cancellation limited for the lowest `l=1,2` points.
+  not as a proof of an exact theorem.  A 25-point $q=2048$ tail data set is
+  compared against a power law with AICc and leave-one-out diagnostics, and a
+  three-point $q=1792$--$2048$ convergence audit bounds the representative
+  relative changes in $T^{(1)}$ by $2.5\times10^{-4}$.
+- A common first-order balance gate removes cancellation-limited low-frequency
+  rows before plotting or fitting.  The lowest displayed frequencies are
+  `M omega=0.02,0.12,0.28` for `l=0,1,2`; a separate tracked scan changes either
+  first-order flux coefficient there by at most `2.0e-8`.
+- The scalar-monopole far-zone calculation is extended analytically to every
+  positive integer `n` in the `|Phi|^(2n) Phi` family.  It predicts
+  `M^(2n-2) chi_H = c_n (M omega)^(2n-2) + o(...)`, with a positive finite-sum
+  coefficient.  The cubic member is infrared marginal and every `n>1` member
+  is infrared suppressed.
+- Independent `n=2,3` fixed-frequency scans recover the analytic coefficients
+  with maximum extrapolation error `2.8e-6`; the largest paired-resolution
+  response change is `2.5e-6`.  Fixed `omega/kappa=0.025` high-spin fits give
+  powers `2.00734` and `4.01128`, resolving the predicted `kappa^2` and
+  `kappa^4` suppression rather than a monopole near-extremal enhancement.
+- The higher-power homogeneous audit has Chebyshev tail ratio at most
+  `5.2e-14`; across 1800 field-dependent off-grid residual samples, the median,
+  95th percentile, and localized maximum are `2.7e-10`, `2.1e-7`, and
+  `1.6e-5`.  Cancellation-limited reflected coefficients at the smallest
+  responses are not used for physical fits.
 
 ## Finalization Steps
 
@@ -128,3 +167,9 @@ Until those steps pass, use only the draft package:
 ```powershell
 python scripts/build_prd_submission_package.py --allow-draft
 ```
+
+Before publication, deposit the exact accepted data/software package in a
+versioned public archive (for example, Zenodo), add the archive citation to the
+reference list, and update the Data and code availability statement with the
+persistent identifier.  This is a prepublication data-policy step rather than
+a blocker to the initial referee PDF.

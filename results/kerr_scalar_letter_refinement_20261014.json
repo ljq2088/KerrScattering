@@ -1,0 +1,24 @@
+{
+  "principal_points": 81,
+  "max_paired_change": 6.5476315210518915e-09,
+  "max_complex_paired_change": 3.2549163093302075e-09,
+  "max_legacy_difference": 2.268004968728217e-05,
+  "phase_points": 27,
+  "max_phase_paired_change": 2.355534471355155e-11,
+  "max_phase_grid_chi_change": 5.280370556918444e-08,
+  "flux_zero_root_estimate": 2.4195403604191505,
+  "flux_zero_verified_bracket": [
+    2.4193403604191506,
+    2.4197403604191505
+  ],
+  "max_abs_chi_at_root": 5.725069919501048e-09,
+  "phase_at_root": 10316.046526710797,
+  "sources": {
+    "src\\kerr_scalar_nonlinear.py": "728d74a735b656bbb4656bc7e9295113f26bc52adc09ea39bf9f1fc56e423f28",
+    "scripts\\summarize_letter_refinement_20261014.py": "209305073b0faeaee97f6b6f7119d4fd0c546f7a531245f4329d1dfa2336a101",
+    "results\\kerr_scalar_principal_log_comparison_20261014.csv": "be09234124d98979b11920c86fa9fe4a9f504c6a6d5315c80ceceb6d597ad730",
+    "results\\kerr_scalar_phase_dominance_summary_20261014.csv": "902c985f56b0beb6c2cf18447ff767d115d8cdc30be36c74d8aab3732d606a48",
+    "results\\kerr_scalar_flux_zero_20261014.csv": "fdbd0f013a5a28556a38f05bab4a3df300883d284305c656694d9b4d840187dc",
+    "results\\kerr_scalar_flux_zero_sourced_20261014.csv": "6c5a3cf58cca4aa5ec44efe95a8a7b125e11148d2e20ce79107cdc8643da4ea1"
+  }
+}

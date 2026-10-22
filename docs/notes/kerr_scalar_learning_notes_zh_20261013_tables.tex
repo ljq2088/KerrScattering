@@ -1,0 +1,227 @@
+\begin{table}[htbp]
+\centering
+\caption{角向离散审计：本征值和两个源投影相对于额外 24 个基与 512 点参考配置的最大相对变化。}
+\label{note-tab:angular-convergence}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lccc}
+setting $(L_{\rm extra},q_\theta)$ & $\max\Delta\lambda$
+& $\max\Delta C^{(0)}$ & $\max\Delta C^{(2)}$\\
+\midrule
+active $(16,256)$ & $4.4\times10^{-16}$ & $3.7\times10^{-14}$ & $5.2\times10^{-14}$\\
+basis $(12,512)$ & $4.4\times10^{-16}$ & $1.6\times10^{-16}$ & $0$\\
+quadrature $(24,128)$ & $0$ & $1.5\times10^{-14}$ & $2.0\times10^{-14}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{三次轴对称红外解析系数及直接视界侧检验，$a/M=0.5$。最后一列比较两组谱阶和积分阶。}
+\label{note-tab:axisymmetric-infrared}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c c}
+$\ell$ & ${\cal I}_\ell$ & $\chi^{\rm IR}_\ell$
+& ${\cal A}^{(0)}_\ell$ & ${\cal A}^{(1)}_\ell$
+& lowest $M\omega$ & $\delta_N\chi_H$\\
+\hline
+0 & 0.346573590280 & 0.220635600153 & 14.9282032 & 3.29369308 & 0.00075 & $1.1\times10^{-7}$\\
+1 & 0.128401008797 & 0.147136717786 & 1.24401694 & 0.183040569 & 0.00150 & $1.5\times10^{-4}$\\
+2 & 0.077970747421 & 0.106366541731 & 0.0165868925 & 0.00176429039 & 0.00500 & $7.7\times10^{-5}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{通过双边首阶能流门槛的低频展示区间、点数和最低点的实际结果。}
+\label{note-tab:low-acceptance}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c}
+$\ell$ & displayed $M\omega$ range & points
+& $T^{(0)}_{\rm low}$ & $T^{(1)}_{\rm low}$ & $|\delta_1|_{\rm low}$\\
+\hline
+0 & $[0.02,0.09]$ & 15 & $6.92348\times10^{-3}$ & $1.67885\times10^{-3}$ & $1.4\times10^{-13}$\\
+1 & $[0.12,0.28]$ & 17 & $9.73095\times10^{-4}$ & $1.78519\times10^{-4}$ & $3.7\times10^{-14}$\\
+2 & $[0.28,0.46]$ & 19 & $4.35440\times10^{-4}$ & $6.58814\times10^{-5}$ & $2.0\times10^{-14}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{各多极最低展示点的独立参数审计：改变谱阶、积分阶或匹配半径，相对参考 $(256,256,40)$ 比较。}
+\label{note-tab:low-convergence}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c}
+$\ell$ & $M\omega$ & $T^{(1)}_{\rm ref}$
+& $\max|\Delta T^{(1)}/T^{(1)}|$
+& $\max|\Delta R^{(1)}/R^{(1)}|$ & $\max|\delta_1|$\\
+\hline
+0 & 0.02 & $1.67885\times10^{-3}$ & $1.8\times10^{-8}$ & $2.0\times10^{-8}$ & $3.0\times10^{-12}$\\
+1 & 0.12 & $1.78519\times10^{-4}$ & $6.7\times10^{-9}$ & $7.3\times10^{-9}$ & $3.8\times10^{-13}$\\
+2 & 0.28 & $6.58814\times10^{-5}$ & $9.2\times10^{-9}$ & $4.6\times10^{-9}$ & $2.8\times10^{-13}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{单极高次作用的解析常数、拟合指数、外推系数误差与双分辨率变化；固定 $y$ 为 $y=0.025$。}
+\label{note-tab:power-l0}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c c}
+$n$ & $c_n$ & predicted power & fixed-$\omega$ fitted power
+& fixed-$y$ $\kappa$ power & max. coefficient error & max. $\delta_N\chi_H$\\
+\hline
+2 & 0.0631722552 & 2 & 2.01009--2.01016 & 2.00734 & $2.8\times10^{-6}$ & $2.5\times10^{-6}$\\
+3 & 0.0172436384 & 4 & 4.01552--4.01561 & 4.01128 & $1.3\times10^{-6}$ & $7.7\times10^{-9}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{有限频率峰和指数尾的现象学拟合参数。QNM 为基本标量模，频率单位 $M=1$；$\Delta T$ 是与 Hawking 温度的相对偏差。}
+\label{note-tab:fit}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c c}
+$\ell$ & $\omega_p$ & $\gamma$
+& $\Re\omega_Q$
+& $|\Im\omega_Q|$
+& $\pi T_{\rm fit}$
+& $\Delta T$\\
+\hline
+0 & 0.1306 & 0.0599 & 0.1124 & 0.1022 & 0.1114 & 4.00\%\\
+1 & 0.3101 & 0.0591 & 0.2979 & 0.0954 & 0.1046 & 9.85\%\\
+2 & 0.5026 & 0.0595 & 0.4920 & 0.0946 & 0.1012 & 12.81\%\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{移动指数尾拟合窗口后的有效温度范围、log 残差与温度偏差；不是无限高频误差界。}
+\label{note-tab:tail-window}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c}
+$\ell$ & baseline $[M\omega_{\min},M\omega_{\max}]$
+& $\pi T_{\rm fit}^{\rm base}$ & range of $\pi T_{\rm fit}$
+& $\max\sigma_{\log}$ & $\max|T_{\rm fit}/T_H-1|$\\
+\hline
+0 & $[0.18,0.60]$ & 0.1114 & $[0.1109,0.1122]$ & $3.86\times10^{-2}$ & 4.45\%\\
+1 & $[0.38,0.85]$ & 0.1046 & $[0.1037,0.1068]$ & $6.95\times10^{-2}$ & 10.61\%\\
+2 & $[0.62,1.00]$ & 0.1012 & $[0.1002,0.1031]$ & $5.59\times10^{-2}$ & 13.62\%\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{指数与幂律尾的同参数数目比较。正的 $\Delta\mathrm{AICc}$ 支持指数模型，LOO 为留一预测误差。}
+\label{note-tab:tail-models}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c c}
+$\ell$ & points & $\sigma_{\rm exp}$ & $\sigma_{\rm power}$
+& $\Delta\mathrm{AICc}$ & $\sigma_{\rm LOO,exp}$ & $\sigma_{\rm LOO,power}$\\
+\hline
+0 & 19 & $3.72\times10^{-2}$ & $4.89\times10^{-1}$ & 97.9 & $4.56\times10^{-2}$ & $6.09\times10^{-1}$\\
+1 & 14 & $6.71\times10^{-2}$ & $3.75\times10^{-1}$ & 48.2 & $8.92\times10^{-2}$ & $4.80\times10^{-1}$\\
+2 & 10 & $5.59\times10^{-2}$ & $1.84\times10^{-1}$ & 23.8 & $8.11\times10^{-2}$ & $2.62\times10^{-1}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{轴对称扫描的保留点数和两种能流误差。低频及峰区 $q=192$，尾拟合 43 点 $q=2048$，谱阶均为 240。}
+\label{note-tab:numerics}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c}
+$\ell$ & retained & $M\omega_{\min}$ & $\max\delta_0$ & $\max\delta_1$
+& $\sigma_{\rm tail}$\\
+\hline
+0 & 51 & 0.02 & $2.8\times10^{-11}$ & $6.9\times10^{-12}$ & $3.7\times10^{-2}$\\
+1 & 40 & 0.12 & $1.9\times10^{-11}$ & $2.2\times10^{-12}$ & $6.7\times10^{-2}$\\
+2 & 44 & 0.28 & $3.8\times10^{-11}$ & $1.5\times10^{-12}$ & $5.6\times10^{-2}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{旧生产配置 $(224,160)$ 与当前峰区配置 $(240,192)$ 的相对变化。小守恒误差不代表两配置完全一致。}
+\label{note-tab:production-convergence}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c}
+case & $\Delta A_{\rm ref}$ & $\Delta A_H$
+& $\Delta T^{(1)}$ & $\Delta R^{(1)}$ & $|\delta_1|_{\rm ref}$\\
+\hline
+$\ell=0,\ M\omega=.125$ & $4.5\times10^{-7}$ & $7.8\times10^{-7}$
+& $2.3\times10^{-6}$ & $2.3\times10^{-6}$ & $2.7\times10^{-12}$\\
+$\ell=1,\ M\omega=.34$ & $5.9\times10^{-6}$ & $3.3\times10^{-6}$
+& $1.5\times10^{-5}$ & $1.5\times10^{-5}$ & $2.2\times10^{-12}$\\
+$\ell=2,\ M\omega=.52$ & $9.6\times10^{-6}$ & $7.6\times10^{-6}$
+& $3.1\times10^{-5}$ & $3.1\times10^{-5}$ & $1.2\times10^{-12}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{尾区独立积分阶及谱阶审计。积分阶比较 1792 与 2048；谱阶比较 224 与 240。}
+\label{note-tab:tail-convergence}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c}
+case & $\Delta T^{(1)}[q]$ & $\Delta T^{(1)}[N]$
+& $\Delta A_{\rm ref}[q]$ & $\Delta A_H[q]$ & $|\delta_1|_{\rm ref}$\\
+\hline
+$\ell=0,\ M\omega=.52$ & $3.0\times10^{-5}$ & $7.1\times10^{-10}$ & $2.3\times10^{-5}$ & $1.6\times10^{-9}$ & $7.8\times10^{-15}$\\
+$\ell=1,\ M\omega=.77$ & $1.7\times10^{-4}$ & $1.0\times10^{-9}$ & $3.1\times10^{-4}$ & $1.2\times10^{-9}$ & $2.7\times10^{-13}$\\
+$\ell=2,\ M\omega=.92$ & $2.5\times10^{-4}$ & $9.5\times10^{-8}$ & $3.4\times10^{-4}$ & $2.5\times10^{-9}$ & $1.0\times10^{-14}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{固定 $(\ell,m,M\omega)=(2,0,0.52)$ 的 Kerr 到施瓦西连续性检查。}
+\label{note-tab:spin-limit}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{c c c c c c}
+$a/M$ & $T^{(1)}$ & $R^{(1)}$ & $|\delta_0|$ & $|\delta_1|$ & $|\delta_W|$\\
+\hline
+0.00 & $8.94395\times10^{-2}$ & $-8.94395\times10^{-2}$ & $1.1\times10^{-12}$ & $3.8\times10^{-13}$ & $2.6\times10^{-16}$\\
+0.05 & $8.95742\times10^{-2}$ & $-8.95742\times10^{-2}$ & $9.8\times10^{-12}$ & $1.1\times10^{-12}$ & $3.3\times10^{-16}$\\
+0.10 & $8.99794\times10^{-2}$ & $-8.99794\times10^{-2}$ & $3.7\times10^{-12}$ & $4.9\times10^{-13}$ & $0$\\
+0.20 & $9.16178\times10^{-2}$ & $-9.16178\times10^{-2}$ & $4.3\times10^{-13}$ & $7.6\times10^{-14}$ & $1.8\times10^{-16}$\\
+0.30 & $9.44095\times10^{-2}$ & $-9.44095\times10^{-2}$ & $1.1\times10^{-11}$ & $1.3\times10^{-12}$ & $1.8\times10^{-16}$\\
+0.50 & $1.03814\times10^{-1}$ & $-1.03814\times10^{-1}$ & $6.0\times10^{-12}$ & $1.2\times10^{-12}$ & $0$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{完整局域有源残差阶数扫描。A、B 为单极三次和五次作用，C 为非轴对称求解器探针；尾为最后八个重构系数的相对最大模。}
+\label{note-tab:sourced20261008}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ccccc}
+Case & $D$ & $\max\delta_1$ & median $\delta_1$ & tail\\
+A & 16 & $1.05\times10^{-4}$ & $4.11\times10^{-6}$ & $1.71\times10^{-5}$\\
+A & 24 & $1.52\times10^{-7}$ & $3.97\times10^{-9}$ & $5.78\times10^{-9}$\\
+A & 32 & $1.85\times10^{-9}$ & $1.31\times10^{-11}$ & $2.50\times10^{-12}$\\
+A & 48 & $4.73\times10^{-9}$ & $3.36\times10^{-11}$ & $4.42\times10^{-15}$\\
+A & 64 & $5.90\times10^{-9}$ & $5.51\times10^{-11}$ & $3.74\times10^{-15}$\\
+B & 16 & $9.87\times10^{-5}$ & $3.63\times10^{-6}$ & $1.93\times10^{-5}$\\
+B & 24 & $1.42\times10^{-7}$ & $3.50\times10^{-9}$ & $6.50\times10^{-9}$\\
+B & 32 & $2.25\times10^{-9}$ & $1.64\times10^{-11}$ & $2.81\times10^{-12}$\\
+B & 48 & $4.71\times10^{-9}$ & $3.69\times10^{-11}$ & $6.51\times10^{-15}$\\
+B & 64 & $6.38\times10^{-9}$ & $6.47\times10^{-11}$ & $5.35\times10^{-15}$\\
+C & 16 & $4.97\times10^{-5}$ & $5.87\times10^{-7}$ & $3.56\times10^{-4}$\\
+C & 24 & $9.77\times10^{-11}$ & $2.37\times10^{-12}$ & $2.54\times10^{-8}$\\
+C & 32 & $3.23\times10^{-10}$ & $2.22\times10^{-12}$ & $2.38\times10^{-14}$\\
+C & 48 & $1.69\times10^{-9}$ & $6.69\times10^{-12}$ & $2.24\times10^{-14}$\\
+C & 64 & $1.16\times10^{-9}$ & $1.29\times10^{-11}$ & $2.70\times10^{-14}$\\
+\end{tabular}
+\end{adjustbox}
+\end{table}

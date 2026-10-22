@@ -24,14 +24,25 @@ def read_best_rows(ell: int) -> tuple[np.ndarray, np.ndarray]:
     paths = (
         ROOT / "results" / f"kerr_scalar_nonlinear_axisymmetric_hires_l{ell}.csv",
         ROOT / "results" / f"kerr_scalar_nonlinear_axisymmetric_refine_l{ell}.csv",
+        ROOT / "results" / f"kerr_scalar_nonlinear_axisymmetric_dense_l{ell}.csv",
+        ROOT / "results" / f"kerr_scalar_nonlinear_axisymmetric_tail_q2048_l{ell}.csv",
     )
     for path in paths:
         with path.open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 omega = round(float(row["omega"]), 14)
-                if omega not in best or abs(float(row["nonlinear_balance"])) < abs(
-                    float(best[omega]["nonlinear_balance"])
-                ):
+                rank = (
+                    int(float(row.get("N", 0))),
+                    int(float(row.get("quad_order", 0))),
+                    -abs(float(row["nonlinear_balance"])),
+                )
+                old = best.get(omega)
+                old_rank = None if old is None else (
+                    int(float(old.get("N", 0))),
+                    int(float(old.get("quad_order", 0))),
+                    -abs(float(old["nonlinear_balance"])),
+                )
+                if old is None or rank > old_rank:
                     best[omega] = row
     rows = [best[omega] for omega in sorted(best)]
     return (

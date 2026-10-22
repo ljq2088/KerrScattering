@@ -1,0 +1,64 @@
+{
+  "status": "completed",
+  "returncode": 0,
+  "command": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu-22.04-D",
+    "-e",
+    "env",
+    "OPENBLAS_NUM_THREADS=1",
+    "JULIA_NUM_THREADS=1",
+    "timeout",
+    "--kill-after=10",
+    "300",
+    "/tmp/codex-julia-20261023/julia-1.10.7/bin/julia",
+    "--startup-file=no",
+    "--threads=1",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/scripts/run_scalar_precision_20261023.jl",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/results/precision_20261023/high_l0_m0_w3_n3_coarse/solution",
+    "0.5",
+    "3",
+    "0",
+    "0",
+    "3",
+    "320",
+    "48",
+    "64",
+    "80",
+    "64"
+  ],
+  "seconds": 25.90734887123108,
+  "source_hashes_before": {
+    "src\\kerr_scalar_precision.jl": "f7be2d8c43111b60c7029197f936bfb90859bf692478ab7dfbd01b5eb583aea8",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_campaign_20261023.py": "cd0d8f37eabbed0483af6cd1f2dd3607433d616752511d71f0bc9f81353f2b76"
+  },
+  "source_hashes_after": {
+    "src\\kerr_scalar_precision.jl": "f7be2d8c43111b60c7029197f936bfb90859bf692478ab7dfbd01b5eb583aea8",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_campaign_20261023.py": "cd0d8f37eabbed0483af6cd1f2dd3607433d616752511d71f0bc9f81353f2b76"
+  },
+  "outputs": {
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "035bab78b4759bd413a169c2f65d56069df87568d9aed679f7ab693e52aac3ce",
+    "solution\\result.toml": "585bbb1dcf1ea3e131b65e4acc80e34f0b193af56750d21392241d0681bb7aee"
+  },
+  "python": "3.13.13 (tags/v3.13.13:01104ce, Apr  7 2026, 19:25:48) [MSC v.1944 64 bit (AMD64)]",
+  "runtime": "Julia 1.10.7 official Linux x86_64",
+  "runtime_archive_sha256": "21b2c69806aacf191d7c81806c7d9918bddab30c7b5b8d4251389c3abe274334",
+  "assertion_tested": "M=1,a=0.5,s=0,l=0,m=0,omega=3,n=3; homogeneous residuals, complex nonlinear response, flux-phase bound",
+  "precision": [
+    320,
+    48,
+    64,
+    80,
+    64
+  ],
+  "timeout_seconds": 300,
+  "memory_guard_bytes": 1500000000,
+  "non_claims": [
+    "R1 uses the exact self-channel decomposition; its balance is algebraic.",
+    "One resolution is provisional until independently refined."
+  ]
+}

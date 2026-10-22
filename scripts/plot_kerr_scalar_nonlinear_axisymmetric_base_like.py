@@ -18,16 +18,29 @@ INPUTS = {
     0: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
         "results/kerr_scalar_nonlinear_axisymmetric_refine_l0.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_dense_l0.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_tail_q2048_l0.csv",
     ],
     1: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l1.csv",
         "results/kerr_scalar_nonlinear_axisymmetric_refine_l1.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_dense_l1.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_tail_q2048_l1.csv",
     ],
     2: [
         "results/kerr_scalar_nonlinear_axisymmetric_hires_l2.csv",
         "results/kerr_scalar_nonlinear_axisymmetric_refine_l2.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_dense_l2.csv",
+        "results/kerr_scalar_nonlinear_axisymmetric_tail_q2048_l2.csv",
     ],
 }
+
+TAIL_WINDOWS = {
+    0: (0.18, 0.60),
+    1: (0.38, 0.85),
+    2: (0.62, 1.00),
+}
+BALANCE_TOL = 1.0e-8
 
 
 def read_rows(paths):
@@ -37,11 +50,23 @@ def read_rows(paths):
         with open(path, newline="") as f:
             for row in csv.DictReader(f):
                 omega = round(float(row["omega"]), 14)
-                score = abs(float(row["nonlinear_balance"]))
+                rank = (
+                    int(float(row.get("N", 0))),
+                    int(float(row.get("quad_order", 0))),
+                    -abs(float(row["nonlinear_balance"])),
+                )
                 old = best.get(omega)
-                if old is None or score < abs(float(old["nonlinear_balance"])):
+                old_rank = None if old is None else (
+                    int(float(old.get("N", 0))),
+                    int(float(old.get("quad_order", 0))),
+                    -abs(float(old["nonlinear_balance"])),
+                )
+                if old is None or rank > old_rank:
                     best[omega] = row
-    rows = [best[key] for key in sorted(best)]
+    rows = [
+        best[key] for key in sorted(best)
+        if abs(float(best[key]["nonlinear_balance"])) <= BALANCE_TOL
+    ]
     omega = np.array([float(row["omega"]) for row in rows])
     t1 = np.array([float(row["T1"]) for row in rows])
     balance = np.array([abs(float(row["nonlinear_balance"])) for row in rows])
@@ -105,8 +130,9 @@ def fit_peak(omega, t1):
     return w_peak, np.nan, y_peak, np.nan, np.nan, len(x)
 
 
-def fit_tail_temperature(omega, t1, qnm_real, w_peak):
-    mask = (omega >= max(qnm_real, w_peak + 0.05)) & (t1 > 0.0)
+def fit_tail_temperature(omega, t1, ell):
+    omega_min, omega_max = TAIL_WINDOWS[ell]
+    mask = (omega >= omega_min) & (omega <= omega_max) & (t1 > 0.0)
     x = omega[mask]
     y = t1[mask]
     if len(x) < 3:
@@ -139,8 +165,8 @@ def main():
     for ell, (_, omega, t1, balance) in data.items():
         w_peak, gamma, y_peak, peak_rms_over_peak, peak_r2, peak_fit_points = fit_peak(omega, t1)
         q = qnms[ell]
-        tfit, rms_log, tail_intercept, tail_slope, tail_min, tail_max = fit_tail_temperature(
-            omega, t1, q.real, w_peak
+        tfit, rms_log, tail_intercept, tail_slope, tail_min, tail_max = (
+            fit_tail_temperature(omega, t1, ell)
         )
         table_rows.append(
             {
@@ -203,6 +229,8 @@ def main():
         smooth = np.clip(interp(dense), 1e-18, None)
         axes[0].plot(dense, smooth, color=colors[ell], lw=1.5, label=rf"$\ell={ell}$")
         axes[1].semilogy(dense, smooth, color=colors[ell], lw=1.5, label=rf"$\ell={ell}$")
+        axes[0].plot(omega, t1, "o", color=colors[ell], ms=1.8, markeredgewidth=0.0)
+        axes[1].semilogy(omega, t1, "o", color=colors[ell], ms=1.8, markeredgewidth=0.0)
         tail = tail_rows[ell]
         fit_x = np.linspace(tail["tail_omega_min"], tail["tail_omega_max"], 120)
         fit_y = np.exp(tail["tail_intercept"] + tail["tail_slope"] * fit_x)
@@ -225,7 +253,7 @@ def main():
     axes[1].legend(frameon=True, fontsize=9, loc="upper right")
 
     os.makedirs(os.path.dirname(OUT_FIG), exist_ok=True)
-    fig.savefig(OUT_FIG, dpi=240)
+    fig.savefig(OUT_FIG, dpi=360)
     plt.close(fig)
 
     print(OUT_FIG)

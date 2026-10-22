@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-14",
+  "editorial_structure_passed": true,
+  "source_unchanged": true,
+  "retained_numeric_tables_unchanged": 12,
+  "principal_parameter_points": 81,
+  "principal_fitted_parameters": 0,
+  "new_local_sourced_residual_table": "tab:sourced20261008",
+  "figure_count": 7,
+  "pages": 23,
+  "abstract_words": 179,
+  "outside_page_text": [],
+  "blank_pages": [],
+  "missing_glyphs": [],
+  "symbolic_infinity_B0": "-lambda - 2*a*m*omega",
+  "independently_checked_c_n": {
+    "1": "0.2206356001526516",
+    "2": "0.06317225520622104",
+    "3": "0.01724363843093639"
+  },
+  "new_parameter_scans": true,
+  "submission_ready": false,
+  "author_metadata_present": true,
+  "corresponding_author": "Yu Tian",
+  "funding_metadata_present": true,
+  "blockers": [
+    "Principal grid covers l=m=2,3,4 and three spins; wider modal and detuning coverage remains an extension",
+    "Local sourced residual verified only on [3M,8M]; global endpoint and accumulated integration-error validation remain incomplete",
+    "Public bibliographic status of the supplied Schwarzschild reference not verified",
+    "Novelty comparison and human scientific review not completed",
+    "A verified archived data-access statement and persistent release identifier remain to be supplied"
+  ],
+  "nonfatal_tex_notices": [
+    "Package nameref Warning: The definition of \\label has changed! "
+  ]
+}

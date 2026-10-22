@@ -1,0 +1,141 @@
+{
+  "h_real": 0.5,
+  "h_imag": 0.9459584691787486,
+  "eigenvalue": 5.855162574588999,
+  "near_ode_relative_residuals": [
+    7.948939782154736e-34,
+    7.680870136125937e-34,
+    5.613930823379449e-34
+  ],
+  "integral_relative_checks": {
+    "1": 1.59758678572353e-16,
+    "2": 5.302239871311777e-16
+  },
+  "mp_decimal_digits": 32,
+  "log_X_interval": [
+    -36,
+    36
+  ],
+  "gauss_orders": [
+    12,
+    20
+  ],
+  "source_couplings": {
+    "1": 0.12259273289426957,
+    "2": 0.014733652575330276
+  },
+  "paired_response_convergence": [
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.99,
+      "n": 1,
+      "relative_change": 3.1036201677830834e-07
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.999,
+      "n": 1,
+      "relative_change": 5.630294809690148e-07
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.9999,
+      "n": 1,
+      "relative_change": 4.664391712873285e-07
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.99999,
+      "n": 1,
+      "relative_change": 1.731783858400712e-06
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.999999,
+      "n": 1,
+      "relative_change": 1.2888893131675658e-05
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.99,
+      "n": 2,
+      "relative_change": 7.286036102489674e-08
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.999,
+      "n": 2,
+      "relative_change": 1.2643870330144774e-07
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.9999,
+      "n": 2,
+      "relative_change": 9.610412394794536e-08
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.99999,
+      "n": 2,
+      "relative_change": 3.384820793902744e-07
+    },
+    {
+      "N_coarse": 256,
+      "N_fine": 320,
+      "a": 0.999999,
+      "n": 2,
+      "relative_change": 2.459281603860888e-06
+    },
+    {
+      "N_coarse": 384,
+      "N_fine": 448,
+      "a": 0.999999,
+      "n": 1,
+      "relative_change": 8.461470124182556e-07
+    },
+    {
+      "N_coarse": 384,
+      "N_fine": 448,
+      "a": 0.9999999,
+      "n": 1,
+      "relative_change": 9.003413647525019e-06
+    },
+    {
+      "N_coarse": 384,
+      "N_fine": 448,
+      "a": 0.999999,
+      "n": 2,
+      "relative_change": 1.6141629615810522e-07
+    },
+    {
+      "N_coarse": 384,
+      "N_fine": 448,
+      "a": 0.9999999,
+      "n": 2,
+      "relative_change": 1.704227749003004e-06
+    }
+  ],
+  "fitted_parameters": 0,
+  "source_sha256": {
+    "src\\kerr_scalar_spectral.py": "1c3d70e6327e60092cc0dea63871d30778cda1e8069a6c574a834b199c4a2832",
+    "src\\kerr_scalar_nonlinear.py": "d4c92c368543ea492d48b57295ed3895a970334e2596237e2c3c73dd61befcc4",
+    "src\\teukolsky_scalar.py": "e1e49c01807cf558b62f41d6f49ac4ba1c9e4423ec449041487121964d547302",
+    "scripts\\analyze_principal_matching_20261013.py": "6aa2e0973d0b6fda8a4e57d97eb414061840ceae1e05d86666bb1071ae622240"
+  },
+  "input_sha256": {
+    "results\\kerr_scalar_principal_relation_20261013_N256.csv": "cc8d36e4260149d6f3e1ddba742577668e474db817bece51fb615331f02a8b56",
+    "results\\kerr_scalar_principal_relation_20261013_N320.csv": "7eaad4c772d0c77d9cfdb6ef9f568b21e074afa47219056558b9c6c275d1f2e8",
+    "results\\kerr_scalar_principal_relation_20261013_N384.csv": "d4e449f5e24a294b86602fc6f38f44602a8178f037036e24d735abe66fffd565",
+    "results\\kerr_scalar_principal_relation_20261013_N448.csv": "507c05cb86c663b1379cd82e141739e9ae57496eab749625bf75317730e6b44e"
+  },
+  "analytic_scope": "Leading principal self-channel matching; y=0.5; n=1,2"
+}

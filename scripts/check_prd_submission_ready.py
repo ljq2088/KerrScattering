@@ -50,18 +50,26 @@ class Finding:
 
 def has_real_author_metadata(tex: str) -> list[Finding]:
     findings: list[Finding] = []
-    if r"\author{KerrScattering Collaboration}" in tex:
+    author_placeholders = (
+        r"\author{KerrScattering Collaboration}",
+        r"\author{Author list to be inserted}",
+    )
+    affiliation_placeholders = (
+        r"\affiliation{KerrScattering Project}",
+        r"\affiliation{Affiliations to be supplied with the author list}",
+    )
+    if any(token in tex for token in author_placeholders):
         findings.append(
             Finding(
                 "author-placeholder",
-                "Replace \\author{KerrScattering Collaboration} with the final author list.",
+                "Replace the author placeholder with the final author list.",
             )
         )
-    if r"\affiliation{KerrScattering Project}" in tex:
+    if any(token in tex for token in affiliation_placeholders):
         findings.append(
             Finding(
                 "affiliation-placeholder",
-                "Replace \\affiliation{KerrScattering Project} with final institutional affiliations.",
+                "Replace the affiliation placeholder with final institutional affiliations.",
             )
         )
     if r"\email{" not in tex:
@@ -235,6 +243,24 @@ def validate_final_metadata(tex: str) -> list[Finding]:
                 "Make submission.title match the REVTeX manuscript title.",
             )
         )
+
+    data_statement = submission.get("data_availability_statement")
+    if not isinstance(data_statement, str) or not data_statement.strip():
+        findings.append(
+            Finding(
+                "missing-final-data-availability-statement",
+                "Set submission.data_availability_statement in docs/prd/submission_metadata.json.",
+            )
+        )
+    else:
+        normalized_statement = data_statement.lower()
+        if "reasonable request" not in normalized_statement and "doi.org/" not in normalized_statement:
+            findings.append(
+                Finding(
+                    "incomplete-final-data-access-route",
+                    "Give either a review-stage reasonable-request route or a persistent archive DOI in the final data statement.",
+                )
+            )
 
     authors = data.get("authors")
     if not isinstance(authors, list) or not authors:

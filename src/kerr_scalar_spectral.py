@@ -151,15 +151,34 @@ def _transformed_coefficients(z, branch, params, l, m, omega, radial_lambda):
         d = delta(r, M=params.M, a=params.a)
         dp = 2.0 * r - 2.0 * params.M
         K = (r**2 + params.a**2) * omega - params.a * m
-        a0 = K**2 / d - radial_lambda
-
-        q, qp = _phase_log_derivatives(r, branch, params, omega, m)
         z_r = -zr**2 / rp
-        z_rr = 2.0 * zr**3 / rp**2
-
         B2[regular] = d * z_r**2
-        B1[regular] = d * (z_rr + 2.0 * q * z_r) + dp * z_r
-        B0[regular] = d * (qp + q**2) + dp * q + a0
+        H = r**2 + params.a**2
+        if branch == "in":
+            p_h = omega - m * params.omega_h
+            B1[regular] = 2.0 * d * zr**3 / rp**2 + (2j * p_h * H - dp) * zr**2 / rp
+            # Cancel r-r_+ analytically before evaluating near the horizon.
+            B0[regular] = (
+                (omega - p_h) * (r + rp) / (r - params.rm) * (K + p_h * H)
+                - 2j * p_h * r - radial_lambda
+            )
+        elif branch in {"down", "up"}:
+            sigma = -1.0 if branch == "down" else 1.0
+            d_scaled = rp**2 - 2.0 * params.M * rp * zr + params.a**2 * zr**2
+            H_scaled = rp**2 + params.a**2 * zr**2
+            B1[regular] = (
+                4.0 * d_scaled * zr / rp**2 - 2.0 * zr
+                + 2.0 * params.M * zr**2 / rp - 2j * sigma * omega * H_scaled / rp
+            )
+            # Factor K^2-omega^2 H^2 instead of subtracting O(r^2) terms.
+            am = params.a * m
+            B0[regular] = (
+                am * (am * zr**2 - 2.0 * omega * H_scaled) / d_scaled
+                - radial_lambda - 2j * sigma * omega * params.a**2 * zr / rp
+                - 2.0 * params.M * zr / rp + 2.0 * params.a**2 * zr**2 / rp**2
+            )
+        else:
+            raise ValueError(f"Unknown branch: {branch}")
 
     if np.any(at_infinity):
         if branch not in {"down", "up"}:
@@ -167,7 +186,8 @@ def _transformed_coefficients(z, branch, params, l, m, omega, radial_lambda):
         sigma = -1.0 if branch == "down" else 1.0
         B2[at_infinity] = 0.0
         B1[at_infinity] = -2j * sigma * rp * omega
-        B0[at_infinity] = -radial_lambda
+        # K^2 - omega^2 (r^2 + a^2)^2 contributes -2 a m omega at infinity.
+        B0[at_infinity] = -radial_lambda - 2.0 * params.a * m * omega
 
     if np.any(at_horizon):
         if branch != "in":
@@ -189,7 +209,7 @@ def _transformed_coefficients(z, branch, params, l, m, omega, radial_lambda):
 
 def _solve_branch(N, z_left, z_right, branch, boundary_side, params,
                   mapping, kappa,
-                  l, m, omega, radial_lambda):
+                  l, m, omega, radial_lambda, linear_solver="direct"):
     z, Dz, D2z = _cheb_interval(N, z_left, z_right, mapping=mapping, kappa=kappa)
     B2, B1, B0 = _transformed_coefficients(
         z, branch, params, l, m, omega, radial_lambda
@@ -208,14 +228,31 @@ def _solve_branch(N, z_left, z_right, branch, boundary_side, params,
     else:
         raise ValueError("boundary_side must be 'left' or 'right'.")
 
-    values = np.linalg.solve(mat, rhs)
-    derivs = Dz @ values
     condition = float(np.linalg.cond(mat))
+    if linear_solver == "direct":
+        values = np.linalg.solve(mat, rhs)
+        scaled_condition = condition
+    elif linear_solver == "equilibrated":
+        row_scale = np.max(np.abs(mat), axis=1)
+        row_scale[row_scale == 0.0] = 1.0
+        row_balanced = mat / row_scale[:, None]
+        rhs_balanced = rhs / row_scale
+        column_scale = np.max(np.abs(row_balanced), axis=0)
+        column_scale[column_scale == 0.0] = 1.0
+        balanced = row_balanced / column_scale[None, :]
+        balanced_values = np.linalg.solve(balanced, rhs_balanced)
+        values = balanced_values / column_scale
+        scaled_condition = float(np.linalg.cond(balanced))
+    else:
+        raise ValueError("linear_solver must be 'direct' or 'equilibrated'.")
+    derivs = Dz @ values
     return {
         "z": z,
         "u": values,
         "uz": derivs,
         "condition": condition,
+        "scaled_condition": scaled_condition,
+        "linear_solver": linear_solver,
     }
 
 
@@ -244,6 +281,7 @@ def solve_scalar_in_mode_spectral(
     mapping="auto",
     lmax_extra=16,
     radial_lambda=None,
+    linear_solver="direct",
 ):
     """Compute scalar Kerr in-mode amplitudes by two-domain spectral matching.
 
@@ -293,17 +331,17 @@ def solve_scalar_in_mode_spectral(
     down = _solve_branch(
         N_outer, z_infinity, z_match, "down", "left",
         params, active_mapping, kappa_outer,
-        l, m, omega, lam
+        l, m, omega, lam, linear_solver
     )
     up = _solve_branch(
         N_outer, z_infinity, z_match, "up", "left",
         params, active_mapping, kappa_outer,
-        l, m, omega, lam
+        l, m, omega, lam, linear_solver
     )
     inner = _solve_branch(
         N_inner, z_match, z_horizon, "in", "right",
         params, active_mapping, kappa_inner,
-        l, m, omega, lam
+        l, m, omega, lam, linear_solver
     )
 
     R_down, Rr_down = _field_and_radial_derivative(

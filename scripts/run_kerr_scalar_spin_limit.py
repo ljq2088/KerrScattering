@@ -19,7 +19,10 @@ from scripts.run_kerr_scalar_nonlinear_diagnostics import (
     fmt_complex,
     require_memory_room,
 )
-from src.kerr_scalar_nonlinear import compute_kerr_scalar_green_diagnostics
+from src.kerr_scalar_nonlinear import (
+    compute_kerr_scalar_green_diagnostics,
+    fixed_incident_flux_coefficients,
+)
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,14 +60,9 @@ def parse_spins(text):
 def row_from_result(result, args, rss_before, rss_after, elapsed_s):
     b_inc = result.B_inc
     b_ref = result.B_ref
-    norm4 = abs(b_inc) ** 4
-    horizon_factor = (
-        result.p_horizon * (result.r_plus ** 2 + result.a ** 2) / result.omega
-    )
-    T0 = horizon_factor / abs(b_inc) ** 2
-    R0 = abs(b_ref / b_inc) ** 2
-    T1 = 2.0 * horizon_factor * result.A_hor_1.real / norm4
-    R1 = 2.0 * (b_ref.conjugate() * result.A_ref_1).real / norm4
+    flux = fixed_incident_flux_coefficients(result)
+    T0, R0 = flux.T0, flux.R0
+    T1, R1 = flux.T1, flux.R1
     return {
         "l": args.l,
         "m": args.m,

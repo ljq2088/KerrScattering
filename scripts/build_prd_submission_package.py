@@ -28,6 +28,9 @@ ROOT_PDF = ROOT / "kerr_scalar_nonlinear_GF_baseframe.pdf"
 
 
 STATIC_FILES = [
+    ROOT / "requirements.txt",
+    ROOT / "requirements-dev.txt",
+    ROOT / "pytest.ini",
     PRD_DIR / "README.md",
     PRD_DIR / "PRD_SUBMISSION_CHECKLIST.md",
     PRD_DIR / "artifact_manifest.json",
@@ -61,9 +64,28 @@ SCRIPT_FILES = [
     ROOT / "scripts" / "plot_kerr_scalar_nonlinear_axisymmetric_base_like.py",
     ROOT / "scripts" / "analyze_kerr_scalar_peak_window_sensitivity.py",
     ROOT / "scripts" / "analyze_kerr_scalar_tail_window_sensitivity.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_tail_models.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_superradiant_response.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_near_extremal_scaling.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_modal_powerlaws.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_l0_zero_frequency.py",
+    ROOT / "scripts" / "run_kerr_scalar_power_nonlinearity_l0.py",
+    ROOT / "scripts" / "run_kerr_scalar_axisymmetric_infrared.py",
+    ROOT / "scripts" / "run_kerr_scalar_nonlinear_frequency_sweep.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_power_nonlinearity_l0.py",
+    ROOT / "scripts" / "plot_kerr_scalar_power_nonlinearity_l0.py",
+    ROOT / "scripts" / "run_kerr_scalar_power_near_extremal.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_power_near_extremal.py",
+    ROOT / "scripts" / "analyze_kerr_scalar_cft_factorization.py",
+    ROOT / "scripts" / "run_kerr_scalar_power_angular_convergence.py",
     ROOT / "scripts" / "plot_kerr_scalar_spin_limit.py",
     ROOT / "scripts" / "render_prd_cover_letter.py",
     ROOT / "scripts" / "run_kerr_scalar_spin_limit.py",
+    ROOT / "scripts" / "run_kerr_scalar_superradiant_response_scan.py",
+    ROOT / "scripts" / "run_kerr_scalar_near_extremal_scaling.py",
+    ROOT / "scripts" / "run_kerr_scalar_angular_convergence.py",
+    ROOT / "scripts" / "run_prd_axisymmetric_low_frequency_convergence.py",
+    ROOT / "scripts" / "run_prd_axisymmetric_tail_convergence.py",
     ROOT / "scripts" / "write_prd_artifact_manifest.py",
     ROOT / "scripts" / "write_prd_reproducibility_report.py",
 ]
@@ -161,6 +183,9 @@ def write_package_readme(package_dir: Path, *, draft: bool) -> str:
 {warning}
 Core files:
 
+- `requirements.txt`
+- `requirements-dev.txt`
+- `pytest.ini`
 - `docs/prd/kerr_scalar_nonlinear_GF_baseframe.pdf`
 - `docs/prd/kerr_scalar_nonlinear_GF_baseframe.tex`
 - `docs/prd/artifact_manifest.json`
@@ -204,7 +229,8 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    run([sys.executable, str(ROOT / "scripts" / "build_prd_manuscript.py")])
+    # The report generator performs the clean manuscript build and every
+    # numerical/style gate, and exits nonzero on any unexpected failure.
     run([sys.executable, str(ROOT / "scripts" / "write_prd_reproducibility_report.py")])
     readiness = run(
         [sys.executable, str(ROOT / "scripts" / "check_prd_submission_ready.py")],

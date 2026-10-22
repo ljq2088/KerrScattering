@@ -20,38 +20,56 @@
 
 \begin{document}
 
-\title{Weakly nonlinear scalar scattering from a Kerr black hole}
+\title{Nonuniform weak-coupling expansion in scalar scattering from near-extremal Kerr}
 
-\author{KerrScattering Collaboration}
-\affiliation{KerrScattering Project}
+\author{Author list to be inserted}
+\affiliation{Affiliations to be supplied with the author list}
 
 \begin{abstract}
 We study weakly nonlinear scattering of a complex scalar field from a Kerr
-black hole with a cubic self-interaction.  We solve the spin-weight-zero
-Teukolsky equation with an endpoint-inclusive, two-domain Chebyshev method and
-construct the first-order Green-function response.  Nonlinear transmission and
-reflection coefficients are defined as derivatives of the horizon and infinity
-energy fluxes at fixed incident flux.  Rotation enters through the
-co-rotating horizon frequency, spheroidal harmonics, and the $\Sigma$-weighted
-source projection.
+black hole with $U(1)$-invariant interactions $|\Phi|^{2n}\Phi$.  The
+spin-weight-zero Teukolsky equation is solved by an endpoint-inclusive,
+two-domain Chebyshev method, and the first-order field is constructed with a
+radial Green function.  Transmission and reflection corrections are defined
+as derivatives of the physical energy fluxes at fixed incident flux.  For
+axisymmetric modes, matched static and far-zone analysis gives
+$T^{(0)}_{\ell0},T^{(1)}_{\ell0}\propto(M\omega)^{2\ell+2}$ and a finite,
+spin-independent ratio $\chi_{H,\ell0}=T^{(1)}/T^{(0)}$.  At the amplitude
+level, the apparent $(M\omega)^{-2\ell-2}$ growth of the unit-horizon Green
+coefficient is removed by fixed-incident normalization: the relative horizon
+amplitude tends to a finite complex constant whose real and imaginary parts
+give the absorption and phase responses, respectively.  The monopole obeys
+$M^{2n-2}\chi^{(n)}_{H,00}\sim c_n(M\omega)^{2n-2}$ for every positive integer
+$n$, with $\chi_{H,00}^{(1)}(0)=\ln2/\pi$; independent $n=2,3$ calculations
+recover the analytic powers and coefficients.  Thus the cubic interaction is
+infrared marginal in this channel, whereas the higher local powers are
+irrelevant.
 
-For an axisymmetric sample with $a=0.5$ and $\ell=0,1,2$, the accepted spectra
-show broad Breit-Wigner-type features whose fitted centers lie on the same
-frequency scale as the real parts of the corresponding scalar Kerr
-quasinormal frequencies.  The high-frequency
-data are described by finite-window exponential fits with effective
-temperatures within $3.2$--$13.6\%$ of the Kerr Hawking temperature.  The
-low-frequency transmission coefficients follow a centrifugal-barrier
-hierarchy, while the reflected first-order coefficient becomes cancellation
-limited at the lowest frequencies.  Spectral tails, field-dependent radial
-residuals, Wronskian constancy, resolution scans, and flux balance are used
-together as internal accuracy tests; the accepted first-order balance
-residuals are at or below $4.3\times10^{-12}$.  A bounded $\ell=m=2$ scan
-resolves the signed horizon-flux change across the superradiant threshold.
+For nonaxisymmetric modes, both horizon fluxes vanish at the superradiant
+threshold $p=\omega-m\Omega_H=0$, while $\chi_H$ remains finite and positive
+at fixed subextremal spin.  Near extremality, principal
+complex-conformal-weight modes exhibit an inverse-surface-gravity envelope and
+collapse approximately in $(p/\kappa,M\kappa\chi_H)$; real-weight controls do
+not.  Extending the calculation through $a/M=0.9999984375$ for $n=2,3$
+supports the order-locked hierarchy
+$M^{2n-2}\chi_H^{(n)}=(M\kappa)^{-n}{\cal F}_{n,\ell}$ in the principal
+$(2,2)$ and $(3,3)$ channels, with bounded finite-window modulation rather
+than an exact pure power.  Integration over a fixed $p/\kappa$ interval
+softens this pointwise hierarchy to $\kappa^{1-n}$: the cubic spectral weight
+is finite at leading power, while the higher weights remain enhanced.  Dense
+profiles also show that increasing $n$ moves the response peak toward the
+absorptive side and narrows it.
 
-This is a prescribed scalar response on a fixed Kerr background.  It is not a
-second-order metric perturbation, a gravitational self-force calculation, or an
-EMRI waveform model.
+Matched near-NHEK theory yields the factorization
+$M^{2n-2}\chi_H^{(n)}={\cal I}_H^n{\cal K}_{n,h}$, separating the analytically
+known linear intensity from an unevaluated nonlinear Green kernel.  It explains
+why no conformal-weight-only law follows for supplementary modes and why the
+principal weak-coupling limit is nonuniform: successive local operators gain
+an additional $|{\cal A}_{\rm in}|^2/(M\kappa)$ in their relative control
+parameter and can reverse their moderate-spin ordering.  Spectral tails,
+off-grid residuals, paired resolutions, Wronskians, and flux balance provide
+independent checks.  The result is a prescribed scalar response on fixed Kerr,
+not a metric perturbation or gravitational self-force observable.
 \end{abstract}
 
 \keywords{Kerr black holes, scalar waves, nonlinear scattering, Green
@@ -61,7 +79,7 @@ functions, spectral methods}
 
 \section{Introduction}
 
-We use geometric units $G=c=1$, metric signature $(-,+,+,+)$, and set
+We use units $G=c=\hbar=1$, metric signature $(-,+,+,+)$, and set
 $M=1$ in the numerical results unless stated otherwise.  The Fourier
 convention is fixed by the mode dependence $e^{-\ii\omega t+\ii m\phi}$
 used below.
@@ -76,25 +94,51 @@ sends in a monochromatic mode from past null infinity and compares the incident
 flux with the reflected flux at future null infinity and the absorbed flux at
 the future event horizon.  The resulting transmission and reflection
 coefficients are natural complements to quasinormal-mode
-spectroscopy~\cite{Berti2009}.  This point has become sharper because
+spectroscopy~\cite{Berti2009}.  At the level of finite-energy wave packets, the
+scalar wave equation on every subextremal Kerr exterior also admits a bounded,
+asymptotically complete scattering map that includes superradiant
+reflection~\cite{Dafermos2018}.  This point has become sharper because
 quasinormal spectra can be sensitive to small deformations of the effective
 potential~\cite{Nollert1996,Jaramillo2021,Cheung2022}, while scattering data,
-greybody factors, and related response functions can remain stable
+graybody factors, and related response functions can remain stable
 observables~\cite{Kyutoku2023,Torres2023,Rosato2024,Oshita2023,Oshita2024}.
 
-The nonlinear scattering problem is less developed.  Time-domain studies have
-examined nonlinear perturbative and fully nonlinear scattering from past to
-future null infinity~\cite{Frauendiener2021,Frauendiener2025}, and recent
-work on nonlinear dynamics in general relativity has studied frequency-dependent
-scattering and mode generation~\cite{Cardoso2026}.  The Schwarzschild
-calculation that we use as a template instead keeps the flux definition of
-scattering coefficients explicit: it considers a weak scalar self-interaction,
-solves the linear homogeneous problem, uses the nonlinear source to construct a
-first-order Green-function correction, and defines nonlinear scattering
-coefficients from the interference terms in the energy flux.  This is the
-key point: the first-order field is not a new independent linear scattering
-experiment; it changes the physical boundary fluxes by interfering with the
-zeroth-order wave.
+The nonlinear scattering literature contains several nearby but inequivalent
+problems.  Characteristic evolutions of an incident gravitational pulse have
+resolved mode coupling, Bondi flux, and the map from incoming to outgoing
+radiation in Schwarzschild, first in fully nonlinear numerical relativity and
+more recently with domains extending to null infinity
+\cite{Zlochower2003,Frauendiener2021,Frauendiener2025}.  Simulations of the
+Einstein--Klein--Gordon system and of vacuum gravitational waves have further
+exhibited harmonic generation, spectral broadening, and spatial focusing
+\cite{Cardoso2026}.  These are time-dependent, self-gravitating scattering
+experiments; their natural outputs are waveforms, Bondi quantities, and
+generated frequencies rather than a stationary first derivative of a scalar
+graybody factor.
+
+Self-interacting scalar fields on Kerr have instead been studied mainly as
+massive quasi-bound clouds.  Time evolutions of an axion cloud have found
+bosenova collapse, while perturbative and occupation-number descriptions have
+analyzed self-interaction-induced level transfer, scalar emission, and possible
+saturation of superradiant growth
+\cite{YoshinoKodama2012,FukudaNakayama2020,Omiya2021,Baryakhtar2021,
+XieHuang2025}.  Nonlinear $Q$-clouds provide a complementary stationary test-field
+construction with quartic and hexic interactions~\cite{HerdeiroQCloud2014}.
+Those calculations impose decay at infinity and use a complex bound-state
+frequency or exact synchronization, $\omega=m\Omega_H$, with no incident flux
+from infinity.  The present problem instead uses a massless field, a real
+driving frequency, and scattering boundary data.  It therefore measures an
+instantaneous open-channel response, not a cloud growth rate, a saturation
+amplitude, or a stationary scalar condensate.
+
+A complementary fixed-background construction keeps the flux definition of
+scattering coefficients explicit: one introduces a weak scalar
+self-interaction, solves the linear homogeneous problem, uses the nonlinear
+source to construct a first-order Green-function correction, and defines
+nonlinear scattering coefficients from the interference terms in the energy
+flux.  This is the key point: the first-order field is not a new independent
+linear scattering experiment; it changes the physical boundary fluxes by
+interfering with the zeroth-order wave.
 
 The scalar model is not a gravitational self-force calculation, but its
 bookkeeping is closely related to the sourced perturbative hierarchies used in
@@ -130,45 +174,88 @@ one prescribed scalar mode.  We therefore use the EMRI and second-order
 literature to delimit the interpretation of the calculation, not to identify
 the scalar coefficient with a gravitational self-force observable.
 
-This work carries the same chain to the scalar Teukolsky equation in Kerr
+Here we implement this construction for the scalar Teukolsky equation in Kerr
 spacetime with spin weight $s=0$, within the standard analytic black-hole
-perturbation framework~\cite{SasakiTagoshi}.  The aim is to keep the observable definition
-and the flux logic of the Schwarzschild work unchanged while replacing the
-radial and angular equations by their Kerr counterparts.  Rotation produces
-three changes.  First, the horizon flux is proportional to
+perturbation framework~\cite{SasakiTagoshi}.  We retain the usual incident,
+reflected, and horizon-flux observables while deriving their weakly nonlinear
+Kerr corrections.  Rotation produces three changes.  First, the horizon flux is proportional to
 $p=\omega-m\Omega_H$, which is the origin of superradiant sign
 changes~\cite{StarobinskyChurilov,PressTeukolsky}.  Second, spherical
 harmonics are replaced by spheroidal harmonics.  Third, the covariant scalar
 source contains $\Sigma=r^2+a^2\cos^2\theta$, so a single incident mode sources
 several target spheroidal channels.
 
-The paper is organized in the same order as the Schwarzschild calculation, so
-that each Kerr step can be compared directly with its spherical counterpart.
+The near-extremal superradiant bound is a distinguished frequency scale even
+in the linear theory.  Near-superradiant scalar absorption in near-extremal
+Kerr is reproduced by a finite-temperature two-dimensional conformal
+correlator, with the right-moving temperature proportional to the surface
+gravity and the scaled right-moving frequency proportional to
+$p/\kappa$~\cite{BredbergKerrCFT2010,HartmanKerrCFT2010,
+CastroHiddenCFT2010}.  In exactly extremal Kerr the same bound becomes a branch
+point of the frequency-domain Green function, near-extremal mode families
+condense toward it, and the throat exhibits an emergent
+self-similarity~\cite{CasalsGrallaZimmerman2016,CasalsZimmerman2019,
+CasalsLongoMicchi2019,GrallaZimmerman2018}.  These linear results motivate
+using $\kappa$ rather than $\Omega_H$ alone to resolve the nonlinear response.
+
+The nonlinear observable studied here is not itself a Kerr/CFT two-point
+function.  The equation-level vertex $|\Phi|^{2n}\Phi$ descends from a bulk
+$|\Phi|^{2n+2}$ interaction and corresponds schematically to a
+$(2n+2)$-point response in the boundary description.  Existing Kerr/CFT
+higher-point and source-driven calculations establish the relevant
+holographic framework~\cite{BeckerKerrCFT2011,PorfyriadisKerrCFT2014}, but do
+not give the fixed-incident, asymptotically flat nonlinear flux susceptibility
+defined below.  We therefore use Kerr/CFT only to organize the throat scaling
+and interpret the conformal-weight split; the sign, coefficient, and complete
+detuning dependence are computed from the nonlinear radial Green function.
+Our calculation remains strictly subextremal and does not insert an analytic
+near-horizon formula into that Green integral.  Weakly nonlinear
+gravitational work has also derived a dynamical system for near-extremal
+zero-damped Kerr modes and found a long-lived inverse-cascade
+equilibrium~\cite{GreenEtAl2023,Iuliano2025}.  That complex-frequency,
+second-order Einstein problem motivates sensitivity to the throat scale, but
+does not predict the real-frequency scalar coefficient calculated here.
+
+The paper follows the physical order of the construction, from the field
+equation and boundary fluxes to the Green function and numerical diagnostics.
 Section~\ref{sec:problem} defines the nonlinear scattering problem and the flux
-coefficients.  Section~\ref{sec:methods} describes the pseudo-spectral
+coefficients.  Section~\ref{sec:methods} describes the pseudospectral
 homogeneous solver, the Green-function construction, the balance law, the
 accuracy diagnostics, and the low- and high-frequency diagnostics.
-Section~\ref{sec:results} gives the main frequency-domain numerical result:
-Kerr nonlinear transmission curves for $\ell=0,1,2$, fitted resonance
-parameters, and high-frequency temperatures.  The main physical frequency
-sweep is deliberately restricted to an axisymmetric Kerr sample, $a=0.5$ and
-$m=0$.  This restriction makes the comparison with the Schwarzschild flux
-construction as direct as possible.  Non-axisymmetric self-channel runs,
-including a bounded superradiant check, appear separately in
-Sec.~\ref{sec:results}; they are not folded into the axisymmetric production
-curves.
+Section~\ref{sec:results} first gives Kerr nonlinear transmission curves for
+$\ell=0,1,2$, their resonance fits, and the analytic axisymmetric infrared
+laws.  It then turns to nonaxisymmetric scattering, separates the threshold
+and near-extremal limits, and tests the principal/supplementary split and the
+operator-order hierarchy.  The initial frequency sweep is deliberately
+restricted to $a=0.5$ and $m=0$ so that radial and spheroidal effects are
+isolated before the superradiant horizon factor is introduced; these data are
+not mixed with the later cross-spin survey.
 
-The contributions of this paper are threefold.  First, we derive the Kerr
+The contributions of this paper are fourfold.  First, we derive the Kerr
 fixed-incident normalization of the weak cubic response, including the horizon
 factor $p$ and the $\Sigma$-weighted spheroidal source projection, so that the
 reported quantities are energy-flux derivatives rather than unnormalized Green
 amplitudes.  Second, we implement the endpoint-inclusive two-domain
 Chebyshev construction and combine spectral tails, field-dependent radial
 residuals, Wronskian constancy, and flux balance into an explicit acceptance
-protocol.  Third, we use that protocol to separate robust axisymmetric
-resonance and tail trends from cancellation-limited low-frequency reflected
-coefficients, while exposing the off-diagonal target-channel structure and a
-bounded superradiant sign change.  The resulting claims are deliberately
+protocol.  Third, we use that protocol to impose a common flux-balance
+acceptance gate before plotting or fitting, while exposing the off-diagonal
+target-channel structure and deriving the absolute infrared flux laws.  The
+monopole classifies the full $U(1)$-invariant family
+$|\Phi|^{2n}\Phi$: the cubic equation is marginal, whereas every $n>1$
+response vanishes as $\omega^{2n-2}$.  Fourth, we resolve a distinct
+near-superradiant scaling pattern.  The principal,
+complex-conformal-weight modes have a numerical $1/\kappa$ envelope for the
+cubic interaction and collapse in $p/\kappa$ and $M\kappa\chi_H$.  For
+$n=2,3$, the data support
+$M^{2n-2}\chi_H^{(n)}=(M\kappa)^{-n}{\cal F}^{\rm num}_{n,\ell}$ with a bounded,
+slowly varying factor over the resolved paths.  We trace this operator-order
+hierarchy to fixed-flux throat intensity and separate the exact linear matching
+factor from the unevaluated nonlinear Green kernel.  This establishes
+both the sign and the geometric scale of the first nonlinear correction.  A
+fixed throat-frequency integration softens the principal hierarchy by one
+power but does not remove it for $n>1$, and dense peak scans resolve a shift
+toward the absorptive side with increasing operator order.  All claims remain
 restricted to the prescribed scalar response problem defined above.
 
 \section{Nonlinear scattering problem in Kerr spacetime}
@@ -201,6 +288,11 @@ We consider a weak cubic self-interaction
 \Box\Phi+\epsilon|\Phi|^2\Phi=0,\qquad \epsilon\in\mathbb R,\quad |\epsilon|\ll1,
 \label{eq:nonlinear_equation}
 \end{equation}
+Here $\epsilon$ is a signed perturbative coefficient.  With the action
+convention in Eq.~\eqref{eq:scalar_action}, a conventional positive quartic
+potential $V=\lambda|\Phi|^4/2$ corresponds to $\epsilon=-\lambda$; therefore
+the sign statements below always refer to Eq.~\eqref{eq:nonlinear_equation},
+not to a separate stability assumption about the scalar potential.
 In four spacetime dimensions the canonical scalar has dimensions
 $[\Phi]=M^{-1}$, so $\epsilon$ is dimensionless in the action convention below.
 For a field amplitude that is not absorbed into the unit-horizon normalization,
@@ -213,7 +305,8 @@ where $\mathcal D$ is the radial and angular region that dominates the cubic
 source projection.  The reported $T^{(1)}$ and $R^{(1)}$ are coefficients in the
 derivative of the fixed-incident flux with respect to $\epsilon$ at
 $\epsilon=0$; a finite-coupling application must additionally check that
-$|\epsilon T^{(1)}|\ll|T^{(0)}|$ and the analogous reflected-flux condition.
+$|\epsilon| |{\cal A}_{\rm in}|^2|T^{(1)}|\ll|T^{(0)}|$ and the analogous
+reflected-flux condition.
 We do not interpret the present frequency-domain calculation as a test of
 nonlinear saturation or of the expansion beyond this perturbative regime.
 This equation follows from the fixed-background scalar action
@@ -354,7 +447,9 @@ At first order,
 \begin{equation}
 \Box\Phi^{(1)}=-|\Phi^{(0)}|^2\Phi^{(0)}.
 \end{equation}
-Since the source has the same $(\omega,m)$ dependence, we expand
+Because the scalar is complex and the interaction is $U(1)$ invariant,
+$|e^{-i\omega t+im\phi}|^2e^{-i\omega t+im\phi}$ has the same
+$(\omega,m)$ dependence as the incident mode.  We therefore expand
 \begin{equation}
 \Phi^{(1)}=e^{-\ii\omega t+\ii m\phi}
 \sum_{\ell'\ge |m|}S_{\ell' m}(\theta;a\omega)
@@ -386,14 +481,14 @@ the linear outgoing wave in the total energy flux at order $\epsilon$.
 \section{Methods}
 \label{sec:methods}
 
-\subsection{Pseudo-spectral method for homogeneous solutions}
+\subsection{Pseudospectral method for homogeneous solutions}
 
 The homogeneous radial equation is solved in the compact coordinate
 \begin{equation}
 z=\frac{\rp}{r},\qquad z=0\ \text{at infinity},\qquad z=1\ \text{at the horizon}.
 \end{equation}
-As in the Schwarzschild calculation, the oscillatory endpoint phases are peeled
-off before Chebyshev collocation.  This endpoint-first organization is also
+The oscillatory endpoint phases are peeled off before Chebyshev collocation.
+This endpoint-first organization is also
 consistent with independent spectral black-hole perturbation work, where the
 asymptotic behavior is factored before the Chebyshev representation is
 truncated~\cite{ChungWagleYunes2023}:
@@ -402,7 +497,7 @@ R_{\rm in}&=e^{-\ii p r_*}u_{\rm in}(z),\\
 R_{\rm down}&=\frac{e^{-\ii\omega r_*}}{r}u_{\rm down}(z),\\
 R_{\rm up}&=\frac{e^{+\ii\omega r_*}}{r}u_{\rm up}(z).
 \end{align}
-The functions $u_{\rm in}$, $u_{\rm down}$, and $u_{\rm up}$ are smooth enough
+The functions $u_{\rm in}$, $u_{\rm down}$, and $u_{\rm up}$ are regular
 on their respective subdomains that the degenerate endpoint rows of the
 transformed ODE can be used directly as boundary regularity conditions.  The
 outer and inner domains are matched at a finite radius $r_{\rm m}$ by continuity
@@ -414,25 +509,60 @@ form
  B_2(z)u_{,zz}+B_1(z)u_{,z}+B_0(z)u=0 .
 \label{eq:peeled_matrix_equation}
 \end{equation}
+These coefficients follow directly without a further field redefinition.
+Writing $R=f(r)u[z(r)]$, $g=\dd z/\dd r=-z^2/r_+$, and
+$V=K^2/\Delta-\lambda_{\ell m\omega}$, one obtains
+\begin{align}
+B_2={}&\Delta g^2,\nonumber\\
+B_1={}&\Delta\left(g_{,r}+2g\frac{f_{,r}}{f}\right)
+       +\Delta_{,r}g,\nonumber\\
+B_0={}&\Delta\frac{f_{,rr}}{f}
+       +\Delta_{,r}\frac{f_{,r}}{f}+V,
+\label{eq:peeled_coefficients}
+\end{align}
+where $f=e^{-ipr_*}$ for the inner ingoing branch and
+$f=r^{-1}e^{\mp i\omega r_*}$ for the outer down/up branches.  The
+expressions used in the code are the analytic endpoint limits of
+Eq.~\eqref{eq:peeled_coefficients}, so no finite-difference evaluation of a
+singular quotient is required.
 At the exact endpoint of each branch $B_2$ vanishes, so the endpoint row is
 the regular-singular relation
 $B_1u_{,z}+B_0u=0$.  The neighboring row is replaced by the normalization
 $u_{\rm down}(0)=u_{\rm up}(0)=1$ on the outer domain or
 $u_{\rm in}(1)=1$ on the inner domain.  Thus the horizon is included as an
 exact collocation endpoint; no horizon truncation is introduced.  Each domain
-uses $N+1$ Chebyshev points and a dense complex linear solve.  The reference
-production runs use $N=240$ on both domains, $r_{\rm m}=40M$, Gauss order
-$q=192$ for the compact inner integral, and relative tolerance $10^{-11}$
-for the oscillatory phase-channel tail.  The low-frequency runs use the
-same endpoint formulation with the sinh map described above; all reported
-results are obtained in IEEE double precision and are checked by the order,
-matching-radius, quadrature, Wronskian, and flux scans reported below.
+uses $N+1$ Chebyshev points and a dense complex linear solve.  For
+$|M\omega|<0.1$ we use the mapped nodes
+\begin{equation}
+z(y)=z_L+(z_R-z_L)
+\frac{\sinh[\kappa(1-y)/2]}{\sinh\kappa},
+\qquad -1\le y\le1,
+\label{eq:sinh_mapping}
+\end{equation}
+with $\kappa_{\rm out}=|\log(2M|\omega|)|$ and
+$\kappa_{\rm in}=\kappa_{\rm out}/2$; otherwise the map is linear.  This
+redistributes the same endpoint-inclusive Chebyshev grid toward the outer end
+of each subdomain and does not move either physical boundary.  The low-frequency
+and resonance-region production runs use $N=240$ on both domains,
+$r_{\rm m}=40M$, Gauss order $q=192$ for the compact inner integral, and
+relative tolerance $10^{-11}$ for the oscillatory phase-channel tail.  The
+high-frequency fits use 25 separately recomputed points at the same $N$ and
+$r_{\rm m}$ but with $q=2048$.  The larger order is required because the
+compact horizon-side Green integral remains oscillatory after the homogeneous
+endpoint phases have been peeled.  The tail-order audit compares $q=1792$
+with $q=2048$ and independently lowers the radial order to $N=224$.  The
+low-frequency runs use the automatic map in Eq.~\eqref{eq:sinh_mapping}; all
+reported results are obtained in IEEE double precision
+and are checked by the order, matching-radius, quadrature, Wronskian, and flux
+scans reported below.
 
 The angular eigenvalue is computed by diagonalizing the truncated spherical
 harmonic representation of
 $\ell(\ell+1)-(a\omega)^2\cos^2\theta$, retaining sixteen modes above
 the requested $\ell$.  The source projectors are evaluated with normalized
-spheroidal harmonics and Gauss--Legendre quadrature.  For the radial Green
+spheroidal harmonics and $q_\theta=256$ point Gauss--Legendre quadrature.  The
+separate basis and quadrature audit in Table~\ref{tab:angular-convergence}
+compares these active settings with $24$ extra modes and $q_\theta=512$.  For the radial Green
 integrals, the compact inner part is integrated in $z$ with the Jacobian
 $\dd r=r_+/z^2\,\dd z$, while the outer part is decomposed into its finite
 phase channels in $r_*$ before oscillatory quadrature.
@@ -446,11 +576,21 @@ formulation is consequently a useful independent route for future high-
 frequency or extended-source checks, but it is not used to define any of the
 production values reported below.
 
-The scattering relation used in the code is the Kerr analogue of the
-Schwarzschild S-matrix relation,
+The scattering relation used in the code is the usual in/down/up decomposition,
 \begin{equation}
 R_{\rm in}=\Bin R_{\rm down}+\Bref R_{\rm up}.
 \label{eq:smatrix}
+\end{equation}
+At $r=r_{\rm m}$ the amplitudes are obtained from
+\begin{equation}
+\begin{pmatrix}
+R_{\rm down} & R_{\rm up}\\
+R_{\rm down}' & R_{\rm up}'
+\end{pmatrix}_{r_{\rm m}}
+\begin{pmatrix}\Bin\\ \Bref\end{pmatrix}
+=
+\begin{pmatrix}R_{\rm in}\\ R_{\rm in}'\end{pmatrix}_{r_{\rm m}} .
+\label{eq:matching_matrix}
 \end{equation}
 Solving this two-by-two matching system gives $\Bin$ and $\Bref$ and therefore
 the linear coefficients in Eq.~\eqref{eq:linear_coefficients}.  The residual
@@ -493,6 +633,19 @@ A_{{\rm ref},{\rm fix}}^{(1)}=\frac{\Aref}{|\Bin|^2\Bin},\qquad
 A_{H,{\rm fix}}^{(1)}=\frac{\AH}{|\Bin|^2\Bin}.
 \label{eq:fixed_incident_amplitudes}
 \end{equation}
+The zeroth-order fixed-incident horizon amplitude is $1/\Bin$.  It is useful
+to retain the complex relative correction
+\begin{equation}
+ \rho_H(\omega)
+ \equiv\frac{A_{H,{\rm fix}}^{(1)}}{1/\Bin}
+ =\frac{\AH}{|\Bin|^2}.
+ \label{eq:complex_horizon_response}
+\end{equation}
+For unit incident amplitude the total horizon coefficient is therefore
+$(1/\Bin)[1+\epsilon\rho_H+\calO(\epsilon^2)]$.  To first order,
+$\operatorname{Re}\rho_H$ changes its modulus whereas
+$\operatorname{Im}\rho_H$ shifts its phase.  Only the former enters an
+energy flux at this order.
 Expanding the horizon and infinity fluxes of the fixed-incident field then
 gives
 \begin{align}
@@ -506,6 +659,33 @@ R^{(1)}
 \frac{2\operatorname{Re}(\overline{\Bref}\,\Aref)}{|\Bin|^4}.
 \label{eq:R1}
 \end{align}
+For $p\ne0$, division by the linear horizon coefficient removes the explicit
+superradiant factor and defines the threshold-regular relative response
+\begin{equation}
+\chi_H(\omega)
+\equiv\frac{T^{(1)}}{T^{(0)}}
+=\frac{2\operatorname{Re}\AH}{|\Bin|^2}
+=2\operatorname{Re}\rho_H.
+\label{eq:horizon_response}
+\end{equation}
+The right-hand side remains directly evaluable as $p\to0$.  Provided the
+real-frequency homogeneous amplitudes and the projected Green integral are
+smooth there,
+\begin{align}
+T^{(0)}&=p\tau_0+\calO(p^2),\nonumber\\
+T^{(1)}&=p\tau_1+\calO(p^2),\nonumber\\
+\chi_H^\star&=\lim_{p\to0}\chi_H=\frac{\tau_1}{\tau_0}.
+\label{eq:threshold_scaling}
+\end{align}
+This form avoids a numerical $0/0$ operation and separates the physical
+vanishing of the horizon flux from cancellation in the reflected interference
+term.  In the superradiant regime the amplification factor
+$Z\equiv R-1=-T$ consequently obeys
+\begin{equation}
+Z=Z^{(0)}\left[1+\epsilon|{\cal A}_{\rm in}|^2\chi_H\right]
++\calO(\epsilon^2|{\cal A}_{\rm in}|^4),\qquad p<0.
+\label{eq:superradiant_amplification_response}
+\end{equation}
 Equivalently, with the incident energy flux held fixed,
 \begin{equation}
 T^{(1)}=\left.\frac{1}{\mathcal F_{E,\infty}^{\rm in}}
@@ -518,6 +698,18 @@ R^{(1)}=\left.\frac{1}{\mathcal F_{E,\infty}^{\rm in}}
 \end{equation}
 Thus the quantities plotted below are normalized changes of the horizon and
 infinity energy fluxes, rather than changes of radial-wave amplitudes alone.
+They are quoted for unit incident amplitude.  For a general dimensionless
+incident amplitude ${\cal A}_{\rm in}$, homogeneity of the cubic source gives
+\begin{align}
+T={}&T^{(0)}+\epsilon|{\cal A}_{\rm in}|^2T^{(1)}
++\calO(\epsilon^2|{\cal A}_{\rm in}|^4),\nonumber\\
+R={}&R^{(0)}+\epsilon|{\cal A}_{\rm in}|^2R^{(1)}
++\calO(\epsilon^2|{\cal A}_{\rm in}|^4).
+\label{eq:amplitude_scaling}
+\end{align}
+Accordingly, $T^{(1)}$ and $R^{(1)}$ are response coefficients per unit
+incident-amplitude squared; unlike their linear counterparts, they are not
+independent of the incident intensity.
 The current conservation identity gives the first-order balance law
 \begin{equation}
 T^{(1)}+R^{(1)}=0.
@@ -565,9 +757,11 @@ The reported relative residual is
 Thus the denominator contains the actual local field amplitude, not only the
 differential-equation coefficients.  This makes the residual insensitive to an
 overall rescaling of the homogeneous solution.  The original radial residual
-is evaluated on the interior collocation nodes, $0<z<1$; the degenerate
-endpoint rows are reserved for the boundary regularity conditions and are not
-interpreted as ordinary pointwise ODE residuals.  We also monitor the Chebyshev
+is evaluated independently on 600 Chebyshev--Gauss points per subdomain that
+are not used in the collocation solve.  The phase-peeled Chebyshev series is
+differentiated analytically at these off-grid points before reconstructing the
+three terms in Eq.~\eqref{eq:radial_residual}; the degenerate endpoint rows
+remain reserved for the boundary regularity conditions.  We also monitor the Chebyshev
 tail
 \begin{equation}
 \eta_{\rm tail}=
@@ -591,62 +785,525 @@ the self-channel coefficients $T_\ell^{(1)}$ and $R_\ell^{(1)}$ reported here.
 
 \subsubsection{Low-frequency behavior}
 
-The Schwarzschild reduced radial equation admits a clean analytic low-frequency
-scaling argument.  In the Kerr Teukolsky variable the far-zone radial
-normalization and the covariant source weight
-$r^2C^{(0)}_{\ell\ell m}+a^2C^{(2)}_{\ell\ell m}$ change the practical
-low-frequency behavior measured by the fixed-incident flux coefficients.
-Rather than importing the Schwarzschild scaling unchanged, we perform a direct
-Kerr low-frequency experiment for $a=0.5$, $m=0$, and $\ell=0,1,2$.
-
-The result is shown in Fig.~\ref{fig:lowfreq}.  A log-log fit over the first
-four available low-frequency points gives the local slopes
+The scalar monopole provides an analytic low-frequency normalization check
+directly in the Kerr Teukolsky variable.  Fix $|a|<M$, take
+$(\ell,m)=(0,0)$, and introduce the far-zone coordinate $x=\omega r$.
+In the limit $\omega\to0$ the normalized spheroidal harmonic and the
+self-channel projector become
 \begin{equation}
-T_\ell^{(1)}\sim\omega^{\alpha_\ell},\qquad
-\alpha_0\simeq2.50,\quad
-\alpha_1\simeq5.48,\quad
-\alpha_2\simeq8.74 .
+ S_{00}\longrightarrow\frac{1}{\sqrt{4\pi}},\qquad
+ C^{(0)}_{000}\longrightarrow\frac{1}{4\pi}.
+ \label{eq:l0-angular-limit}
 \end{equation}
-The corresponding linear slopes are approximately
-$2.34$, $5.25$, and $8.52$.  Thus, in the present Kerr normalization the
-nonlinear transmission correction follows the same centrifugal-barrier
-hierarchy as the linear transmission coefficient in the accessible
-low-frequency window.  These are finite-window fitted exponents rather than
-analytic asymptotic indices: repeating the fit with three, four, and five
-points gives the ranges in Table~\ref{tab:low-window}.  The reflected coefficient is harder to extract at the
-lowest frequencies because the infinity-side interference integral contains a
-large cancellation; this is why Eq.~\eqref{eq:first_order_balance} is reported
-alongside the coefficients.
+The leading far-zone radial equation is the flat-space monopole equation.
+Matching to the solution that is unity at the horizon gives
+\begin{align}
+ R^{\rm in}_{00\omega}
+ &=j_0(x)+o(1)=\frac{\sin x}{x}+o(1),\nonumber\\
+ R^{\rm up}_{00\omega}
+ &=\frac{e^{\ii x}}{r}[1+o(1)].
+ \label{eq:l0-far-solutions}
+\end{align}
+Comparison with Eq.~\eqref{eq:bc_inf} and evaluation of
+Eq.~\eqref{eq:wronskian} at infinity then yield
+\begin{equation}
+ B^{\rm inc}_{00\omega}=\frac{\ii}{2\omega}[1+o(1)],
+ \qquad
+ W_0=2\ii\omega B^{\rm inc}_{00\omega}=-1+o(1).
+ \label{eq:l0-binc-wronskian}
+\end{equation}
+
+The $a^2C^{(2)}$ part of the source and all strong-field corrections are
+subleading relative to the far-zone $r^2C^{(0)}$ term.  Substitution of
+Eqs.~\eqref{eq:l0-angular-limit}--\eqref{eq:l0-binc-wronskian} into the
+horizon Green integral therefore gives the full complex amplitude
+\begin{align}
+ A_{H,00}^{(1)}
+ &=\frac{C^{(0)}_{000}}{\omega^2}
+ \int_0^\infty\frac{\sin^3x\,e^{\ii x}}{x^2}\,\dd x
+ +o(\omega^{-2})\nonumber\\
+ &=\frac{C^{(0)}_{000}}{\omega^2}(I_0+\ii J_0)
+ +o(\omega^{-2}),
+ \label{eq:l0-green-limit}
+\end{align}
+where both integrals can be evaluated without a regulator.  Using
+$\sin^3x\cos x=\tfrac14\sin 2x-\tfrac18\sin4x$ and integrating by parts,
+\begin{equation}
+ \begin{split}
+ I_0&=\int_0^\infty\frac{\sin^3x\cos x}{x^2}\,\dd x\\
+ &=\frac12\int_0^\infty\frac{\cos2x-\cos4x}{x}\,\dd x
+ =\frac12\ln2 .
+\end{split}
+\label{eq:l0-integral}
+\end{equation}
+while a second integration by parts gives
+\begin{equation}
+ J_0=\int_0^\infty\frac{\sin^4x}{x^2}\,\dd x
+ =4\int_0^\infty\frac{\sin^3x\cos x}{x}\,\dd x
+ =\frac{\pi}{4}.
+ \label{eq:l0-phase-integral}
+\end{equation}
+Since $C^{(0)}_{000}=1/(4\pi)$, the amplitude and relative response are
+\begin{align}
+ A_{H,00}^{(1)}
+ &=\left(\frac{\ln2}{8\pi}+\frac{\ii}{16}\right)\omega^{-2}
+ +o(\omega^{-2}),\nonumber\\
+ \rho_{H,00}
+ &\longrightarrow\frac{\ln2}{2\pi}+\frac{\ii}{4}.
+ \label{eq:l0-complex-response}
+\end{align}
+The imaginary term is a finite horizon phase response after incident
+normalization; it does not contribute to the first-order energy flux.  The
+real part and Eq.~\eqref{eq:horizon_response} give
+\begin{equation}
+ \boxed{\displaystyle
+ \lim_{\omega\to0}\chi_{H,00}
+ =8C^{(0)}_{000}I_0
+ =\frac{\ln 2}{\pi}=0.220635600153 .}
+ \label{eq:l0-exact-response}
+\end{equation}
+The leading result is independent of spin because the limit is controlled by
+the far zone.  The closed form $\ln2/\pi$ is specific to the scalar monopole
+and is not a superradiant-threshold result: $m=0$ implies $p=\omega$.
+
+The same matching argument determines both absolute flux coefficients for
+every cubic axisymmetric self channel.  Let
+$d=(M^2-a^2)^{1/2}$ and first set $\omega=0$.  The horizon-regular radial
+equation and its unit-horizon solution are
+\begin{equation}
+ \frac{\dd}{\dd r}\left(\DeltaK\frac{\dd R}{\dd r}\right)
+ -\ell(\ell+1)R=0,
+ \qquad
+ R=P_\ell\!\left(\frac{r-M}{d}\right),
+ \label{eq:axisymmetric-static-solution}
+\end{equation}
+because $P_\ell(1)=1$.  Since the leading coefficient of $P_\ell(z)$ is
+$q_\ell=(2\ell)!/[2^\ell(\ell!)^2]$, matching the growing part of
+Eq.~\eqref{eq:axisymmetric-static-solution} to the small-$x$ limit of
+$j_\ell(x)$ gives
+\begin{align}
+ R^{\rm in}_{\ell0\omega}
+ &= {\cal K}_\ell(M\omega)^{-\ell}j_\ell(x)[1+o(1)],\nonumber\\
+ {\cal K}_\ell
+ &=(2\ell+1)!!\,q_\ell\left(\frac{M}{d}\right)^\ell,
+ \qquad x=\omega r .
+ \label{eq:axisymmetric-far-match}
+\end{align}
+The incoming part of $j_\ell$ fixes both the phase and magnitude,
+\begin{align}
+ B^{\rm inc}_{\ell0\omega}
+ &=\frac{M\ii^{\ell+1}{\cal K}_\ell}
+ {2(M\omega)^{\ell+1}}[1+o(1)],\nonumber\\
+ |B^{\rm inc}_{\ell0\omega}|^2
+ &=\frac{M^2{\cal K}_\ell^2}
+ {4(M\omega)^{2\ell+2}}[1+o(1)].
+ \label{eq:axisymmetric-binc-limit}
+\end{align}
+Substitution into Eq.~\eqref{eq:linear_coefficients}, with $p=\omega$, yields
+the absolute linear law
+\begin{align}
+ T^{(0)}_{\ell0}
+ &={\cal A}^{(0)}_\ell(M\omega)^{2\ell+2}[1+o(1)],\nonumber\\
+ {\cal A}^{(0)}_\ell
+ &=\frac{4(r_+^2+a^2)}{M^2{\cal K}_\ell^2}.
+ \label{eq:axisymmetric-T0-infrared}
+\end{align}
+
+For the nonlinear coefficient, define the spherical angular overlap and two
+convergent Bessel integrals
+\begin{align}
+ {\cal C}_\ell=\int|Y_{\ell0}|^4\dd\Omega,
+ \qquad &
+ {\cal I}_\ell=-\int_0^\infty x^2y_\ell(x)j_\ell^3(x)\dd x ,\nonumber\\
+ &{\cal J}_\ell=\int_0^\infty x^2j_\ell^4(x)\dd x>0.
+ \label{eq:axisymmetric-infrared-integral}
+\end{align}
+For fixed subextremal spin the $a^2C^{(2)}$ source term and the strong-field
+part of the Green integral are subleading.  In units $M=1$, the outgoing
+solution and Wronskian in the far zone are
+$R^{\rm up}=\omega\ii^{\ell+1}h_\ell^{(1)}(x)[1+o(1)]$ and
+$W_\ell=\ii^{\ell+2}{\cal K}_\ell\omega^{-\ell}[1+o(1)]$.
+Their phases are essential.  Since
+$\ii h_\ell^{(1)}=\ii j_\ell-y_\ell$, direct substitution in the Green
+integral gives, after restoring $M$,
+\begin{equation}
+ \frac{A_{H,\ell0}^{(1)}}{M^2}
+ ={\cal C}_\ell{\cal K}_\ell^2
+ ({\cal I}_\ell+\ii{\cal J}_\ell)
+ (M\omega)^{-2\ell-2}[1+o(1)].
+ \label{eq:axisymmetric-AH-infrared}
+\end{equation}
+Thus the unit-horizon coefficient has
+$|A_H^{(1)}|\propto(M\omega)^{-2\ell-2}$ and
+$\arg A_H^{(1)}\to\arg({\cal I}_\ell+\ii{\cal J}_\ell)$.  This divergence is
+not a divergent scattering response: maintaining unit horizon amplitude
+requires a growing incident wave as $\omega\to0$.  Combining
+Eqs.~\eqref{eq:axisymmetric-binc-limit} and
+\eqref{eq:axisymmetric-AH-infrared} instead gives
+\begin{align}
+ M A_{H,{\rm fix}}^{(1)}
+ &=\frac{8{\cal C}_\ell}{{\cal K}_\ell}\ii^{-(\ell+1)}
+ ({\cal I}_\ell+\ii{\cal J}_\ell)
+ (M\omega)^{\ell+1}[1+o(1)],\nonumber\\
+ \rho_{H,\ell0}
+ &\longrightarrow\rho^{\rm IR}_{H,\ell}
+ =4{\cal C}_\ell({\cal I}_\ell+\ii{\cal J}_\ell).
+ \label{eq:axisymmetric-complex-response}
+\end{align}
+The fixed-incident first-order amplitude therefore vanishes as
+$(M\omega)^{\ell+1}$, while its ratio to the linear horizon amplitude tends
+to a finite complex constant.  Taking its real part cancels the near-zone
+matching coefficient and recovers the flux laws
+\begin{align}
+ \chi_{H,\ell0}
+ &\longrightarrow \chi^{\rm IR}_\ell
+ =2\operatorname{Re}\rho^{\rm IR}_{H,\ell}
+ =8{\cal C}_\ell{\cal I}_\ell,\nonumber\\
+ T^{(1)}_{\ell0}
+ &={\cal A}^{(1)}_\ell(M\omega)^{2\ell+2}[1+o(1)],
+ \qquad
+ {\cal A}^{(1)}_\ell={\cal A}^{(0)}_\ell\chi^{\rm IR}_\ell .
+ \label{eq:axisymmetric-T1-infrared}
+\end{align}
+Thus the cubic interaction is infrared marginal for every axisymmetric
+self channel: it changes the coefficient, but not the linear absorption
+power.  The ratio $\chi^{\rm IR}_\ell$ is independent of spin, although the
+absolute coefficients retain spin dependence through ${\cal K}_\ell$ and the
+horizon-area factor.  This statement takes $\omega\to0$ at fixed $|a|<M$;
+Eq.~\eqref{eq:axisymmetric-static-solution} also makes clear why the limit is
+not uniform as $a/M\to1$ for $\ell>0$.
+
+Table~\ref{tab:axisymmetric-infrared} evaluates the new formulas for the
+$a/M=0.5$ production spin.  The Bessel integrals were summed over successive
+$\pi$ intervals and extrapolated in inverse endpoint powers.  Independent
+Kerr solves at $(N,q)=(144,144)$ and $(176,176)$ used only the horizon-side
+response at the listed lowest frequencies.  At the higher resolution the
+relative differences between the scaled numerical and analytic coefficients
+are $(0.48,0.96,3.32)\%$ for $T^{(0)}$ and $(0.82,1.07,3.41)\%$ for
+$T^{(1)}$, ordered by $\ell=0,1,2$; these are finite-frequency corrections,
+not fitted exponents.  The two-resolution changes in $\chi_H$ are given in
+the final column, and the largest Wronskian error is $2.5\times10^{-11}$.
+The same runs test information absent from the energy flux.  For
+$\ell=0,1,2$ they give
+$\mathcal J_\ell=(0.785398163397,0.366519142919,0.246839422782)$ and limiting
+phases $(66.1895^\circ,70.6933^\circ,72.4699^\circ)$.  At the lowest listed
+frequencies the complex relative responses agree with
+Eq.~\eqref{eq:axisymmetric-complex-response} to
+$(0.228,0.148,0.318)\%$, while their simultaneous-resolution changes are
+$(6.3\times10^{-6},5.0\times10^{-5},3.0\times10^{-4})$.  Hence both the
+dissipative real part and the reactive phase part are independently resolved.
+The infinity-side $R^{(1)}$ interference term is already cancellation limited
+at these frequencies and is deliberately not used in this infrared audit.
+
+As a numerical test of the powers rather than only their coefficients, we fit
+the seven horizon-side points for each multipole freely in log--log space.
+For $T^{(0)}$ the fitted powers are $2.0145$, $4.0298$, and $6.0784$; for
+$T^{(1)}$ they are $2.0245$, $4.0360$, and $6.0884$.  Every fit has
+$R^2>0.999989$.  Restricting to the lowest five frequencies moves the two
+sets to $(2.0095,4.0193,6.0502)$ and $(2.0162,4.0237,6.0585)$,
+respectively, showing convergence toward the exact powers $(2,4,6)$ as the
+upper end of the fit window is removed.  The analytic conclusion still comes
+from matched asymptotics; these free fits are an independent finite-frequency
+audit.  For $\ell=2$, attempts at $M\omega=0.003$ and $0.004$ failed the
+paired continuation-normalization check and are excluded, so the reported
+infrared window begins at $M\omega=0.005$.
 
 \begin{table*}[t]
-\caption{Sensitivity of the low-frequency log-log slopes to the number of
-points retained in the fit.  The baseline column uses the four-point fit quoted
-in the text; the ranges use three, four, and five points.  Here the superscript
-$(0)$ labels the linear transmission coefficient and $(1)$ labels the
-first-order nonlinear coefficient.  The last two columns give the largest
-log-space RMS residual over those fits.}
-\label{tab:low-window}
+\caption{Analytic cubic infrared coefficients and direct horizon-side checks
+for $a/M=0.5$.  Here
+$T^{(i)}_{\ell0}\sim{\cal A}^{(i)}_\ell(M\omega)^{2\ell+2}$ and
+$\delta_N\chi_H$ compares the simultaneous $(N,q)=(144,144)$ and
+$(176,176)$ calculations at the lowest listed frequency.}
+\label{tab:axisymmetric-infrared}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c c}
+$\ell$ & ${\cal I}_\ell$ & $\chi^{\rm IR}_\ell$
+& ${\cal A}^{(0)}_\ell$ & ${\cal A}^{(1)}_\ell$
+& lowest $M\omega$ & $\delta_N\chi_H$\\
+\hline
+0 & 0.346573590280 & 0.220635600153 & 14.9282032 & 3.29369308 & 0.00075 & $1.1\times10^{-7}$\\
+1 & 0.128401008797 & 0.147136717786 & 1.24401694 & 0.183040569 & 0.00150 & $1.5\times10^{-4}$\\
+2 & 0.077970747421 & 0.106366541731 & 0.0165868925 & 0.00176429039 & 0.00500 & $7.7\times10^{-5}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+This calculation extends analytically to every positive integer $n$.  Consider
+the $U(1)$-invariant local equation
+\begin{equation}
+ \Box\Phi+\epsilon_n|\Phi|^{2n}\Phi=0,
+ \qquad n=1,2,\ldots,
+ \label{eq:power-nonlinearity}
+\end{equation}
+for which $[\epsilon_n]=M^{2n-2}$ when $[\Phi]=M^{-1}$.  The cubic model used
+elsewhere in this paper is the $n=1$ member.  At first order the source scales
+as $|\alpha|^{2n}\alpha$ under
+$R^{(0)}\mapsto\alpha R^{(0)}$, so fixed-incident normalization gives
+\begin{align}
+ T_n^{(1)}&=\frac{2p(r_+^2+a^2)}{\omega|B^{\rm inc}|^{2n+2}}
+ \operatorname{Re}A_{H,n}^{(1)},\nonumber\\
+ \chi_H^{(n)}&\equiv\frac{T_n^{(1)}}{T^{(0)}}
+ =\frac{2\operatorname{Re}A_{H,n}^{(1)}}{|B^{\rm inc}|^{2n}}.
+ \label{eq:power-response}
+\end{align}
+For a general incident mode and target multipole the projected source is
+\begin{align}
+ Q^{(n)}_{\ell'\ell m}(r)={}&
+ \left[r^2C^{(0,n)}_{\ell'\ell m}
+ +a^2C^{(2,n)}_{\ell'\ell m}\right]
+ |R^{\rm in}_{\ell m\omega}|^{2n}R^{\rm in}_{\ell m\omega},
+ \label{eq:power-radial-source}\\
+ C^{(j,n)}_{\ell'\ell m}={}&\int\dd\Omega\,\cos^j\theta\,
+ S_{\ell'm}^*|S_{\ell m}|^{2n}S_{\ell m},
+ \qquad j=0,2 .
+ \label{eq:power-angular-general}
+\end{align}
+The Green amplitudes follow from the same in/up Wronskian as in the cubic
+calculation, with $Q\mapsto Q^{(n)}$.  In particular,
+\begin{equation}
+ A_{H,n}^{(1)}=-\frac{1}{W_\ell}\int_{r_+}^{\infty}
+ Q^{(n)}_{\ell\ell m}(r)R^{\rm up}_{\ell m\omega}(r)\dd r .
+ \label{eq:power-horizon-green}
+\end{equation}
+For a dimensionless incident amplitude ${\cal A}_{\rm in}$, the self-channel
+flux expansion and its conservation law are
+\begin{align}
+ T={}&T^{(0)}+\epsilon_n|{\cal A}_{\rm in}|^{2n}T_n^{(1)}
+ +\calO(\epsilon_n^2|{\cal A}_{\rm in}|^{4n}),\nonumber\\
+ R={}&R^{(0)}+\epsilon_n|{\cal A}_{\rm in}|^{2n}R_n^{(1)}
+ +\calO(\epsilon_n^2|{\cal A}_{\rm in}|^{4n}),\nonumber\\
+ T_n^{(1)}+R_n^{(1)}={}&0 .
+ \label{eq:power-flux-expansion}
+\end{align}
+This makes $M^{2n-2}\chi_H^{(n)}$ dimensionless.  Numerically, the outer
+integrand is not formed by raising a cancellation-prone oscillatory sum to a
+large power.  We expand
+$(B^{\rm inc}e^{-\ii\omega r_*}+B^{\rm ref}e^{\ii\omega r_*})^{n+1}$ and
+its conjugate factor binomially, multiply by the target homogeneous wave, and
+integrate the resulting finite phase channels separately.  This gives
+$2n+3$ channels with phase indices
+$q=-2n-2,-2n,\ldots,2n+2$ and asymptotic envelope $r^{-2n}$.
+The construction is therefore finite for every fixed positive integer $n$
+and retains oscillatory-tail control as the operator order is increased.
+
+For the monopole the angular projections reduce to
+\begin{equation}
+ C_n^{(0)}=\int|S_{00}|^{2n+2}\dd\Omega=(4\pi)^{-n},
+ \qquad C_n^{(2)}=\frac13C_n^{(0)}.
+ \label{eq:power-angular}
+\end{equation}
+The leading far-zone Green integral is consequently
+\begin{align}
+ \operatorname{Re}A_{H,n}^{(1)}
+ &=\frac{C_n^{(0)}}{\omega^2}I_n+o(\omega^{-2}),\nonumber\\
+ I_n&=\int_0^\infty
+ \frac{\sin^{2n+1}x\cos x}{x^{2n}}\dd x,\nonumber\\
+ &=\frac{n}{n+1}\int_0^\infty
+ \frac{\sin^{2n+2}x}{x^{2n+1}}\dd x>0.
+ \label{eq:power-integral}
+\end{align}
+The second form follows by integration by parts and proves positivity without
+numerics.  Repeated integration by parts, followed by the standard finite
+cosine expansion of $\sin^{2n+2}x$, gives the regulator-independent finite sum
+\begin{equation}
+ I_n=\frac{(-1)^n}{4(n+1)(2n-1)!}
+ \sum_{j=1}^{n+1}(-1)^{j+1}j^{2n}
+ \binom{2n+2}{n+1-j}\ln j .
+ \label{eq:power-integral-sum}
+\end{equation}
+Using $B^{\rm inc}=\ii/(2\omega)+o(\omega^{-1})$ in
+Eq.~\eqref{eq:power-response} yields the all-$n$ infrared law
+\begin{align}
+ M^{2n-2}\chi_{H,00}^{(n)}
+ &=c_n(M\omega)^{2n-2}\nonumber\\
+ &\quad+o\!\left((M\omega)^{2n-2}\right),
+ \label{eq:power-infrared-law}\\
+ c_n&=\frac{2I_n}{\pi^n}>0 .\nonumber
+\end{align}
+Thus $n=1$ is infrared marginal and reproduces $c_1=\ln2/\pi$,
+whereas every $n>1$ operator is infrared irrelevant in this scattering
+observable.  The next two coefficients are
+\begin{equation}
+ c_2=0.0631722552062,\qquad c_3=0.0172436384309.
+ \label{eq:power-coefficients}
+\end{equation}
+
+For the full $\ell=0,1,2$ spectra, the far-zone normalization and the
+covariant source weight
+$r^2C^{(0)}_{\ell\ell m}+a^2C^{(2)}_{\ell\ell m}$ still control how quickly a
+finite-frequency calculation reaches Eqs.~\eqref{eq:axisymmetric-T0-infrared}
+and \eqref{eq:axisymmetric-T1-infrared}.  We therefore retain a separate
+globally balanced Kerr experiment for $a=0.5$ and $m=0$, rather than use the
+asymptotic formulas to manufacture display points.
+
+The infinity-side interference integral becomes cancellation limited before
+the transmitted coefficient loses smoothness.  For points that test both
+boundary fluxes, we therefore apply the same global requirement used
+throughout the paper,
+\begin{equation}
+|\delta_1|=|T^{(1)}+R^{(1)}|\leq10^{-8},
+\end{equation}
+before a point can enter the globally balanced part of a figure or a
+two-boundary physical fit.  Table~\ref{tab:low-acceptance} gives the resulting
+displayed windows.  The lowest retained frequencies are
+$M\omega=0.02$, $0.12$, and $0.28$ for $\ell=0,1,2$, respectively.  The
+filled data in Fig.~\ref{fig:lowfreq} show that both $T^{(0)}$ and
+$T^{(1)}$ decrease rapidly toward the low-frequency side.  The additional
+open points are the paired horizon-side calculations of
+Table~\ref{tab:axisymmetric-infrared}; they extend below the reflected-channel
+cancellation boundary and are compared with the analytic leading laws.  We
+do not fit a power law to the globally balanced segments.  The free infrared
+fits quoted above use only the open horizon-side points, while the powers in
+Eqs.~\eqref{eq:axisymmetric-T0-infrared} and
+\eqref{eq:axisymmetric-T1-infrared} come from matched asymptotics.
+
+We test each lowest retained point independently.  Starting from a
+$N=256$, $q=256$, $r_{\rm m}=40M$ reference, we lower $N$ to 224, lower $q$ to
+192, and move the matching radius to $32M$ and $48M$.  Table~\ref{tab:low-convergence}
+shows that the largest relative change in $T^{(1)}$ is $1.8\times10^{-8}$;
+the largest change in $R^{(1)}$ is $2.0\times10^{-8}$, and every run satisfies
+the first-order balance at or below $3.1\times10^{-12}$.  The displayed
+low-frequency-side trend is therefore supported by both boundary fluxes,
+rather than inferred from a cancellation-limited reflected amplitude.
+
+\begin{table*}[t]
+\caption{Accepted low-frequency-side data displayed in
+Fig.~\ref{fig:lowfreq}.  Only points satisfying
+$|T^{(1)}+R^{(1)}|\leq10^{-8}$ are retained.  The last three columns give the
+linear transmission, first-order transmission, and absolute first-order
+balance residual at the lowest displayed frequency.}
+\label{tab:low-acceptance}
 \begin{ruledtabular}
 \begin{tabular}{c c c c c c}
-$\ell$ & baseline $(\alpha_\ell^{(0)},\alpha_\ell^{(1)})$
-& range of $\alpha_\ell^{(0)}$ & range of $\alpha_\ell^{(1)}$
-& $\max\sigma_{\log}^{(0)}$ & $\max\sigma_{\log}^{(1)}$\\
+$\ell$ & displayed $M\omega$ range & points
+& $T^{(0)}_{\rm low}$ & $T^{(1)}_{\rm low}$ & $|\delta_1|_{\rm low}$\\
 \hline
-0 & $(2.34,2.50)$ & $[2.31,2.37]$ & $[2.46,2.50]$ & $3.44\times10^{-2}$ & $3.33\times10^{-2}$\\
-1 & $(5.25,5.48)$ & $[4.88,5.51]$ & $[5.03,5.80]$ & $2.92\times10^{-1}$ & $3.66\times10^{-1}$\\
-2 & $(8.52,8.74)$ & $[7.92,9.05]$ & $[8.07,9.35]$ & $4.48\times10^{-1}$ & $5.10\times10^{-1}$\\
+0 & $[0.02,0.09]$ & 15 & $6.92348\times10^{-3}$ & $1.67885\times10^{-3}$ & $1.4\times10^{-13}$\\
+1 & $[0.12,0.28]$ & 17 & $9.73095\times10^{-4}$ & $1.78519\times10^{-4}$ & $3.7\times10^{-14}$\\
+2 & $[0.28,0.46]$ & 19 & $4.35440\times10^{-4}$ & $6.58814\times10^{-5}$ & $2.0\times10^{-14}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\begin{table*}[t]
+\caption{Convergence audit at the lowest accepted displayed point for each
+multipole.  The reference uses $(N,q,r_{\rm m}/M)=(256,256,40)$.  The
+maxima include the active $(240,192,40)$ setting and the one-choice variations
+$(224,256,40)$, $(256,192,40)$, $(256,256,32)$, and $(256,256,48)$.  The last
+column is the largest absolute first-order balance residual in the scan.}
+\label{tab:low-convergence}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c}
+$\ell$ & $M\omega$ & $T^{(1)}_{\rm ref}$
+& $\max|\Delta T^{(1)}/T^{(1)}|$
+& $\max|\Delta R^{(1)}/R^{(1)}|$ & $\max|\delta_1|$\\
+\hline
+0 & 0.02 & $1.67885\times10^{-3}$ & $1.8\times10^{-8}$ & $2.0\times10^{-8}$ & $3.0\times10^{-12}$\\
+1 & 0.12 & $1.78519\times10^{-4}$ & $6.7\times10^{-9}$ & $7.3\times10^{-9}$ & $3.8\times10^{-13}$\\
+2 & 0.28 & $6.58814\times10^{-5}$ & $9.2\times10^{-9}$ & $4.6\times10^{-9}$ & $2.8\times10^{-13}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+We next test the all-$n$ prediction in Eq.~\eqref{eq:power-infrared-law}
+without using it as an input to the radial solve.  For $n=2,3$ we computed the
+$\ell=m=0$ response at
+$M\omega=(0.0005,0.00075,0.001,0.0015,0.002,0.003,0.005)$ and
+$a/M=(0,0.5,0.9,0.99,0.999)$, independently at
+$(N,q)=(144,144)$ and $(176,176)$.  A quadratic extrapolation of
+$\chi_H^{(n)}/\omega^{2n-2}$ over the lowest five frequencies recovers the
+analytic coefficient at every spin.  Changing the fit to the lowest four or
+six points changes the extrapolated coefficient by at most
+$4.6\times10^{-6}$, and the spin-to-spin relative standard deviations of the
+intercepts are $1.2\times10^{-6}$ and $7.2\times10^{-7}$ for $n=2,3$.
+The direct log--log slopes in the finite fit window are slightly above their
+asymptotic integer values, with the ranges given in
+Table~\ref{tab:power-l0}; their $R^2$ values exceed $0.9999989$.
+
+The fixed-frequency limit does not by itself test whether the conclusion is
+uniform as extremality is approached.  We therefore performed a second scan
+at fixed $y=\omega/\kappa=(0.025,0.05,0.1)$ for
+$a/M=(0.98,0.99,0.995,0.997,0.999)$.  Equation~\eqref{eq:power-infrared-law}
+predicts
+\begin{equation}
+ M^{2n-2}\chi_{H,00}^{(n)}
+ \sim c_n y^{2n-2}(M\kappa)^{2n-2}.
+ \label{eq:power-kappa-law}
+\end{equation}
+At the smallest $y$, fits to the three highest spins give powers
+$2.00734$ and $4.01128$, with $R^2=0.99999988$ and $0.99999993$.
+The results therefore resolve suppression by $\kappa^2$ and $\kappa^4$,
+respectively.  This is qualitatively different from the $1/\kappa$ growth of
+the cubic principal $\ell=m\ge2$ channels: increasing the local power
+does not manufacture a monopole throat enhancement.
+
+The new source calculations reuse the same homogeneous solution for every
+$n$.  At the lowest representative point
+$(a/M,M\omega,N)=(0.5,5\times10^{-4},176)$, the last 16 normalized
+phase-peeled Chebyshev coefficients are at most $5.2\times10^{-14}$.
+Across 1800 independent Chebyshev--Gauss validation points, the original
+field-dependent radial residual in Eq.~\eqref{eq:radial_residual} has median
+$2.7\times10^{-10}$, 95th percentile $2.1\times10^{-7}$, and a localized
+maximum $1.6\times10^{-5}$.  Over both response scans the largest
+two-resolution change is $2.5\times10^{-6}$, the largest linear-balance error
+is $7.7\times10^{-13}$, and the largest Wronskian error is
+$1.1\times10^{-14}$.  At the smallest responses the separately reconstructed
+reflected interference is cancellation limited and is not used: the power-law
+test uses the direct horizon Green integral, its two-resolution convergence,
+and the independent homogeneous diagnostics just quoted.
+
+OpenAI Codex (GPT-5, accessed August 2026) assisted with implementation and
+debugging of the generalized source, construction of the parameter scans, and
+numerical postprocessing.  The authors specified the physical problem and
+acceptance tests, executed the calculations locally, and independently checked
+the analytic limits, paired-resolution results, conservation laws, Wronskians,
+and manuscript tables against the frozen data files.
+
+\begin{table*}[t]
+\caption{Scalar-monopole test of the $|\Phi|^{2n}\Phi$ infrared hierarchy.
+The fixed-$\omega$ slope is the range over the five spins; the fixed-$y$
+slope uses $y=0.025$ and the three highest spins.  The coefficient error is
+the largest quadratic-extrapolation error over spin.  The final column is the
+largest two-resolution response change over both scans.}
+\label{tab:power-l0}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c c}
+$n$ & $c_n$ & predicted power & fixed-$\omega$ fitted power
+& fixed-$y$ $\kappa$ power & max. coefficient error & max. $\delta_N\chi_H$\\
+\hline
+2 & 0.0631722552 & 2 & 2.01009--2.01016 & 2.00734 & $2.8\times10^{-6}$ & $2.5\times10^{-6}$\\
+3 & 0.0172436384 & 4 & 4.01552--4.01561 & 4.01128 & $1.3\times10^{-6}$ & $7.7\times10^{-9}$\\
 \end{tabular}
 \end{ruledtabular}
 \end{table*}
 
 \begin{figure*}[t]
 \centering
+\includegraphics[width=0.98\textwidth]{../../figures/kerr_scalar_power_nonlinearity_l0.png}
+\caption{Higher-power scalar-monopole response.  (a) Direct horizon response
+for $n=2,3$ at $a/M=0.5$; dotted lines are the analytic leading laws
+$c_n\omega^{2n-2}$.  (b) The scaled response divided by $c_n$ for five spins;
+solid circles and dashed squares denote $n=2$ and 3.  The near coincidence of
+the colored spin curves exhibits the common far-zone limit.  (c) At fixed
+$\omega/\kappa=0.025$, the response decreases toward extremality; dotted
+curves are $c_n(0.025\kappa)^{2n-2}$.  Points show the $N=q=176$ calculation;
+all pass the paired-resolution, linear-balance, and Wronskian tests described
+in the text.}
+\label{fig:power-l0}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
 \includegraphics[width=0.92\textwidth]{../../figures/kerr_scalar_low_frequency_axisymmetric.png}
 \caption{Low-frequency Kerr diagnostics for $a=0.5$, $m=0$, and
 $\ell=0,1,2$.  Left: linear transmission coefficients.  Right:
-self-channel nonlinear transmission coefficients.  The fitted low-frequency
-slopes show that the Kerr fixed-incident coefficients decrease with the same
-centrifugal hierarchy in $T^{(0)}$ and $T^{(1)}$.}
+self-channel nonlinear transmission coefficients.  Filled circles and solid
+segments are the dense globally balanced sweep satisfying
+$|T^{(1)}+R^{(1)}|\leq10^{-8}$.  Open circles are the higher-resolution
+member of the paired horizon-side infrared audit; dashed segments are the
+analytic leading laws ${\cal A}^{(i)}_\ell(M\omega)^{2\ell+2}$.  The gap
+between the two sets marks loss of reflected-channel cancellation accuracy,
+not loss of convergence of the transmitted coefficient.}
 \label{fig:lowfreq}
 \end{figure*}
 
@@ -654,11 +1311,12 @@ centrifugal hierarchy in $T^{(0)}$ and $T^{(1)}$.}
 
 At high frequencies the phase-peeled homogeneous amplitudes become slowly
 varying, while the nonlinear Green integral is controlled by rapidly
-oscillatory tails.  The Schwarzschild calculation finds an exponential tail
-with a fitted temperature close to the Hawking temperature~\cite{Hawking1975}.
-For Kerr we do not assume the Schwarzschild asymptotic integral unchanged,
-because the Teukolsky radial normalization and the $\Sigma$-weighted source
-modify the integrand.  Instead we test the same one-parameter tail model,
+oscillatory tails.  Motivated by the thermal scale associated with a black-hole
+horizon~\cite{Hawking1975} and by finite-window Boltzmann diagnostics in the
+Kerr graybody-factor literature~\cite{Oshita2023,Oshita2024},
+we test an exponential finite-window diagnostic.  We do not infer this form
+from a nonrotating asymptotic integral, because the Teukolsky radial
+normalization and the $\Sigma$-weighted source modify the integrand.  The model is
 \begin{equation}
 T_\ell^{(1)}(\omega)\simeq
 A_\ell\exp\left[-\frac{\omega}{T_{\rm fit}}\right],
@@ -671,7 +1329,7 @@ For Kerr
 T_H=\frac{\rp-\rmn}{4\pi(\rp^2+a^2)}.
 \end{equation}
 For $a=0.5$ the fits in Sec.~\ref{sec:results} give
-$\pi M T_{\rm fit}=0.112$, $0.104$, and $0.100$ for
+$\pi M T_{\rm fit}=0.111$, $0.105$, and $0.101$ for
 $\ell=0,1,2$, close to $\pi M T_H=0.1160$.  These values should be read as
 finite-window effective temperatures rather than as a proof of an exact
 high-frequency theorem.
@@ -680,8 +1338,7 @@ high-frequency theorem.
 \label{sec:results}
 
 Our main result on the Kerr nonlinear scattering coefficient is shown in
-Fig.~\ref{fig:mainresults}.  This figure is the direct Kerr analogue of the
-main Schwarzschild figure: it plots $T_\ell^{(1)}$ for $\ell=0,1,2$, uses a
+Fig.~\ref{fig:mainresults}.  It plots $T_\ell^{(1)}$ for $\ell=0,1,2$, uses a
 linear scale to display the resonance peaks, and uses a logarithmic scale to
 display the high-frequency tail.  The dashed lines mark the real parts of the
 fundamental scalar Kerr quasinormal modes computed with the local
@@ -699,10 +1356,10 @@ Schwarzschild field convention without translating the flux normalization.
 
 Second, the peaks of $T_\ell^{(1)}$ lie on the frequency scale set by the real
 parts of the corresponding fundamental Kerr scalar QNMs~\cite{Berti2009,Stein2019}.  The fitted peak
-positions are $M\omega_{\rm peak}=0.1299$, $0.3100$, and $0.5022$ for
+positions are $M\omega_{\rm peak}=0.1306$, $0.3101$, and $0.5026$ for
 $\ell=0,1,2$, while the QNM real parts are $0.1124$, $0.2979$, and $0.4920$.
-The corresponding fractional offsets are approximately $16\%$, $4.1\%$, and
-$2.1\%$.
+The corresponding fractional offsets are $16.2\%$, $4.1\%$, and
+$2.2\%$.
 To make the comparison quantitative without identifying the flux with a pole,
 we fit the selected samples to the four-parameter profile
 \begin{equation}
@@ -711,52 +1368,56 @@ T_\ell^{(1)}(\omega)=T_{\rm off}+
 \label{eq:lorentzian}
 \end{equation}
 Here $\omega_p$ is the fitted center in units $M=1$, and $\gamma$ is the
-half-width parameter of the interpolation.  This is the Kerr version of the
-Breit-Wigner-type resonance observed in the Schwarzschild nonlinear
-coefficients, not a claim that the flux itself is a meromorphic response.
-The coefficient of determination of the three fits is $R^2=0.9974$,
-$0.9979$, and $0.9991$ for $\ell=0,1,2$, respectively.  The comparison is
+half-width parameter of the phenomenological Breit--Wigner-type interpolation,
+not a claim that the flux itself is a meromorphic response.
+The coefficient of determination of the three fits is $R^2=0.9918$,
+$0.9978$, and $0.9985$ for $\ell=0,1,2$, respectively.  The comparison is
 qualitative rather than a precision QNM determination: the nonlinear
 coefficient is a real-frequency flux observable, whereas the QNM frequencies
-are poles of the analytically continued response.
-The quoted $\omega_{\rm peak}$ and $\gamma$ are parameters of the numerical
-Lorentzian interpolation used to locate a broad feature; they are not a
-claim that the nonlinear flux has been analytically continued to a QNM pole.
+are poles of the analytically continued response.  A genuine Kerr QNM
+projection requires a conserved bilinear form and contour
+regularization~\cite{GreenEtAl2023}, neither of which is part of this fit.
 The fit uses the sampled points satisfying $T_\ell^{(1)}>0.2T_{\ell,\max}^{(1)}$;
 the relative RMS residuals of these peak fits over the selected points are
-$1.36\%$, $1.23\%$, and $0.57\%$ for $\ell=0,1,2$, respectively.  These
+$2.41\%$, $1.27\%$, and $1.05\%$ for $\ell=0,1,2$, respectively.  These
 residuals quantify the descriptive quality of the interpolation, not an error
 bar on the QNM frequencies.
 As a fit-window sensitivity check, we repeat the selection with thresholds
 from $0.15$ to $0.30$ of the sampled maximum, retaining at least five points
 in every fit.  The resulting fitted centers vary by at most
-$7.1\times10^{-5}$, $3.2\times10^{-4}$, and $1.3\times10^{-5}$ for
+$6.7\times10^{-4}$, $3.9\times10^{-4}$, and $3.4\times10^{-4}$ for
 $\ell=0,1,2$, respectively, whereas the corresponding half-widths vary by
-$5.3\times10^{-3}$, $8.8\times10^{-3}$, and $4.5\times10^{-4}$.  The
+$3.1\times10^{-3}$, $4.8\times10^{-3}$, and $5.2\times10^{-3}$.  The
 center locations are therefore stable at the resolution of the sweep, while
 the widths should be regarded as descriptive fit parameters.  The complete
 threshold scan is included in the reproducibility data.
 
 Third, at high frequency the accepted tail points are well fit by the
 Boltzmann form Eq.~\eqref{eq:boltzmann}.  The fitted temperatures differ from
-the Kerr Hawking temperature by $3.2\%$, $10.1\%$, and $13.6\%$ for
+the Kerr Hawking temperature by $4.0\%$, $9.8\%$, and $12.8\%$ for
 $\ell=0,1,2$, respectively.  These are effective finite-window fit
-parameters, not an analytic derivation of a thermal spectrum.  At low
-frequency the Kerr fixed-incident coefficients decrease
-with frequency in the accessible window.  This differs from simply copying the
+parameters, not an analytic derivation of a thermal spectrum.  On the accepted
+low-frequency side the Kerr fixed-incident coefficients decrease as
+$\omega$ is lowered over the globally balanced windows.  The deeper
+horizon-side data then recover the matched Kerr powers $(M\omega)^{2\ell+2}$
+with free-fit $R^2>0.999989$.  This differs from simply copying the
 Schwarzschild reduced-field statement and is therefore reported as a Kerr
-numerical result rather than assumed analytically.
+analytic result with an independent numerical audit.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.92\textwidth]{../../figures/kerr_scalar_nonlinear_axisymmetric_fig2.png}
 \caption{Nonlinear Kerr transmission coefficients
 $T_\ell^{(1)}$ for $a=0.5$, $m=0$, and $\ell=0,1,2$.  The left panel uses a
-linear scale to show the Breit-Wigner-type peaks.  The right panel uses a
+linear scale to show the Breit--Wigner-type peaks.  The right panel uses a
 logarithmic scale to show the exponential high-frequency tails; dotted
 segments show the finite-window fits used in Table~\ref{tab:fit}.  Dashed
 vertical lines mark the real parts of the fundamental scalar Kerr QNMs
-$\operatorname{Re}\omega_{\ell0}$.}
+$\operatorname{Re}\omega_{\ell0}$.  All 43 points entering the three tail-fit
+windows use $q=2048$; the denser low-frequency and peak samples use $q=192$.
+Circles show every accepted sample, while the solid curves are
+shape-preserving interpolants used only as visual guides.  Every plotted point satisfies
+$|T^{(1)}+R^{(1)}|\leq10^{-8}$.}
 \label{fig:mainresults}
 \end{figure*}
 
@@ -774,9 +1435,9 @@ $\ell$ & $\omega_p$ & $\gamma$
 & $\pi T_{\rm fit}$
 & $\Delta T$\\
 \hline
-0 & 0.1299 & 0.0779 & 0.1124 & 0.1022 & 0.1123 & 3.25\%\\
-1 & 0.3100 & 0.0597 & 0.2979 & 0.0954 & 0.1043 & 10.1\%\\
-2 & 0.5022 & 0.0611 & 0.4920 & 0.0946 & 0.1003 & 13.6\%\\
+0 & 0.1306 & 0.0599 & 0.1124 & 0.1022 & 0.1114 & 4.00\%\\
+1 & 0.3101 & 0.0591 & 0.2979 & 0.0954 & 0.1046 & 9.85\%\\
+2 & 0.5026 & 0.0595 & 0.4920 & 0.0946 & 0.1012 & 12.81\%\\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
@@ -785,8 +1446,8 @@ The exponential fits use unweighted least squares for
 $\log T_\ell^{(1)}$ versus $M\omega$ over the windows
 $[0.18,0.60]$, $[0.38,0.85]$, and $[0.62,1.00]$ for
 $\ell=0,1,2$, respectively.  The corresponding root-mean-square residuals
-in log space are $4.5\times10^{-2}$, $4.9\times10^{-2}$, and
-$3.8\times10^{-2}$.  These window-dependent residuals quantify the quality
+in log space are $3.7\times10^{-2}$, $6.7\times10^{-2}$, and
+$5.6\times10^{-2}$.  These window-dependent residuals quantify the quality
 of the finite-window fit; they are not estimates of a systematic error outside
 the computed frequency range.
 
@@ -811,41 +1472,86 @@ $\ell$ & baseline $[M\omega_{\min},M\omega_{\max}]$
 & $\pi T_{\rm fit}^{\rm base}$ & range of $\pi T_{\rm fit}$
 & $\max\sigma_{\log}$ & $\max|T_{\rm fit}/T_H-1|$\\
 \hline
-0 & $[0.18,0.60]$ & 0.1123 & $[0.1112,0.1131]$ & $4.83\times10^{-2}$ & 4.18\%\\
-1 & $[0.38,0.85]$ & 0.1043 & $[0.1034,0.1057]$ & $4.87\times10^{-2}$ & 10.90\%\\
-2 & $[0.62,1.00]$ & 0.1003 & $[0.0994,0.1012]$ & $3.82\times10^{-2}$ & 14.37\%\\
+0 & $[0.18,0.60]$ & 0.1114 & $[0.1109,0.1122]$ & $3.86\times10^{-2}$ & 4.45\%\\
+1 & $[0.38,0.85]$ & 0.1046 & $[0.1037,0.1068]$ & $6.95\times10^{-2}$ & 10.61\%\\
+2 & $[0.62,1.00]$ & 0.1012 & $[0.1002,0.1031]$ & $5.59\times10^{-2}$ & 13.62\%\\
 \end{tabular}
 \end{ruledtabular}
 \end{table*}
 
-For the accepted subset of the sweep, the largest first-order balance residual
-is $4.3\times10^{-12}$, $2.2\times10^{-12}$, and
-$1.2\times10^{-12}$ for $\ell=0,1,2$, respectively.  The full sweep also
-contains rejected lowest-frequency points with residuals as large as
-$3.9\times10^{-5}$ and $1.2\times10^{-4}$ for $\ell=1,2$; these are caused by
-cancellation in the reflected interference term and are not used for precision
-claims.  The transmitted coefficients remain smooth at those frequencies, so
-we retain them for the low-frequency slope measurement but explicitly separate
-that trend from an accuracy claim for $R^{(1)}$.
+To test whether a power law can mimic the exponential over these finite
+windows, we fit the same positive data to
+$\log T^{(1)}=c-\beta M\omega$ and
+$\log T^{(1)}=c-n\log(M\omega)$.  Both models have two fitted parameters, so
+their corrected Akaike information criteria can be compared without a
+parameter-count ambiguity.  For $n_s$ samples and $k=2$ fitted parameters we
+use
+\begin{equation}
+\mathrm{AICc}=n_s\log(\mathrm{RSS}/n_s)+2k
++\frac{2k(k+1)}{n_s-k-1},
+\label{eq:aicc}
+\end{equation}
+with the residual sum of squares evaluated in log space.
+Table~\ref{tab:tail-models} also reports
+leave-one-out prediction residuals.  The exponential has the smaller AICc and
+the smaller predictive residual for every $\ell$.  A fit with the exponential
+slope fixed exactly to $-1/T_H$ has logarithmic RMS residuals $0.139$, $0.443$,
+and $0.514$ for $\ell=0,1,2$; hence the data support a finite-window
+exponential more strongly than either a power law or an exact thermal slope.
+This model comparison strengthens the descriptive tail claim but does not
+turn it into an asymptotic theorem.
+
+\begin{table*}[t]
+\caption{Finite-window comparison of exponential and power-law descriptions
+of the high-frequency nonlinear transmission tail.  The residuals are RMS
+errors in $\log T^{(1)}$; $\Delta\mathrm{AICc}$ is
+$\mathrm{AICc}_{\rm power}-\mathrm{AICc}_{\rm exp}$, so positive values favor
+the exponential.  The final two columns are leave-one-out logarithmic
+prediction residuals.}
+\label{tab:tail-models}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c c}
+$\ell$ & points & $\sigma_{\rm exp}$ & $\sigma_{\rm power}$
+& $\Delta\mathrm{AICc}$ & $\sigma_{\rm LOO,exp}$ & $\sigma_{\rm LOO,power}$\\
+\hline
+0 & 19 & $3.72\times10^{-2}$ & $4.89\times10^{-1}$ & 97.9 & $4.56\times10^{-2}$ & $6.09\times10^{-1}$\\
+1 & 14 & $6.71\times10^{-2}$ & $3.75\times10^{-1}$ & 48.2 & $8.92\times10^{-2}$ & $4.80\times10^{-1}$\\
+2 & 10 & $5.59\times10^{-2}$ & $1.84\times10^{-1}$ & 23.8 & $8.11\times10^{-2}$ & $2.62\times10^{-1}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+All peak and tail fits, and all filled sweep points in
+Figs.~\ref{fig:lowfreq} and \ref{fig:mainresults}, use only the accepted
+globally balanced subset.  The open infrared points in
+Fig.~\ref{fig:lowfreq} instead obey the paired horizon-side and Wronskian
+checks stated above.  The largest first-order balance residual of the global
+subset
+is $6.9\times10^{-12}$, $2.2\times10^{-12}$, and
+$1.5\times10^{-12}$ for $\ell=0,1,2$, respectively.  Completed solver rows
+that fail the $10^{-8}$ gate remain in the reproducibility data as an audit
+trail, but they are omitted from the plots, tables, peak interpolation, and
+low-frequency discussion.  No physical claim is based on those excluded rows.
 
 \begin{table*}[t]
 \caption{Numerical quality of the axisymmetric Kerr frequency sweeps.  Here
 $\delta_0=|T^{(0)}+R^{(0)}-1|$ and
-$\delta_1=|T^{(1)}+R^{(1)}|$.  A point is counted as accepted when
-$\delta_1\le 10^{-8}$.  All active frequency-sweep points use the refined
-resolution $N=240$ and quadrature order $q=192$; the earlier $N=224$, $q=160$
-sweep is retained only as the production-resolution audit in
+$\delta_1=|T^{(1)}+R^{(1)}|$.  Every retained point satisfies
+$\delta_1\le 10^{-8}$.  All active points use $N=240$.  The low-frequency and
+peak samples use $q=192$.  All 43 samples in the three tail-fit windows use
+$q=2048$ after the audit in Table~\ref{tab:tail-convergence}.  The earlier
+$N=224$, $q=160$ peak sweep is retained as the production-resolution audit in
 Table~\ref{tab:production-convergence}.  The final column is the
 root-mean-square residual of the logarithmic high-frequency tail fit.}
 \label{tab:numerics}
 \begin{ruledtabular}
 \begin{tabular}{c c c c c c}
-$\ell$ & points & $\max\delta_0$ & accepted & $\max\delta_1^{\rm acc}$
+$\ell$ & retained & $M\omega_{\min}$ & $\max\delta_0$ & $\max\delta_1$
 & $\sigma_{\rm tail}$\\
 \hline
-0 & 16 & $2.2\times10^{-11}$ & 16/16 & $4.3\times10^{-12}$ & $4.5\times10^{-2}$\\
-1 & 16 & $1.9\times10^{-11}$ & 14/16 & $2.2\times10^{-12}$ & $4.9\times10^{-2}$\\
-2 & 15 & $3.8\times10^{-11}$  & 12/15 & $1.2\times10^{-12}$ & $3.8\times10^{-2}$\\
+0 & 51 & 0.02 & $2.8\times10^{-11}$ & $6.9\times10^{-12}$ & $3.7\times10^{-2}$\\
+1 & 40 & 0.12 & $1.9\times10^{-11}$ & $2.2\times10^{-12}$ & $6.7\times10^{-2}$\\
+2 & 44 & 0.28 & $3.8\times10^{-11}$ & $1.5\times10^{-12}$ & $5.6\times10^{-2}$\\
 \end{tabular}
 \end{ruledtabular}
 \end{table*}
@@ -883,6 +1589,36 @@ $\ell=2,\ M\omega=.52$ & $9.6\times10^{-6}$ & $7.6\times10^{-6}$
 \end{ruledtabular}
 \end{table*}
 
+The high-frequency tail requires a separate quadrature audit because flux
+balance alone does not detect a common error in the two interference terms.
+At fixed $N=240$, the compact inner integral was scanned from $q=192$ to
+$q=2048$, with twelve intermediate orders, at the three representative points
+in Table~\ref{tab:tail-convergence}.  The sequence
+is mildly nonmonotonic at intermediate order but reaches a plateau at the two
+largest orders.  We therefore recomputed every point entering the tail fits at
+$q=2048$.  Lowering $N$ at fixed $q=2048$ produces a much smaller change,
+showing that the remaining sensitivity belongs to the oscillatory Green
+integral rather than to the homogeneous spectral solution.
+
+\begin{table*}[t]
+\caption{High-frequency convergence audit for the active tail data.  The
+quadrature columns compare $q=1792$ with the $q=2048$ reference at $N=240$;
+the radial-order column compares $N=224$ with $N=240$ at $q=2048$.  All
+entries except the final balance residual are relative changes with respect to
+the reference.}
+\label{tab:tail-convergence}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c}
+case & $\Delta T^{(1)}[q]$ & $\Delta T^{(1)}[N]$
+& $\Delta A_{\rm ref}[q]$ & $\Delta A_H[q]$ & $|\delta_1|_{\rm ref}$\\
+\hline
+$\ell=0,\ M\omega=.52$ & $3.0\times10^{-5}$ & $7.1\times10^{-10}$ & $2.3\times10^{-5}$ & $1.6\times10^{-9}$ & $7.8\times10^{-15}$\\
+$\ell=1,\ M\omega=.77$ & $1.7\times10^{-4}$ & $1.0\times10^{-9}$ & $3.1\times10^{-4}$ & $1.2\times10^{-9}$ & $2.7\times10^{-13}$\\
+$\ell=2,\ M\omega=.92$ & $2.5\times10^{-4}$ & $9.5\times10^{-8}$ & $3.4\times10^{-4}$ & $2.5\times10^{-9}$ & $1.0\times10^{-14}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
 We additionally test the self channel with $\ell=m=2$ at both signs of the
 Kerr horizon frequency $p$ and for a rapidly rotating case.  Table~\ref{tab:convergence}
 records finite-resolution changes under $N$, $r_{\rm m}$, and $q$; these are
@@ -897,7 +1633,7 @@ integrals.  Each entry is the maximum relative change in the indicated
 amplitude over the non-reference runs.  The $N$ scan compares $N=224,288$ with
 $N=256$; the matching scan compares the listed alternatives with the reference
 $r_{\rm m}$; and the quadrature scan compares lower orders with $q=192$.
-These non-axisymmetric self-channel tests are validation data for the numerical
+These nonaxisymmetric self-channel tests are validation data for the numerical
 method and are not included in the axisymmetric production curves.}
 \label{tab:convergence}
 \begin{ruledtabular}
@@ -919,11 +1655,41 @@ $a=.9,\ M\omega=.58$ & $1.5\times10^{-6}$ & $1.2\times10^{-8}$
 \end{ruledtabular}
 \end{table*}
 
+The angular discretization is inexpensive enough to audit independently of the
+radial Green calculation.  Table~\ref{tab:angular-convergence} tests both the
+largest spheroidal parameter in the displayed axisymmetric data,
+$(\ell,m,M\omega;\ell')=(2,0,1.0;2)$, and the weakest nonzero channel displayed
+in Table~\ref{tab:channels}, $(2,2,0.30;6)$.  The active angular settings change
+the separation constants by at most $4.4\times10^{-16}$ and the source
+projectors by at most $5.3\times10^{-14}$ relative to the reference.  Lowering
+the basis and quadrature separately gives changes of the same order or less,
+so angular discretization is not the limiting error in the reported data.
+
+\begin{table}[t]
+\caption{Angular-discretization audit.  Each entry is the largest relative
+change over $(\ell,m,M\omega;\ell')=(2,0,1.0;2)$ and $(2,2,0.30;6)$, measured
+against the reference $(L_{\rm extra},q_\theta)=(24,512)$.}
+\label{tab:angular-convergence}
+\small
+\begin{ruledtabular}
+\begin{tabular}{lccc}
+setting $(L_{\rm extra},q_\theta)$ & $\max\Delta\lambda$
+& $\max\Delta C^{(0)}$ & $\max\Delta C^{(2)}$\\
+\midrule
+active $(16,256)$ & $4.4\times10^{-16}$ & $3.7\times10^{-14}$ & $5.2\times10^{-14}$\\
+basis $(12,512)$ & $4.4\times10^{-16}$ & $1.6\times10^{-16}$ & $0$\\
+quadrature $(24,128)$ & $0$ & $1.5\times10^{-14}$ & $2.0\times10^{-14}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
 \noindent\parbox[t]{0.96\columnwidth}{\small
 \textit{Local field diagnostic.}\\
-At the representative peak in Fig.~\ref{fig:accuracy}, the field-dependent
-radial residual has maximum, 95th-percentile, and median values
-$2.5\times10^{-10}$, $3.3\times10^{-12}$, and $1.3\times10^{-13}$.\\
+At the representative peak in Fig.~\ref{fig:accuracy}, the 600-point
+Chebyshev--Gauss grid on each of the three homogeneous branches gives 1800
+independent samples.  Across the 1800 off-grid validation points, the
+field-dependent radial residual has maximum, 95th-percentile, and median values
+$2.8\times10^{-10}$, $1.2\times10^{-11}$, and $3.2\times10^{-13}$.\\
 The largest normalized Chebyshev tail is $2.8\times10^{-14}$ and the
 Wronskian mismatch is below $3\times10^{-16}$.  These local diagnostics are
 reported separately from the global flux-balance residual.}
@@ -936,11 +1702,12 @@ calculation.  Panels (a) and (b) use the representative peak point
 $a=0.5$, $m=0$, $\ell=2$, and $M\omega=0.52$ with $N=240$ and quadrature order
 $q=192$.  Panel (a) shows the normalized Chebyshev coefficients of the
 phase-peeled homogeneous solutions on the outer and inner subdomains.  Panel
-(b) shows the relative residual \eqref{eq:radial_residual} after substituting
-the numerical solution back into the original radial Teukolsky equation.
-Panel (c) shows the first-order flux-balance residual over the full
-axisymmetric frequency sweep.  The dashed line marks the acceptance threshold
-$10^{-8}$ used in Table~\ref{tab:numerics}.}
+(b) shows the relative residual \eqref{eq:radial_residual} after evaluating the
+spectral interpolant and its analytic derivatives on 600 off-grid
+Chebyshev--Gauss points per branch in the original radial Teukolsky equation.
+Panel (c) shows the first-order flux-balance residual for the retained
+axisymmetric points.  The dashed line marks the acceptance threshold
+$10^{-8}$ used before any point enters the manuscript figures or fits.}
 \label{fig:accuracy}
 \end{figure*}
 
@@ -995,58 +1762,847 @@ Since off-diagonal channels do not
 interfere with the zeroth-order field, their energy flux first enters at
 $\mathcal O(\epsilon^2)$.
 
-\subsection{Non-axisymmetric superradiant check}
+\subsection{Superradiant threshold response and spin dependence}
 
-The axisymmetric production sweep is useful for a controlled comparison with
-the Schwarzschild calculation, but it removes the most distinctive rotating
-black-hole effect because $p=\omega$ when $m=0$.  We therefore performed a
-bounded check with $a=0.5$ and $\ell=m=2$, using $N=320$ on both spectral
-subdomains, quadrature order $q=320$, and $r_{\rm m}=40M$.  The threshold is
-$m\Omega_H=0.2679491924$.  The full ten-point scan is retained in the tracked
-CSV file; Table~\ref{tab:superradiant} lists only points satisfying the same
-first-order balance gate $|T^{(1)}+R^{(1)}|\leq10^{-8}$ used for the production
-data.  The rejected points are $M\omega=0.20,0.22,0.255,0.265,0.28$; they lie
-in the near-threshold portion of the scan and are limited by cancellation in
-the reflected interference term, rather than by a physical discontinuity.
+The axisymmetric production sweep removes the most distinctive rotating
+black-hole effect because $p=\omega$ when $m=0$.  We therefore extend the self
+channel to $a/M=0.5,0.7,0.9$ and $\ell=m=1,2$, using the threshold coordinate
+\begin{equation}
+x=\frac{\omega}{m\Omega_H}.
+\end{equation}
+Each displayed point is computed independently at $(N,q)=(288,320)$ and
+$(320,384)$.  The collocation equations are unchanged, but their rows and
+columns are equilibrated before the dense linear solve; this lowers the outer
+branch matrix condition number without changing the endpoint equations.
+Frequency-dependent matching radii lie between $12M$ and $30M$.
 
-Figure~\ref{fig:superradiant} shows the signed linear and first-order horizon
-flux coefficients.  On the accepted points below the threshold, both
-$T^{(0)}$ and $T^{(1)}$ are negative, while they are positive on the accepted
-points above it.  Thus the scalar Kerr calculation recovers the expected
-signed-flux change across the superradiant boundary in this representative
-mode.  This is a validation of the horizon-frequency normalization, not a
-systematic survey over spin, $m$, or spheroidal target channels.
+The primary acceptance condition for this survey is a relative change
+$\delta_N\chi_H\leq10^{-5}$ between the two resolutions, supplemented by a
+$10^{-8}$ linear-flux gate and a $10^{-10}$ Wronskian gate.  Direct
+$R^{(1)}$ is retained as a separate diagnostic: 67 of the 77 displayed
+response points also satisfy $|T^{(1)}+R^{(1)}|\leq10^{-8}$ at both
+resolutions.  The remaining ten points are not used to quote $R^{(1)}$; their
+horizon-side $T^{(1)}$ and $\chi_H$ pass the independent spectral gate, while
+the much smaller reflected interference correction is cancellation limited.
+No rejected response point is shown in Fig.~\ref{fig:superradiant}.  To avoid
+disconnected low-frequency islands, the $a/M=0.5$ curves start at $x=0.9$,
+corresponding to $M\omega=0.121$ and $0.241$ for $\ell=1,2$; the $a/M=0.7$
+and $0.9$ curves start at $x=0.6$, where their absolute frequencies are no
+lower than $0.123$ and $0.188$ for $\ell=1$ and $0.245$ and $0.376$ for
+$\ell=2$.
+
+Figure~\ref{fig:superradiant}(a) shows that $T^{(1)}<0$ below $x=1$ and
+$T^{(1)}>0$ above it for all six families.  Panel (b) shows why this sign
+change is regular rather than discontinuous: $\chi_H$ is positive, finite,
+and smooth through the threshold.  We evaluate the threshold limit by
+symmetrizing the pairs $x=1\pm0.001$ and $1\pm0.01$ and Richardson-extrapolating
+the leading even error.  Table~\ref{tab:superradiant} lists the resulting
+$\chi_H^\star$ and the independently finite slope
+$\lim_{p\to0}T^{(1)}/p$.  The two spectral resolutions agree in
+$\chi_H^\star$ to between $4.2\times10^{-9}$ and $2.8\times10^{-7}$.
+
+The positive sign has an immediate flux interpretation.  In the convention of
+Eq.~\eqref{eq:nonlinear_equation}, $\epsilon>0$ gives $T^{(1)}<0$ and
+$R^{(1)}=-T^{(1)}>0$ for $p<0$, so the weak interaction increases the
+superradiant amplification by the fractional amount
+$\epsilon|{\cal A}_{\rm in}|^2\chi_H$.  A conventional positive quartic
+potential has $\epsilon=-\lambda$ in our action convention and therefore
+suppresses the amplification at this order.  This is a perturbative statement;
+it does not describe nonlinear saturation.
+
+The response also develops a mode-dependent maximum above threshold at high
+spin.  For $a/M=0.9$, the largest sampled values are
+$\chi_H=0.369248$ at $(\ell,m,x)=(1,1,1.30)$ and
+$\chi_H=0.378482$ at $(2,2,1.20)$, with resolution changes
+$7.7\times10^{-7}$ and $1.5\times10^{-6}$, respectively.  Moving the matching
+radius from its reference value $12M$ to $10M$ and $16M$ changes these peak
+values by only $9.4\times10^{-8}$ and $2.4\times10^{-7}$.  The response then
+falls rapidly; according to the same $10^{-5}$ relative gate, the plotted
+high-spin curves are truncated at $x=1.60$ for $\ell=1$ and $x=1.30$ for
+$\ell=2$.  We regard these as resolved real-frequency response maxima, not as
+quasinormal-mode pole fits.
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.88\textwidth]{../../figures/kerr_scalar_nonlinear_superradiant_m2.png}
-\caption{Bounded non-axisymmetric scalar Kerr flux check for $a=0.5$ and
-$\ell=m=2$.  The dashed line marks $M\omega=m\Omega_H=0.2679491924$.
-Filled circles satisfy the first-order balance gate; crosses mark scan points
-retained in the CSV file but rejected because of cancellation.  The signed
-coefficients change sign across the superradiant threshold on the accepted
-points.}
+\includegraphics[width=0.94\textwidth]{../../figures/kerr_scalar_superradiant_response.png}
+\caption{Accepted nonaxisymmetric scalar Kerr response for
+$a/M=0.5,0.7,0.9$ and $\ell=m=1,2$.  The dotted vertical line is the
+superradiant threshold $x=1$.  (a) The signed first-order horizon coefficient
+vanishes and changes sign at the threshold.  (b) The ratio
+$\chi_H=T^{(1)}/T^{(0)}$ remains finite and positive, increases with spin near
+threshold, and develops mode-dependent maxima for $a/M=0.9$.  Only points
+passing the two-resolution response gate are displayed; each curve is
+truncated before its cancellation-limited low- or high-response tail.}
 \label{fig:superradiant}
 \end{figure*}
 
 \begin{table*}[t]
-\caption{Accepted points in the bounded non-axisymmetric superradiant check.
-The entries are signed energy-flux coefficients for $a=0.5$ and $\ell=m=2$;
-$p=\omega-m\Omega_H$.  The omitted points in the ten-point scan fail the
-$10^{-8}$ first-order balance gate.}
+\caption{Threshold-regular nonlinear horizon response.  The limit is obtained
+from the symmetric pairs $x=1\pm0.001$ and $1\pm0.01$ with leading-even-error
+Richardson extrapolation.  The last column is the relative change between the
+$(N,q)=(288,320)$ and $(320,384)$ extrapolations.}
 \label{tab:superradiant}
 \begin{ruledtabular}
 \begin{tabular}{c c c c c}
-$M\omega$ & $p$ & $T^{(0)}$ & $T^{(1)}$ & $|T^{(1)}+R^{(1)}|$\\
+$a/M$ & $\ell=m$ & $\chi_H^\star$ & $\displaystyle\lim_{p\to0}T^{(1)}/p$ & $\delta_N\chi_H^\star$\\
 \hline
-0.18 & $-8.795\times10^{-2}$ & $-1.157\times10^{-6}$ & $-9.742\times10^{-8}$ & $4.788\times10^{-13}$\\
-0.24 & $-2.795\times10^{-2}$ & $-2.373\times10^{-6}$ & $-2.153\times10^{-7}$ & $1.261\times10^{-12}$\\
-0.30 & $3.205\times10^{-2}$ & $1.595\times10^{-5}$ & $1.582\times10^{-6}$ & $9.240\times10^{-13}$\\
-0.35 & $8.205\times10^{-2}$ & $1.804\times10^{-4}$ & $1.960\times10^{-5}$ & $1.598\times10^{-12}$\\
-0.45 & $1.821\times10^{-1}$ & $8.298\times10^{-3}$ & $1.194\times10^{-3}$ & $4.130\times10^{-12}$\\
+0.5 & 1 & 0.124051 & $1.0573\times10^{-3}$ & $4.2\times10^{-9}$\\
+0.5 & 2 & 0.094350 & $1.8295\times10^{-5}$ & $2.8\times10^{-7}$\\
+0.7 & 1 & 0.146970 & $5.3226\times10^{-3}$ & $1.5\times10^{-8}$\\
+0.7 & 2 & 0.116670 & $2.9971\times10^{-4}$ & $8.7\times10^{-9}$\\
+0.9 & 1 & 0.206963 & $2.9206\times10^{-2}$ & $7.9\times10^{-8}$\\
+0.9 & 2 & 0.183251 & $5.8233\times10^{-3}$ & $6.4\times10^{-8}$\\
 \end{tabular}
 \end{ruledtabular}
 \end{table*}
+
+\subsection{Near-extremal scaling and multipole reordering}
+
+The growth visible between $a/M=0.5$ and $0.9$ does not continue as an
+arbitrary function of spin.  To identify its geometric scale, we introduce the
+surface gravity and near-threshold variables
+\begin{equation}
+ \kappa=\frac{r_+-r_-}{2(r_+^2+a^2)},\qquad
+ y=\frac{p}{\kappa},\qquad \Xi=M\kappa\chi_H .
+ \label{eq:near_extremal_variables}
+\end{equation}
+The two limiting procedures must be distinguished before fitting.  Our
+threshold data mean the iterated limit
+\begin{equation}
+ \chi_H^\star(\kappa)=\lim_{y\to0}\chi_H(\kappa,y),
+ \qquad\hbox{followed by}\qquad \kappa\to0,
+ \label{eq:iterated_threshold_limit}
+\end{equation}
+whereas a fixed-$y$ sequence takes $\kappa\to0$ and $p=y\kappa$ together.
+For each spin and mode we sample the four threshold offsets
+$y=(-0.05,-0.025,0.025,0.05)$ and form
+\begin{equation}
+ \begin{aligned}
+ \overline\chi(\eta)&=\frac{\chi_H(+\eta)+\chi_H(-\eta)}{2},\\
+ \chi_H^\star&=\frac{4\overline\chi(0.025)-\overline\chi(0.05)}{3}.
+ \end{aligned}
+ \label{eq:y_threshold_richardson}
+\end{equation}
+The symmetrization removes the odd terms and the second combination removes
+the leading $O(y^2)$ error.  Thus the label $p=0$ below denotes an ingoing
+limit inferred from four nonzero-$p$ solves, not a solve at the degenerate
+Frobenius point.  The radial domains still contain $r=r_+$ and impose the
+regular endpoint equation there; no horizon cutoff is introduced.
+
+The common grid contains $a/M=(0.98,0.99,0.995,0.997,0.999)$ and modes
+$(\ell,m)=(1,1),(2,1),(2,2),(3,2),(3,3),(4,4),(5,5)$.  We add
+$a/M=0.9995,0.9999$ for $(1,1),(2,1),(2,2),(3,2)$.  In addition to the four
+threshold offsets, independent fixed-$y$ rows are evaluated at
+$y=-0.5,0.5,1$.  The base resolutions are $(N,q)=(144,144)$ and $(176,176)$;
+the most cancellation-sensitive supplementary channels are repeated at
+$(224,224)$ and $(256,256)$.  A row is admitted only when the paired response
+changes by at most $5\times10^{-4}$, the linear-flux residual is at most
+$2\times10^{-8}$, and the Wronskian error is at most $10^{-12}$.  Forty
+threshold limits and 126 fixed-$y$ points pass.  Among accepted rows the
+largest corresponding values are $1.21\times10^{-4}$, $1.60\times10^{-11}$,
+and $7.05\times10^{-16}$ at threshold, and $4.92\times10^{-4}$,
+$6.94\times10^{-9}$, and $5.59\times10^{-16}$ at fixed $y$.  Failed extreme
+supplementary rows are omitted from all fits and figures.
+
+We fit each path independently to
+\begin{equation}
+ \chi_H=A(M\kappa)^{-\alpha}
+ \label{eq:modal_power_fit}
+\end{equation}
+by ordinary least squares in $(\ln M\kappa,\ln\chi_H)$.  The fit is repeated
+over all accepted spins, the nearest four, and the nearest three.  We call a
+mode inverse-$\kappa$ only if the nearest-three exponent lies in
+$0.8\leq\alpha\leq1.2$, has $R^2\geq0.995$, and changes by at most $0.1$ from
+the nearest-four fit.  Small drifting exponents are additionally compared
+with the finite-limit model $C_0+C_1(M\kappa)^\beta$.
+
+There is a useful linear-theory classification.  In the extremal angular
+convention of Ref.~\cite{CasalsGrallaZimmerman2016},
+\begin{equation}
+ \begin{aligned}
+ h_{\ell m}&=\frac12+
+ \sqrt{\frac14+K_{\ell m}-2m^2},\\
+ K_{\ell m}&=A_{\ell m}(m/2)+\frac{m^2}{4}.
+ \end{aligned}
+ \label{eq:conformal_weight}
+\end{equation}
+Negative square-root discriminant defines the principal, complex-$h$ family;
+positive discriminant defines the supplementary, real-$h$ family.  This is a
+classification of the associated linear extremal Green function, not by
+itself a derivation of the nonlinear exponent.
+
+Table~\ref{tab:near-extremal-threshold} gives the nearest-three exponents.
+Every tested principal mode, $(2,2)$ through $(5,5)$, is in the
+inverse-$\kappa$ class on all four paths.  Their threshold exponents span
+$1.038$--$1.064$; at fixed $y=-0.5,0.5,1$ the respective ranges are
+$1.027$--$1.051$, $1.044$--$1.091$, and $1.042$--$1.121$.  The smallest
+$R^2$ among these 16 fits is $0.99987$.  Extending $(2,2)$ to seven spins gives
+\begin{equation}
+ \chi_{H,22}^\star=0.02872(M\kappa)^{-1.0037},
+ \qquad R^2=0.99975,
+ \label{eq:near_extremal_threshold_fit}
+\end{equation}
+The nominal ordinary-least-squares 95\% interval for the exponent is
+$[0.9855,1.0219]$, the largest leave-one-out relative prediction error is
+$5.02\%$, and the largest paired-resolution response change is
+$1.26\times10^{-5}$.  The interval is descriptive: it quantifies residuals
+within the seven resolved points but does not include model uncertainty from
+the two-branch matching function.  This fit motivates the resolved leading form
+\begin{equation}
+ \chi_{H,22}^\star\simeq\frac{0.029}{M\kappa}
+ =\frac{0.0046}{M T_H},
+ \qquad T_H=\frac{\kappa}{2\pi}.
+ \label{eq:inverse_kappa_response}
+\end{equation}
+
+\begin{table*}[t]
+\caption{Modal near-extremal scaling audit.  The $y=0$ column is the iterated threshold
+limit in Eqs.~\eqref{eq:iterated_threshold_limit} and
+\eqref{eq:y_threshold_richardson}; the other columns hold the displayed
+nonzero $y$ fixed.  Each $\alpha_y$ is a nearest-three effective logarithmic
+slope, so its precise spin endpoints are channel dependent and are recorded
+in the accompanying CSV file.  These numbers diagnose window drift; no
+asymptotic power is assigned to a supplementary mode.}
+\label{tab:near-extremal-threshold}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c c}
+$(\ell,m)$ & $h_{\ell m}$ & $\alpha_{-0.5}$ & $\alpha_{0}$
+& $\alpha_{0.5}$ & $\alpha_{1}$ & numerical class\\
+\hline
+$(1,1)$ & $1.171$ & 0.471 & 0.415 & 0.308 & 0.236 & drifting crossover\\
+$(2,1)$ & $2.596$ & 0.103 & 0.092 & 0.041 & 0.000 & finite-limit favored\\
+$(2,2)$ & $0.5+0.946i$ & 1.027 & 1.038 & 1.044 & 1.121 & $\kappa^{-1}$ envelope\\
+$(3,2)$ & $2.717$ & 0.218 & 0.247 & 0.125 & 0.090 & finite-limit favored\\
+$(3,3)$ & $0.5+1.938i$ & 1.036 & 1.051 & 1.071 & 1.042 & $\kappa^{-1}$ envelope\\
+$(4,4)$ & $0.5+2.850i$ & 1.047 & 1.060 & 1.085 & 1.052 & $\kappa^{-1}$ envelope\\
+$(5,5)$ & $0.5+3.741i$ & 1.051 & 1.064 & 1.091 & 1.101 & $\kappa^{-1}$ envelope\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+The numerical split is sharper than the statement that corotating modes are
+enhanced.  The fully corotating dipole $(1,1)$ has real $h$, and its threshold
+exponent moves from $0.498$ over all seven spins to $0.445$ over the nearest
+four and $0.415$ over the nearest three.  We therefore do not identify an
+asymptotic fractional power.  For $(2,1)$ and $(3,2)$ the threshold exponents
+similarly decrease from $0.124$ to $0.092$ and from $0.312$ to $0.247$ as the
+window is moved inward.  The finite-limit model is favored over a pure power
+by $\Delta\mathrm{AICc}=18.3$ and $19.8$, respectively, where positive values
+favor the finite model.  These are bounded candidates, while $(1,1)$ remains
+a resolved crossover.  Empirically, the robust $1/\kappa$ response follows
+the principal conformal sector rather than the condition $m=\ell$ alone.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{../../figures/kerr_scalar_modal_powerlaw_classification.png}
+\caption{Path-controlled modal scaling audit.  (a) Threshold responses
+obtained from the four-point $y\to0$ extrapolation.  (b) Adjacent-pair
+effective exponents; the principal $(2,2)$--$(5,5)$ curves approach the
+$\alpha=1$ guide, while the supplementary curves drift downward.  (c)
+Nearest-three effective slopes at the iterated threshold ($y=0$) and at three
+fixed nonzero detunings.  The supplementary points are finite-window
+diagnostics, not $h$-derived critical exponents.  Only samples passing the
+paired-resolution, linear-flux, and Wronskian gates are shown.}
+\label{fig:modal-powerlaws}
+\end{figure*}
+
+The enhancement is a boundary-layer phenomenon, not only a threshold number.
+For $a/M=0.98,0.99,0.995$ we scan $-0.5\le y\le1.2$ for $\ell=m=2,3$.
+All 60 pairs pass the $N=144$--176 comparison; the largest relative response
+change is $1.7\times10^{-4}$, the largest linear and first-order flux-balance
+residuals are $1.1\times10^{-8}$ and $8.1\times10^{-9}$, and the largest
+Wronskian error is $4.9\times10^{-16}$.  As shown in
+Fig.~\ref{fig:near-extremal}, the data support the numerical scaling form
+\begin{equation}
+ \chi_{H,\ell\ell}(p,a)
+ =\frac{1}{M\kappa}F^{\rm num}_\ell\!\left(\frac{p}{\kappa}\right)
+ [1+\delta_\ell(\kappa,p/\kappa)],\qquad \ell=2,3,
+ \label{eq:near_extremal_collapse}
+\end{equation}
+For $-0.5\le y\le1$, the relative scatter across the three spins is at most
+$3.9\%$ for $\ell=2$ and $3.7\%$ for $\ell=3$.  A denser grid with
+$\Delta y=0.05$ locates the sampled maxima at $y=0.80$--$0.90$ and gives
+$\Xi_{\rm pk}=0.06419$ with $2.22\%$ relative scatter among the four
+$(a/M,\ell)=(0.99,2),(0.99,3),(0.995,2),(0.995,3)$ cases.  Thus the resolved
+peak-height envelope grows as $1/\kappa$ while its frequency width scales as
+$\kappa$; Eq.~\eqref{eq:near_extremal_collapse} is an empirical collapse over
+the stated spin window, not an asserted exact-extremal expansion.
+
+The fixed-$y$ columns of Table~\ref{tab:near-extremal-threshold} show that the
+modal split persists away from the single threshold number.  In particular,
+the principal modes retain near-unit exponents on both sides of the bound,
+while the supplementary controls have exponents that shrink as the fit window
+moves inward.  This comparison ties the enhancement to the principal
+near-superradiant throat sector rather than to generic growth of the cubic
+source with spin.
+
+\subsubsection{Kerr/CFT interpretation: from linear absorption to nonlinear order locking}
+
+The collapse above can be organized by the finite-temperature throat
+description without using it as an input to the numerical calculation.  The
+standard left- and right-moving Kerr/CFT temperatures are
+\begin{equation}
+ T_L=\frac{r_++r_-}{4\pi a},\qquad
+ T_R=\frac{r_+-r_-}{4\pi a}
+ =\frac{\kappa(r_+^2+a^2)}{2\pi a}.
+ \label{eq:cft-temperatures}
+\end{equation}
+Thus $T_L\to1/(2\pi)$ while $T_R=\calO(M\kappa)$ in the extremal limit.
+The near-superradiant right-moving frequency obeys
+$\varpi_R\equiv\omega_R/(2\pi T_R)\propto p/\kappa=y$; convention-dependent
+constant factors can be absorbed into the definition of $\omega_R$.  The
+angular eigenvalue enters through the conformal weight in
+Eq.~\eqref{eq:conformal_weight}.  These are precisely the variables in which
+the linear near-region absorption probability is reproduced by a thermal
+two-dimensional correlator~\cite{BredbergKerrCFT2010,HartmanKerrCFT2010,
+CastroHiddenCFT2010}.
+
+The CFT two-point function determines the near-region factor, but the quantity
+normalized at infinity also contains both near--far matching branches.  In
+the matched scalar solution their coefficients scale as
+$A\sim(M\kappa)^{1-h}$ and $B\sim(M\kappa)^h$, while the incident amplitude is
+proportional to $A{\cal D}_{+,h}+B{\cal D}_{-,h}$ and the horizon flux carries
+one power of $\kappa$.  Factoring the $A$ branch gives, up to
+$\kappa$-independent normalizations, the leading form
+\cite{BredbergKerrCFT2010}
+\begin{equation}
+ T^{(0)}_{\ell m}(\kappa,y)=
+ \frac{(M\kappa)^{2\operatorname{Re}h-1}{\cal N}_h(y)}
+ {\left|{\cal D}_{+,h}(y)+{\cal D}_{-,h}(y)
+ (M\kappa)^{2h-1}\right|^2}\,[1+o(1)] .
+ \label{eq:cft-matched-absorption}
+\end{equation}
+Here ${\cal D}_{\pm,h}$ include the far-zone matching coefficients, and
+${\cal N}_h$ contains the signed horizon factor.  Equation
+\eqref{eq:cft-matched-absorption}, rather than the isolated CFT power, is the
+appropriate linear input for the present asymptotically flat problem.  If $h$
+is real, the second matching branch is suppressed and
+$T^{(0)}\sim(M\kappa)^{2h-1}$.  If $h=1/2+\ii\nu$, the two branches have the
+same magnitude and $(M\kappa)^{2h-1}=\exp[2\ii\nu\ln(M\kappa)]$.  The linear
+absorption then carries no net real power of $\kappa$, but is generally a
+bounded log-periodic matching function away from isolated resonant zeros.  It
+need not approach a $\kappa$-independent constant.
+
+The crucial step from a linear correlator to the nonlinear susceptibility is
+the fixed-incident normalization.  The unit-horizon solution becomes a
+unit-incident solution after multiplication by $1/B^{\rm inc}$.  A useful
+dimensionless measure of the resulting horizon intensity is
+\begin{equation}
+ {\cal I}_H\equiv\frac{M^2}{|B^{\rm inc}|^2}
+ =\frac{M^2\omega T^{(0)}}{p(r_+^2+a^2)}.
+ \label{eq:fixed-flux-throat-intensity}
+\end{equation}
+At fixed nonzero $y$, $p=y\kappa$, so Eq.~\eqref{eq:cft-matched-absorption}
+implies the linear intensity scaling
+\begin{equation}
+ {\cal I}_H\sim
+ \begin{cases}
+ (M\kappa)^{2h-2}{\cal I}_h(y), & h\in\mathbb{R},\\[2pt]
+ (M\kappa)^{-1}{\cal Q}_h(y,\ln M\kappa),
+ & h=1/2+\ii\nu,
+ \end{cases}
+ \label{eq:matched-intensity-scaling}
+\end{equation}
+where ${\cal Q}_h$ retains the two-branch log-periodic matching.  The power
+$2h-2$ in the first line belongs to the \emph{linear fixed-incident horizon
+intensity}; it is not an exponent for the nonlinear susceptibility.
+For a principal mode this does not say that the horizon energy flux diverges.
+Its kinematic factor $p$ vanishes; the field intensity required to carry a
+fixed incident flux through that increasingly soft channel grows.  At the threshold itself,
+Eq.~\eqref{eq:matched-intensity-scaling} means first taking the fixed-$y$
+scaling limit and then continuing the matching function to $y=0$, exactly in the
+order used by Eq.~\eqref{eq:iterated_threshold_limit}.  No division by a
+numerical $0/0$ is performed.
+
+Equation~\eqref{eq:power-response} now gives the factorization needed to
+compare operator orders.  Strip the incident normalization from the response by defining
+the dimensionless unit-horizon nonlinear kernel
+\begin{equation}
+ {\cal K}_{n,\ell m}(\kappa,y)
+ \equiv
+ \frac{M^{2n-2}\chi_{H,\ell m}^{(n)}}{{\cal I}_H^n}
+ =\frac{2\operatorname{Re}A_{H,n}^{(1)}}{M^2}.
+ \label{eq:unit-horizon-nonlinear-kernel}
+\end{equation}
+The equality follows directly from Eq.~\eqref{eq:power-response}; it is exact
+in the conventions of this paper.  The kernel contains the projected
+unit-horizon Green integral and the nonlinear near--far overlap, but no power
+of the incident normalization.  Combining Eqs.~\eqref{eq:matched-intensity-scaling}
+and \eqref{eq:unit-horizon-nonlinear-kernel} gives the logically complete
+factorization
+\begin{equation}
+ \begin{aligned}
+ M^{2n-2}\chi_H^{(n)}
+ &\sim (M\kappa)^{n(2h-2)}{\cal I}_h^n(y)
+ {\cal K}_{n,h}(\kappa,y),\\[-2pt]
+ &\hspace{4.5cm}h\in\mathbb{R},\\[2pt]
+ M^{2n-2}\chi_H^{(n)}
+ &\sim (M\kappa)^{-n}{\cal Q}_h^n(y,\ln M\kappa)
+ {\cal K}_{n,h}(\kappa,y),\\[-2pt]
+ &\hspace{4.5cm}h=1/2+\ii\nu.
+ \end{aligned}
+ \label{eq:cft-factorized-response}
+\end{equation}
+Only the explicit linear-normalization factor in this equation is fixed by
+the known matched linear theory.  The nonlinear kernel is not fixed by the
+conformal weight.  Consequently the principal-sector envelope
+$\chi_H^{(n)}=\calO(\kappa^{-n})$ follows conditionally if
+${\cal Q}_h^n{\cal K}_{n,h}$ remains bounded and carries no additional real
+power.  It may still contain logarithmic or log-periodic modulation.  This is
+a power-counting argument, not an analytic evaluation of the nonlinear NHEK
+integral.
+
+We audit this factorization directly at $y=0.5$ using the recorded
+$B^{\rm inc}$.  For any quantity $X$ in Table~\ref{tab:cft-factorization},
+$\alpha_X$ denotes a finite-window effective slope
+$X\propto\kappa^{-\alpha_X}$.  The exact definition gives
+$\alpha_\chi=n\alpha_{\cal I}+\alpha_{\cal K}$ within rounding.  The
+principal $(3,3)$ kernel has a nearly vanishing effective slope, whereas the
+$(2,2)$ kernel retains a $0.10$--$0.13$ drift that can include unresolved
+two-branch modulation.  Thus the full response collapse is stronger than an
+independent numerical demonstration that ${\cal K}_{n,h}$ has a strict
+constant limit.  In the supplementary rows the kernel slope is large and
+compensates the vanishing linear intensity, explicitly ruling out an
+$h$-only formula for the response.
+
+\begin{table*}[t]
+\caption{Fixed-$y=0.5$ factorization audit.  The principal and $(1,1)$ rows use
+the nearest seven accepted spins; the shorter $(2,1)$ sequence uses its five
+accepted spins.  All fitted columns are effective slopes in the convention
+$X\propto\kappa^{-\alpha_X}$.
+The linear column is the matched-asymptotic intensity exponent: $2-2h$ for
+real $h$, and the principal-sector envelope value 1 for complex $h$.  The
+last four columns come from the accepted numerical rows and satisfy
+$\alpha_\chi=n\alpha_{\cal I}+\alpha_{\cal K}$.  They diagnose the factors in
+Eq.~\eqref{eq:cft-factorized-response}; they are not supplementary-sector
+asymptotic exponents.}
+\label{tab:cft-factorization}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c c}
+$(\ell,m)$ & $\alpha_{\cal I}^{\rm lin}$ & $\alpha_{\cal I}^{\rm fit}$
+& $\alpha_{{\cal K},2}$ & $\alpha_{\chi,2}$
+& $\alpha_{{\cal K},3}$ & $\alpha_{\chi,3}$\\
+\hline
+$(1,1)$ & $-0.341$ & $-0.023$ & 0.724 & 0.677 & 1.059 & 0.988\\
+$(2,1)$ & $-3.192$ & $-2.783$ & 5.829 & 0.263 & 8.800 & 0.451\\
+$(2,2)$ & $1$ (envelope) & 0.973 & 0.099 & 2.045 & 0.129 & 3.048\\
+$(3,3)$ & $1$ (envelope) & 1.013 & $-0.003$ & 2.023 & $-0.003$ & 3.036\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+In a boundary-source language, the distinction can be written schematically
+as
+\begin{equation}
+ \langle {\cal O}\rangle_J
+ =G_R^{(2)}J+\epsilon_n\!\int\!G_{R,{\rm conn}}^{(2n+2)}
+ J^{n+1}(J^*)^n+\cdots .
+ \label{eq:cft-nonlinear-response}
+\end{equation}
+The first term controls the linear throat normalization.  The second is the
+contact contribution associated with the bulk $|\Phi|^{2n+2}$ vertex; for the
+cubic equation, $n=1$, it is a four-point rather than a three-point response.
+Kerr/CFT three-point calculations demonstrate how bulk interactions encode
+higher-point data~\cite{BeckerKerrCFT2011}, but the real-time correlator and
+asymptotically flat matching needed for Eq.~\eqref{eq:cft-nonlinear-response}
+have not been computed here.  Consequently linear Kerr/CFT fixes neither the
+sign nor the normalization of ${\cal F}_{n,h}(y)$.  Those quantities, including
+the positive threshold response and the peak near $y\simeq0.8$--0.9, are
+genuine outputs of the nonlinear Green-function experiment.
+
+For supplementary modes the same equation explains why no $h$-only response
+law exists.  Linear theory supplies the factor
+$(M\kappa)^{n(2h-2)}$, but ${\cal K}_{n,h}$ can carry a competing power because
+the nonlinear source samples the throat entrance and far matching region.
+Therefore neither $2\operatorname{Re}h-2$ nor
+$n(2\operatorname{Re}h-2)$ is an exponent of $\chi_H$ unless the kernel is
+separately shown to be asymptotically constant.  Our data do not show that.
+The drifting $(1,1)$ slopes and the $(2,1),(3,2)$ crossovers are reported only
+as finite-window behavior, not as supplementary-sector critical exponents.
+
+\subsubsection{Higher local powers and operator-order hierarchy}
+
+The monopole hierarchy in Eq.~\eqref{eq:power-kappa-law} does not determine
+what a higher local power does to a nonaxisymmetric throat mode.  We therefore
+repeat the path-controlled experiment for $n=2,3$, using the finite-window
+fit model
+\begin{equation}
+ \begin{aligned}
+ \widehat\chi_{H,\ell m}^{(n)}
+ &\equiv M^{2n-2}\chi_{H,\ell m}^{(n)},\\
+ \widehat\chi_{H,\ell m}^{(n)}
+ &=A_{n,\ell m}(y)(M\kappa)^{-\alpha_{n,\ell m}(y)} .
+ \end{aligned}
+ \label{eq:power-modal-fit}
+\end{equation}
+The modes $(1,1),(2,1),(2,2),(3,3)$ provide low- and high-real-weight
+supplementary controls and two principal channels.  The common spin grid is
+$a/M=(0.98,0.99,0.995,0.997,0.999)$; every mode is additionally computed at
+$a/M=(0.9995,0.9998,0.9999)$.  We use the same four nonzero threshold offsets
+as Eq.~\eqref{eq:y_threshold_richardson} and an independent fixed-$y=0.5$
+sequence.  For $(1,1)$ and $(2,2)$ the wider fixed-$y$ check also includes
+$y=-0.5$ and 1.  The base resolution pair is $(N,q)=(144,144)$ and
+$(176,176)$, while the first three added spins use $(224,224)$ and $(256,256)$.
+For both principal modes we further add
+$a/M=(0.99995,0.999975,0.9999875,0.99999375)$ at $N=q=256,288$ and
+$a/M=(0.999996875,0.9999984375)$ at $N=q=288,320$.  The resulting primary
+fit window contains seven points with $0.9999\leq a/M\leq0.9999984375$.
+Acceptance requires paired-response convergence, linear balance, Wronskian
+constancy, and either absolute or flux-relative first-order balance.
+
+The principal modes exhibit a numerical order-locked envelope:
+\begin{equation}
+ \begin{aligned}
+ \widehat\chi_{H,\ell\ell}^{(n)}(\kappa,y)
+ &=\frac{{\cal F}^{\rm num}_{n,\ell}(y,\ln M\kappa)}{(M\kappa)^n},\\
+ {\cal F}^{\rm num}_{n,\ell}&=\calO(1)
+ \quad\hbox{on the resolved paths}.
+ \end{aligned}
+ \label{eq:power-order-locking}
+\end{equation}
+As shown in Tables~\ref{tab:power-modal} and \ref{tab:power-fit-quality} and
+Fig.~\ref{fig:power-near-extremal}, the seven-point exponents at the iterated
+threshold are $2.0587$ and $3.0567$ for the $(2,2)$ mode at $n=2,3$, and
+$2.0257$ and $3.0408$ for $(3,3)$.  At fixed $y=0.5$ they are $2.0447$,
+$3.0475$, $2.0226$, and $3.0357$, in the same order.  The minimum principal
+$R^2$ is $0.9999766$, and the largest leave-one-out relative prediction error
+is $2.30\%$.  Nominal ordinary-least-squares intervals resolve modest offsets
+from $\alpha_n=n$ in most channels.  These intervals summarize finite-window
+residuals and are not stochastic confidence bounds on an asymptotic model.
+The data therefore support an order-locked leading
+envelope with bounded residual modulation, not an exact pure power.  Thus,
+over the accepted spin windows, adding one factor
+$|\Phi|^2$ to the local source adds one resolved inverse power of the surface
+gravity to the fixed-incident response.  Equation
+\eqref{eq:cft-factorized-response} supplies conditional analytic power
+counting for this envelope, while Table~\ref{tab:cft-factorization} shows that
+the linear intensity and nonlinear kernel need not be separately constant.
+
+The collapse test is more restrictive than fitting slopes independently.
+Over the seven-point primary window, the threshold means of
+$(M\kappa)^n\widehat\chi_H^{(n)}$ are
+$4.0128\times10^{-4}$ and $5.6432\times10^{-6}$ for $(2,2)$ at $n=2,3$,
+with relative standard deviations $4.06\%$ and $3.95\%$.  For $(3,3)$ the
+corresponding means are $1.0660\times10^{-3}$ and
+$4.0687\times10^{-5}$, with relative standard deviations $1.83\%$ and
+$2.88\%$.  The nonzero scatter is the same finite-window modulation resolved
+by the free-power fits.  These order-dependent constants decrease rapidly, but the extra
+inverse powers of $\kappa$ dominate sufficiently close to extremality.
+
+\begin{table*}[t]
+\caption{Higher-power modal scaling.  The displayed $\alpha_n$ are
+finite-window effective slopes
+of Eq.~\eqref{eq:power-modal-fit}.  The $p\to0$ column uses the four-point
+ingoing extrapolation; the other holds $y=p/\kappa=0.5$.  The principal rows
+use the seven-point primary window, $(1,1)$ uses its seven nearest accepted
+spins, and $(2,1)$ uses its five accepted spins.  The supplementary entries
+are not asserted asymptotic powers.}
+\label{tab:power-modal}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c}
+$(\ell,m)$ & $h_{\ell m}$ & $n$ & $\alpha_n(p\to0)$
+& $\alpha_n(y=0.5)$ & numerical class\\
+\hline
+$(1,1)$ & $1.171$ & 2 & 0.937 & 0.677 & drifting slope\\
+        &         & 3 & 1.402 & 0.988 & drifting slope\\
+$(2,1)$ & $2.596$ & 2 & 0.468 & 0.263 & weak crossover\\
+        &         & 3 & 0.812 & 0.451 & weak crossover\\
+$(2,2)$ & $0.5+0.946i$ & 2 & 2.059 & 2.045 & locked envelope\\
+        &              & 3 & 3.057 & 3.048 & locked envelope\\
+$(3,3)$ & $0.5+1.938i$ & 2 & 2.026 & 2.023 & locked envelope\\
+        &              & 3 & 3.041 & 3.036 & locked envelope\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\begin{table*}[t]
+\caption{Seven-point principal-mode fit audit over
+$0.9999\leq a/M\leq0.9999984375$.  The interval is the nominal 95\%
+ordinary-least-squares interval for the free logarithmic slope.  It is a
+finite-window residual diagnostic, not a confidence bound on the asymptotic
+model.  The leave-one-out (LOO)
+column is the largest relative prediction error, and $\delta_N$ is the largest
+paired-resolution response change.  These statistical intervals do not
+include model uncertainty from bounded two-branch modulation.}
+\label{tab:power-fit-quality}
+\begin{ruledtabular}
+\begin{tabular}{c c c c c c c}
+$(\ell,m)$ & $n$ & path & $\alpha_n$ [95\% interval] & $R^2$
+& LOO max & $\delta_N$\\
+\hline
+$(2,2)$ & 2 & $p\to0$ & 2.0587 [2.0519,2.0655] & 0.99999180 & 1.28\% & $4.50\times10^{-7}$\\
+$(2,2)$ & 2 & $y=0.5$ & 2.0447 [2.0334,2.0561] & 0.99997661 & 2.18\% & $8.85\times10^{-6}$\\
+$(2,2)$ & 3 & $p\to0$ & 3.0567 [3.0482,3.0652] & 0.99999420 & 1.46\% & $4.32\times10^{-8}$\\
+$(2,2)$ & 3 & $y=0.5$ & 3.0475 [3.0373,3.0578] & 0.99999141 & 2.02\% & $1.61\times10^{-6}$\\
+$(3,3)$ & 2 & $p\to0$ & 2.0257 [2.0178,2.0337] & 0.99998836 & 1.43\% & $4.20\times10^{-7}$\\
+$(3,3)$ & 2 & $y=0.5$ & 2.0226 [2.0154,2.0298] & 0.99999031 & 1.31\% & $7.56\times10^{-6}$\\
+$(3,3)$ & 3 & $p\to0$ & 3.0408 [3.0281,3.0535] & 0.99998681 & 2.30\% & $3.81\times10^{-8}$\\
+$(3,3)$ & 3 & $y=0.5$ & 3.0357 [3.0242,3.0472] & 0.99998915 & 2.09\% & $8.95\times10^{-7}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+The nested-window audit gives the same hierarchy without using the
+seven-point interval as the only diagnostic.  Moving from the nearest seven to
+the nearest three spins changes the principal $n=2$ slopes from
+$2.0587$ to $2.0405$ for $(2,2)$ and from $2.0257$ to $2.0121$ for $(3,3)$ at
+threshold.  For $n=3$ the corresponding nearest-three values are $3.0485$ and
+$3.0192$.  At fixed $y=0.5$, all four nearest-three slopes lie between
+$2.0104$ and $2.0160$ or between $3.0164$ and $3.0196$, according to operator
+order.  This seven-to-three-point comparison supports the order hierarchy, but the
+three-point fits have only one residual degree of freedom and are used only as
+a window-drift diagnostic.
+
+The supplementary sector does not obey a common power.  At threshold the
+low-real-weight $(1,1)$ effective slope increases from the cubic value $0.415$ to
+$0.937$ and $1.402$ for $n=2,3$, but remains well below the order-locked
+values.  It is also strongly path dependent: at $y=0.5$ the latter slopes
+fall to $0.677$ and $0.988$.  The $(2,1)$ control grows much more weakly in
+the accepted five-spin window.  Its three added-spin pairs fail only the
+response-resolution gate, with no accompanying loss of linear balance or
+Wronskian constancy, and are excluded from Table~\ref{tab:power-modal} and all
+fits.  We therefore identify a resolved crossover, not an asymptotic power or
+a proof of a finite limit.  The data establish an order-locked envelope in the
+principal sector and its absence in two distinct supplementary controls.  No
+supplementary exponent is predicted from $h$ alone.
+
+Across 480 paired higher-power samples, 82 threshold limits and 122 fixed-$y$
+values pass all gates.  Among accepted data, the largest response change is
+$4.6\times10^{-6}$ at threshold and $3.4\times10^{-5}$ at fixed $y$; the
+largest linear-balance residuals are $1.6\times10^{-11}$ and
+$7.0\times10^{-9}$, and the largest Wronskian error is
+$5.8\times10^{-16}$.  Within the seven-point principal window the largest
+paired response changes are $4.5\times10^{-7}$ at threshold and
+$8.9\times10^{-6}$ at fixed $y$, while the largest flux-relative first-order
+balance residual is $6.7\times10^{-9}$.  Recomputing all $n=2,3$ angular projectors at the
+hardest spin with 24 extra spherical modes and 512 Gauss points changes them
+by at most $4.1\times10^{-15}$.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{../../figures/kerr_scalar_power_near_extremal_scaling.png}
+\caption{Operator-order dependence of the near-extremal response.  (a) The
+$(2,2)$ threshold response for $n=1,2,3$.  (b) Multiplication by
+$(M\kappa)^n$ produces a plateau for the principal mode.  (c) The
+supplementary $(1,1)$ response grows with $n$ but does not obey the principal
+collapse.  (d) Seven-point effective slopes at the threshold and at
+fixed $y=0.5$; the dotted line is $\alpha_n=n$.  The supplementary slopes are
+finite-window diagnostics.  Only paired-resolution accepted points enter the
+curves and fits.}
+\label{fig:power-near-extremal}
+\end{figure*}
+
+\subsubsection{Finite-bandwidth hierarchy and peak migration}
+
+The pointwise hierarchy has a direct consequence for a fixed interval in the
+throat frequency.  Define the dimensionless windowed spectral weight
+\begin{equation}
+ {\cal W}_{n,\ell m}[y_-,y_+]
+ \equiv\int_{m\Omega_H+y_-\kappa}^{m\Omega_H+y_+\kappa}
+ \widehat\chi_{H,\ell m}^{(n)}(\omega)\,d(M\omega).
+ \label{eq:windowed-spectral-weight}
+\end{equation}
+Since $d(M\omega)=M\kappa\,dy$, Eq.~\eqref{eq:power-order-locking} gives
+\begin{equation}
+ {\cal W}_{n,\ell\ell}[y_-,y_+]
+ =(M\kappa)^{1-n}\int_{y_-}^{y_+}
+ {\cal F}^{\rm num}_{n,\ell}(y,\ln M\kappa)\,dy .
+ \label{eq:windowed-spectral-hierarchy}
+\end{equation}
+Thus an integration over a thermal-width interval removes one inverse power
+of surface gravity.  It makes the cubic spectral weight finite at leading
+power, but leaves the $n>1$ weights enhanced as $\kappa^{1-n}$ if the
+integrated scaling function remains bounded and nonzero.  This is a
+windowed integral of monochromatic susceptibilities; it is not a nonlinear
+wave-packet calculation, which would also contain frequency mixing and a
+specified incident spectral envelope.
+
+We test Eq.~\eqref{eq:windowed-spectral-hierarchy} on the common ten-point grid
+\begin{equation}
+ y=(-0.5,-0.2,-0.05,0.05,0.2,0.4,0.6,0.8,1.0,1.2)
+ \label{eq:bandwidth-y-grid}
+\end{equation}
+for both principal modes.  The cubic calculation uses
+$a/M=(0.98,0.99,0.995)$ and $(N,q)=(144,144),(176,176)$; the $n=2,3$
+calculation uses $a/M=(0.995,0.9999,0.99999375)$ and
+$(N,q)=(256,256),(288,288)$.  Trapezoidal integration is applied identically
+to each paired grid.  All 180 monochromatic rows pass the response, flux, and
+Wronskian gates.  The largest pointwise resolution change is
+$4.09\times10^{-4}$, the largest integral change is $7.78\times10^{-5}$,
+and the largest flux-relative first-order balance residual is
+$1.54\times10^{-8}$.
+
+Writing ${\cal W}_n\propto(M\kappa)^{-\beta_n}$ over these three spins, the
+effective exponents are
+\begin{equation}
+ \begin{array}{c|cc|cc}
+  & \beta_{n,22} & R^2_{22} & \beta_{n,33} & R^2_{33}\\ \hline
+ n=1 & 0.0442 & 0.99906 & 0.0856 & 0.99410\\
+ n=2 & 1.0632 & 0.999983 & 1.0890 & 0.999317\\
+ n=3 & 2.0729 & 0.999986 & 2.1455 & 0.999504
+ \end{array}
+ \label{eq:bandwidth-effective-exponents}
+\end{equation}
+The corresponding innermost-pair exponents for $n=1,2,3$ are
+$(0.0420,1.0539,2.0561)$ for $(2,2)$ and $(0.0745,1.0278,2.0427)$ for
+$(3,3)$.  The cubic rescaled weights vary by only 2.7\% and 5.2\% across their
+three-spin intervals, and by 1.3\% and 2.3\% across the innermost pairs.  For
+$n=2,3$, the corresponding full-interval variations are 20.2\%, 27.0\%,
+23.1\%, and 42.9\%, falling to 7.4\%, 3.8\%, 7.7\%, and 5.9\% on the
+innermost pairs.  The inward movement toward $n-1$ is more informative than
+the three-point $R^2$: only one residual degree of freedom is available, and
+the remaining offsets are consistent with the finite-window modulation
+already seen in the pointwise response.  The experiment therefore supplies a
+direct cubic control and supports the predicted envelope without claiming a
+pure asymptotic power.
+
+The scaling function also changes shape with operator order.  At
+$a/M=0.9999$ we evaluate $0.75\leq y\leq1.20$ in steps of 0.05 at
+$N=q=288,320$.  A five-point local fit
+\begin{equation}
+ \ln {\cal F}_{n,\ell}(y)
+ =\ln {\cal F}_{n,\ell}(y_{\rm pk})
+ -\frac{(y-y_{\rm pk})^2}{2\sigma_y^2}+\cdots
+ \label{eq:local-peak-fit}
+\end{equation}
+gives
+\begin{equation}
+ \begin{array}{c|ccc|ccc}
+ & \multicolumn{3}{c|}{(2,2)} & \multicolumn{3}{c}{(3,3)}\\
+ n & 1 & 2 & 3 & 1 & 2 & 3\\ \hline
+ y_{\rm pk} & 0.887 & 0.980 & 1.027 & 0.891 & 0.976 & 1.015\\
+ \sigma_y & 0.307 & 0.236 & 0.205 & 0.319 & 0.246 & 0.231
+ \end{array}
+ \label{eq:peak-migration-values}
+\end{equation}
+All 60 dense-scan rows pass; the largest paired-response change is
+$1.50\times10^{-4}$ and the largest flux-relative balance residual is
+$3.42\times10^{-9}$.  Increasing $n$ therefore shifts the peak toward the
+absorptive side and narrows it within the common $p=O(\kappa)$ frequency
+scale.  The factorization
+$\widehat\chi_H^{(n)}={\cal I}_H^n{\cal K}_n$ suggests the local peak condition
+\begin{equation}
+ n\,\partial_y\ln {\cal I}_H+\partial_y\ln {\cal K}_n=0 .
+ \label{eq:peak-factorization-condition}
+\end{equation}
+If the kernel varies more slowly than the repeated intensity factor,
+increasing $n$ moves the response toward the maximum of ${\cal I}_H$ and
+sharpens it.  The measured migration is consistent with this mechanism, but
+the present data do not establish a large-$n$ law or an $n$-independent
+kernel.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{../../figures/kerr_scalar_power_bandwidth_hierarchy.png}
+\caption{Finite-bandwidth and line-shape audit for the principal modes.
+(a),(b) Peak-normalized dense profiles at $a/M=0.9999$; increasing the local
+power moves the maximum toward the absorptive side and narrows it while
+retaining the throat scale $p=O(\kappa)$.  (c) The ten-point cubic, quintic,
+and septic windowed weights,
+after multiplication by $(M\kappa)^{n-1}$ and normalization to their
+innermost-spin values.  (d) Five-point log-quadratic peak locations and local
+widths.  Every curve uses the higher member of a paired spectral-resolution
+calculation, and all displayed rows pass the flux and Wronskian gates.}
+\label{fig:power-bandwidth-hierarchy}
+\end{figure*}
+
+Equation~\eqref{eq:power-order-locking} also changes the perturbative control
+parameter.  Defining the dimensionless coupling
+$\widehat\epsilon_n=\epsilon_n/M^{2n-2}$, a principal mode requires
+\begin{align}
+ g_{{\rm eff},n}(y)
+ &\equiv |\widehat\epsilon_n||{\cal A}_{\rm in}|^{2n}
+ \widehat\chi_H^{(n)}\nonumber\\
+ &\sim
+ \frac{|\widehat\epsilon_n||{\cal A}_{\rm in}|^{2n}
+ {\cal F}^{\rm num}_{n,\ell}(y,\ln M\kappa)}
+ {(M\kappa)^n}\ll1 .
+ \label{eq:power-effective-coupling}
+\end{align}
+Consequently the breakdown scale is parametrically
+$M\kappa\sim[|\widehat\epsilon_n||{\cal A}_{\rm in}|^{2n}
+|{\cal F}^{\rm num}_{n,\ell}|]^{1/n}$ over the resolved principal envelope.
+If a general $U(1)$-invariant potential contains adjacent nonzero couplings,
+their principal-mode control parameters obey
+\begin{equation}
+ \frac{g_{{\rm eff},n+1}}{g_{{\rm eff},n}}
+ \sim
+ \frac{|\widehat\epsilon_{n+1}|}{|\widehat\epsilon_n|}
+ \frac{|{\cal A}_{\rm in}|^2}{M\kappa}
+ \left|\frac{{\cal F}^{\rm num}_{n+1,\ell}}
+ {{\cal F}^{\rm num}_{n,\ell}}\right| .
+ \label{eq:adjacent-order-inversion}
+\end{equation}
+Thus extremality can reverse the coefficient-defined ordering of adjacent
+local operators.  This does not justify extrapolating to arbitrarily large
+$n$: it says instead that no fixed finite truncation is uniform once the
+right-hand side of Eq.~\eqref{eq:adjacent-order-inversion} approaches unity.
+This is the opposite of the monopole result:
+the same $n>1$ operator is irrelevant as $\omega\to0$ in the axisymmetric
+far zone, but increasingly relevant in a principal near-superradiant throat
+mode.  It is a statement about first-order susceptibility, not a computation
+of the nonlinear state beyond the breakdown scale.
+
+The $\ell=m=0$ mode is a stronger control because it also tests the lowest
+scalar multipole.  Here $p=\omega$ and the natural scan coordinate is
+$y=\omega/\kappa$.  We computed $0.0125\le y\le8$ at
+$a/M=0,0.5,0.9,0.98,0.99,0.995,0.997,0.999$ and performed quadratic
+$y\to0$ extrapolations over the stable low-frequency windows.
+Table~\ref{tab:l0-zero-frequency} compares the extrapolations with
+Eq.~\eqref{eq:l0-exact-response}.  The largest relative discrepancy is
+$6.6\times10^{-5}$ and the largest primary two-resolution change is
+$2.0\times10^{-4}$; the largest linear-balance and Wronskian errors in the
+fit samples are $1.7\times10^{-12}$ and $4.3\times10^{-15}$.
+The response remains bounded while $M\kappa\chi_{H,00}$ decreases as
+$a/M\to1$.  Thus the inverse-surface-gravity growth is neither a generic
+property of $s=0$ nor an artifact of selecting low $\ell$.
+
+At the smallest frequencies the direct reflected-channel interference
+involves subtraction of nearly equal terms and its separate first-order
+balance can reach $1.2\times10^{-4}$.  Those rows are not used for
+$R^{(1)}$ or in the flux spectra.  The monopole extrapolation instead uses the
+independently converged horizon ratio
+$\chi_H=2\operatorname{Re}A_H^{(1)}/|B^{\rm inc}|^2$, together with the
+linear-balance, Wronskian, and two-resolution checks quoted above.
+
+\begin{table*}[t]
+\caption{Zero-frequency scalar-monopole response.  The second column is a
+quadratic extrapolation in $y=\omega/\kappa$; the third compares it with
+$\ln2/\pi$, and the last gives the largest relative change between the two
+radial resolutions in the fit window.  The fits use
+$y=(0.0125,0.025,0.05)$ except at $a/M=0.999$, where the stable
+$y=(0.05,0.1,0.2)$ window is used.}
+\label{tab:l0-zero-frequency}
+\begin{ruledtabular}
+\begin{tabular}{c c c c}
+$a/M$ & $\chi_{H,00}(0)$ & relative analytic error
+& maximum resolution change\\
+\hline
+0.000 & 0.2206211 & $6.57\times10^{-5}$ & $1.46\times10^{-8}$\\
+0.500 & 0.2206249 & $4.85\times10^{-5}$ & $1.22\times10^{-8}$\\
+0.900 & 0.2206330 & $1.20\times10^{-5}$ & $6.83\times10^{-7}$\\
+0.980 & 0.2206335 & $9.60\times10^{-6}$ & $1.84\times10^{-7}$\\
+0.990 & 0.2206351 & $2.18\times10^{-6}$ & $6.21\times10^{-8}$\\
+0.995 & 0.2206353 & $1.23\times10^{-6}$ & $1.63\times10^{-7}$\\
+0.997 & 0.2206354 & $8.24\times10^{-7}$ & $4.10\times10^{-7}$\\
+0.999 & 0.2206343 & $5.72\times10^{-6}$ & $1.97\times10^{-4}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{../../figures/kerr_scalar_near_extremal_scaling.png}
+\caption{Near-extremal nonlinear response.  (a) The raw threshold response
+grows as the surface gravity decreases; solid guides show power-law fits.
+(b) Multiplication by $M\kappa$ exposes the reversal of the low-multipole
+hierarchy and the approximately constant $\ell=m=2,3$ scale.  Open points at
+$a/M=0.995$ are the $\ell=m=4,5$ checks.  (c) The full $\ell=m=2$ (solid) and
+$3$ (dashed) response approximately collapses when plotted as
+$\Xi=M\kappa\chi_H$ against $y=p/\kappa$.  Every displayed point passes the
+two-resolution response, flux-balance, and Wronskian gates.}
+\label{fig:near-extremal}
+\end{figure*}
 
 \subsection{Kerr-to-Schwarzschild continuity}
 
@@ -1101,8 +2657,8 @@ $a/M$ & $T^{(1)}$ & $R^{(1)}$ & $|\delta_0|$ & $|\delta_1|$ & $|\delta_W|$\\
 \section{Discussion and outlook}
 
 We have formulated the weakly nonlinear scattering problem for a scalar field
-on Kerr in a way that keeps the observable content of the Schwarzschild
-Green-function calculation unchanged.  The linear solution is normalized at
+on Kerr while retaining the usual incident, reflected, and horizon-flux
+observables.  The linear solution is normalized at
 the horizon, the incident normalization is restored through $\Bin$, and the
 nonlinear corrections are read from the interference terms in the physical
 energy fluxes.  In this form the two useful balance laws,
@@ -1114,30 +2670,213 @@ source all enter the normalization of the observable coefficients.
 
 For the axisymmetric Kerr sample $a=0.5$, $m=0$, and $\ell=0,1,2$, the present
 numerical diagnostics support the following qualitative picture.  The nonlinear
-transmission coefficient develops a single dominant Breit-Wigner-type peak for
+transmission coefficient develops a single dominant Breit--Wigner-type peak for
 each $\ell$, with the peak position lying on the frequency scale of the corresponding
 scalar Kerr quasinormal mode.  The high-frequency tail is well fit by an
-exponential form in the computed window, and the fitted temperature is of the
-same order as the Kerr Hawking temperature.  At low frequency, however, the
-fixed-incident Teukolsky normalization and the Kerr source weight prevent a
-direct transcription of the Schwarzschild reduced-variable scaling; the
-low-frequency behavior is therefore treated here as a numerical Kerr result.
+exponential form in the computed window; AICc and leave-one-out tests prefer it
+to a power law for all three multipoles.  The fitted temperature is of the
+same order as the Kerr Hawking temperature, although fixing the slope exactly
+to $-1/T_H$ worsens the residual.  On the accepted low-frequency side, the
+globally balanced plotting windows alone do not justify asymptotic fits.
+Matched static/far-zone analysis nevertheless fixes the true cubic limit:
+for every axisymmetric self channel, $T^{(0)}$ and $T^{(1)}$ share the power
+$(M\omega)^{2\ell+2}$ and their ratio approaches the spin-independent Bessel
+integral in Eq.~\eqref{eq:axisymmetric-T1-infrared}.  Dedicated horizon-side
+solves verify this statement for $\ell=0,1,2$ below the plotting windows.  The
+monopole integral can be evaluated exactly and gives
+$\rho_{H,00}(0)=\ln2/(2\pi)+\ii/4$ and
+$\chi_{H,00}(0)=\ln2/\pi$; the eight-spin experiment independently verifies
+its spin independence.  The general $|\Phi|^{2n}\Phi$ monopole calculation
+turns this control into an
+infrared classification: $n=1$ is marginal, while $n>1$ responses vanish as
+$\omega^{2n-2}$.  The $n=2,3$ double-resolution experiments recover both the
+integer hierarchy and the analytic coefficients, and their fixed
+$\omega/\kappa$ scans show corresponding $\kappa^2$ and $\kappa^4$
+suppression toward extremality.
 
-The present data also identify the current limiting numerical effect.  The
-transmitted nonlinear coefficient is smooth across the displayed low-frequency
-windows, while the reflected coefficient can suffer large cancellations in the
-interference integral.  This is why the lowest-frequency $\ell=1,2$ points are
-used for the scaling trend but are not counted as high-precision reflected-flux
-points in Table~\ref{tab:numerics}.  The numerical evidence is therefore
-strongest for the resonance region, the high-frequency tail, and the
-transmitted low-frequency scaling; it is weaker for the individual
-low-frequency reflected coefficient before using the balance law.  The
+The uniform acceptance cut removes cancellation-limited rows from the
+globally balanced curves and all two-boundary fits.  The separate open
+infrared points are retained only after paired horizon-response and Wronskian
+tests.  At the lowest filled points, the
+dedicated scan changes either $T^{(1)}$ or $R^{(1)}$ by at most
+$2.0\times10^{-8}$ and preserves first-order balance below
+$3.1\times10^{-12}$.  The numerical evidence therefore supports a resolved
+decrease on the displayed low-frequency side.  Its distinct role is to
+validate both boundary fluxes; the infrared indices are supplied by
+Eqs.~\eqref{eq:axisymmetric-T0-infrared} and
+\eqref{eq:axisymmetric-T1-infrared}, whose deeper horizon-side checks do not
+require a cancellation-prone reflected interference term.  The
+high-frequency result has a different limiting error: the compact inner Green
+integral requires substantially higher quadrature order than the homogeneous
+spectral solve.  The $q=1792$--$2048$ audit bounds the representative relative
+changes in $T^{(1)}$ by $2.5\times10^{-4}$, while lowering the Chebyshev order
+at $q=2048$ changes those values by at most $9.5\times10^{-8}$.  The
 representative target-channel experiment in Table~\ref{tab:channels}
 demonstrates the matrix structure generated by the Kerr source projection and
 shows that the dominant reflected off-diagonal amplitudes can be resolved at
-the stated spectral order.  A broader scan over $(a,\ell,m,\omega)$, uniform
-acceptance gates for off-diagonal horizon amplitudes, and a systematic study of
-the superradiant nonlinear flux remain future work.
+the stated spectral order.  The nonaxisymmetric survey additionally shows
+that $T^{(1)}$ vanishes linearly with $p$ while
+$\chi_H=T^{(1)}/T^{(0)}$ has a finite positive threshold limit at every fixed
+subextremal spin.  The extended scan reveals that this limit is not uniform as
+$a/M\to1$: the principal $\ell=m=2$--5 responses grow approximately as
+$1/\kappa$ along the tested paths, the $\ell=m=2,3$ curves collapse in the
+near-horizon variables of Eq.~\eqref{eq:near_extremal_variables}, and the
+multipole hierarchy reverses.  The real-weight $(1,1),(2,1),(3,2)$ controls
+do not share this scaling.
+For the higher $|\Phi|^{2n}\Phi$ interactions, the principal $(2,2)$ and
+$(3,3)$ channels instead display the numerical order-locked envelope
+$M^{2n-2}\chi_H^{(n)}=(M\kappa)^{-n}{\cal F}^{\rm num}_{n,\ell}$ for
+$n=2,3$, both at threshold and at fixed $p/\kappa=0.5$.  Seven-point free
+fits resolve small residual slopes in ${\cal F}^{\rm num}_{n,\ell}$, so this
+statement is an order hierarchy rather than an exact pure-power identity.
+The low-real-weight $(1,1)$ channel acquires
+weaker order-dependent growth, while the accepted $(2,1)$ window remains a
+weak crossover.  This separates the operator relevance of the throat from
+the infrared irrelevance of the same higher powers in the scalar monopole.
+The finite-bandwidth experiment sharpens that distinction.  Integrating over
+a fixed $p/\kappa$ interval changes the pointwise $\kappa^{-n}$ hierarchy to
+$\kappa^{1-n}$ rather than removing it.  Moreover, the dense profiles show a
+systematic drift of $y_{\rm pk}$ toward the absorptive side and a decreasing
+local width as $n$ rises from 1 to 3.  The thermal scale is therefore common,
+but the scaling function is operator dependent: higher local powers amplify
+and concentrate a different part of the same throat-frequency window.
+For the signed coupling $\epsilon>0$ this enhances superradiant amplification;
+the conventional positive quartic potential, $\epsilon=-\lambda$, suppresses
+it at first order.
+
+\subsection{Physical content of the Kerr extension}
+
+The genuinely Kerr-specific result is not merely a displacement of the
+axisymmetric line shapes.  The explicit factor
+$p=\omega-m\Omega_H$ forces both the linear and first-order horizon fluxes to
+vanish at the superradiant threshold, while the independently evaluated
+horizon amplitude shows that their ratio remains regular at fixed
+subextremal spin.  For every accepted family we find
+\begin{equation}
+\chi_H^\star>0,\qquad
+\operatorname{sgn}T^{(1)}=\operatorname{sgn}p,\qquad
+R^{(1)}=-T^{(1)}.
+\label{eq:physical_superradiant_sign}
+\end{equation}
+Thus the threshold zero is a physical flux zero rather than a singularity in
+$p$.  Equation~\eqref{eq:physical_superradiant_sign}, together with
+Eq.~\eqref{eq:superradiant_amplification_response}, gives a direct energy-flux
+statement: for $p<0$ the coefficient $T^{(1)}$ is negative and the reflected
+coefficient is positive.  The signed interaction $\epsilon>0$ therefore
+increases the superradiant excess $Z=R-1$, while the standard positive quartic
+potential, whose action convention gives $\epsilon=-\lambda$, reduces it at
+first order.
+
+The new information is that regularity in $p$ is not uniform in surface
+gravity.  For $\ell=m=2$, Eq.~\eqref{eq:inverse_kappa_response} changes the
+fractional correction in Eq.~\eqref{eq:superradiant_amplification_response}
+into the effective near-extremal parameter
+\begin{equation}
+ g_{\rm eff}
+ \equiv |\epsilon||{\cal A}_{\rm in}|^2\chi_H
+ \sim \frac{C|\epsilon||{\cal A}_{\rm in}|^2}{M\kappa},
+ \qquad C\simeq0.03 .
+ \label{eq:effective_near_extremal_coupling}
+\end{equation}
+The first-order expansion consequently requires
+\begin{equation}
+ |\epsilon||{\cal A}_{\rm in}|^2\ll\frac{M\kappa}{C}
+ \label{eq:near_extremal_weak_condition}
+\end{equation}
+in the enhanced principal sector.  Therefore a coupling and incident
+amplitude that are perturbatively small at moderate spin need not remain so as
+$a/M\to1$.  This is a physical breakdown criterion for the weakly nonlinear
+expansion, not a computed saturation mechanism.  Determining the subsequent
+behavior requires a resummation or a fully nonlinear evolution.
+
+For the general interaction, Eq.~\eqref{eq:power-effective-coupling} replaces
+the cubic criterion by
+\begin{equation}
+ |\widehat\epsilon_n||{\cal A}_{\rm in}|^{2n}
+ \ll \frac{(M\kappa)^n}
+ {|{\cal F}^{\rm num}_{n,\ell}(y,\ln M\kappa)|}
+ \label{eq:power-near-extremal-weak-condition}
+\end{equation}
+in a principal mode over the resolved envelope.  The numerical order locking
+therefore describes a hierarchy of increasingly singular finite-window
+susceptibilities, even though the fitted plateau values decrease with $n$.
+Equation~\eqref{eq:adjacent-order-inversion} makes the implication for a
+multi-operator potential explicit: at fixed incident amplitude, each
+successive order receives one additional throat factor $1/(M\kappa)$, so the
+moderate-spin operator ordering can be inverted before the first-order series
+loses control.  The crossover depends on the coupling ratios and scaling
+functions and is not universal.
+Its exact-extremal continuation remains conditional on the nonlinear kernel.
+No comparable universal law is claimed for supplementary modes.
+
+The physical picture supported by the factorization is a principal Kerr throat
+acting as a fixed-flux intensity amplifier.  The horizon energy flux remains
+regular and carries $p\sim\kappa$, while the principal fixed-incident field
+intensity in Eq.~\eqref{eq:matched-intensity-scaling} has a
+$\kappa^{-1}$ envelope.  A local interaction samples $n$ powers of that
+intensity, but the unit-horizon nonlinear kernel can modify the residual
+scaling.  Equations~\eqref{eq:cft-matched-absorption}--
+\eqref{eq:cft-factorized-response} therefore isolate the analytically known
+linear contribution without pretending to calculate the nonlinear one.  The
+observed $\kappa^{-n}$ envelope is the numerical statement that their product
+has no additional order-sized power on the principal paths; the small residual
+slopes in Table~\ref{tab:power-fit-quality} remain resolved.
+
+The collapse in Eq.~\eqref{eq:near_extremal_collapse}, the conformal-class
+split in Table~\ref{tab:near-extremal-threshold}, and the multipole reordering
+all point to a throat-controlled response.  In particular, the exceptional
+$(1,1)$ result shows that corotation alone is insufficient: the robust
+inverse-$\kappa$ numerical envelope appears only after the conformal weight
+becomes complex.
+This interpretation is consistent with the linear Green-function branch point
+at the extremal superradiant bound and with the self-similar near-horizon sector
+\cite{CasalsGrallaZimmerman2016,CasalsZimmerman2019,
+CasalsLongoMicchi2019,GrallaZimmerman2018}, and the fixed-$y$ variables agree
+with the thermal Kerr/CFT description of near-superradiant
+scattering~\cite{BredbergKerrCFT2010,HartmanKerrCFT2010}.  None of those
+linear results derives the exponent or coefficient of $\chi_H$ without a
+separate statement about ${\cal K}_{n,h}$.  Moreover, the complex
+principal weight allows bounded log-periodic phases in $\ln\kappa$; the
+present effective-slope fits establish the leading envelope over the resolved spins,
+not the absence of such phases.  The windowed audit in
+Eq.~\eqref{eq:windowed-spectral-hierarchy} verifies the corresponding
+finite-bandwidth hierarchy directly: a thermal-width integration removes one
+inverse power, leaving the cubic spectral weight finite at leading power but
+the $n=2,3$ weights enhanced as $\kappa^{-1}$ and $\kappa^{-2}$.  The dense
+scan further shows that higher local powers reshape the throat line profile,
+moving its maximum toward the absorptive side and narrowing it.  These are
+properties of integrated monochromatic susceptibilities, not a substitute for
+the frequency mixing in a nonlinear wave packet.
+The axisymmetric infrared result sharpens this conclusion: every cubic
+$(\ell,0)$ self-channel ratio remains finite and spin independent as
+$\omega\to0$, with the first three constants listed in
+Table~\ref{tab:axisymmetric-infrared}.  Hence $M\kappa\chi_{H,\ell0}\to0$
+rather than approaching the nonzero scaling function seen for the principal
+$\ell=m\ge2$ modes.  The near-extremal enhancement is therefore tied to the
+principal corotating throat sector, not to a universal infrared growth of the
+nonlinear scalar response.  Equation~\eqref{eq:power-kappa-law}
+strengthens this statement beyond the quartic potential within the monopole:
+at fixed $\omega/\kappa$, every higher $U(1)$-invariant local operator tested
+there is suppressed by an additional even power of surface gravity.  The scalar
+monopole therefore defines an infrared universality hierarchy in which the
+cubic equation is the unique marginal member of the family, rather than the
+first example of a generic near-extremal divergence.  In contrast,
+Eq.~\eqref{eq:power-order-locking} shows that the principal nonaxisymmetric
+throat sector assigns the same operators the growing hierarchy
+$\kappa^{-n}$.  The far-zone and throat limits thus give opposite relevance
+classifications for one and the same local interaction.
+At every fixed subextremal spin $\chi_H^\star$ is finite, whereas the sequence
+of threshold limits grows without a resolved plateau for $\ell=m=2,3$.  The
+calculation therefore establishes a nonuniform approach to extremality and
+strongly motivates a separate analysis of the order of the $p\to0$ and
+$a/M\to1$ limits; it does not numerically impose $a=M$.
+
+These statements use only the continuous frequency intervals satisfying the
+two-resolution response, linear-flux, and Wronskian gates.  Rejected
+low-frequency islands and cancellation-limited high-frequency tails are not
+used.  Where the direct reflected interference term fails its separate
+balance gate, only the independently converged horizon-side quantities
+$T^{(1)}$ and $\chi_H$ enter the physical conclusions.
 
 The spin-limit audit supplies an additional implementation-level check.  We
 fix $(\ell,m)=(2,0)$ and $M\omega=0.52$; the first-order coefficients change
@@ -1147,15 +2886,98 @@ convention-matched Schwarzschild comparison, but it rules out a discontinuity
 introduced solely by the Kerr tortoise coordinate, spheroidal projection, or
 endpoint matching.
 
+\subsection{Relation to previous nonlinear calculations}
+
+The boundary-value problem is the decisive distinction from previous
+self-interacting Kerr scalar calculations.  The axion and boson-cloud studies
+of Refs.~\cite{YoshinoKodama2012,FukudaNakayama2020,Omiya2021,
+Baryakhtar2021,XieHuang2025} evolve massive quasi-bound levels whose amplitudes
+grow through a complex-frequency superradiant instability.  Their nonlinear
+observables include occupation-number transfer, emitted scalar or gravitational
+radiation, shifts of the bound-state frequency, and the onset of saturation or
+collapse.  Here $\omega$ is real, the field is massless, and an incident beam
+continuously supplies flux from infinity.  Consequently $T^{(1)}$ and
+$R^{(1)}$ are derivatives of open-channel energy fluxes at fixed incident
+normalization.  They cannot be inserted as growth-rate corrections in a cloud
+evolution equation without an additional projection onto quasi-bound states.
+
+The closest stationary scalar comparison is the nonlinear $Q$-cloud of
+Ref.~\cite{HerdeiroQCloud2014}.  Both calculations use a complex field with a
+$U(1)$-invariant local potential and both single out the synchronization
+condition $p=\omega-m\Omega_H=0$.  The $Q$-cloud is nevertheless a massive,
+spatially bound, finite-amplitude solution with zero horizon flux; the present
+solution is a perturbative scattering state with oscillatory data at infinity.
+Our threshold result is therefore not a small-amplitude $Q$-cloud branch.
+Rather, it states that the two fluxes vanish linearly in $p$ while their
+first-order ratio has a finite limit at fixed subextremal spin, followed by a
+nonuniform $1/\kappa$ enhancement along the near-extremal sequence.
+
+The closest analytic antecedent for the throat scaling is linear Kerr/CFT.
+Near-superradiant scalar graybody factors and their charged and spinning
+generalizations are reproduced by thermal two-point functions
+\cite{BredbergKerrCFT2010,HartmanKerrCFT2010,CastroHiddenCFT2010}, and
+source-driven radiation from the throat can likewise be related to a boundary
+transition rate~\cite{PorfyriadisKerrCFT2014}.  The present observable goes one
+step beyond this linear map.  The cubic equation comes from a quartic bulk
+vertex and hence probes a four-point contact response; it is not the same
+quantity as the bulk cubic vertex and three-point correlator studied in
+Ref.~\cite{BeckerKerrCFT2011}.  Our result supplies the asymptotically flat
+matching, fixed-incident normalization, and signed flux derivative that those
+correlators do not determine.  Kerr/CFT and matched linear theory therefore
+fix the intensity factor and organize the conformal-sector split, but do not
+by themselves determine the exponent, coefficient, or sign of the nonlinear
+susceptibility.  Those are new Green-function data in the present calculation.
+
+The nonlinear gravitational-scattering calculations of
+Refs.~\cite{Zlochower2003,Frauendiener2021,Frauendiener2025,Cardoso2026}
+are closer in their incoming-versus-outgoing interpretation, but include the
+metric dynamics and a finite-bandwidth pulse.  Their harmonic generation and
+spectral broadening also explain why the present $U(1)$-invariant,
+single-frequency response is only one component of a general nonlinear
+scattering map.  Likewise, the Kerr QNM projection and near-extremal amplitude
+system of Refs.~\cite{GreenEtAl2023,Iuliano2025} concern complex-frequency
+gravitational modes and time-dependent nonlinear transfer.  The observed
+$1/\kappa$ scalar susceptibility is consistent with a throat-controlled
+nonuniform limit, but neither the inverse-cascade solution nor QNM
+orthogonality yields its coefficient $C$ or its flux sign.
+
+This comparison isolates the new content of the present calculation: a
+flux-normalized, real-frequency Green-function susceptibility for massless
+self-interacting scalar scattering on fixed Kerr; its signed continuation
+through the superradiant threshold; the resolved near-extremal scaling and
+conformal-class split of the nonaxisymmetric sector; the analytic monopole
+hierarchy for isolated $|\Phi|^{2n}\Phi$ operators; and the opposite,
+order-locked relevance hierarchy of those operators in principal throat
+modes, including its finite-bandwidth continuation and operator-dependent
+peak migration.  It also fixes the interpretation: the calculation
+is a controlled weak-field response function that can inform, but does not
+replace, a nonlinear wave-packet evolution or a superradiant-cloud model.
+
 \subsection{Scope and limitations}
 
 The conclusions above have a deliberately narrow interpretation.  The
-calculation is a fixed-background scalar response problem with a prescribed
-cubic interaction; it is not a second-order metric perturbation, a
+calculation is a fixed-background scalar response problem with prescribed
+$U(1)$-invariant local interactions.  The $n=2,3$ monopole experiments test
+the analytic far-zone hierarchy, while the four-mode near-extremal experiment
+tests the distinct throat hierarchy.  It is not a second-order metric perturbation, a
 gravitational self-force calculation, or an EMRI waveform model.  The main
-frequency sweep is axisymmetric.  The separate $m=2$ check tests one narrow
-superradiant crossing but does not provide a systematic survey of superradiant
-sign changes.  The target-channel experiment establishes the spheroidal
+frequency sweep is axisymmetric, while the nonaxisymmetric extension uses a
+seven-mode common grid through $a/M=0.999$, selected cubic channels through
+$a/M=0.9999$, and the higher-power principal audit through
+$a/M=0.9999984375$, together with a ten-point bandwidth audit through
+$a/M=0.99999375$, a dense peak scan at $a/M=0.9999$, and the $\ell=m=0$
+control.  It does not determine the
+exact extremal coefficient, nonlinear saturation, an analytic conformal-weight
+dependence, a real-time Kerr/CFT multipoint correlator, or generic
+mode-coupled superradiance.  In particular, a finite limit of the scaled
+unit-horizon kernel in Eq.~\eqref{eq:unit-horizon-nonlinear-kernel} is not
+proved.  The principal-sector response collapse shows no additional
+order-sized power for $n=1,2,3$, while the seven-point fits and separate
+factorization audit resolve modest finite-window two-branch and kernel drift.
+No asymptotic supplementary-sector
+critical exponent has been established.
+The target-channel
+experiment establishes the spheroidal
 coupling structure and the dominant reflected amplitudes, but the
 $\ell'=6$ horizon coefficient is conditioning limited in double precision.
 The QNM comparison uses real-frequency peak locations only, and the
@@ -1164,29 +2986,50 @@ as a proof of Hawking thermality.  Extending the result to generic Kerr
 orbits or to gravitational perturbations requires, respectively,
 source-harmonic and orbit-evolution modules or metric reconstruction, gauge
 completion, and regularization; none of these are hidden in the present
-scalar result.
+scalar result.  A real scalar with a $\Phi^3$ source would additionally generate
+harmonics such as $3\omega$; the single-frequency closure used here relies on
+the complex field and its $U(1)$-invariant interaction.
 
 \section*{Data and code availability}
 
-The numerical data used in Figs.~\ref{fig:lowfreq}--\ref{fig:spin-limit} and
-Tables~\ref{tab:low-window}, \ref{tab:fit}, \ref{tab:tail-window},
-\ref{tab:numerics}, \ref{tab:production-convergence}, \ref{tab:convergence},
-\ref{tab:channels}, \ref{tab:superradiant}, and \ref{tab:spin-limit} are
-included in the project
-data directory, ``results/''.  The figures are generated by the scripts in
-``scripts/'', and the exact commands and tracked inputs are listed in
-``docs/prd/README.md''.  The source code and frozen inputs are maintained at
-\url{https://github.com/ljq2088/KerrScattering}.  The numerical checker compares the rounded entries in
-Tables~\ref{tab:fit}--\ref{tab:channels}, the spin-limit audit, the
-production-resolution audit, and the low-frequency slopes with the tracked CSV
+The numerical data used in Figs.~\ref{fig:lowfreq}--\ref{fig:spin-limit},
+including Figs.~\ref{fig:power-l0}, \ref{fig:power-near-extremal}, and
+\ref{fig:power-bandwidth-hierarchy}, and
+Tables~\ref{tab:axisymmetric-infrared}, \ref{tab:low-acceptance},
+\ref{tab:fit}, \ref{tab:tail-window},
+\ref{tab:low-convergence}, \ref{tab:tail-models}, \ref{tab:numerics}, \ref{tab:production-convergence},
+\ref{tab:tail-convergence}, \ref{tab:convergence},
+\ref{tab:angular-convergence}, \ref{tab:channels}, \ref{tab:superradiant},
+\ref{tab:near-extremal-threshold}, \ref{tab:cft-factorization},
+\ref{tab:l0-zero-frequency}, \ref{tab:power-l0}, \ref{tab:power-modal},
+\ref{tab:power-fit-quality}, and \ref{tab:spin-limit}, together with the source code and scripts required to
+reproduce them, are contained in a frozen review package.  The package is not
+yet publicly archived because its versioned release is being prepared; during
+peer review it is available to editors and referees from the authors upon
+reasonable request.  A public archival release with a persistent identifier
+will be deposited before publication, and the data citation in this statement
+will be updated to identify that release.  The numerical checker compares the rounded entries in
+Tables~\ref{tab:fit}--\ref{tab:channels}, the superradiant and near-extremal
+threshold tables, the scalar-monopole limits, the spin-limit audit,
+the higher-power modal slopes, bandwidth and peak-migration audits,
+factorization audit, production-resolution audit, and
+the low-frequency acceptance boundaries with the tracked CSV
 files.  The artifact
 manifest records file sizes and SHA-256 hashes for the figure and CSV inputs,
 including the target-channel values in Table~\ref{tab:channels}; a human-readable
-snapshot is provided in ``docs/prd/reproducibility\_report.md''.  No external
-experimental data are used.  In the CSV files, ``status=ok'' records a
-completed solver call; the manuscript acceptance decision is a separate
-postprocessing predicate on the recorded absolute first-order balance
-residual, $|T^{(1)}+R^{(1)}|$.
+snapshot is included in the review package.  No external experimental data are
+used.  In the CSV files, ``status=ok'' records a completed solver call; the
+manuscript acceptance decision is a separate, path-dependent postprocessing
+predicate combining paired-resolution response convergence, linear balance,
+Wronskian constancy, and, where it is numerically informative, absolute or
+flux-relative first-order balance.
+
+\section*{Acknowledgments}
+
+OpenAI Codex (GPT-5, accessed August 2026) assisted with substantive drafting,
+derivation cross-checks, and code review.  The authors reviewed and revised all
+assisted material and take full responsibility for the scientific content,
+originality, citations, and conclusions.
 
 \appendix
 
@@ -1304,7 +3147,12 @@ R&=
 \end{align}
 which gives Eq.~\eqref{eq:R1}.  Conservation of the radial current for the
 inhomogeneous solution with no incoming first-order radiation then yields the
-first-order balance law Eq.~\eqref{eq:first_order_balance}.
+first-order balance law Eq.~\eqref{eq:first_order_balance}.  If the prescribed
+incident amplitude is ${\cal A}_{\rm in}$ rather than unity, both first-order
+boundary amplitudes acquire the factor
+$|{\cal A}_{\rm in}|^2{\cal A}_{\rm in}$ and division by the incident flux
+leaves the factor $|{\cal A}_{\rm in}|^2$ in
+Eq.~\eqref{eq:amplitude_scaling}.
 
 \subsection{Schwarzschild normalization correspondence}
 
@@ -1349,8 +3197,8 @@ T_{\rm unit\text{-}inc}^{(1)}=T^{(0)}\widehat T^{(1)},
 R_{\rm unit\text{-}inc}^{(1)}=T^{(0)}\widehat R^{(1)}.
 \end{equation}
 
-Thus a direct comparison of the numerical values of $T^{(1)}$ between the two
-papers is meaningful only after this normalization conversion.  The physical
+Thus a direct comparison of numerical values of $T^{(1)}$ between the two
+conventions is meaningful only after this normalization conversion.  The physical
 first-order flux correction and the balance law are unchanged.
 
 \begin{thebibliography}{99}
@@ -1369,6 +3217,13 @@ J.~A. H. Futterman, F.~A. Handler, and R.~A. Matzner,
 K.~Glampedakis and N.~Andersson,
 Scattering of scalar waves by rotating black holes,
 Class. Quantum Grav. \textbf{18}, 1939 (2001).
+
+\bibitem{Dafermos2018}
+M.~Dafermos, I.~Rodnianski, and Y.~Shlapentokh-Rothman,
+A scattering theory for the wave equation on Kerr black hole exteriors,
+Ann. Sci. Ec. Norm. Super. \textbf{51}, 371 (2018),
+doi:10.24033/asens.2358,
+arXiv:1412.8379 [gr-qc].
 
 \bibitem{Dolan2008}
 S.~R. Dolan,
@@ -1445,6 +3300,57 @@ Fully nonlinear gravitational wave simulations from past to future null
 infinity,
 Phys. Rev. Lett. \textbf{134}, 161401 (2025).
 
+\bibitem{Zlochower2003}
+Y.~Zlochower, R.~G\'omez, S.~Husa, L.~Lehner, and J.~Winicour,
+Mode coupling in the nonlinear response of black holes,
+Phys. Rev. D \textbf{68}, 084014 (2003),
+doi:10.1103/PhysRevD.68.084014,
+arXiv:gr-qc/0306098.
+
+\bibitem{YoshinoKodama2012}
+H.~Yoshino and H.~Kodama,
+Bosenova collapse of axion cloud around a rotating black hole,
+Prog. Theor. Phys. \textbf{128}, 153 (2012),
+doi:10.1143/PTP.128.153,
+arXiv:1203.5070 [gr-qc].
+
+\bibitem{HerdeiroQCloud2014}
+C.~Herdeiro, E.~Radu, and H.~R\'unarsson,
+Non-linear $Q$-clouds around Kerr black holes,
+Phys. Lett. B \textbf{739}, 302 (2014),
+doi:10.1016/j.physletb.2014.11.005,
+arXiv:1409.2877 [gr-qc].
+
+\bibitem{FukudaNakayama2020}
+H.~Fukuda and K.~Nakayama,
+Aspects of nonlinear effect on black hole superradiance,
+JHEP \textbf{01}, 128 (2020),
+doi:10.1007/JHEP01(2020)128,
+arXiv:1910.06308 [hep-ph].
+
+\bibitem{Omiya2021}
+H.~Omiya, T.~Takahashi, and T.~Tanaka,
+Renormalization group analysis of superradiant growth of self-interacting
+axion cloud,
+Prog. Theor. Exp. Phys. \textbf{2021}, 043E02 (2021),
+doi:10.1093/ptep/ptab032,
+arXiv:2012.03473 [gr-qc].
+
+\bibitem{Baryakhtar2021}
+M.~Baryakhtar, M.~Galanis, R.~Lasenby, and O.~Simon,
+Black hole superradiance of self-interacting scalar fields,
+Phys. Rev. D \textbf{103}, 095019 (2021),
+doi:10.1103/PhysRevD.103.095019,
+arXiv:2011.11646 [hep-ph].
+
+\bibitem{XieHuang2025}
+N.~Xie and F.~P. Huang,
+Self-interaction effects on the Kerr black hole superradiance and their
+observational implications,
+Phys. Rev. D \textbf{112}, 055028 (2025),
+doi:10.1103/xmhn-cpv4,
+arXiv:2503.10347 [hep-ph].
+
 \bibitem{BarackPound2019}
 L.~Barack and A.~Pound,
 Self-force and radiation reaction in general relativity,
@@ -1497,20 +3403,25 @@ arXiv:2209.05450 [gr-qc].
 \bibitem{Wei2025}
 Y.-X.~Wei, X.-L.~Zhu, J.-D.~Zhang, and J.~Mei,
 Toward second-order self-force for eccentric extreme-mass-ratio inspirals in
-Schwarzschild spacetime,
-arXiv:2504.09640 [gr-qc] (2025).
+Schwarzschild spacetimes,
+Phys. Rev. D \textbf{112}, 064048 (2025),
+doi:10.1103/42fh-sw5h,
+arXiv:2504.09640 [gr-qc].
 
 \bibitem{Berens2024}
 R.~Berens, T.~Gravely, and A.~Lupsasca,
 Gravitational waves on Kerr black holes I: Reconstruction of linearized metric
 perturbations,
-arXiv:2403.20311 [gr-qc] (2024).
+Class. Quantum Grav. \textbf{41}, 195004 (2024),
+doi:10.1088/1361-6382/ad6c9c,
+arXiv:2403.20311 [gr-qc].
 
 \bibitem{ZhangEffectiveSource2025}
 C.~Zhang, R.-g.~Cai, G.~Fu, Y.~Gong, X.~Lu, and W.~Zhou,
 Generic effective sources for first-order in mass-ratio gravitational
 self-force calculations in Schwarzschild spacetime,
 Phys. Rev. D \textbf{112}, 104069 (2025),
+doi:10.1103/z9jr-qxc7,
 arXiv:2505.19732 [gr-qc].
 
 \bibitem{UptonWardell2026}
@@ -1518,12 +3429,28 @@ S.~D. Upton, B.~Wardell, A.~Pound, N.~Warburton, and L.~Barack,
 Effective source for second-order self-force calculations: quasicircular
 orbits in Schwarzschild spacetime,
 Phys. Rev. D \textbf{113}, 064013 (2026),
+doi:10.1103/f9j2-k64r,
 arXiv:2508.00087 [gr-qc].
 
 \bibitem{Cardoso2026}
 V.~Cardoso, J.~Redondo-Yuste, U.~Sperhake, and F.~Tuncer,
 Nonlinear dynamics in general relativity,
 arXiv:2603.04501 [gr-qc] (2026).
+
+\bibitem{GreenEtAl2023}
+S.~R. Green, S.~Hollands, L.~Sberna, V.~Toomani, and P.~Zimmerman,
+Conserved currents for a Kerr black hole and orthogonality of quasinormal
+modes,
+Phys. Rev. D \textbf{107}, 064030 (2023),
+doi:10.1103/PhysRevD.107.064030,
+arXiv:2210.15935 [gr-qc].
+
+\bibitem{Iuliano2025}
+C.~Iuliano, S.~Hollands, S.~R. Green, and P.~Zimmerman,
+Extremal black hole weather,
+Phys. Rev. D \textbf{111}, 124038 (2025),
+doi:10.1103/PhysRevD.111.124038,
+arXiv:2412.02821 [gr-qc].
 
 \bibitem{StarobinskyChurilov}
 A.~A. Starobinsky and S.~M. Churilov,
@@ -1535,6 +3462,72 @@ Sov. Phys. JETP \textbf{38}, 1 (1974).
 W.~H. Press and S.~A. Teukolsky,
 Floating orbits, superradiant scattering and the black-hole bomb,
 Nature \textbf{238}, 211 (1972).
+
+\bibitem{BredbergKerrCFT2010}
+I.~Bredberg, T.~Hartman, W.~Song, and A.~Strominger,
+Black hole superradiance from Kerr/CFT,
+J. High Energy Phys. \textbf{04} (2010) 019,
+doi:10.1007/JHEP04(2010)019,
+arXiv:0907.3477 [hep-th].
+
+\bibitem{HartmanKerrCFT2010}
+T.~Hartman, W.~Song, and A.~Strominger,
+Holographic derivation of Kerr-Newman scattering amplitudes for general
+charge and spin,
+J. High Energy Phys. \textbf{03} (2010) 118,
+doi:10.1007/JHEP03(2010)118,
+arXiv:0908.3909 [hep-th].
+
+\bibitem{CastroHiddenCFT2010}
+A.~Castro, A.~Maloney, and A.~Strominger,
+Hidden conformal symmetry of the Kerr black hole,
+Phys. Rev. D \textbf{82}, 024008 (2010),
+doi:10.1103/PhysRevD.82.024008,
+arXiv:1004.0996 [hep-th].
+
+\bibitem{BeckerKerrCFT2011}
+M.~Becker, S.~Cremonini, and W.~Schulgin,
+Extremal three-point correlators in Kerr/CFT,
+J. High Energy Phys. \textbf{02} (2011) 007,
+doi:10.1007/JHEP02(2011)007,
+arXiv:1004.1174 [hep-th].
+
+\bibitem{PorfyriadisKerrCFT2014}
+A.~P. Porfyriadis and A.~Strominger,
+Gravity waves from Kerr/CFT,
+Phys. Rev. D \textbf{90}, 044038 (2014),
+doi:10.1103/PhysRevD.90.044038,
+arXiv:1401.3746 [hep-th].
+
+\bibitem{CasalsGrallaZimmerman2016}
+M.~Casals, S.~E. Gralla, and P.~Zimmerman,
+Horizon instability of extremal Kerr black holes: Nonaxisymmetric modes and
+enhanced growth rate,
+Phys. Rev. D \textbf{94}, 064003 (2016),
+doi:10.1103/PhysRevD.94.064003,
+arXiv:1606.08505 [gr-qc].
+
+\bibitem{CasalsZimmerman2019}
+M.~Casals and P.~Zimmerman,
+Perturbations of extremal Kerr spacetime: Analytic framework and late-time
+tails,
+Phys. Rev. D \textbf{100}, 124027 (2019),
+doi:10.1103/PhysRevD.100.124027,
+arXiv:1801.05830 [gr-qc].
+
+\bibitem{CasalsLongoMicchi2019}
+M.~Casals and L.~F. Longo Micchi,
+Spectroscopy of extremal (and near-extremal) Kerr black holes,
+Phys. Rev. D \textbf{99}, 084047 (2019),
+doi:10.1103/PhysRevD.99.084047,
+arXiv:1901.04586 [gr-qc].
+
+\bibitem{GrallaZimmerman2018}
+S.~E. Gralla and P.~Zimmerman,
+Critical exponents of extremal Kerr perturbations,
+Class. Quantum Grav. \textbf{35}, 095002 (2018),
+doi:10.1088/1361-6382/aab140,
+arXiv:1711.00855 [gr-qc].
 
 \bibitem{MST1996}
 S.~Mano, H.~Suzuki, and E.~Takasugi,

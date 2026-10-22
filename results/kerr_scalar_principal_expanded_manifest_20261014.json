@@ -1,0 +1,37 @@
+{
+  "points": 81,
+  "accepted": 81,
+  "analytic_fitted_parameters": 0,
+  "acceptance": {
+    "paired_response": 1e-05,
+    "paired_complex_response": 1e-05,
+    "quadrature_change": 0.0001,
+    "radial_residual": 1e-06,
+    "coeff_tail": 1e-08,
+    "normalized_flux_balance": 1e-06
+  },
+  "analytic_cases": 27,
+  "log_X_checks": [
+    [
+      -30,
+      30
+    ],
+    [
+      -36,
+      36
+    ]
+  ],
+  "gauss_orders": [
+    12,
+    20
+  ],
+  "files": {
+    "results\\kerr_scalar_principal_expanded_20261014_N384_q3072.csv": "9fe737a6ff4d605293435a77262ba6e1a9089cd7abefeee7cd57868e9da55687",
+    "results\\kerr_scalar_principal_expanded_20261014_N448_q3072.csv": "105d966cb1216b1af5e233bc82329f1af35875061d9da94a2e195801805f12a5",
+    "results\\kerr_scalar_principal_expanded_20261014_N448.csv": "41641f3380e1931a3dccbdf39f2e56fa2db173d03cfd56134c1a34aa966d1ba0",
+    "scripts\\validate_principal_expanded_20261014.py": "cff28100a2f1f044e37555bd13b1551d0c82c838c19638548f06b51ef5f81755",
+    "scripts\\analyze_principal_matching_20261013.py": "6aa2e0973d0b6fda8a4e57d97eb414061840ceae1e05d86666bb1071ae622240",
+    "src\\kerr_scalar_spectral.py": "1c3d70e6327e60092cc0dea63871d30778cda1e8069a6c574a834b199c4a2832",
+    "src\\kerr_scalar_nonlinear.py": "d4c92c368543ea492d48b57295ed3895a970334e2596237e2c3c73dd61befcc4"
+  }
+}

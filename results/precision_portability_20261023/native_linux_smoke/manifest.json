@@ -1,0 +1,61 @@
+{
+  "status": "completed",
+  "returncode": 0,
+  "command": [
+    "/tmp/codex-julia-20261023/julia-1.10.7/bin/julia",
+    "--startup-file=no",
+    "--threads=1",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/scripts/run_scalar_precision_20261023.jl",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/results/precision_portability_20261023/native_linux_smoke/solution",
+    "0.5",
+    "0.1",
+    "0",
+    "0",
+    "1",
+    "320",
+    "48",
+    "64",
+    "80",
+    "64"
+  ],
+  "seconds": 12.619300962018315,
+  "precision": [
+    320,
+    48,
+    64,
+    80,
+    64
+  ],
+  "source_hashes_before": {
+    "src/kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts/run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts/run_scalar_precision.py": "6e150642ec51716e52f40b4c183d868d6f73b7b4f377fc14fa799681e4000de5"
+  },
+  "source_hashes_after": {
+    "src/kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts/run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts/run_scalar_precision.py": "6e150642ec51716e52f40b4c183d868d6f73b7b4f377fc14fa799681e4000de5"
+  },
+  "outputs": {
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "939255434d2c8346bf7399ee3c0ceeaa43445d48acb342ecb1103ef321c8c3c1",
+    "solution/result.toml": "704314c263cb0c9d048a7577085fc4cabcd0c4697c31e6415ab28b7a03c8108b",
+    "source_snapshot/kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "source_snapshot/run_scalar_precision.py": "6e150642ec51716e52f40b4c183d868d6f73b7b4f377fc14fa799681e4000de5",
+    "source_snapshot/run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738"
+  },
+  "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "julia": "julia version 1.10.7",
+  "timeout_seconds": 300,
+  "memory_guard_bytes": 1500000000,
+  "memory_guard_scope": "Julia guard; current RSS on Linux, peak RSS on other systems",
+  "parameters": {
+    "a": "0.5",
+    "omega": "0.1",
+    "ell": 0,
+    "m": 0,
+    "n": 1
+  },
+  "assertion_tested": "Scalar homogeneous residual and first-order nonlinear response; single run pending refinement"
+}

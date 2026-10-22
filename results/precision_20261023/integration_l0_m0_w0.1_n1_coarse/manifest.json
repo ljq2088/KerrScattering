@@ -1,0 +1,59 @@
+{
+  "status": "completed",
+  "returncode": 0,
+  "command": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu-22.04-D",
+    "-e",
+    "env",
+    "OPENBLAS_NUM_THREADS=1",
+    "JULIA_NUM_THREADS=1",
+    "timeout",
+    "--kill-after=10",
+    "300",
+    "/tmp/codex-julia-20261023/julia-1.10.7/bin/julia",
+    "--startup-file=no",
+    "--threads=1",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/scripts/run_scalar_precision_20261023.jl",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/results/precision_20261023/integration_l0_m0_w0.1_n1_coarse/solution",
+    "0.5",
+    "0.1",
+    "0",
+    "0",
+    "1",
+    "384",
+    "64",
+    "80",
+    "144",
+    "112"
+  ],
+  "source_hashes_before": {
+    "src\\kerr_scalar_precision.jl": "83f888c508ad9f31cac45241e6725710b842a35804f988121f7222ece28c0fa5",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_extra_20261023.py": "4fdc8fa0553b6115daa3079569bf9c2e03203f11bbe92f119167baa9b2fedf3d",
+    "scripts\\run_scalar_precision_campaign_20261023.py": "cd0d8f37eabbed0483af6cd1f2dd3607433d616752511d71f0bc9f81353f2b76"
+  },
+  "source_hashes_after": {
+    "src\\kerr_scalar_precision.jl": "83f888c508ad9f31cac45241e6725710b842a35804f988121f7222ece28c0fa5",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_extra_20261023.py": "4fdc8fa0553b6115daa3079569bf9c2e03203f11bbe92f119167baa9b2fedf3d",
+    "scripts\\run_scalar_precision_campaign_20261023.py": "cd0d8f37eabbed0483af6cd1f2dd3607433d616752511d71f0bc9f81353f2b76"
+  },
+  "outputs": {
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "d7e67193b1f9de376626e28f120dc3b0a6aa1abd14c67c1a805e9a34a5ce84a8",
+    "solution\\result.toml": "c9b0d8d1bb6a020a277bff0a221beaa7ad3f3faf8b6da0f257cdfaa5786cfd50"
+  },
+  "seconds": 15.982102155685425,
+  "precision": [
+    384,
+    64,
+    80,
+    144,
+    112
+  ],
+  "assertion_tested": "s=0,a=0.5,l=0,m=0,omega=0.1,n=1",
+  "timeout_seconds": 300,
+  "memory_guard_bytes": 1500000000
+}

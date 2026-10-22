@@ -22,9 +22,9 @@ TEX = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.tex"
 
 
 FRONT_MATTER_RE = re.compile(
-    r"(\\title\{Weakly nonlinear scalar scattering from a Kerr black hole\}\n\n)"
+    r"(\\title\{[^}\n]+\}\n\n)"
     r".*?"
-    r"(\n\\maketitle)",
+    r"(\n\\begin\{abstract\})",
     re.DOTALL,
 )
 

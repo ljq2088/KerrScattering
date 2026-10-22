@@ -17,6 +17,10 @@ MANIFEST = ROOT / "docs" / "prd" / "artifact_manifest.json"
 TEX = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.tex"
 PDF = ROOT / "docs" / "prd" / "kerr_scalar_nonlinear_GF_baseframe.pdf"
 ROOT_PDF = ROOT / "kerr_scalar_nonlinear_GF_baseframe.pdf"
+REQUIREMENTS = ROOT / "requirements.txt"
+DEV_REQUIREMENTS = ROOT / "requirements-dev.txt"
+PYTEST_CONFIG = ROOT / "pytest.ini"
+ENV_SNAPSHOT = ROOT / "docs" / "prd" / "environment_snapshot.txt"
 DEFAULT_SOURCE_DATE_EPOCH = "1704067200"
 
 
@@ -41,7 +45,8 @@ def run_check(command: list[str]) -> tuple[int, str]:
         stderr=subprocess.STDOUT,
         check=False,
     )
-    return completed.returncode, completed.stdout.strip()
+    output = "\n".join(line.rstrip() for line in completed.stdout.strip().splitlines())
+    return completed.returncode, output
 
 
 def status_label(returncode: int, *, expected_failure: bool = False) -> str:
@@ -93,6 +98,26 @@ def fenced(text: str) -> str:
     return "```text\n" + text + "\n```"
 
 
+def compact_check_output(name: str, output: str) -> str:
+    """Keep the build evidence without embedding three complete TeX logs."""
+    if name != "Clean manuscript build":
+        return output
+    normalized = output.replace(str(ROOT), ".").replace(sys.executable, "python")
+    prefixes = (
+        "+ ",
+        "PRD artifact checks passed.",
+        "PRD manuscript numeric checks passed.",
+        "PRD citation integrity passed",
+        "PRD style and structure audit passed.",
+        "Copied ",
+        "PRD manuscript build passed.",
+    )
+    retained = [
+        line for line in normalized.splitlines() if line.strip().startswith(prefixes)
+    ]
+    return "\n".join(retained)
+
+
 def main() -> None:
     source_date_epoch = int(
         os.environ.get("SOURCE_DATE_EPOCH", DEFAULT_SOURCE_DATE_EPOCH)
@@ -104,6 +129,11 @@ def main() -> None:
         manifest = json.load(handle)
 
     checks = [
+        (
+            "Clean manuscript build",
+            [sys.executable, str(ROOT / "scripts" / "build_prd_manuscript.py")],
+            False,
+        ),
         (
             "Artifact manifest/schema check",
             [sys.executable, str(ROOT / "scripts" / "check_prd_artifacts.py")],
@@ -122,6 +152,11 @@ def main() -> None:
         (
             "PRD style and structure audit",
             [sys.executable, str(ROOT / "scripts" / "check_prd_style.py")],
+            False,
+        ),
+        (
+            "Python solver test suite",
+            [sys.executable, "-m", "pytest", "-q"],
             False,
         ),
         (
@@ -148,6 +183,12 @@ def main() -> None:
         "",
         *file_summary_table([TEX, PDF, ROOT_PDF, MANIFEST]),
         "",
+        "## Reproduction Environment Files",
+        "",
+        *file_summary_table(
+            [REQUIREMENTS, DEV_REQUIREMENTS, PYTEST_CONFIG, ENV_SNAPSHOT]
+        ),
+        "",
         "## Frozen Figure And CSV Inputs",
         "",
         *artifact_table(manifest["artifacts"]),
@@ -163,7 +204,7 @@ def main() -> None:
                 "",
                 f"Status: **{status_label(returncode, expected_failure=expected_failure)}**",
                 "",
-                fenced(output),
+                fenced(compact_check_output(name, output)),
                 "",
             ]
         )
@@ -173,6 +214,9 @@ def main() -> None:
             "## Rebuild Commands",
             "",
             "```powershell",
+            "python -m venv .venv",
+            ".\\.venv\\Scripts\\python -m pip install -r requirements-dev.txt",
+            ".\\.venv\\Scripts\\python -m pytest -q",
             "python scripts\\write_prd_artifact_manifest.py",
             "python scripts\\build_prd_manuscript.py",
             "python scripts\\check_prd_citations.py",
@@ -183,12 +227,22 @@ def main() -> None:
             "The readiness audit is expected to report blockers until the final "
             "author metadata, submission metadata, and cover letter are "
             "available.",
+            "The frozen review package is available on reasonable request; a "
+            "versioned public archive citation remains a prepublication step.",
             "",
         ]
     )
 
     REPORT.write_text("\n".join(lines), encoding="utf-8", newline="\n")
     print(f"Wrote {REPORT}")
+    unexpected_failures = [
+        name
+        for name, returncode, _output, expected_failure in check_results
+        if returncode != 0 and not expected_failure
+    ]
+    if unexpected_failures:
+        print("Unexpected reproducibility failures: " + ", ".join(unexpected_failures))
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

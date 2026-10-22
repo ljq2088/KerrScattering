@@ -1,0 +1,466 @@
+\section{阅读路线、结论等级与本次审计}
+本笔记覆盖当前英文稿件的全部物理问题及主要实现工作，保留从 Schwarzschild 到 Kerr 的推导路线。排版参照所提供的中文场论笔记；参考文件中的 Maxwell 场、带电标量与 Abelian--Higgs 模型不属于本项目，不能将其结果移植过来。本文没有作者署名，也不是幻灯片。公式按节编号，图和数值表来自现有可复现产物。
+
+\begin{note}
+\textbf{结果来源与时间。} 本笔记于 2026 年 10 月 5 日整理，数值取自当前英文稿件及其既有结果，不代表本日重新完成了参数扫描。旧中文笔记的解析部分经过核对后复用，旧版数值和解释已替换。解析恒等式、已记录的数值证据、条件性的渐近解释分别标示；最后附上现稿全部 20 张数值表，便于逐项审计。
+\end{note}
+
+全文的核心不是非线性振幅本身很大，而是\emph{固定入射能流后}吸收、反射和相位如何响应。轴对称低频问题得到明确的匹配渐近结果：三次自通道的 $T^{(0)}$ 与 $T^{(1)}$ 同阶，单极比值趋于 $\ln2/\pi$，更高局域幂次在红外被压低。近极端非轴对称问题提出另一种机制：喉区线性强度和非线性 Green 核共同控制响应，不能只用共形权重写出任意模态的幂律。
+
+\subsection{新发现的无穷远端点一致性问题}
+按本文 $R_\sigma=r^{-1}e^{i\sigma\omega r_*}u$、$K=\omega(r^2+a^2)-am$、$\lambda=A+a^2\omega^2-2am\omega$，令 $H(r)=r^2+a^2$，有
+\begin{equation}
+ q=\frac{i\sigma\omega H}{\Delta}-\frac1r,
+ \qquad
+ B_0=\frac{K^2-\omega^2H^2}{\Delta}-\lambda
+       -\frac{2i\sigma\omega a^2}{r}
+       +\frac{2\Delta}{r^2}-\frac{\Delta'}r.
+\label{eq:audit-exact-b0}
+\end{equation}
+因此
+\begin{equation}
+ \boxed{B_0(0)=-\lambda-2am\omega=-(A+a^2\omega^2).}
+\label{eq:audit-inf-b0}
+\end{equation}
+推导只需展开 $q'+q^2$：$i\sigma\omega H'$ 与 $-2i\sigma\omega H/r$ 合成 $-2i\sigma\omega a^2/r$；相位平方项与原势的差留下 $-2am\omega$。不存在可以把该项默认为零的径向本征值换算。
+
+\begin{note}
+\textbf{代码审计结论。} 当前 \texttt{src/kerr\_scalar\_spectral.py} 的无穷远分支使用 $B_0(0)=-\lambda$，而非式~\eqref{eq:audit-inf-b0}。非线性生产程序调用同一个分支求解器，因此 $am\omega\ne0$ 的历史扫描需要修正端点后重新计算、检查离网残差和数值稳定性，才能恢复最终结论等级。$m=0$ 或 $a=0$ 时此处差异严格消失。本文修正解析公式，但不暗中改写旧数据，也不声称误差必然很大或必然可忽略。本次交付是笔记整理，不包括该重算。
+\end{note}
+谱阶数收敛和守恒量很重要，但不能排除同一错误边界条件下的共同收敛。后文非轴对称的斜率、坍缩和高阶层级均作为\emph{历史计算所呈现、等待此项审计复核的规律}记录；喉区线性理论和归一化恒等式仍可独立推导。
+
+\clearpage
+\section{轴对称低频：静态解与波区解的完整匹配}
+\label{sec:new-infrared}
+本节固定 $|a|<M$、$m=0$，先令 $\omega\to0$。它与先取极端或固定 $p/\kappa$ 的极限不同。令
+\begin{equation}
+ d=\sqrt{M^2-a^2},\quad H_+=r_+^2+a^2,\quad
+ X=\frac{r-M}{d},\quad x=\omega r,\quad
+ q_\ell=2^{-\ell}\binom{2\ell}{\ell}.
+\end{equation}
+零频角本征值为 $A_{\ell0}=\ell(\ell+1)$。径向方程化为
+\begin{equation}
+ \frac{\dd}{\dd X}\left[(X^2-1)\frac{\dd R}{\dd X}\right]
+ -\ell(\ell+1)R=0.
+\end{equation}
+两支为 $P_\ell(X),Q_\ell(X)$；后者在视界 $X=1$ 发散，而 $P_\ell(1)=1$，故单位视界解是 $P_\ell(X)$。大 $r$ 时
+\begin{equation}
+ R_{\rm in}\simeq q_\ell(r/d)^\ell.
+\end{equation}
+波区主方程是平直球 Bessel 方程，正则支 $j_\ell(x)$ 在 $x\ll1$ 时为 $x^\ell/(2\ell+1)!!$。重叠区 $M\ll r\ll\omega^{-1}$ 存在，从而
+\begin{equation}
+ R_{\rm in}\simeq K_\ell(M\omega)^{-\ell}j_\ell(x),\qquad
+ K_\ell=(2\ell+1)!!q_\ell(M/d)^\ell.
+\label{eq:new-bessel-match}
+\end{equation}
+用 $j_\ell(x)\simeq\sin(x-\ell\pi/2)/x$ 分解入射、出射波，得到主阶
+\begin{equation}
+ B^{\rm inc}\simeq\frac{M i^{\ell+1}K_\ell}{2(M\omega)^{\ell+1}},
+ \qquad
+ T^{(0)}_{\ell0}\simeq A_{0,\ell}(M\omega)^{2\ell+2},\quad
+ A_{0,\ell}=\frac{4H_+}{M^2K_\ell^2}.
+\label{eq:new-linear-low}
+\end{equation}
+这说明透射的离心抑制是场的匹配结果，而不是从几组点猜出来的幂律。$\ell=0$ 时 $K_0=1$，$T^{(0)}\sim4H_+\omega^2$，旋转依赖只在面积因子里。
+
+\subsection{复 Green 振幅的主阶，而不只取实部}
+本节暂以 $M=1$ 写中间步骤，再恢复量纲。令
+\begin{equation}
+ C_\ell=\int_{S^2}|Y_{\ell0}|^4\dd\Omega,
+ \quad h_\ell^{(1)}=j_\ell+i y_\ell.
+\end{equation}
+单位无穷远出射解为 $R_{\rm up}\simeq\omega i^{\ell+1}h_\ell^{(1)}(x)$。利用
+$W_x[j_\ell,h_\ell^{(1)}]=i/x^2$，径向 Wronskian 在主阶为
+\begin{equation}
+ W_r=\Delta(R_{\rm in}R'_{\rm up}-R_{\rm up}R'_{\rm in})
+ \simeq i^{\ell+2}K_\ell\omega^{-\ell}.
+\end{equation}
+源主阶是 $-C_\ell r^2R_{\rm in}^3$。把它代入 $A_H=\int R_{\rm up}S/W_r\,\dd r$ 并令 $x=\omega r$，所有幂次逐项合并后得到
+\begin{align}
+ \frac{A_H^{(1)}}{M^2}&\simeq C_\ell K_\ell^2
+ (I_\ell+iJ_\ell)(M\omega)^{-2\ell-2},\label{eq:new-ah-low}\\
+ I_\ell&=-\int_0^\infty x^2 y_\ell(x)j_\ell(x)^3\dd x,
+ &J_\ell&=\int_0^\infty x^2j_\ell(x)^4\dd x.
+\end{align}
+被积函数在零点分别为 $O(x^{2\ell+1})$、$O(x^{4\ell+2})$，大 $x$ 时为 $O(x^{-2})$，因此这些积分收敛。式~\eqref{eq:new-ah-low} 的发散来自单位视界归一化，并非固定入射场的物理发散。
+
+定义单位入射的一阶视界振幅与相对振幅
+\begin{equation}
+ A_{H,\rm fix}^{(1)}=\frac{A_H^{(1)}}{|B^{\rm inc}|^2B^{\rm inc}},\qquad
+ \rho_H=\frac{A_H^{(1)}}{|B^{\rm inc}|^2},\qquad
+ \chi_H=2\Ree\rho_H=\frac{T^{(1)}}{T^{(0)}}.
+\end{equation}
+由两式主阶相除，$K_\ell$、黑洞自旋因子和频率负幂全部抵消：
+\begin{align}
+ M A_{H,\rm fix}^{(1)}&\simeq\frac{8C_\ell}{K_\ell}
+ i^{-(\ell+1)}(I_\ell+iJ_\ell)(M\omega)^{\ell+1},\\
+ \boxed{\rho_H\longrightarrow4C_\ell(I_\ell+iJ_\ell),\qquad
+ \chi_H\longrightarrow8C_\ell I_\ell.}\label{eq:new-rho-limit}
+\end{align}
+因此 $T^{(1)}=T^{(0)}\chi_H$ 和 $T^{(0)}$ 具有相同主幂 $2\ell+2$，只要该模 $I_\ell$ 不为零。这里已经验证的 $\ell=0,1,2$ 均为正；不把有限模态的正性外推为未经证明的任意 $\ell$ 定理。
+
+对单极，$j_0=\sin x/x$、$y_0=-\cos x/x$，积分可化为
+\begin{equation}
+ I_0=\int_0^\infty\frac{\cos x\sin^3x}{x^2}\dd x
+       =\frac{\ln2}{2},\quad J_0=\frac\pi4,\quad C_0=\frac1{4\pi}.
+\end{equation}
+例如先分部积分，再用三角恒等式化为 $\int(\cos bx-\cos cx)/x\,\dd x=\ln(c/b)$，有界振荡积分以共同调节因子定义，不能拆成两个各自发散的积分。于是
+\begin{equation}
+ \frac{A_{H,00}^{(1)}}{M^2}\simeq
+ \left(\frac{\ln2}{8\pi}+\frac i{16}\right)(M\omega)^{-2},\quad
+ \rho_{H,00}\to\frac{\ln2}{2\pi}+\frac i4,\quad
+ \boxed{\chi_{H,00}\to\frac{\ln2}{\pi}=0.220635600153\ldots.}
+\end{equation}
+若物理视界幅为 $C_H=C_H^{(0)}[1+\epsilon|\mathcal A_{\rm in}|^2\rho_H+\cdots]$，则模长一阶变化由 $\Ree\rho_H$ 决定，相位变化是 $\epsilon|\mathcal A_{\rm in}|^2\Imm\rho_H$。能流只测量实部，不能声称已经从能流验证完整复相位。
+
+\subsection{采点、截断与数值验证}
+在 $a/M=0.5$ 的轴对称自通道，接受的最低 $M\omega$ 分别为
+$0.00075,0.0015,0.005$，对应 $\ell=0,1,2$。这些是视界比值/复振幅的精度边界，不等于双通道能流的最低频率。$\ell=2$ 的 $0.003,0.004$ 点未通过配对归一化检验，不参与图与拟合。
+
+解析极限 $\chi_H$ 在三个模态依次为 $0.220635600153$、$0.147136717786$、$0.106366541731$。七点低频拟合的 $T^{(0)}$ 有效幂为 $2.0145,4.0298,6.0784$，$T^{(1)}$ 为 $2.0245,4.0360,6.0884$；缩至五点分别趋近 $2.0095,4.0193,6.0502$ 与 $2.0162,4.0237,6.0585$。全部 $R^2>0.999989$。偏离整数的方向与缩窗漂移一起报告，不能以很高 $R^2$ 代替渐近误差。
+
+双通道一阶能流曲线最低接受频率为 $0.02,0.12,0.28$。低于这些阈值，直接反射干涉存在严重大数相消；不能用守恒关系补一个 $R^{(1)}$ 再称其独立测得，也不能把这些较高的频点误当红外拟合窗。
+\notefigure{kerr_scalar_low_frequency_axisymmetric.png}{轴对称低频匹配和归一化检验。每个模态应分别查看 $T^{(0)}$、$T^{(1)}$ 和比值的接受窗；不同可观测量使用不同精度门槛。复振幅相位检验不能由能流图替代。}
+
+\section{推广到任意正整数的局域幂次}
+取一个相互作用阶次
+\begin{equation}
+ S_n=\int\sqrt{-g}\left[-|\nabla\Phi|^2+
+ \frac{\epsilon_n}{n+1}|\Phi|^{2n+2}\right]\dd^4x,\quad
+ \Box\Phi+\epsilon_n|\Phi|^{2n}\Phi=0,
+ \quad [\epsilon_n]=M^{2n-2}.
+\end{equation}
+复单频场的 $|\Phi|^{2n}\Phi$ 保留原 $\omega,m$，但不保留单一角模。若入射为 $S_{\ell m}R_{\rm in}$，投影到 $L,m$ 后
+\begin{align}
+ S_{L}^{(n)}(r)&=-[r^2C_{L\ell m}^{(0,n)}+a^2C_{L\ell m}^{(2,n)}]
+ |R_{\rm in}|^{2n}R_{\rm in},\\
+ C_{L\ell m}^{(j,n)}&=\int S_{Lm}^*(\theta)
+ (\cos\theta)^j|S_{\ell m}|^{2n}S_{\ell m}\,\dd\Omega,\quad j=0,2.
+\end{align}
+每个目标模使用自己的径向算符、$\lambda_L$ 和 Wronskian。自通道和异通道不能共用一个本征值。一般源缩放是 $|\alpha|^{2n}\alpha$，不是 $\alpha^{2n+1}$，因为相位与复共轭必须保留。
+
+对自通道定义
+\begin{align}
+ \rho_H^{(n)}&=\frac{A_H^{(1,n)}}{|B^{\rm inc}|^{2n}},&
+ \chi_H^{(n)}&=2\Ree\rho_H^{(n)},\\
+ T_n^{(1)}&=\frac{2pH_+}{\omega}
+ \frac{\Ree A_H^{(1,n)}}{|B^{\rm inc}|^{2n+2}},&
+ R_n^{(1)}&=\frac{2\Ree[(B^{\rm ref})^*A_{\rm ref}^{(1,n)}]}
+ {|B^{\rm inc}|^{2n+2}}.
+\end{align}
+真正物理修正为 $\epsilon_n|\mathcal A_{\rm in}|^{2n}T_n^{(1)}$。$n>1$ 时不能把有量纲 $\chi_H^{(n)}$ 直接与 $n=1$ 的数值比较，需使用 $\widehat\chi_H^{(n)}=M^{2n-2}\chi_H^{(n)}$。
+
+\subsection{单极红外系数的解析推导}
+$R_{\rm in}\simeq\sin x/x$，$C_n=(4\pi)^{-n}$。与三次情形相同，$\dd r=\omega^{-1}\dd x$ 的体积因子和 Wronskian 合并，使单位视界 $\Ree A_H^{(1,n)}$ 的主幂仍为 $\omega^{-2}$，但固定入射的 $|B^{\rm inc}|^{2n}$ 提供 $\omega^{-2n}$：
+\begin{align}
+ \Ree A_H^{(1,n)}&\simeq C_n\omega^{-2}I_n,\qquad
+ I_n=\int_0^\infty\frac{\sin^{2n+1}x\cos x}{x^{2n}}\dd x,\\
+ I_n&=\frac{n}{n+1}\int_0^\infty
+ \frac{\sin^{2n+2}x}{x^{2n+1}}\dd x>0.
+\end{align}
+第二式来自 $\dd(\sin^{2n+2}x)/(2n+2)=\sin^{2n+1}x\cos x\dd x$，边界项消失。恢复 $M$ 后
+\begin{equation}
+ \boxed{\widehat\chi_{H,00}^{(n)}\simeq c_n(M\omega)^{2n-2},
+ \qquad c_n=\frac{2I_n}{\pi^n}>0.}
+\label{eq:new-alln}
+\end{equation}
+将 $\sin^{2n+2}x$ 展开为有限余弦和，用共同指数调节因子积分、消去抵消的多项式项，得到适合独立校核的表达式
+\begin{equation}
+ I_n=\frac{(-1)^n}{4(n+1)(2n-1)!}
+ \sum_{j=1}^{n+1}(-1)^{j+1}j^{2n}
+ \binom{2n+2}{n+1-j}\ln j.
+\end{equation}
+$c_1=\ln2/\pi$、$c_2=0.063172552062\ldots$、$c_3=0.0172436834309\ldots$。因此三次项在单极红外是边际响应，五次、七次及更高项被额外的 $\omega^{2n-2}$ 抑制；对应 $T_n^{(1)}\sim\omega^{2n}$。这是在固定次极端背景下的解析结论。已做 $n=2,3$ 独立数值计算；任意 $n$ 的公式不代表每个 $n$ 都已数值扫描。
+
+固定 $y=\omega/\kappa$ 的轴对称数值对照给出 $n=2,3$ 的有效 $\kappa$ 幂 $2.00734,4.01128$。这与红外层级相容，但固定自旋的定理不自动保证双重极限的一致性。单极 $y\to0$ 外推在八个自旋 $a/M=0,0.5,0.9,0.98,0.99,0.995,0.997,0.999$ 的最大解析相对偏差为 $6.6\times10^{-5}$；最困难自旋采用 $y=(0.05,0.1,0.2)$，其他采用 $(0.0125,0.025,0.05)$。
+\notefigure{kerr_scalar_power_nonlinearity_l0.png}{单极高阶局域非线性的红外层级。三次比值趋于常数，高阶响应在低频逐级衰减；坐标与无量纲化必须对应式~\eqref{eq:new-alln}。}
+
+\section{有限频率谱、共振与高频窗：计算了什么}
+轴对称生产设置为 $a/M=0.5$、$\ell=0,1,2$、两域 $N=240$、匹配半径 $r_m=40M$。通常内区求积阶数 $q=192$，振荡外尾相对容差 $10^{-11}$；高频尾窗另行提高内区求积阶数到 $2048$。图中 $T^{(1)}$、$R^{(1)}$ 是\emph{能流对带符号耦合的一阶导数}，不是振幅，也不是把耦合设为 1 的精确散射。
+\notefigure{kerr_scalar_nonlinear_axisymmetric_fig2.png}{轴对称完整能流结果。线性吸收、非线性吸收修正以及反射修正应在固定入射约定下读取；仅展示双通道通过精度门槛的频率。}
+三个非线性峰的拟合峰位 $(0.1306,0.3101,0.5026)$，Lorentzian 宽度 $(0.0599,0.0591,0.0595)$。基本 QNM 为 $(0.1124-0.1022i,0.2979-0.0954i,0.4920-0.0946i)$。峰位并非精确 QNM 实部，宽度也不等于其虚部。峰拟合 $R^2=(0.9918,0.9978,0.9985)$，RMS 为 $(2.41,1.27,1.05)\%$。只能说实频散射峰与势垒模结构有关；没有计算非线性极点移动或 QNM 残数。
+
+指数尾拟合窗是 $M\omega\in[0.18,0.60],[0.38,0.85],[0.62,1.00]$，接受点数 $19,14,10$。指数模型的对数残差 $\sigma_{\log}=(0.0372,0.0671,0.0559)$，相对幂律模型的 $\Delta\mathrm{AICc}=(97.9,48.2,23.8)$。留一检验也支持这些\emph{有限频窗}中指数更合适。但固定 Hawking 斜率的残差明显更大，不能称其证明了 Hawking 热谱或严格 $\omega\to\infty$ 渐近律。
+
+\subsection{目标通道、选择定则和首个非零能流阶次}
+反射对称性使球状谐具有确定赤道奇偶性；$|S_{\ell m}|^{2n}S_{\ell m}$ 保留相应奇偶性，故不允许的目标 $L$ 投影严格为零。源仍只含原 $m$，但允许同奇偶性的多个 $L$。如果目标模没有零阶入射场，则其边界幅为 $O(\epsilon_n)$、能流为 $O(\epsilon_n^2)$。因此不能把它的幅平方加入自通道的一阶平衡里，也不能将异通道能流和自通道的干涉项混同。
+
+\section{数值精度：彼此独立的误差预算}
+\subsection{低频映射、导数矩阵和本征值接口}
+长波区不能仅通过盲目增大 $N$ 解析。对每域 $[z_L,z_R]$，低频使用
+\begin{equation}
+ z(y)=z_L+(z_R-z_L)\frac{\sinh[\eta(1-y)/2]}{\sinh\eta},\qquad -1\le y\le1.
+\end{equation}
+$y=1,-1$ 分别对应 $z_L,z_R$，没有移动物理端点。$|M\omega|<0.1$ 时取 $\eta_{\rm out}=|\ln(2M|\omega|)|$、$\eta_{\rm in}=\eta_{\rm out}/2$，其余用仿射映射。$\eta$ 是网格参数，绝非表面引力。若 $D_y,D_y^2$ 是 Lobatto 导数矩阵，链式法则给出
+\begin{equation}
+ D_z=\operatorname{diag}(z_y^{-1})D_y,\quad
+ D_{zz}=\operatorname{diag}(z_y^{-2})D_y^2
+ -\operatorname{diag}(z_{yy}z_y^{-3})D_y.
+\end{equation}
+不能把 $D_z^2$ 无条件当成解析映射的 $D_{zz}$，两者有限截断时未必相同。先映射再用正确导数矩阵装配 $L$，才能检查网格加密改善的是解析度还是舍入误差。
+
+角本征值接口输出 $A_{\ell m}(a\omega)$ 后，径向接口统一换算为 $\lambda=A+a^2\omega^2-2am\omega$。球谐矩阵表示为 $\ell'(\ell'+1)\delta_{\ell'\ell''}-(a\omega)^2\langle\ell'm|\cos^2\theta|\ell''m\rangle$，实对称对角化并按零旋转连续性跟踪模态。球状谐归一化为 $\int|S|^2\dd\Omega=1$；在调用其他语言或软件的接口时，必须先核对其角常数、傅里叶号和相位约定，而不直接使用同名 $\lambda$。
+
+\subsection{谱解、求积和能流的独立审计}
+端点包含法的优势是直接把退化后的一阶正则性条件放入矩阵，并保留 $u_H=1$；它不免除条件数、匹配和求积检验。实际应依次检查：角本征值、原方程离网残差、相位剥离谱尾、端点条件、Wronskian、匹配半径、$N$ 与 $q$ 的独立变化、线性能流以及直接双通道一阶平衡。
+
+归一化不变的齐次残差已在式~\eqref{eq:relative-residual} 给出；非齐次场应使用
+\begin{equation}
+ \delta_{\rm inh}=
+ \frac{|\Delta R_1''+\Delta'R_1'+VR_1-S|}
+ {|\Delta R_1''|+|\Delta'R_1'|+|VR_1|+|S|},\qquad
+ V=K^2/\Delta-\lambda.
+\end{equation}
+分母为零的点需单独标记而非除以任意固定常数；端点必须取解析正则变量极限。源项和场同步缩放时该定义不变。在共振附近或微小净能流下，绝对和相对平衡必须并列，不应只挑数值好看的一个。
+
+代表性轴对称样本使用三个分支共 1800 个离网点，最大残差 $2.8\times10^{-10}$、95 分位 $1.2\times10^{-11}$、中位数 $3.2\times10^{-13}$，谱尾 $2.8\times10^{-14}$。这是\emph{代表性样本}，不能写成所有扫描点的统一上界。角向从 16 个额外球谐和 256 点求积提高到 24 个及 512 点，本征值与投影变化分别不超过 $4.4\times10^{-16}$ 与 $5.2\times10^{-14}$。
+
+高频处 $q=1792\to2048$ 的三模 $T^{(1)}$ 变化为 $3\times10^{-5},1.7\times10^{-4},2.5\times10^{-4}$，而固定 $q=2048$ 将 $N=224\to240$ 的变化不超过 $9.5\times10^{-8}$。所以这一频段限制来自\emph{紧致视界侧 Green 求积}，不是齐次谱阶数不足。旧笔记将其称作远区尾积分误差，已在本版改正。
+\notefigure{kerr_scalar_axisymmetric_accuracy.png}{轴对称数值精度审计。谱系数、离网残差和能流平衡检查不同环节，不能由其中某一个替代其余指标。}
+
+显式逆与直接解 $Lu=b$ 在精确算术下相同，直接解通常更经济、数值误差常数更好，但不会神奇地消除问题本身的病态。真正影响两端频率的因素包括长波尺度、相位解析度、行列尺度、匹配基的线性独立性和归一化相消。逆矩阵不能作为低频失败的唯一原因，也不能据此断言中频高精度是算法错误。
+
+\section{超辐射阈值：能流与响应比值的不同极限}
+本节以及后续近极端数值都受前述无穷远端点审计限制。线性理论的阈值判据不受该限制：
+\begin{equation}
+ p=\omega-m\Omega_H,\quad
+ T^{(0)}=\frac{pH_+}{\omega|B^{\rm inc}|^2},\quad
+ T^{(1)}=T^{(0)}\chi_H.
+\end{equation}
+固定次极端自旋、若 $B^{\rm inc}$ 和 $\rho_H$ 有有限非零极限，则 $T^{(0)},T^{(1)}\propto p$，而比值 $\chi_H$ 有限。在 $p=0$ 直接计算 $T^{(1)}/T^{(0)}$ 是 $0/0$，应从视界振幅或双侧极限定义。
+
+历史扫描 $a/M=0.5,0.7,0.9$、$\ell=m=1,2$ 使用 $x=\omega/(m\Omega_H)$；谱/求积配对 $(288,320)$ 与 $(320,384)$。77 个响应点中 67 个亦通过直接双通道平衡，10 个只用于视界比值。阈值取 $x=1\pm0.001,1\pm0.01$ 的对称外推。记录的 $\chi_*$ 对 $(1,1)$ 为 $0.124051,0.146970,0.206963$，对 $(2,2)$ 为 $0.094350,0.116670,0.183251$；重算后需确认这些数字及趋势。
+
+若 $\epsilon>0$ 且 $\chi_H>0$，超辐射区 $T^{(0)}<0$ 导致 $T^{(1)}<0$，由 $R^{(1)}=-T^{(1)}$ 得到放大增强。通常正势耦合 $\lambda_{\rm pot}>0$ 对应 $\epsilon=-\lambda_{\rm pot}$，符号反向。这里只是一阶效应，不包含超辐射饱和、bosenova 或自洽非线性终态。
+\notefigure{kerr_scalar_superradiant_response.png}{历史超辐射响应扫描：阈值两侧的能流符号与有限视界响应。非轴对称数值需在端点修正后重算，本图保留为已有工作记录而非最终复核结果。}
+
+\section{近极端喉区：从径向方程推出共形权重}
+\label{sec:new-throat}
+定义
+\begin{equation}
+ \kappa=\frac{r_+-r_-}{2H_+},\quad y=\frac p\kappa,\quad
+ \delta=r_+-r_-,\quad \xi=\frac{r-r_+}{\delta}.
+\end{equation}
+避免将网格映射参数也叫 $\kappa$；本节 $\kappa$ 只表示表面引力。取 $a\to M$、$y$ 固定，则 $\omega\to m/(2M)$，$a\omega\to m/2$。直接展开
+\begin{equation}
+ \Delta=\delta^2\xi(\xi+1),\qquad
+ K=H_+p+\omega(2r_+\delta\xi+\delta^2\xi^2),\qquad
+ \frac K\delta\to\frac y2+m\xi.
+\end{equation}
+原方程中两个径向导数的 $\delta^{-1}$ 恰好抵消 $\Delta$ 的 $\delta^2$，故主阶为
+\begin{equation}
+ \frac{\dd}{\dd\xi}\left[\xi(\xi+1)\frac{\dd R}{\dd\xi}\right]
+ +\left[\frac{(m\xi+y/2)^2}{\xi(\xi+1)}-\lambda_{\rm ext}\right]R=0,
+ \quad\lambda_{\rm ext}=A_{\ell m}(m/2)-\frac{3m^2}{4}.
+\label{eq:new-near-ode}
+\end{equation}
+在 $\xi=0$，设 $R\propto\xi^s$ 得 $s^2+y^2/4=0$，未来视界入射支为 $s=-iy/2$，与 $r_*\sim(2\kappa)^{-1}\ln(r-r_+)$ 一致。
+
+在喉口 $1\ll\xi\ll M/\delta$，令 $R\propto\xi^b$，得到
+\begin{equation}
+ b(b+1)+m^2-\lambda_{\rm ext}=0,
+ \qquad b=-h,\ h-1,
+\end{equation}
+其中
+\begin{equation}
+ \boxed{h=\frac12+\sqrt{\frac14+\mathsf K_{\ell m}-2m^2},\qquad
+ \mathsf K_{\ell m}=A_{\ell m}(m/2)+\frac{m^2}{4}.}
+\end{equation}
+$\mathsf K$ 是这里的角分离常数，不是径向函数 $K(r)$，也不是原径向 $\lambda$。根号取 $\Ree h\ge1/2$。实 $h>1/2$ 称 supplementary（实权重）模，$h=1/2+i\nu$ 称 principal（复权重）模。它们的区别来自两支幂在匹配时的相对大小，而非标签本身的物理假设。
+
+这是标准近极端线性匹配结构的本项目约定版\cite{BredbergKerrCFT2010}。与极端晚时自相似研究的联系是相同的喉区指标，不是把晚时衰减指数直接当作定频非线性散射幂律。
+
+\subsection{两支匹配、线性吸收和固定入射强度}
+单位视界近区解在喉口为 $c_+(y)\xi^{h-1}+c_-(y)\xi^{-h}$。把 $\xi=(r-r_+)/\delta$ 写回外区，外区两个幂的系数分别包含
+\begin{equation}
+ \mathcal A\propto(M\kappa)^{1-h},\qquad
+ \mathcal B\propto(M\kappa)^h.
+\end{equation}
+外区传播到无穷远给出 $B^{\rm inc}=\mathcal A D_++\mathcal B D_-$。因此在远区连接系数正常、没有额外零点共振的路径上
+\begin{equation}
+ T^{(0)}\simeq
+ \frac{(M\kappa)^{2\Ree h-1}\mathcal N_h(y)}
+ {|D_+(y)+D_-(y)(M\kappa)^{2h-1}|^2}.
+\label{eq:new-matched-t0}
+\end{equation}
+系数吸收了约定相关常数；$\mathcal N_h$ 包含有符号的 $y$ 因子，所以该式允许超辐射。实权重时第二支被压低，复权重时
+\begin{equation}
+ (M\kappa)^{2h-1}=e^{2i\nu\ln(M\kappa)}
+\end{equation}
+纯相位，两支同阶干涉，可以产生有界对数振荡。若分母接近零，简单有界包络假设可能失效；需要单独研究。
+
+定义无量纲固定入射视界强度
+\begin{equation}
+ \mathcal I_H=\frac{M^2}{|B^{\rm inc}|^2}
+ =\frac{M^2\omega}{pH_+}T^{(0)}.
+\end{equation}
+对固定非零 $y$，实权重强度主幂为 $(M\kappa)^{2h-2}$，principal 强度为 $(M\kappa)^{-1}$ 乘两支干涉函数。在 $y=0$ 必须先取平滑的 $T^{(0)}/p$ 极限，不能除以零。
+
+\section{非线性响应的因子化：哪些幂律真正有解析支持}
+由定义得到\emph{精确恒等式}
+\begin{equation}
+ \boxed{\widehat\chi_H^{(n)}=\mathcal I_H^n\mathcal K_{n,h},\qquad
+ \mathcal K_{n,h}=\frac{2\Ree A_H^{(1,n)}}{M^2}.}
+\label{eq:new-factorization}
+\end{equation}
+此处单位视界场是无量纲径向基函数，因此 $A_H^{(1,n)}$ 都具有 $M^2$ 的基函数积分量纲；实际耦合及物理场幅的维度在固定入射换算中恢复。该恒等式区分了\emph{线性强度}与\emph{非线性径向 Green 核}，不能把第二因子省略。
+
+在近区，Wronskian 为
+\begin{equation}
+ W_r=\delta\,\xi(\xi+1)
+ (R_{\rm in}\partial_\xi R_{\rm up}-R_{\rm up}\partial_\xi R_{\rm in}),
+ \qquad\dd r=\delta\dd\xi.
+\end{equation}
+局域 $\dd r/W_r$ 的显式 $\delta$ 抵消，但这\emph{不能证明}整个核趋于常数：$R_{\rm up}$ 的全局连接系数、喉口积分上限、两支干涉、外区贡献和相消均仍可能依赖 $\kappa$。要完成严格非线性渐近定理，必须匹配积分各区并给出余项的一致估计；当前未完成这一步。
+
+若 principal 模的 $\mathcal I_H=(M\kappa)^{-1}Q_h$，且 $Q_h^n\mathcal K_{n,h}$ 没有额外实幂并保持有界，则
+\begin{equation}
+ \widehat\chi_H^{(n)}=(M\kappa)^{-n}
+ \mathcal F_n(y,\ln M\kappa).
+\end{equation}
+只有再假设非零下界或合适意义的非零极限，才能说它\emph{具有}该增强阶；$O(\kappa^{-n})$ 的上界本身不等于非零渐近等价。允许 $\mathcal F_n$ 有有界调制，不应写成普遍精确纯幂。
+
+实权重模则是 $(M\kappa)^{n(2h-2)}\mathcal K_{n,h}$。只要核发生补偿、喉口主导或路径交叉，单由 $h$ 得出的 $n(2h-2)$ 就不再是完整响应幂。此前为非principal 模强行使用 $2\Ree h-2$ 的写法不成立。本笔记以因子化为核心叙述，避免这种逻辑跳步。
+
+\subsection{路径、采点和历史数据的分类}
+三次阈值数据在每个 $\kappa$ 先取 $y\to0$，随后再取 $\kappa\to0$；与固定 $y=-0.5,0.5,1$ 的路径分开。阈值使用 $y=\pm0.05,\pm0.025$，令 $\bar\chi(y)=[\chi(y)+\chi(-y)]/2$，二次误差消去公式
+\begin{equation}
+ \chi_*(\kappa)\simeq\frac{4\bar\chi(0.025)-\bar\chi(0.05)}3.
+\end{equation}
+所以“$p=0$”不是在病态点直接求商。基础自旋为 $0.98,0.99,0.995,0.997,0.999$，部分模增加 $0.9995,0.9999$。
+
+principal 模 $(2,2),(3,3),(4,4),(5,5)$ 的 $h$ 依次为 $0.5+0.946i,0.5+1.938i,0.5+2.850i,0.5+3.741i$。实权重对照 $(1,1),(2,1),(3,2)$ 为 $1.171,2.596,2.717$。历史三次最内三点阈值斜率依次约为 $1.038,1.051,1.060,1.064$，对照则为 $0.415,0.092,0.247$。这些是有限窗有效斜率，不是任意模态的理论指数。
+
+历史 $(2,2)$ 七点阈值拟合为 $\chi_*\simeq0.02872(M\kappa)^{-1.0037}$，$R^2=0.99975$，留一最大误差 $5.02\%$。数据曾呈现 $M\kappa\chi_H$ 对 $y$ 的近似坍缩。端点审计后需重建每一个采点和拟合，不能以此处旧拟合代替最终核验。
+\notefigure{kerr_scalar_modal_powerlaw_classification.png}{历史模态分类与有效幂律。复权重与实权重的区别必须结合全局 Green 核及路径讨论；非轴对称点等待端点修正重算。}
+\notefigure{kerr_scalar_near_extremal_scaling.png}{历史近极端三次响应及坍缩检验。单极轴对称对照保持有界；非轴对称增强作为待复核发现记录。}
+
+\section{更高局域幂次、有限带宽和响应峰迁移}
+$n=2,3$ 的历史 principal 实验进一步推进至 $a/M=0.9999984375$。主要拟合窗由七个自旋组成：
+\begin{equation}
+ 0.9999,\ 0.99995,\ 0.999975,\ 0.9999875,\
+ 0.99999375,\ 0.999996875,\ 0.9999984375.
+\end{equation}
+最内两点采用 $N=q=288,320$ 配对；之前四个新点采用 $256,288$。不能因两个低阶分辨率彼此相近就忽略端点公式审计。历史四组阈值斜率为 $(2,2)$ 的 $2.0587,3.0567$ 与 $(3,3)$ 的 $2.0257,3.0408$；固定 $y=0.5$ 是 $2.0447,3.0475,2.0226,3.0357$。最小 $R^2=0.9999766$，最大留一误差 $2.30\%$，见完整审计表。
+
+最内三点斜率更接近整数，但仅有一个残差自由度，因此只能当作缩窗漂移诊断。OLS 区间不是随机采样置信区间，更不含未知渐近模型误差。实权重 $(1,1)$ 和 $(2,1)$ 没有共同的阶次锁定幂，部分新增自旋点未通过响应配对门槛，已从旧拟合中剔除。
+\notefigure{kerr_scalar_power_near_extremal_scaling.png}{历史五次、七次响应的阶次层级和主窗拟合。图中整数幂参考线表示条件性包络，而非已经完成非线性核解析证明。}
+
+\subsection{有限频窗积分减少一个逆表面引力幂次}
+定义的是\emph{单频响应的频窗积分}，不是波包散射：
+\begin{align}
+ \mathcal W_n[y_-,y_+]&=\int_{m\Omega_H+\kappa y_-}^{m\Omega_H+\kappa y_+}
+ \widehat\chi_H^{(n)}\dd(M\omega),\\
+ \mathcal W_n&=(M\kappa)^{1-n}\int_{y_-}^{y_+}
+ \mathcal F_n(y,\ln M\kappa)\dd y.
+\end{align}
+第二式只是换元和条件性包络的直接推论。只有积分后的函数有界非零，才能说三次在主幂上有限、$n>1$ 为 $\kappa^{1-n}$。真正波包包含指定入射谱、频率混合与干涉，不能由这一个积分得到。
+
+历史共同 $y$ 网格为
+\begin{equation}
+ y=(-0.5,-0.2,-0.05,0.05,0.2,0.4,0.6,0.8,1.0,1.2).
+\end{equation}
+三次使用自旋 $(0.98,0.99,0.995)$；$n=2,3$ 使用 $(0.995,0.9999,0.99999375)$。相同梯形积分给出 $(2,2)$ 的 $\beta_n=0.0442,1.0632,2.0729$，$(3,3)$ 为 $0.0856,1.0890,2.1455$。只有三个自旋，不能靠大 $R^2$ 宣称精确幂律；固定频网格的谱解收敛也不能独立衡量梯形积分的网格偏差。
+
+\subsection{响应峰位置和局部宽度}
+历史稠密采点为 $a/M=0.9999$，$0.75\le y\le1.20$、步长 $0.05$，$N=q=288,320$ 配对。五点局部模型
+\begin{equation}
+ \ln\mathcal F_n(y)=\ln\mathcal F_n(y_{\rm pk})
+ -\frac{(y-y_{\rm pk})^2}{2\sigma_y^2}+\cdots
+\end{equation}
+给出 $(2,2)$ 的 $y_{\rm pk}=(0.887,0.980,1.027)$、$\sigma_y=(0.307,0.236,0.205)$；$(3,3)$ 为 $(0.891,0.976,1.015)$、$(0.319,0.246,0.231)$。这里是局部曲率宽度，不是全局 FWHM，也不是准正常模阻尼。
+
+因子化提示峰条件
+\begin{equation}
+ n\partial_y\ln\mathcal I_H+\partial_y\ln\mathcal K_{n,h}=0
+\end{equation}
+（正响应、非零核的局部区间）。如果核比强度变化慢，增大 $n$ 更偏重强度最大处并锐化峰。这是与数据相容的机制，不是证明 $\mathcal K_n$ 与 $n$ 无关，也没有验证大 $n$ 极限。
+\notefigure{kerr_scalar_power_bandwidth_hierarchy.png}{历史有限带宽层级与局部峰迁移。稠密曲线、窗口积分和局部拟合是不同观测量；所有非轴对称记录均须通过修正端点后的重算。}
+
+\section{真正的新物理问题：弱耦合展开的非一致性}
+常规中等自旋下，相互作用阶次按小耦合排序。但 principal 强度增强可能使有效参数
+\begin{equation}
+ g_n=|\widehat\epsilon_n||\mathcal A_{\rm in}|^{2n}
+ |\widehat\chi_H^{(n)}|\sim
+ \frac{|\widehat\epsilon_n||\mathcal A_{\rm in}|^{2n}|\mathcal F_n|}
+ {(M\kappa)^n},\quad\widehat\epsilon_n=\epsilon_n/M^{2n-2}.
+\end{equation}
+相邻阶次相对权重满足条件性估计
+\begin{equation}
+ \frac{g_{n+1}}{g_n}\sim
+ \left|\frac{\widehat\epsilon_{n+1}}{\widehat\epsilon_n}\right|
+ \frac{|\mathcal A_{\rm in}|^2}{M\kappa}
+ \left|\frac{\mathcal F_{n+1}}{\mathcal F_n}\right|.
+\end{equation}
+因此系数较小的高阶局域算符，在接近极端时可能赶上低阶项；这与同一算符在单极远区红外越来越不重要形成对照。它不是任意大 $n$ 的有效理论定理，而是固定有限阶截断可能不一致的诊断。
+
+仅要求 $g_n\ll1$ 控制能流实部并不充分保证完整波形展开。还要检查 $|\epsilon_n||\mathcal A_{\rm in}|^{2n}|\rho_H^{(n)}|\ll1$、局域场修正和二阶余项；很大的虚部可能先使相位展开失效。第一阶结果在失效尺度之外不能用于求饱和、稳定非线性散射态或黑洞反作用。
+
+\begin{note}
+\textbf{当前可用的结论层级。} 轴对称红外、单极任意 $n$ 的系数与固定入射归一化有解析支持，并有独立数值对照；端点包含法和能流恒等式是方法学结果。近极端 principal 的高阶增强、带宽软化和峰迁移是重要的研究候选，但非线性核尚未完整解析，且本次发现的非轴对称端点差异要求重算。不能把这些候选直接写为已证明的新物理。
+\end{note}
+
+\section{文献背景、与原 Schwarzschild 工作的关系}
+原 \texttt{nonlinear\_GF.pdf} 的逻辑是：散射基与归一化、源投影、Green 函数、一阶能流、谱方法、频谱与误差。本文保持这条链，而不是只把图形画成相似外观。Kerr 推广改变角基、共转波数和 $\Sigma$ 源权重，保留 Green 结构和固定入射能流定义；$a\to0$ 必须用前文的幅换算检验，不能直接比较不同单位视界变量的 $A_H$。
+
+线性散射的经典文献\cite{Sanchez1976,Futterman,GlampedakisAndersson2001,Teukolsky1973} 支持分离、散射基和角本征值约定；超辐射文献\cite{PressTeukolsky,StarobinskyChurilov} 解释有符号视界能流。QNM 与灰体因子研究\cite{Berti2009,Oshita2023,Oshita2024} 提供实频谱比较背景，但不能代替本项目的非线性源积分。
+
+自相互作用云、bosenova 和非线性束缚态\cite{YoshinoKodama2012,HerdeiroQCloud2014,Baryakhtar2021} 研究不同的边界条件和长期演化。本工作是无质量复标量从无穷远入射、固定 Kerr、第一阶规定非线性；不能把散射增强称作云不稳定率，也不计算黑洞质量自旋演化。
+
+自力与 EMRI 文献\cite{BarackPound2019,PoundWardell2021} 涉及点粒子奇异场、正则化、规范、轨道演化及度规扰动。本项目没有这些结构，$s=0$ 的自相互作用修正不是引力自力。它可以为频域 Green 积分和谱误差检验提供方法参考，但不直接给出 EMRI 波形相位。
+
+完整参考资料目录保留现稿文献，便于追踪项目背景；并非每篇文献都证明了当前问题的结论。近极端线性公式可参照 \url{https://arxiv.org/abs/0907.3477}；极端临界指标的相关工作见 \url{https://arxiv.org/abs/1711.00855}。后者不构成本文非线性定频幂律的证明。
+
+\section{实现、产物与下一步验证闭环}
+\begin{longtable}{p{0.37\textwidth}p{0.57\textwidth}}
+\toprule 模块/脚本 & 对应工作 \\ \midrule\endhead
+\path{src/bondi.py} 与 \path{src/gf_adaptive_match.py} & Schwarzschild 基准算符、匹配和振荡尾积分。\\
+\path{src/teukolsky_scalar.py} & Kerr 几何、$s=0$ 角本征值与径向约定。\\
+\path{src/kerr_scalar_spectral.py} & 三个分支、端点正则性行、两域谱解与振幅匹配；本次端点审计针对该模块。\\
+\path{src/kerr_scalar_nonlinear.py} & 角投影、Green 源积分、固定入射幅和能流，以及低频解析对照函数。\\
+\path{scripts/run_kerr_scalar_axisymmetric_infrared.py} & 轴对称低频幂和完整复视界振幅。\\
+\path{scripts/run_kerr_scalar_superradiant_response_scan.py} & 阈值两侧响应与直接能流门槛。\\
+\path{scripts/run_kerr_scalar_near_extremal_scaling.py} & 三次近极端阈值和固定 $y$ 路径。\\
+\path{scripts/run_kerr_scalar_power_nonlinearity_l0.py} & 单极高阶红外。\\
+\path{scripts/run_kerr_scalar_power_near_extremal.py} & $n=2,3$ 模态层级及近极端采点。\\
+\path{results/}、\path{figures/}、\path{docs/prd/} & 原始数值表、分析输出、当前英文稿件和图。\\
+\bottomrule
+\end{longtable}
+参数扫描应顺序或有限批执行，保存每个频点和失败原因，及时释放工作矩阵。节点数增加并不一定改善舍入误差；一组 $N,q,r_m$ 配对必须将齐次解误差、求积误差和匹配误差区分。每次更改端点方程需先用解析展开测试，再复算代表性点，最后重建生产扫描和全部图表。
+
+合理的下一步不是继续把幂律曲线拟合得更漂亮，而是修正并检验无穷远端点，重新建立非轴对称证据链；随后解析估计 $\mathcal K_{n,h}$ 的喉区、喉口和外区贡献，再决定能否将条件性包络提升为渐近命题。有限带宽应加密 $y$ 并与高阶求积比较，弱耦合失效需要二阶或直接非线性解。文章作者信息、文献的最终核验和这些科学问题完成之前，不宜声称已达到 PRD regular 的完整投稿标准。
+
+\notefigure{kerr_scalar_spin_limit.png}{旋转趋零的连续性记录。必须先换算 Schwarzschild 与 Kerr 的径向变量和单位入射约定，再比较能流；此图用于连续性检验而非近极端增强。}
+
+\clearpage
+\appendix
+\section{端点公式与任意源的 Green 构造补充}
+若 $B_2(z_b)=0$，端点解解析且 $B_1(z_b)$ 有限非零，则 Taylor 展开 $u=u_b+u'_b(z-z_b)+\cdots$ 的常数项恰为 $B_1u'_b+B_0u_b=0$。它不是额外任意的 Robin 条件，而是方程在正则分支上的极限；再给 $u_b=1$ 固定幅度。如果 $B_1$ 同时为零（例如某些零频退化极限），需继续展开，不能机械沿用非退化边界行。
+
+设 $L=\partial_r(\Delta\partial_r)+V$，两齐次支为 $f=R_{\rm in}$、$g=R_{\rm up}$，$W=\Delta(fg'-gf')$。用
+\begin{equation}
+ G(r,r')=\frac{f(r_<)g(r_>)}{W}
+\end{equation}
+在 $r=r'$ 积分，$\Delta[\partial_rG]_-^+=(fg'-gf')\Delta/W=1$。因此 $LG=\delta(r-r')$，
+\begin{equation}
+ R_1(r)=\frac{g(r)}W\int_{r_+}^{r}f(r')S(r')\dd r'
+ +\frac{f(r)}W\int_r^\infty g(r')S(r')\dd r'.
+\end{equation}
+视界只保留 $f$，无穷远只保留 $g$，恰满足无额外入射的第一阶边界条件。这也固定了源负号与振幅号，不应分别凭习惯选取。
+
+\section{能流的展开与可测量定义}
+单频角积分归一化为 1 时，径向能流为
+\begin{equation}
+ \mathcal F_E=2\omega\Delta\Imm(R^*R').
+\end{equation}
+无穷远入射幅 $\mathcal A_{\rm in}$ 的正入射能流大小为 $2\omega^2|\mathcal A_{\rm in}|^2$。视界入流为 $2\omega pH_+|C_H|^2$，外向反射为 $2\omega^2|C_{\rm ref}|^2$。展开模平方
+\begin{equation}
+ |C_0+\epsilon_n C_1|^2=|C_0|^2+
+ 2\epsilon_n\Ree(C_0^*C_1)+O(\epsilon_n^2)
+\end{equation}
+便得到正文的 $T_n^{(1)},R_n^{(1)}$。这就是“能流在哪里表现”的精确定义：在边界应力能张量流量的干涉项，不是 $|A_H^{(1)}|^2$。后者是二阶，不能代替一阶导数。
+
+对实源投影系数，自通道一阶流的径向导数由 $\Imm(R_0^*S)$ 决定，而 $S=-Q(r)|R_0|^{2n}R_0$ 使其为零。结合无一阶入射，得到 $T_n^{(1)}+R_n^{(1)}=0$。直接分别积分两条振幅再检验平衡，才构成独立数值测试。
+
+\section{完整数值审计表的阅读方法}
+下列 20 张表逐项保留当前英文稿件的原始数字；中文标题说明含义，原始表头保留英文便于对照。表中统计误差、分辨率差异和渐近模型误差不是同一件事。所有 $m\ne0$ 表受式~\eqref{eq:audit-inf-b0} 的新审计限制，旧有通过门槛不等于已经通过修正后的复核。表中 $q$ 表示内侧 Green 求积阶数，除非表头另行指明；$N$ 表示每域的谱阶数。

@@ -2,11 +2,11 @@
   "submission": {
     "journal": "Physical Review D",
     "manuscript_type": "Regular Article",
-    "title": "Weakly nonlinear scalar scattering from a Kerr black hole",
+    "title": "Nonuniform weak-coupling expansion in scalar scattering from near-extremal Kerr",
     "corresponding_author": "First Author",
     "cover_letter_template": "docs/prd/cover_letter.template.md",
     "cover_letter_output": "docs/prd/cover_letter.md",
-    "data_availability_statement": "The numerical data used in the figures and tables are included with the project under results/. The plotting, checking, and build scripts are included under scripts/."
+    "data_availability_statement": "The numerical data and software required to reproduce the figures and tables are contained in a frozen review package. The package is not yet publicly archived because its versioned release is being prepared; during peer review it is available to editors and referees from the authors upon reasonable request. A public archival release with a persistent identifier will be deposited before publication, and the data citation will be updated to identify that release."
   },
   "authors": [
     {

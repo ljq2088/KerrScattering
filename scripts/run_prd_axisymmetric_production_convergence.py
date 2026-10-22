@@ -11,7 +11,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts.run_kerr_scalar_nonlinear_diagnostics import current_rss_mb
-from src.kerr_scalar_nonlinear import compute_kerr_scalar_green_diagnostics
+from src.kerr_scalar_nonlinear import (
+    compute_kerr_scalar_green_diagnostics,
+    fixed_incident_flux_coefficients,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,12 +44,9 @@ def rel(value: complex | float, reference: complex | float) -> float:
 
 
 def row_from_result(case, config, n, q, result, elapsed, rss_before, rss_after):
-    horizon_factor = result.p_horizon * (result.r_plus**2 + result.a**2) / result.omega
-    bnorm4 = abs(result.B_inc) ** 4
-    t0 = horizon_factor / abs(result.B_inc) ** 2
-    r0 = abs(result.B_ref / result.B_inc) ** 2
-    t1 = 2.0 * horizon_factor * result.A_hor_1.real / bnorm4
-    r1 = 2.0 * (result.B_ref.conjugate() * result.A_ref_1).real / bnorm4
+    flux = fixed_incident_flux_coefficients(result)
+    t0, r0 = flux.T0, flux.R0
+    t1, r1 = flux.T1, flux.R1
     return {
         "label": case["label"],
         "l": case["l"],

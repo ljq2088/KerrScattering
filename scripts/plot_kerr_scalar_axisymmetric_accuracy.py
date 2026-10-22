@@ -25,6 +25,7 @@ AXISYM_INPUTS = {
     ],
 }
 OUT_FIG = os.path.join(ROOT, "figures", "kerr_scalar_axisymmetric_accuracy.png")
+BALANCE_TOL = 1.0e-8
 
 
 STYLE = {
@@ -49,7 +50,10 @@ def best_axisym_rows(paths):
                 old = best.get(omega)
                 if old is None or score < abs(float(old["nonlinear_balance"])):
                     best[omega] = row
-    return [best[key] for key in sorted(best)]
+    return [
+        best[key] for key in sorted(best)
+        if abs(float(best[key]["nonlinear_balance"])) <= BALANCE_TOL
+    ]
 
 
 def main():
@@ -89,13 +93,13 @@ def main():
             if r["branch"] == branch and r["subdomain"] == subdomain
             and r["radial_relative_residual"]
         ]
-        node = np.array([int(r["node_index"]) for r in rows])
+        sample = np.array([int(r["sample_index"]) for r in rows])
         rel = np.array([float(r["radial_relative_residual"]) for r in rows])
-        x = node / max(float(node.max()), 1.0)
+        x = sample / max(float(sample.max()), 1.0)
         order = np.argsort(x)
         ax.semilogy(x[order], np.maximum(np.abs(rel[order]), 1e-18),
                     lw=1.1, color=style["color"], label=style["label"])
-    ax.set_xlabel("collocation fraction")
+    ax.set_xlabel("off-grid validation fraction")
     ax.set_ylabel(r"relative $R$-equation residual")
     ax.text(0.04, 0.08, "(b)", transform=ax.transAxes)
     ax.tick_params(direction="in", top=True, right=True)

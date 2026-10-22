@@ -15,14 +15,20 @@ INPUTS = {
     0: [
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_hires_l0.csv",
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l0.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_dense_l0.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_tail_q2048_l0.csv",
     ],
     1: [
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_hires_l1.csv",
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l1.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_dense_l1.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_tail_q2048_l1.csv",
     ],
     2: [
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_hires_l2.csv",
         ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_refine_l2.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_dense_l2.csv",
+        ROOT / "results" / "kerr_scalar_nonlinear_axisymmetric_tail_q2048_l2.csv",
     ],
 }
 
@@ -48,8 +54,18 @@ def load(ell: int) -> tuple[np.ndarray, np.ndarray]:
         with path.open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 omega = round(float(row["omega"]), 14)
+                rank = (
+                    int(float(row.get("N", 0))),
+                    int(float(row.get("quad_order", 0))),
+                    -abs(float(row["nonlinear_balance"])),
+                )
                 old = rows.get(omega)
-                if old is None or abs(float(row["nonlinear_balance"])) < abs(float(old["nonlinear_balance"])):
+                old_rank = None if old is None else (
+                    int(float(old.get("N", 0))),
+                    int(float(old.get("quad_order", 0))),
+                    -abs(float(old["nonlinear_balance"])),
+                )
+                if old is None or rank > old_rank:
                     rows[omega] = row
     omega = np.array(sorted(rows), dtype=float)
     values = np.array([float(rows[x]["T1"]) for x in omega], dtype=float)

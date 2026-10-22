@@ -1,0 +1,26 @@
+{
+  "status": "completed",
+  "command": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu-22.04-D",
+    "-e",
+    "timeout",
+    "180",
+    "/tmp/codex-julia-20261023/julia-1.10.7/bin/julia",
+    "--startup-file=no",
+    "--threads=1",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/scripts/probe_scalar_angular_wkb_20261023.jl",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/results/precision_20261023/angular_wkb_refined.toml"
+  ],
+  "source_hashes_before": {
+    "src\\kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts\\probe_scalar_angular_wkb_20261023.jl": "0b4ae9a4cdb8c428e1eb62a761e515642dc0ee07bac53d0b1b4cb4c63abc637a"
+  },
+  "source_hashes_after": {
+    "src\\kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts\\probe_scalar_angular_wkb_20261023.jl": "0b4ae9a4cdb8c428e1eb62a761e515642dc0ee07bac53d0b1b4cb4c63abc637a"
+  },
+  "seconds": 7.232515335083008,
+  "output_sha256": "a3049782e07f1e25bf5444e0fb758b964f20bc6973796d168f5f0242602ef4e5"
+}

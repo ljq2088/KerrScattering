@@ -154,6 +154,48 @@ def evaluate_scalar_spheroidal(mode, theta, phi=0.0):
     return value
 
 
+def scalar_power_coupling(
+    l_source,
+    m,
+    a,
+    omega,
+    nonlinearity_order,
+    l_target=None,
+    lmax_extra=16,
+    quad_order=256,
+    cos_power=0,
+):
+    """Project a `|S_lm|**(2n) S_lm` source onto a target mode."""
+    if l_target is None:
+        l_target = l_source
+    if l_source < abs(m) or l_target < abs(m):
+        raise ValueError("Require l_source,l_target >= |m|.")
+    if cos_power < 0:
+        raise ValueError("cos_power must be non-negative.")
+    if (
+        not isinstance(nonlinearity_order, (int, np.integer))
+        or nonlinearity_order < 1
+    ):
+        raise ValueError("nonlinearity_order must be a positive integer.")
+
+    c = a * omega
+    source = scalar_spheroidal_mode(l_source, m, c, lmax_extra=lmax_extra)
+    target = scalar_spheroidal_mode(l_target, m, c, lmax_extra=lmax_extra)
+
+    x, w = np.polynomial.legendre.leggauss(quad_order)
+    theta = np.arccos(x)
+    source_vals = evaluate_scalar_spheroidal(source, theta, 0.0)
+    target_vals = evaluate_scalar_spheroidal(target, theta, 0.0)
+    integrand = (
+        np.conj(target_vals)
+        * np.abs(source_vals) ** (2 * int(nonlinearity_order))
+        * source_vals
+    )
+    if cos_power:
+        integrand = (x ** int(cos_power)) * integrand
+    return 2.0 * np.pi * np.sum(w * integrand)
+
+
 def scalar_cubic_coupling(l_source, m, a, omega, l_target=None,
                           lmax_extra=16, quad_order=256, cos_power=0):
     """Project ``cos(theta)**p |S_lm|^2 S_lm`` onto a spheroidal harmonic.
@@ -167,25 +209,17 @@ def scalar_cubic_coupling(l_source, m, a, omega, l_target=None,
     The same spheroidal parameter ``c = a omega`` is used for source and
     target modes.
     """
-    if l_target is None:
-        l_target = l_source
-    if l_source < abs(m) or l_target < abs(m):
-        raise ValueError("Require l_source,l_target >= |m|.")
-    if cos_power < 0:
-        raise ValueError("cos_power must be non-negative.")
-
-    c = a * omega
-    source = scalar_spheroidal_mode(l_source, m, c, lmax_extra=lmax_extra)
-    target = scalar_spheroidal_mode(l_target, m, c, lmax_extra=lmax_extra)
-
-    x, w = np.polynomial.legendre.leggauss(quad_order)
-    theta = np.arccos(x)
-    source_vals = evaluate_scalar_spheroidal(source, theta, 0.0)
-    target_vals = evaluate_scalar_spheroidal(target, theta, 0.0)
-    integrand = np.conj(target_vals) * np.abs(source_vals) ** 2 * source_vals
-    if cos_power:
-        integrand = (x ** int(cos_power)) * integrand
-    return 2.0 * np.pi * np.sum(w * integrand)
+    return scalar_power_coupling(
+        l_source,
+        m,
+        a,
+        omega,
+        1,
+        l_target=l_target,
+        lmax_extra=lmax_extra,
+        quad_order=quad_order,
+        cos_power=cos_power,
+    )
 
 
 def scalar_cubic_coupling_cos2(l_source, m, a, omega, l_target=None,

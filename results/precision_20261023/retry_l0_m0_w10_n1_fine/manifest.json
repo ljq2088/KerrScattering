@@ -1,0 +1,56 @@
+{
+  "status": "completed",
+  "returncode": 0,
+  "command": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu-22.04-D",
+    "-e",
+    "env",
+    "OPENBLAS_NUM_THREADS=1",
+    "JULIA_NUM_THREADS=1",
+    "timeout",
+    "--kill-after=10",
+    "300",
+    "/tmp/codex-julia-20261023/julia-1.10.7/bin/julia",
+    "--startup-file=no",
+    "--threads=1",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/scripts/run_scalar_precision_20261023.jl",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/results/precision_20261023/retry_l0_m0_w10_n1_fine/solution",
+    "0.5",
+    "10",
+    "0",
+    "0",
+    "1",
+    "384",
+    "64",
+    "80",
+    "112",
+    "88"
+  ],
+  "source_hashes_before": {
+    "src\\kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_one_20261023.py": "5f3d2e1d926bebd40412a5b5c2572f3fcb9b17f1891807b8b6746113687d10a0"
+  },
+  "source_hashes_after": {
+    "src\\kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_one_20261023.py": "5f3d2e1d926bebd40412a5b5c2572f3fcb9b17f1891807b8b6746113687d10a0"
+  },
+  "outputs": {
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "f8af64be2789c2c40618946733c08b8e9f01e058ff50490ab41081c70b3f7b42",
+    "solution\\result.toml": "4158df1c6052b5d01a691bbd9410abe904944c00ee799c44f043921deb9001f5"
+  },
+  "seconds": 87.3172562122345,
+  "precision": [
+    384,
+    64,
+    80,
+    112,
+    88
+  ],
+  "timeout_seconds": 300,
+  "memory_guard_bytes": 1500000000
+}

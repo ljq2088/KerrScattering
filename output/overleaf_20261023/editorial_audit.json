@@ -1,0 +1,8 @@
+{
+  "scope": "narrative-only: introduction, asymptotic transition, conclusion opening",
+  "preserved_display_table_figure_blocks": 154,
+  "abstract_unchanged": true,
+  "original_sha256": "b901c71e2d5d29294b49fc666dc2209898a6a27c3e7c5aec04a9e96d736544ed",
+  "revised_sha256": "368c11d4ab6c5ac6ece03ead224db14219689b88f8e41402ceba8112281736ff",
+  "new_precision_results_in_manuscript": false
+}

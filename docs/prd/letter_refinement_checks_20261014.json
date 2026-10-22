@@ -1,0 +1,14 @@
+{
+  "source_sha256": "368c11d4ab6c5ac6ece03ead224db14219689b88f8e41402ceba8112281736ff",
+  "labels": 118,
+  "cited_sources": 29,
+  "abstract_words": 243,
+  "figure_count": 8,
+  "numerical_evidence_checked": true,
+  "zero_sourced_residual_interval": [
+    1,
+    8
+  ],
+  "finite_coupling_validation": "pending",
+  "letter_readiness": "requires further physics validation"
+}

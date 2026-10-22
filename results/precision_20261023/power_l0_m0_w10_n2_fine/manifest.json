@@ -1,0 +1,59 @@
+{
+  "status": "completed",
+  "returncode": 0,
+  "command": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu-22.04-D",
+    "-e",
+    "env",
+    "OPENBLAS_NUM_THREADS=1",
+    "JULIA_NUM_THREADS=1",
+    "timeout",
+    "--kill-after=10",
+    "300",
+    "/tmp/codex-julia-20261023/julia-1.10.7/bin/julia",
+    "--startup-file=no",
+    "--threads=1",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/scripts/run_scalar_precision_20261023.jl",
+    "/mnt/c/Users/12511/Documents/\u8c31\u65b9\u6cd5\u8ba1\u7b97Kerr\u6563\u5c04\u632f\u5e45/KerrScattering/results/precision_20261023/power_l0_m0_w10_n2_fine/solution",
+    "0.5",
+    "10",
+    "0",
+    "0",
+    "2",
+    "384",
+    "64",
+    "80",
+    "96",
+    "72"
+  ],
+  "source_hashes_before": {
+    "src\\kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_extra_20261023.py": "43e4cd9be8e3fc948c13654f6d49f40aff42459fb74396bcd4c082933f3ebec5",
+    "scripts\\run_scalar_precision_campaign_20261023.py": "cd0d8f37eabbed0483af6cd1f2dd3607433d616752511d71f0bc9f81353f2b76"
+  },
+  "source_hashes_after": {
+    "src\\kerr_scalar_precision.jl": "7ceaaa0abd96f12c8afa294df5447e650f0793ddc28c41c9ab1199a548e710b2",
+    "scripts\\run_scalar_precision_20261023.jl": "eed8f88fd66f965a9be6ef9d59c7a53500db9708f3127de585993323cd42a738",
+    "scripts\\run_scalar_precision_extra_20261023.py": "43e4cd9be8e3fc948c13654f6d49f40aff42459fb74396bcd4c082933f3ebec5",
+    "scripts\\run_scalar_precision_campaign_20261023.py": "cd0d8f37eabbed0483af6cd1f2dd3607433d616752511d71f0bc9f81353f2b76"
+  },
+  "outputs": {
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "bb77ca0ffe84155ea1dadfbb2fce089c2d360bd48cc4e11224f317461264328a",
+    "solution\\result.toml": "214527f38d42cbeb59ff54666f0e51439c89e779854647f06235fd2a79b70deb"
+  },
+  "seconds": 137.29401898384094,
+  "precision": [
+    384,
+    64,
+    80,
+    96,
+    72
+  ],
+  "assertion_tested": "s=0,a=0.5,l=0,m=0,omega=10,n=2",
+  "timeout_seconds": 300,
+  "memory_guard_bytes": 1500000000
+}

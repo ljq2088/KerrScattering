@@ -6,12 +6,16 @@ import os
 import sys
 
 import numpy as np
+from numpy.polynomial.chebyshev import chebder, chebval
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from scripts.run_kerr_scalar_nonlinear_diagnostics import CASES, fmt_complex
 from src.cheb import real_to_cheb
-from src.kerr_scalar_nonlinear import compute_kerr_scalar_green_diagnostics
+from src.kerr_scalar_nonlinear import (
+    compute_kerr_scalar_green_diagnostics,
+    fixed_incident_flux_coefficients,
+)
 from src.kerr_scalar_spectral import (
     _cheb_interval,
     _default_r_match,
@@ -49,13 +53,27 @@ def _mapping_y_to_z(y, z_left, z_right, mapping, kappa):
     return z, z_y, z_yy
 
 
-def _collocation_residuals(data, N, z_left, z_right, branch, boundary,
-                           params, mapping, kappa, l, m, omega, lam):
-    z, Dz, D2z = _cheb_interval(N, z_left, z_right, mapping=mapping, kappa=kappa)
+def _offgrid_residuals(data, z_left, z_right, branch, params, mapping, kappa,
+                       l, m, omega, lam, samples):
+    """Evaluate the differential equation on Chebyshev--Gauss validation points."""
+    if samples < 3:
+        raise ValueError("residual_samples must be at least 3")
+
+    coeff = _cheb_coeff(data["u"])
+    coeff_y = chebder(coeff)
+    coeff_yy = chebder(coeff_y)
+    sample_index = np.arange(samples)
+    y = np.cos(np.pi * (sample_index + 0.5) / samples)
+    z, z_y, z_yy = _mapping_y_to_z(
+        y, z_left, z_right, mapping=mapping, kappa=kappa
+    )
+    u = chebval(y, coeff)
+    u_y = chebval(y, coeff_y)
+    u_yy = chebval(y, coeff_yy)
+    u_z = u_y / z_y
+    u_zz = u_yy / z_y**2 - u_y * z_yy / z_y**3
+
     B2, B1, B0 = _transformed_coefficients(z, branch, params, l, m, omega, lam)
-    u = data["u"]
-    u_z = Dz @ u
-    u_zz = D2z @ u
     residual = B2 * u_zz + B1 * u_z + B0 * u
     term_scale = np.maximum(
         np.abs(B2 * u_zz) + np.abs(B1 * u_z) + np.abs(B0 * u),
@@ -63,57 +81,41 @@ def _collocation_residuals(data, N, z_left, z_right, branch, boundary,
     )
     rel = np.abs(residual) / term_scale
 
-    radial_residual = np.full(N + 1, np.nan, dtype=float)
-    radial_rel = np.full(N + 1, np.nan, dtype=float)
-    radial_scale = np.full(N + 1, np.nan, dtype=float)
-    interior = (z > 0.0) & (z < 1.0)
-    if np.any(interior):
-        zi = z[interior]
-        r = params.rp / zi
-        d = delta(r, M=params.M, a=params.a)
-        dp = 2.0 * r - 2.0 * params.M
-        K = (r**2 + params.a**2) * omega - params.a * m
-        potential = K**2 / d - lam
-        z_r = -zi**2 / params.rp
-        z_rr = 2.0 * zi**3 / params.rp**2
-        q, qp = _phase_log_derivatives(r, branch, params, omega, m)
-        ui = u[interior]
-        uzi = u_z[interior]
-        uzzi = u_zz[interior]
+    r = params.rp / z
+    d = delta(r, M=params.M, a=params.a)
+    dp = 2.0 * r - 2.0 * params.M
+    K = (r**2 + params.a**2) * omega - params.a * m
+    potential = K**2 / d - lam
+    z_r = -z**2 / params.rp
+    z_rr = 2.0 * z**3 / params.rp**2
+    q, qp = _phase_log_derivatives(r, branch, params, omega, m)
 
-        R = ui
-        R_r_over_phase = q * ui + uzi * z_r
-        R_rr_over_phase = (
-            (qp + q**2) * ui
-            + 2.0 * q * uzi * z_r
-            + uzzi * z_r**2
-            + uzi * z_rr
-        )
-        term2 = d * R_rr_over_phase
-        term1 = dp * R_r_over_phase
-        term0 = potential * R
-        raw_radial = term2 + term1 + term0
-        raw_scale = np.maximum(np.abs(term2) + np.abs(term1) + np.abs(term0), 1e-300)
-        radial_residual[interior] = np.abs(raw_radial)
-        radial_scale[interior] = raw_scale
-        radial_rel[interior] = np.abs(raw_radial) / raw_scale
+    R_r_over_phase = q * u + u_z * z_r
+    R_rr_over_phase = (
+        (qp + q**2) * u
+        + 2.0 * q * u_z * z_r
+        + u_zz * z_r**2
+        + u_z * z_rr
+    )
+    term2 = d * R_rr_over_phase
+    term1 = dp * R_r_over_phase
+    term0 = potential * u
+    raw_radial = term2 + term1 + term0
+    radial_scale = np.maximum(
+        np.abs(term2) + np.abs(term1) + np.abs(term0), 1e-300
+    )
+    radial_residual = np.abs(raw_radial)
+    radial_rel = radial_residual / radial_scale
 
-    keep = np.ones(N + 1, dtype=bool)
-    if boundary == "left":
-        keep[1] = False
-    elif boundary == "right":
-        keep[-2] = False
-    else:
-        raise ValueError("boundary must be left or right")
     return (
-        z[keep],
-        residual[keep],
-        rel[keep],
-        term_scale[keep],
-        radial_residual[keep],
-        radial_rel[keep],
-        radial_scale[keep],
-        np.nonzero(keep)[0],
+        z,
+        residual,
+        rel,
+        term_scale,
+        radial_residual,
+        radial_rel,
+        radial_scale,
+        sample_index,
     )
 
 
@@ -189,13 +191,11 @@ def run_spectral_quality(args):
             radial_rel,
             radial_scale,
             residual_index,
-        ) = _collocation_residuals(
+        ) = _offgrid_residuals(
             data,
-            N,
             z_left,
             z_right,
             branch,
-            boundary,
             params,
             active_mapping,
             kappa,
@@ -203,6 +203,7 @@ def run_spectral_quality(args):
             args.m,
             args.omega,
             lam,
+            args.residual_samples,
         )
         radial_rel_finite = radial_rel[np.isfinite(radial_rel)]
         radial_res_finite = radial_residual[np.isfinite(radial_residual)]
@@ -219,7 +220,8 @@ def run_spectral_quality(args):
             residual_rows.append({
                 "branch": branch,
                 "subdomain": subdomain,
-                "node_index": int(idx),
+                "sample_kind": "chebyshev-gauss-offgrid",
+                "sample_index": int(idx),
                 "z": f"{zi:.16e}",
                 "abs_residual": f"{abs(ri):.16e}",
                 "relative_residual": f"{rrel:.16e}",
@@ -242,6 +244,8 @@ def run_spectral_quality(args):
             "mapping": "sinh" if active_mapping == "sinh-left" else "linear",
             "r_match": f"{r_match:.16e}",
             "tail_terms": args.tail_terms,
+            "residual_grid": "chebyshev-gauss-offgrid",
+            "residual_samples": args.residual_samples,
             "coeff_tail_ratio": f"{tail_ratio:.16e}",
             "max_abs_residual": f"{float(np.max(np.abs(residual))):.16e}",
             "max_relative_residual": f"{float(np.max(rel)):.16e}",
@@ -254,6 +258,14 @@ def run_spectral_quality(args):
             "max_radial_relative_residual": (
                 "" if radial_rel_finite.size == 0
                 else f"{float(np.max(radial_rel_finite)):.16e}"
+            ),
+            "p95_radial_relative_residual": (
+                "" if radial_rel_finite.size == 0
+                else f"{float(np.quantile(radial_rel_finite, 0.95)):.16e}"
+            ),
+            "median_radial_relative_residual": (
+                "" if radial_rel_finite.size == 0
+                else f"{float(np.median(radial_rel_finite)):.16e}"
             ),
             "condition": f"{float(data['condition']):.16e}",
         })
@@ -275,12 +287,9 @@ def _fixed_incident_flux_row(case, N, quad_order, tail_epsrel):
         tail_epsrel=tail_epsrel,
         radial_weight_model="kerr-covariant-sigma-dr",
     )
-    horizon_factor = result.p_horizon * (result.r_plus**2 + result.a**2) / result.omega
-    bnorm4 = abs(result.B_inc) ** 4
-    T0 = horizon_factor / abs(result.B_inc) ** 2
-    R0 = abs(result.B_ref / result.B_inc) ** 2
-    T1 = 2.0 * horizon_factor * float(np.real(result.A_hor_1)) / bnorm4
-    R1 = 2.0 * float(np.real(np.conj(result.B_ref) * result.A_ref_1)) / bnorm4
+    flux = fixed_incident_flux_coefficients(result)
+    T0, R0 = flux.T0, flux.R0
+    T1, R1 = flux.T1, flux.R1
     return {
         "label": case["label"],
         "l": case["l"],
@@ -390,7 +399,7 @@ def main(argv=None):
     _write_csv(
         args.residual_output,
         residual_rows,
-        ["branch", "subdomain", "node_index", "z", "abs_residual",
+        ["branch", "subdomain", "sample_kind", "sample_index", "z", "abs_residual",
          "relative_residual", "term_scale", "radial_abs_residual",
          "radial_relative_residual", "radial_term_scale",
          "real_residual", "imag_residual"],
@@ -400,9 +409,11 @@ def main(argv=None):
         summary_rows,
         ["case", "l", "m", "a", "omega", "N", "branch", "subdomain",
          "mapping", "r_match", "tail_terms", "coeff_tail_ratio",
+         "residual_grid", "residual_samples",
          "max_abs_residual", "max_relative_residual",
          "p95_relative_residual", "median_relative_residual",
          "max_radial_abs_residual", "max_radial_relative_residual",
+         "p95_radial_relative_residual", "median_radial_relative_residual",
          "condition"],
     )
     print(f"Saved spectral coefficients: {args.coeff_output}")
